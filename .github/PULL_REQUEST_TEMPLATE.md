@@ -8,8 +8,8 @@
 | :--- | :--- |
 | 📜 **Description** | `description` |
 | 📌 **Issue Number** | `#1` |
-| ![](https://img.shields.io/badge/figma-black?logo=figma) **Figma** | `Link` |
-| ![](https://img.shields.io/badge/notion-black?logo=notion) **Notion Card** | `Link` |
+| ![](https://img.shields.io/badge/-black?logo=figma) **Figma** | `Link` |
+| ![](https://img.shields.io/badge/-black?logo=notion) **Notion Card** | `Link` |
 
 ---
 
