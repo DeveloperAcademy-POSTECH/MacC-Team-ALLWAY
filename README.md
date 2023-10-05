@@ -1,2 +1,2 @@
 # MacC-Team-ALLWAY
-🛸 TEAM: ALL WAY
+🛸 TEAM: ALLWAY
