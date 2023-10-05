@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
+		7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */; };
+		7E8D17C92ACE8AED00E904E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
+		7E8D17CC2ACE8AED00E904E5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
+		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
+		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
+		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7E8D17D22ACE8AED00E904E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E8D17B92ACE8AEC00E904E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E8D17C02ACE8AEC00E904E5;
+			remoteInfo = talklat;
+		};
+		7E8D17DC2ACE8AED00E904E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E8D17B92ACE8AEC00E904E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E8D17C02ACE8AEC00E904E5;
+			remoteInfo = talklat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatApp.swift; sourceTree = "<group>"; };
+		7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatTests.swift; sourceTree = "<group>"; };
+		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
+		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7E8D17BE2ACE8AEC00E904E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17CE2ACE8AED00E904E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17D82ACE8AED00E904E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7E8D17B82ACE8AEC00E904E5 = {
+			isa = PBXGroup;
+			children = (
+				7E8D17C32ACE8AEC00E904E5 /* talklat */,
+				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
+				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
+				7E8D17C22ACE8AEC00E904E5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7E8D17C22ACE8AEC00E904E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17C12ACE8AEC00E904E5 /* talklat.app */,
+				7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */,
+				7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7E8D17C32ACE8AEC00E904E5 /* talklat */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */,
+				7E8D17EF2ACE8B8900E904E5 /* Sources */,
+				7E8D17EE2ACE8B1400E904E5 /* Resources */,
+			);
+			path = talklat;
+			sourceTree = "<group>";
+		};
+		7E8D17CA2ACE8AED00E904E5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7E8D17D42ACE8AED00E904E5 /* talklatTests */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */,
+			);
+			path = talklatTests;
+			sourceTree = "<group>";
+		};
+		7E8D17DE2ACE8AED00E904E5 /* talklatUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */,
+				7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */,
+			);
+			path = talklatUITests;
+			sourceTree = "<group>";
+		};
+		7E8D17EE2ACE8B1400E904E5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17CA2ACE8AED00E904E5 /* Preview Content */,
+				7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17F02ACE8BA300E904E5 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		7E8D17F02ACE8BA300E904E5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7E8D17C02ACE8AEC00E904E5 /* talklat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklat" */;
+			buildPhases = (
+				7E8D17BD2ACE8AEC00E904E5 /* Sources */,
+				7E8D17BE2ACE8AEC00E904E5 /* Frameworks */,
+				7E8D17BF2ACE8AEC00E904E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = talklat;
+			productName = talklat;
+			productReference = 7E8D17C12ACE8AEC00E904E5 /* talklat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7E8D17D02ACE8AED00E904E5 /* talklatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatTests" */;
+			buildPhases = (
+				7E8D17CD2ACE8AED00E904E5 /* Sources */,
+				7E8D17CE2ACE8AED00E904E5 /* Frameworks */,
+				7E8D17CF2ACE8AED00E904E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E8D17D32ACE8AED00E904E5 /* PBXTargetDependency */,
+			);
+			name = talklatTests;
+			productName = talklatTests;
+			productReference = 7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7E8D17DA2ACE8AED00E904E5 /* talklatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatUITests" */;
+			buildPhases = (
+				7E8D17D72ACE8AED00E904E5 /* Sources */,
+				7E8D17D82ACE8AED00E904E5 /* Frameworks */,
+				7E8D17D92ACE8AED00E904E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E8D17DD2ACE8AED00E904E5 /* PBXTargetDependency */,
+			);
+			name = talklatUITests;
+			productName = talklatUITests;
+			productReference = 7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7E8D17B92ACE8AEC00E904E5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					7E8D17C02ACE8AEC00E904E5 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					7E8D17D02ACE8AED00E904E5 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 7E8D17C02ACE8AEC00E904E5;
+					};
+					7E8D17DA2ACE8AED00E904E5 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 7E8D17C02ACE8AEC00E904E5;
+					};
+				};
+			};
+			buildConfigurationList = 7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "talklat" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7E8D17B82ACE8AEC00E904E5;
+			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7E8D17C02ACE8AEC00E904E5 /* talklat */,
+				7E8D17D02ACE8AED00E904E5 /* talklatTests */,
+				7E8D17DA2ACE8AED00E904E5 /* talklatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7E8D17BF2ACE8AEC00E904E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E8D17CC2ACE8AED00E904E5 /* Preview Assets.xcassets in Resources */,
+				7E8D17C92ACE8AED00E904E5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17CF2ACE8AED00E904E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17D92ACE8AED00E904E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7E8D17BD2ACE8AEC00E904E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */,
+				7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17CD2ACE8AED00E904E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E8D17D72ACE8AED00E904E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */,
+				7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7E8D17D32ACE8AED00E904E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E8D17C02ACE8AEC00E904E5 /* talklat */;
+			targetProxy = 7E8D17D22ACE8AED00E904E5 /* PBXContainerItemProxy */;
+		};
+		7E8D17DD2ACE8AED00E904E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E8D17C02ACE8AEC00E904E5 /* talklat */;
+			targetProxy = 7E8D17DC2ACE8AED00E904E5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7E8D17E32ACE8AED00E904E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7E8D17E42ACE8AED00E904E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7E8D17E62ACE8AED00E904E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7E8D17E72ACE8AED00E904E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7E8D17E92ACE8AED00E904E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/talklat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/talklat";
+			};
+			name = Debug;
+		};
+		7E8D17EA2ACE8AED00E904E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/talklat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/talklat";
+			};
+			name = Release;
+		};
+		7E8D17EC2ACE8AED00E904E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = talklat;
+			};
+			name = Debug;
+		};
+		7E8D17ED2ACE8AED00E904E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = talklat;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "talklat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8D17E32ACE8AED00E904E5 /* Debug */,
+				7E8D17E42ACE8AED00E904E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8D17E62ACE8AED00E904E5 /* Debug */,
+				7E8D17E72ACE8AED00E904E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8D17E92ACE8AED00E904E5 /* Debug */,
+				7E8D17EA2ACE8AED00E904E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E8D17EC2ACE8AED00E904E5 /* Debug */,
+				7E8D17ED2ACE8AED00E904E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7E8D17B92ACE8AEC00E904E5 /* Project object */;
+}
