@@ -14,6 +14,10 @@
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
+		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
+		EF67C64D2ACEB69500C1074E /* HandlingTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64C2ACEB69500C1074E /* HandlingTestingView.swift */; };
+		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
+		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF67C64C2ACEB69500C1074E /* HandlingTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlingTestingView.swift; sourceTree = "<group>"; };
+		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
+		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +146,7 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EF67C6492ACEB65400C1074E /* Managers */,
 				7E8D17F02ACE8BA300E904E5 /* Views */,
 			);
 			path = Sources;
@@ -146,9 +155,20 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF67C64C2ACEB69500C1074E /* HandlingTestingView.swift */,
+				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EF67C6492ACEB65400C1074E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
+				EF67C6522AD13BF700C1074E /* AppRootManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,7 +302,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */,
+				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */,
+				EF67C64D2ACEB69500C1074E /* HandlingTestingView.swift in Sources */,
+				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
+				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,9 +465,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 좀 쓸게용!";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "음성인식 좀 할게용!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -470,9 +496,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 좀 쓸게용!";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "음성인식 좀 할게용!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
