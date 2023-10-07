@@ -27,7 +27,7 @@ struct talklatApp: App {
             }
             .environmentObject(appRootManager)
             .task {
-                await appRootManager.switchAuthorizationStatus()
+                await appRootManager.switchAuthStatus()
             }
         }
     }
