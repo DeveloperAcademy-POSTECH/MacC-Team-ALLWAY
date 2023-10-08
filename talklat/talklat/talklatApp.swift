@@ -14,14 +14,14 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch appRootManager.currentRoot {
+                switch appRootManager.currentAuthStatus {
                 case .authCompleted:
                     HandlingTestingView()
                 case .speechRecognitionAuthIncompleted,
                         .microphoneAuthIncompleted,
                         .authIncompleted:
                     AuthorizationRequestView(
-                        currentRoot: appRootManager.currentRoot
+                        currentAuthStatus: appRootManager.currentAuthStatus
                     )
                 }
             }

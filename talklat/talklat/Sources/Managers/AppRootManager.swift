@@ -16,7 +16,7 @@ public class AppRootManager: ObservableObject {
         case authIncompleted = "마이크, 음성"
     }
     
-    @Published var currentRoot: AuthStatus = .authCompleted
+    @Published var currentAuthStatus: AuthStatus = .authCompleted
     
     var isSpeechRecognitionAuthorized: Bool = true
     var isMicrophoneAuthorized: Bool = true
@@ -30,13 +30,13 @@ extension AppRootManager {
         await getAuthStatus()
         
         if isSpeechRecognitionAuthorized && isMicrophoneAuthorized == true {
-            currentRoot = .authCompleted
+            currentAuthStatus = .authCompleted
         } else if isSpeechRecognitionAuthorized == false && isMicrophoneAuthorized == true {
-            currentRoot = .speechRecognitionAuthIncompleted
+            currentAuthStatus = .speechRecognitionAuthIncompleted
         } else if isSpeechRecognitionAuthorized == true && isMicrophoneAuthorized == false {
-            currentRoot = .microphoneAuthIncompleted
+            currentAuthStatus = .microphoneAuthIncompleted
         } else {
-            currentRoot = .authIncompleted
+            currentAuthStatus = .authIncompleted
         }
     }
     
