@@ -7,32 +7,45 @@
 
 import SwiftUI
 
-struct AWIntroView: View {
-    enum RecordStatus {
-        case recording
-        case writing
-    }
-    
-    @FocusState private var isFocused: Bool
-    @State private var recordStatus: RecordStatus = .writing
-    @State private var text: String = ""
+struct TKIntroView: View {
+    @StateObject private var appViewManager: AppViewManager = .init()
     
     var body: some View {
-        switch recordStatus {
+        switch appViewManager.communicationStatus {
         case .writing:
-            writingView()
+            WritingView(appViewManager: appViewManager)
         case .recording:
-            recordingView()
+            
+            VStack {
+                Text(appViewManager.communicationStatus.rawValue)
+                
+                Button {
+                    appViewManager.communicationStatus = .writing
+                } label: {
+                    Text("Toggle")
+                }
+            }
         }
     }
+}
+
+struct AWIntroView_Previews: PreviewProvider {
+    static var previews: some View {
+        TKIntroView()
+    }
+}
+
+struct WritingView: View {
+    @ObservedObject var appViewManager: AppViewManager
     
-    @ViewBuilder
-    private func writingView() -> some View {
+    var body: some View {
         VStack {
             VStack {
+                Text("\(appViewManager.communicationStatus.rawValue)")
+                
                 HStack {
                     Button {
-                        text = ""
+                        appViewManager.text = ""
                     } label: {
                         Text("전체 지우기")
                             .foregroundColor(.gray)
@@ -42,11 +55,11 @@ struct AWIntroView: View {
                     Spacer()
                 }
                 
-                // MARK: 현재 multiline placeholder 구현에 시간이 소요되고 있음
+                // MARK: Multiline Placeholder 구현 불가
                 // lofi: 한 줄 placeholder
                 TextField(
                     "요구사항 입력 영역",
-                    text: $text,
+                    text: $appViewManager.text,
                     prompt: Text("내용을 입력하세요"),
                     axis: .vertical
                 )
@@ -64,7 +77,7 @@ struct AWIntroView: View {
             Spacer()
             
             Button {
-                recordStatus = .recording
+                appViewManager.communicationStatus = .recording
             } label: {
                 Text("음성 인식 전환")
             }
@@ -73,22 +86,5 @@ struct AWIntroView: View {
                 .frame(maxHeight: 120)
         }
         .frame(maxHeight: .infinity)
-    }
-    
-    @ViewBuilder
-    private func recordingView() -> some View {
-        VStack {
-            Button {
-                recordStatus = .writing
-            } label: {
-                Text("?")
-            }
-        }
-    }
-}
-
-struct AWIntroView_Previews: PreviewProvider {
-    static var previews: some View {
-        AWIntroView()
     }
 }
