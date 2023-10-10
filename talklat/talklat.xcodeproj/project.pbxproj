@@ -14,6 +14,7 @@
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
+		CE9BC85D2ACE8F330062B7E6 /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9BC85C2ACE8F330062B7E6 /* GyroScopeStore.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C64D2ACEB69500C1074E /* HandlingTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64C2ACEB69500C1074E /* HandlingTestingView.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
@@ -48,6 +49,7 @@
 		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CE9BC85C2ACE8F330062B7E6 /* GyroScopeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C64C2ACEB69500C1074E /* HandlingTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlingTestingView.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CE9BC85B2ACE8F210062B7E6 /* Stores */,
 				EF67C6492ACEB65400C1074E /* Managers */,
 				7E8D17F02ACE8BA300E904E5 /* Views */,
 			);
@@ -162,6 +165,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		CE9BC85B2ACE8F210062B7E6 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				CE9BC85C2ACE8F330062B7E6 /* GyroScopeStore.swift */,
+			);
+			path = Stores;
 		EF67C6492ACEB65400C1074E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +313,7 @@
 				7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */,
+				CE9BC85D2ACE8F330062B7E6 /* GyroScopeStore.swift in Sources */,
 				EF67C64D2ACEB69500C1074E /* HandlingTestingView.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
@@ -465,6 +475,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -496,6 +507,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
