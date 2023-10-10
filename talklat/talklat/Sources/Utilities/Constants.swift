@@ -20,3 +20,15 @@ public enum Constants {
     음성 인식을 위해 천천히 크게 말해주세요.
     """
 }
+
+public enum AuthStatus: String {
+    case authCompleted
+    case speechRecognitionAuthIncompleted = "음성 인식"
+    case microphoneAuthIncompleted = "마이크"
+    case authIncompleted = "마이크, 음성"
+}
+
+public enum FlippedStatus: String {
+    case opponent
+    case myself
+}
