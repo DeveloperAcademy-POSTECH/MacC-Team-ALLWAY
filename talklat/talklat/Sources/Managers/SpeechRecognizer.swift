@@ -2,16 +2,15 @@
 //  SpeechRecognizer.swift
 //  talklat
 //
-//  Created by Ye Eun Choi on 2023/10/05.
+//  Created by 신정연 on 2023/10/05.
 //
 
-import AVFoundation
 import Foundation
+import AVFoundation
 import Speech
 import SwiftUI
 
-/// A helper for transcribing speech to text using SFSpeechRecognizer and AVAudioEngine.
-class SpeechRecognizer: ObservableObject {
+final class SpeechRecognizer: ObservableObject {
     enum RecognizerError: Error {
         case nilRecognizer
         case notAuthorizedToRecognize
@@ -35,15 +34,11 @@ class SpeechRecognizer: ObservableObject {
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
     
-    /**
-     Initializes a new speech recognizer. If this is the first time you've used the class, it
-     requests access to the speech recognizer and the microphone.
-     */
+    // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
-        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko_KR"))
-    
+        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
         guard recognizer != nil else {
-            transcribe(RecognizerError.nilRecognizer)
+            transcribeFailed(RecognizerError.nilRecognizer)
             return
         }
         
@@ -56,31 +51,29 @@ class SpeechRecognizer: ObservableObject {
                     throw RecognizerError.notPermittedToRecord
                 }
             } catch {
-                transcribe(error)
+                transcribeFailed(error)
             }
         }
     }
     
-    @MainActor func startTranscribing() {
+    @MainActor
+    public func startTranscribing() {
         Task {
-            await transcribe()
+            beginTranscribe()
         }
     }
     
-    @MainActor func stopTranscribing() {
+    @MainActor
+    public func stopAndResetTranscribing() {
         Task {
-            await reset()
+            stopAndResetTranscribe()
         }
     }
     
-    /**
-     Begin transcribing audio.
-     Creates a `SFSpeechRecognitionTask` that transcribes speech to text until you call `stopTranscribing()`.
-     The resulting transcription is continuously written to the published `transcript` property.
-     */
-    func transcribe() {
+    // text 전환을 시작합니다.
+    private func beginTranscribe() {
         guard let recognizer, recognizer.isAvailable else {
-            self.transcribe(RecognizerError.recognizerIsUnavailable)
+            self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
             return
         }
         
@@ -89,17 +82,19 @@ class SpeechRecognizer: ObservableObject {
             self.audioEngine = audioEngine
             self.request = request
             self.task = recognizer.recognitionTask(with: request, resultHandler: { [weak self] result, error in
-                self?.recognitionHandler(audioEngine: audioEngine, result: result, error: error)
+                self?.recognitionHandler(
+                    audioEngine: audioEngine,
+                    result: result,
+                    error: error
+                )
             })
-        
         } catch {
-            self.reset()
-            self.transcribe(error)
+            self.stopAndResetTranscribe()
+            self.transcribeFailed(error)
         }
     }
     
-    /// Reset the speech recognizer.
-    private func reset() {
+    private func stopAndResetTranscribe() {
         task?.cancel()
         audioEngine?.stop()
         audioEngine = nil
@@ -114,12 +109,26 @@ class SpeechRecognizer: ObservableObject {
         request.shouldReportPartialResults = true
         
         let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.playAndRecord, mode: .measurement, options: .duckOthers)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        try audioSession.setCategory(
+            .playAndRecord,
+            mode: .measurement,
+            options: .duckOthers
+        )
+        try audioSession.setActive(
+            true,
+            options: .notifyOthersOnDeactivation
+        )
         let inputNode = audioEngine.inputNode
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+        inputNode.installTap(
+            onBus: 0,
+            bufferSize: 1024,
+            format: recordingFormat
+        ) { (
+            buffer: AVAudioPCMBuffer,
+            when: AVAudioTime
+        ) in
             request.append(buffer)
         }
         audioEngine.prepare()
@@ -128,7 +137,11 @@ class SpeechRecognizer: ObservableObject {
         return (audioEngine, request)
     }
     
-    private func recognitionHandler(audioEngine: AVAudioEngine, result: SFSpeechRecognitionResult?, error: Error?) {
+    private func recognitionHandler(
+        audioEngine: AVAudioEngine,
+        result: SFSpeechRecognitionResult?,
+        error: Error?
+    ) {
         let receivedFinalResult = result?.isFinal ?? false
         let receivedError = error != nil
         
@@ -142,13 +155,12 @@ class SpeechRecognizer: ObservableObject {
         }
     }
     
-    private func transcribe(_ message: String) {
+    nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
             transcript = message
         }
     }
-    
-    private func transcribe(_ error: Error) {
+    nonisolated private func transcribeFailed(_ error: Error) {
         var errorMessage = ""
         if let error = error as? RecognizerError {
             errorMessage += error.message
@@ -161,7 +173,6 @@ class SpeechRecognizer: ObservableObject {
     }
 }
 
-// MARK: - 여기서 권한 요청 메서드 이름만 일치하면 다른 코드는 대체 가능!
 extension SFSpeechRecognizer {
     static func hasAuthorizationToRecognize() async -> Bool {
         await withCheckedContinuation { continuation in
@@ -173,7 +184,7 @@ extension SFSpeechRecognizer {
 }
 
 extension AVAudioSession {
-    func hasPermissionToRecord() async -> Bool {
+    public func hasPermissionToRecord() async -> Bool {
         await withCheckedContinuation { continuation in
             requestRecordPermission { authorized in
                 continuation.resume(returning: authorized)

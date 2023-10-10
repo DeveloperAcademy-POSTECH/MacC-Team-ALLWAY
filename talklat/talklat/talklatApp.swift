@@ -16,7 +16,7 @@ struct talklatApp: App {
             Group {
                 switch appRootManager.currentAuthStatus {
                 case .authCompleted:
-                    HandlingTestingView()
+                    StaffSpeechView()
                 case .speechRecognitionAuthIncompleted,
                         .microphoneAuthIncompleted,
                         .authIncompleted:
