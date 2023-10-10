@@ -9,9 +9,26 @@ import SwiftUI
 
 @main
 struct talklatApp: App {
+    @StateObject private var appRootManager = AppRootManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                switch appRootManager.currentAuthStatus {
+                case .authCompleted:
+                    StaffSpeechView()
+                case .speechRecognitionAuthIncompleted,
+                        .microphoneAuthIncompleted,
+                        .authIncompleted:
+                    AuthorizationRequestView(
+                        currentAuthStatus: appRootManager.currentAuthStatus
+                    )
+                }
+            }
+            .environmentObject(appRootManager)
+            .task {
+                await appRootManager.switchAuthStatus()
+            }
         }
     }
 }

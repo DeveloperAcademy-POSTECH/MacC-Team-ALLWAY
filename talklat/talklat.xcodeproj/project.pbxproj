@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57E76EB52ACE9B9D00D79553 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB42ACE9B9D00D79553 /* SpeechRecognizer.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
 		7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */; };
@@ -16,6 +15,10 @@
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
+		7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
+		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
+		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
+		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +39,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		57E76EB42ACE9B9D00D79553 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatApp.swift; sourceTree = "<group>"; };
@@ -48,6 +50,10 @@
 		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
+		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
+		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,14 +81,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		57E76EB32ACE9B5800D79553 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				57E76EB42ACE9B9D00D79553 /* SpeechRecognizer.swift */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		7E8D17B82ACE8AEC00E904E5 = {
 			isa = PBXGroup;
 			children = (
@@ -150,7 +148,8 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				57E76EB32ACE9B5800D79553 /* Managers */,
+				7EA8A7892AD502C800AFD687 /* Stores */,
+				EF67C6492ACEB65400C1074E /* Managers */,
 				7E8D17F02ACE8BA300E904E5 /* Views */,
 			);
 			path = Sources;
@@ -159,10 +158,28 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				7E8D17C62ACE8AEC00E904E5 /* ContentView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7EA8A7892AD502C800AFD687 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		EF67C6492ACEB65400C1074E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
+				EF67C6522AD13BF700C1074E /* AppRootManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,9 +313,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E8D17C72ACE8AEC00E904E5 /* ContentView.swift in Sources */,
+				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				7E8D17C52ACE8AEC00E904E5 /* talklatApp.swift in Sources */,
-				57E76EB52ACE9B9D00D79553 /* SpeechRecognizer.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
+				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
+				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
+				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

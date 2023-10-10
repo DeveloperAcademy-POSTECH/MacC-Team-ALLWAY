@@ -10,7 +10,7 @@ import AVFoundation
 import Speech
 import SwiftUI
 
-class SpeechRecognizer :ObservableObject {
+final class SpeechRecognizer: ObservableObject {
     enum RecognizerError: Error {
         case nilRecognizer
         case notAuthorizedToRecognize
@@ -56,13 +56,15 @@ class SpeechRecognizer :ObservableObject {
         }
     }
     
-    @MainActor func startTranscribing() {
+    @MainActor
+    public func startTranscribing() {
         Task {
             beginTranscribe()
         }
     }
     
-    @MainActor func stopAndResetTranscribing() {
+    @MainActor
+    public func stopAndResetTranscribing() {
         Task {
             stopAndResetTranscribe()
         }
@@ -182,7 +184,7 @@ extension SFSpeechRecognizer {
 }
 
 extension AVAudioSession {
-    func hasPermissionToRecord() async -> Bool {
+    public func hasPermissionToRecord() async -> Bool {
         await withCheckedContinuation { continuation in
             requestRecordPermission { authorized in
                 continuation.resume(returning: authorized)
