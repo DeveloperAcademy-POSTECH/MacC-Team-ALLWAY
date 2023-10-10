@@ -26,7 +26,6 @@ struct TKRecordingView: View {
                     Text(appViewStore.questionText)
                         .font(.largeTitle)
                         .bold()
-                        .kerning(2)
                         .lineSpacing(10)
                         .padding(.horizontal, 24)
                         .padding(.top, 40)

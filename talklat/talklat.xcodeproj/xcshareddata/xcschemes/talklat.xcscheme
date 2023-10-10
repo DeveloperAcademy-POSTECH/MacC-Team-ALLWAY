@@ -28,28 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7E8D17D02ACE8AED00E904E5"
-               BuildableName = "talklatTests.xctest"
-               BlueprintName = "talklatTests"
-               ReferencedContainer = "container:talklat.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7E8D17DA2ACE8AED00E904E5"
-               BuildableName = "talklatUITests.xctest"
-               BlueprintName = "talklatUITests"
-               ReferencedContainer = "container:talklat.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
