@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuthorizationRequestView: View {
-    var currentAuthStatus: AppRootManager.AuthStatus
+    var currentAuthStatus: AuthStatus
     
     var body: some View {
         VStack(spacing: 30) {

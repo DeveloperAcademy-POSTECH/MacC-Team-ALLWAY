@@ -18,9 +18,17 @@ struct TKWritingView: View {
     // MARK: - BODY
     var body: some View {
         VStack {
-            VStack {
+            VStack {                
                 if let answeredText = appViewStore.answeredText {
                     Text(answeredText)
+                        .font(.headline)
+                        .bold()
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: 100,
+                            alignment: .leading
+                        )
+                        .padding(.top, 40)
                         .padding(.horizontal, 24)
                         .padding(.bottom, 80)
                 }

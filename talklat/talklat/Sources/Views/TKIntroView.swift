@@ -8,23 +8,38 @@
 import SwiftUI
 
 struct TKIntroView: View {
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: ""
-    )
+    @StateObject var gyroMotionStore: GyroScopeStore = GyroScopeStore()
+    @ObservedObject var appViewStore: AppViewStore
     
     var body: some View {
-        switch appViewStore.communicationStatus {
-        case .writing:
-            TKWritingView(appViewStore: appViewStore)
-        case .recording:
-            TKRecordingView(appViewStore: appViewStore)
+        Group {            
+            switch appViewStore.communicationStatus {
+            case .writing:
+                TKWritingView(appViewStore: appViewStore)
+            case .recording:
+                TKRecordingView(appViewStore: appViewStore)
+            }
+        }
+        .onAppear {
+            gyroMotionStore.startDeviceMotion()
+        }
+        .onChange(of: gyroMotionStore.faced) { facedStatus in
+            switch facedStatus {
+            case .myself:
+                appViewStore.communicationStatusSetter(.writing)
+            case .opponent:
+                appViewStore.communicationStatusSetter(.recording)
+            }
         }
     }
 }
 
 struct TKIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        TKIntroView()
+        TKIntroView(appViewStore: .makePreviewStore(condition: { store in
+            store.questionTextSetter("")
+            store.voiceRecordingAuthSetter(.authCompleted)
+            store.communicationStatusSetter(.writing)
+        }))
     }
 }
