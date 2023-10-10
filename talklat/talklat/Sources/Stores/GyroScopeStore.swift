@@ -8,18 +8,12 @@
 import CoreMotion
 import Foundation
 
-enum FlippedStatus: String {
-    case opponent
-    case myself
-}
-
-class GyroScopeStore: ObservableObject {
+final class GyroScopeStore: ObservableObject {
+    @Published private(set) var faced: FlippedStatus = .myself
+    @Published private(set) var yaw: Double = 0.0
     
-    @Published var faced: FlippedStatus = .myself
-    @Published var yaw: Double = 0.0
-    
-    let motionManager: CMMotionManager
-    let timeInterval: Double
+    private let motionManager: CMMotionManager
+    private let timeInterval: Double
     
     init() {
         motionManager = CMMotionManager()
@@ -37,14 +31,13 @@ class GyroScopeStore: ObservableObject {
             ) { (data, error) in
                 if let validData = data {
                     // 실제 coreMotion의 3가지 attitude 중 yaw로 flip 이벤트 측정
-                    let yaw = abs(validData.attitude.yaw.toDegrees())
-                    self.yaw = yaw
+                    self.yaw = abs(validData.attitude.yaw.toDegrees())
                     
                     self.faced = {
-                        switch yaw {
-                        case ...90:
+                        switch self.yaw {
+                        case ...75:
                             return FlippedStatus.myself
-                        case 91...:
+                        case 75...:
                             return FlippedStatus.opponent
                         default:
                             return FlippedStatus.myself
@@ -63,11 +56,5 @@ class GyroScopeStore: ObservableObject {
     // Mark: MotionManger를 멈출때 쓰는 메서드
     func stopMotionManager() {
         self.motionManager.stopDeviceMotionUpdates()
-    }
-}
-
-extension Double {
-    func toDegrees() -> Double {
-        return 180 / Double.pi * self
     }
 }
