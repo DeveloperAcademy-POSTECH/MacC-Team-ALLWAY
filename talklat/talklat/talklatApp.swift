@@ -13,22 +13,7 @@ struct talklatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
-                switch appRootManager.currentAuthStatus {
-                case .authCompleted:
-                    StaffSpeechView()
-                case .speechRecognitionAuthIncompleted,
-                        .microphoneAuthIncompleted,
-                        .authIncompleted:
-                    AuthorizationRequestView(
-                        currentAuthStatus: appRootManager.currentAuthStatus
-                    )
-                }
-            }
-            .environmentObject(appRootManager)
-            .task {
-                await appRootManager.switchAuthStatus()
-            }
+            TKIntroView()
         }
     }
 }
