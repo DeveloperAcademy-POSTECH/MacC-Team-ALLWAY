@@ -8,16 +8,8 @@
 import Foundation
 import Speech
 
-public class AppRootManager: ObservableObject {
-    public enum AuthStatus: String {
-        case authCompleted
-        case speechRecognitionAuthIncompleted = "음성 인식"
-        case microphoneAuthIncompleted = "마이크"
-        case authIncompleted = "마이크, 음성"
-    }
-    
-    @Published var currentAuthStatus: AuthStatus = .authCompleted
-    
+// TODO: AppRootManager 에서 VoiceAuthManager로 수정
+public class AppRootManager {    
     var isSpeechRecognitionAuthorized: Bool = true
     var isMicrophoneAuthorized: Bool = true
 }
@@ -26,17 +18,17 @@ public class AppRootManager: ObservableObject {
 /// 시스템 마이크, 음성인식 권한 허용에 맞게 뷰를 반영합니다.
 @MainActor
 extension AppRootManager {
-    public func switchAuthStatus() async {
+    public func switchAuthStatus() async -> AuthStatus{
         await getAuthStatus()
         
         if isSpeechRecognitionAuthorized && isMicrophoneAuthorized == true {
-            currentAuthStatus = .authCompleted
+            return .authCompleted
         } else if isSpeechRecognitionAuthorized == false && isMicrophoneAuthorized == true {
-            currentAuthStatus = .speechRecognitionAuthIncompleted
+            return .speechRecognitionAuthIncompleted
         } else if isSpeechRecognitionAuthorized == true && isMicrophoneAuthorized == false {
-            currentAuthStatus = .microphoneAuthIncompleted
+            return .microphoneAuthIncompleted
         } else {
-            currentAuthStatus = .authIncompleted
+            return .authIncompleted
         }
     }
     
