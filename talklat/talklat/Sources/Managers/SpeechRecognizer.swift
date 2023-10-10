@@ -81,13 +81,13 @@ final class SpeechRecognizer: ObservableObject {
             let (audioEngine, request) = try Self.prepareEngine()
             self.audioEngine = audioEngine
             self.request = request
-            self.task = recognizer.recognitionTask(with: request, resultHandler: { [weak self] result, error in
+            self.task = recognizer.recognitionTask(with: request) { [weak self] result, error in
                 self?.recognitionHandler(
                     audioEngine: audioEngine,
                     result: result,
                     error: error
                 )
-            })
+            }
         } catch {
             self.stopAndResetTranscribe()
             self.transcribeFailed(error)
@@ -112,23 +112,20 @@ final class SpeechRecognizer: ObservableObject {
         try audioSession.setCategory(
             .playAndRecord,
             mode: .measurement,
-            options: .duckOthers
+            options: .defaultToSpeaker
         )
         try audioSession.setActive(
             true,
             options: .notifyOthersOnDeactivation
         )
-        let inputNode = audioEngine.inputNode
         
+        let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(
             onBus: 0,
-            bufferSize: 1024,
+            bufferSize: 2048,
             format: recordingFormat
-        ) { (
-            buffer: AVAudioPCMBuffer,
-            when: AVAudioTime
-        ) in
+        ) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
             request.append(buffer)
         }
         audioEngine.prepare()
@@ -160,6 +157,7 @@ final class SpeechRecognizer: ObservableObject {
             transcript = message
         }
     }
+    
     nonisolated private func transcribeFailed(_ error: Error) {
         var errorMessage = ""
         if let error = error as? RecognizerError {
