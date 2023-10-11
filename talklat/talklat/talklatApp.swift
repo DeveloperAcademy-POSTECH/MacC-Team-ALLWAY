@@ -13,7 +13,7 @@ struct talklatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TKIntroView()
+            TestingView()
         }
     }
 }
