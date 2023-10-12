@@ -10,12 +10,15 @@ assignees: ''
 ### 📝 작업 목적
 | ⚒️ Title | `title` | 
 | :--- | :--- |
-| 📜 **Description** | `description` |
-| ![](https://img.shields.io/badge/-black?logo=figma) **Figma** | `Link` |
-| ![](https://img.shields.io/badge/-black?logo=notion) **Notion Card** | `Link` |
+| 📜 **Description** | description |
+| ![](https://img.shields.io/badge/-black?logo=figma)**Figma** | Link(<!-- URL -->) |
+| ![](https://img.shields.io/badge/-black?logo=notion)**Notion Card** | Link(<!-- URL -->) |
 
 ---
 
+<!--
+OPTIONAL
+--->
 ### 🛠️ Tasks
 
 * [ ] Task 1
