@@ -11,8 +11,8 @@ assignees: ''
 | ⚒️ Title | `title` | 
 | :--- | :--- |
 | 📜 **Description** | description |
-| ![](https://img.shields.io/badge/-black?logo=figma)**Figma** | Link(<!-- URL -->) |
-| ![](https://img.shields.io/badge/-black?logo=notion)**Notion Card** | Link(<!-- URL -->) |
+| ![](https://img.shields.io/badge/-black?logo=figma)**Figma** | [Link](<!-- URL -->) |
+| ![](https://img.shields.io/badge/-black?logo=notion)**Notion Card** | [Link](<!-- URL -->) |
 
 ---
 
