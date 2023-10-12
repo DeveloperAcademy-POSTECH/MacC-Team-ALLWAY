@@ -5,6 +5,8 @@
 //  Created by Celan on 2023/10/05.
 //
 
+// TODO: 애초부터 하나의 뷰 내에서 Component만 변화하고 있으니 View를 이렇게 분리할 필요가 없다고 본다
+// 괜히 뷰 쪼개서 Animation, Transition 복잡하게 하지 말고 하던대로 해보자
 import SwiftUI
 
 struct TKIntroView: View {
@@ -16,8 +18,11 @@ struct TKIntroView: View {
             switch appViewStore.communicationStatus {
             case .writing:
                 TKWritingView(appViewStore: appViewStore)
+                    .transition(.opacity)
+                
             case .recording:
                 TKRecordingView(appViewStore: appViewStore)
+                    .transition(.opacity)
             }
         }
         .onAppear {
@@ -28,7 +33,9 @@ struct TKIntroView: View {
             case .myself:
                 appViewStore.communicationStatusSetter(.writing)
             case .opponent:
-                appViewStore.communicationStatusSetter(.recording)
+                withAnimation {
+                    appViewStore.communicationStatusSetter(.recording)
+                }
             }
         }
     }

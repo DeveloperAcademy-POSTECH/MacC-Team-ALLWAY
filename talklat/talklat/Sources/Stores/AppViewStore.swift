@@ -33,14 +33,13 @@ final class AppViewStore: ObservableObject {
     
     // MARK: HELPERS
     public func enterSpeechRecognizeButtonTapped() {
-        withAnimation {
+        withAnimation(.easeIn(duration: 0.75)) {
             communicationStatus = .recording
         }
-        
     }
     
     public func stopSpeechRecognizeButtonTapped() {
-        withAnimation {
+        withAnimation(.easeIn(duration: 0.75)) {
             communicationStatus = .writing
         }
     }
@@ -61,7 +60,9 @@ final class AppViewStore: ObservableObject {
 // MARK: public Setters
 extension AppViewStore {
     public func communicationStatusSetter(_ status: CommunicationStatus) {
-        communicationStatus = status
+        withAnimation(.easeIn(duration: 0.75)) {
+            communicationStatus = status
+        }
     }
     
     public func questionTextSetter(_ str: String) {

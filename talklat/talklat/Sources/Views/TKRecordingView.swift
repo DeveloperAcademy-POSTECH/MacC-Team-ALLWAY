@@ -14,31 +14,31 @@ struct TKRecordingView: View {
     
     var body: some View {
         VStack {
-            if appViewStore.questionText.isEmpty {
-                VStack {
-                    if speechRecognizeManager.transcript == "" {
-                        guideMessageBuilder()
-                    } else {
-                        Text(speechRecognizeManager.transcript)
-                            .font(.largeTitle)
-                            .bold()
-                            .lineSpacing(10)
-                            .padding(.horizontal, 24)
-                            .padding(.top, 40)
-                            .frame(
-                                maxWidth: .infinity,
-                                alignment: .leading
-                            )
-                    }
-                    
-                    Spacer()
-                    
-                    recordButtonBuilder()
-                        .padding(.bottom, 60)
-                }
-            } else {
-                VStack {
+            VStack {
+                if appViewStore.questionText.isEmpty { }
+                else if !appViewStore.questionText.isEmpty {
                     Text(appViewStore.questionText)
+                        .font(appViewStore.communicationStatus == .recording ? .title2 : .largeTitle)
+                        .bold()
+                        .lineSpacing(appViewStore.communicationStatus == .recording ? 10 : 14)
+                        .animation(.easeInOut, value: appViewStore.communicationStatus)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 40)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                }
+                
+                if speechRecognizeManager.transcript == "" {
+                    guideMessageBuilder()
+                        .transition(
+                            .move(edge: .bottom)
+                            .combined(with: .opacity)
+                        )
+                    
+                } else {
+                    Text(speechRecognizeManager.transcript)
                         .font(.largeTitle)
                         .bold()
                         .lineSpacing(10)
@@ -48,22 +48,12 @@ struct TKRecordingView: View {
                             maxWidth: .infinity,
                             alignment: .leading
                         )
-                    
-                    Spacer()
-                    
-                    if speechRecognizeManager.transcript == "" {
-                        guideMessageBuilder()
-                            .padding(.bottom, 90)
-                    } else {
-                        Text(speechRecognizeManager.transcript)
-                            .font(.largeTitle)
-                            .lineSpacing(10)
-                            .padding(.bottom, 90)
-                    }
-                    
-                    recordButtonBuilder()
-                        .padding(.bottom, 60)
                 }
+                
+                Spacer()
+                
+                recordButtonBuilder()
+                    .padding(.bottom, 60)
             }
         }
         .onAppear {
