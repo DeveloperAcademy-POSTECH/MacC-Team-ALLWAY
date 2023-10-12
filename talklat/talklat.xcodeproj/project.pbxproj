@@ -21,6 +21,7 @@
 		7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737932AD3DE5600FCBA21 /* Constants.swift */; };
 		7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737962AD43EE000FCBA21 /* TKTextField.swift */; };
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
+		7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
@@ -61,6 +62,7 @@
 		7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecordingView.swift; sourceTree = "<group>"; };
 		7EF737932AD3DE5600FCBA21 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
+		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		7EF737922AD3DE4C00FCBA21 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7EFA2C292AD51FBC0013B533 /* Extensions */,
 				7EF737932AD3DE5600FCBA21 /* Constants.swift */,
 			);
 			path = Utilities;
@@ -204,11 +207,19 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		7EFA2C292AD51FBC0013B533 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		EF67C6492ACEB65400C1074E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
 				EF67C6522AD13BF700C1074E /* AppRootManager.swift */,
+				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -349,6 +360,7 @@
 				7EF7378F2AD3DCE500FCBA21 /* TKWritingView.swift in Sources */,
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
+				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
@@ -515,7 +527,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -547,7 +559,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
