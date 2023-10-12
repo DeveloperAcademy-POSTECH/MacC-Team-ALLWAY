@@ -7,6 +7,7 @@
 
 import CoreMotion
 import Foundation
+import SwiftUI
 
 enum FlippedStatus: String {
     case opponent
@@ -16,40 +17,44 @@ enum FlippedStatus: String {
 class GyroScopeStore: ObservableObject {
     
     @Published var faced: FlippedStatus = .myself
-    @Published var yaw: Double = 0.0
+    private var rotationDegree: Double = 0.0
     
     let motionManager: CMMotionManager
     let timeInterval: Double
+    let queue: OperationQueue = OperationQueue()
     
     init() {
         motionManager = CMMotionManager()
         timeInterval = 1.0 / 60.0
     }
     
-    // Mark: Motion을 감지할때 사용하는 메서드
+    // MARK: Motion을 감지할때 사용하는 메서드
+    // 다른 queue에서 motion을 감지합니다.
     func startDeviceMotion() {
         if motionManager.isDeviceMotionAvailable {
             self.motionManager.deviceMotionUpdateInterval = timeInterval
             self.motionManager.showsDeviceMovementDisplay = true
             self.motionManager.startDeviceMotionUpdates(
                 using: .xArbitraryCorrectedZVertical,
-                to: .main
+                to: queue
             ) { (data, error) in
                 if let validData = data {
-                    // 실제 coreMotion의 3가지 attitude 중 yaw로 flip 이벤트 측정
-                    let yaw = abs(validData.attitude.yaw.toDegrees())
-                    self.yaw = yaw
+                    // MARK: roll, pitch, yaw를 전부 사용해서 attitude를 판단
+                    self.rotationDegree = abs(validData.attitude.pitch.toDegrees()) + abs(validData.attitude.roll.toDegrees()) + abs(validData.attitude.yaw.toDegrees())
                     
-                    self.faced = {
-                        switch yaw {
-                        case ...90:
-                            return FlippedStatus.myself
-                        case 91...:
-                            return FlippedStatus.opponent
-                        default:
-                            return FlippedStatus.myself
-                        }
-                    }()
+                    // 실제 뷰에서 사용하는 부분은 Main Queue에서 업데이트
+                    DispatchQueue.main.async {
+                        self.faced = {
+                            switch self.rotationDegree {
+                            case ...150:
+                                return FlippedStatus.myself
+                            case 151...300:
+                                return FlippedStatus.opponent
+                            default:
+                                return FlippedStatus.myself
+                            }
+                        }()
+                    }
                 }
             }
         } else {
@@ -69,5 +74,21 @@ class GyroScopeStore: ObservableObject {
 extension Double {
     func toDegrees() -> Double {
         return 180 / Double.pi * self
+    }
+}
+
+
+// Rotation을 테스트하기 위한 앱
+struct RotationTestView: View {
+    @StateObject private var gyroStore: GyroScopeStore = GyroScopeStore()
+    
+    var body: some View {
+        VStack {
+            Text(gyroStore.faced.rawValue)
+//            Text("\(gyroStore.rotationDegree)")
+        }
+        .onAppear {
+            gyroStore.startDeviceMotion()
+        }
     }
 }
