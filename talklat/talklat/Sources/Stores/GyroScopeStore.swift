@@ -6,6 +6,7 @@
 //
 
 import CoreMotion
+import CoreHaptics
 import Foundation
 import SwiftUI
 
@@ -15,7 +16,7 @@ final class GyroScopeStore: ObservableObject {
     private var rotationDegree: Double = 0.0
     private let motionManager: CMMotionManager
     private let timeInterval: Double
-    private let queue: OperationQueue = OperationQueue()
+    private let gyroScopeQueue: OperationQueue = OperationQueue()
 
     
     // MARK: INIT
@@ -26,21 +27,21 @@ final class GyroScopeStore: ObservableObject {
     
     // MARK: Motion을 감지할때 사용하는 메서드
     // 다른 queue에서 motion을 감지합니다.
-    public func startDeviceMotion() {
+    public func detectDeviceMotion() {
         if motionManager.isDeviceMotionAvailable {
             self.motionManager.deviceMotionUpdateInterval = timeInterval
             self.motionManager.showsDeviceMovementDisplay = true
             self.motionManager.startDeviceMotionUpdates(
                 using: .xArbitraryCorrectedZVertical,
-                to: queue
-            ) { (data, error) in
+                to: gyroScopeQueue
+            ) { [weak self] (data, error) in
                 if let validData = data {
                     // MARK: roll, pitch, yaw를 전부 사용해서 attitude를 판단
-                    self.rotationDegree = abs(validData.attitude.pitch.toDegrees()) + abs(validData.attitude.roll.toDegrees()) + abs(validData.attitude.yaw.toDegrees())
+                    self?.rotationDegree = abs(validData.attitude.pitch.toDegrees()) + abs(validData.attitude.roll.toDegrees()) + abs(validData.attitude.yaw.toDegrees())
                     
                     // 실제 뷰의 UI를 변경하는 부분은 Main Queue에서 업데이트
                     DispatchQueue.main.async {
-                        self.faced = self.motionStatusSetter(self.rotationDegree)
+                        self?.faced = self?.motionStatusSetter(self?.rotationDegree) ?? .myself
                     }
                 }
             }
@@ -57,8 +58,9 @@ final class GyroScopeStore: ObservableObject {
         self.motionManager.stopDeviceMotionUpdates()
     }
     
-    private func motionStatusSetter(_ rotationDegree: Double) -> FlippedStatus {
-        switch rotationDegree {
+    private func motionStatusSetter(_ rotationDegree: Double?) -> FlippedStatus? {
+        guard let degree = rotationDegree else { return nil }
+        switch degree {
         case ...150:
             return FlippedStatus.myself
         case 151...300:
@@ -80,7 +82,7 @@ struct RotationTestView: View {
 //            Text("\(gyroStore.rotationDegree)")
         }
         .onAppear {
-            gyroStore.startDeviceMotion()
+            gyroStore.detectDeviceMotion()
         }
     }
 }
