@@ -26,7 +26,7 @@ struct TKIntroView: View {
             }
         }
         .onAppear {
-            gyroMotionStore.startDeviceMotion()
+            gyroMotionStore.detectDeviceMotion()
         }
         .onChange(of: gyroMotionStore.faced) { facedStatus in
             switch facedStatus {
