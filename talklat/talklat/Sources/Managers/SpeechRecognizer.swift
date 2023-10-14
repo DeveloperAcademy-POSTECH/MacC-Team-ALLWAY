@@ -5,8 +5,9 @@
 //  Created by 신정연 on 2023/10/05.
 //
 
-import Foundation
+import Accelerate
 import AVFoundation
+import Foundation
 import Speech
 import SwiftUI
 
@@ -33,6 +34,8 @@ final class SpeechRecognizer: ObservableObject {
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
+    private var audioBuffers: [AVAudioPCMBuffer] = []
+    private let signalExtractor = SignalExtractor()
     
     // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
@@ -78,7 +81,7 @@ final class SpeechRecognizer: ObservableObject {
         }
         
         do {
-            let (audioEngine, request) = try Self.prepareEngine()
+            let (audioEngine, request) = try prepareEngine()
             self.audioEngine = audioEngine
             self.request = request
             self.task = recognizer.recognitionTask(with: request, resultHandler: { [weak self] result, error in
@@ -102,7 +105,7 @@ final class SpeechRecognizer: ObservableObject {
         task = nil
     }
     
-    private static func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
+    private func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
         let audioEngine = AVAudioEngine()
         
         let request = SFSpeechAudioBufferRecognitionRequest()
@@ -125,16 +128,31 @@ final class SpeechRecognizer: ObservableObject {
             onBus: 0,
             bufferSize: 1024,
             format: recordingFormat
-        ) { (
+            //weak self 추가
+        ) { [weak self] (
             buffer: AVAudioPCMBuffer,
             when: AVAudioTime
         ) in
             request.append(buffer)
+            // 버퍼 저장 추가
+            self?.audioBuffers.append(buffer)
         }
         audioEngine.prepare()
         try audioEngine.start()
         
         return (audioEngine, request)
+    }
+    
+    // 오디어 데이터 처리 메서드 추가 -> Maybe 리앤 코드로 대체
+    public func processAudioDate() {
+        for buffer in audioBuffers {
+            //signalextractor
+            let processedData = signalExtractor.process(buffer: buffer)
+            // TODO: 데이터 처리 및 저장 하는 코드 추가 해야함
+            
+        }
+        //처리 다 하고 audioBuffer 비우기
+        audioBuffers.removeAll()
     }
     
     private func recognitionHandler(
