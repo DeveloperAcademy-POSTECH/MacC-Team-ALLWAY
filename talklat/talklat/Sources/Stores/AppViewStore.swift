@@ -55,6 +55,7 @@ final class AppViewStore: ObservableObject {
     }
     
     public func onRecordingViewAppear() {
+        // TODO: 추후 Transcript 를 배열 등으로 저장하게 되면 해당 속성의 count 등으로 로직 업데이트 예정
         if !hasGuidingMessageShown,
            answeredText != nil {
             hasGuidingMessageShown = true
@@ -67,11 +68,6 @@ final class AppViewStore: ObservableObject {
         } else {
             questionText = str
         }
-    }
-    
-    public func hasAnsweredText() -> Bool {
-        if answeredText != nil { return true }
-        else { return false }
     }
 }
 
