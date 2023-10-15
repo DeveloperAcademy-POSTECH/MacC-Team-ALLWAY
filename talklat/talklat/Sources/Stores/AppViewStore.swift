@@ -17,6 +17,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
+    @Published var historyItems: [HistoryItem] = []
     
     public let questionTextLimit: Int = 55
     
@@ -67,10 +68,16 @@ extension AppViewStore {
     
     public func questionTextSetter(_ str: String) {
         questionText = str
+        let newQuestion = HistoryItem(text: str, type: .question)
+        historyItems.append(newQuestion)
+
     }
     
     public func answeredTextSetter(_ str: String) {
         answeredText = str
+        let newAnswer = HistoryItem(text: str, type: .answer)
+        historyItems.append(newAnswer)
+
     }
     
     public func voiceRecordingAuthSetter(_ status: AuthStatus) {
