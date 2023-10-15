@@ -9,11 +9,23 @@ import SwiftUI
 
 @main
 struct talklatApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appRootManager = AppRootManager()
-    
+
+    let signalExtractor = SignalExtractor()
+
     var body: some Scene {
         WindowGroup {
-            TKIntroView()
+            SignalExtractionView()
+                .environmentObject(signalExtractor)
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active {
+                Task(priority: .userInitiated) {
+                    try? await signalExtractor.loadAudioSamples()
+                    try? SignalGenerator(signalProvider: signalExtractor).start()
+                }
+            }
         }
     }
 }
