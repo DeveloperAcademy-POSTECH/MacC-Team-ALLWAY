@@ -17,6 +17,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
+    @Published private(set) var hasGuidingMessageShown: Bool = false
     
     public let questionTextLimit: Int = 55
     
@@ -47,6 +48,18 @@ final class AppViewStore: ObservableObject {
     public func removeQuestionTextButtonTapped() {
         questionText = ""
     }
+
+    public func onWritingViewAppear() {
+        if questionText.isEmpty { }
+        else { questionText = "" }
+    }
+    
+    public func onRecordingViewAppear() {
+        if !hasGuidingMessageShown,
+           answeredText != nil {
+            hasGuidingMessageShown = true
+        }
+    }
     
     public func bindingTextField(_ str: String) {
         if str.count > questionTextLimit {
@@ -54,6 +67,11 @@ final class AppViewStore: ObservableObject {
         } else {
             questionText = str
         }
+    }
+    
+    public func hasAnsweredText() -> Bool {
+        if answeredText != nil { return true }
+        else { return false }
     }
 }
 
