@@ -10,13 +10,23 @@ import SwiftUI
 class HapticManager {
     static let sharedInstance = HapticManager()
     
-    private func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+    func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(type)
     }
     
-    private func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+    func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
+    }
+}
+
+
+struct HapticTestView: View {
+    let hapticManager: HapticManager = HapticManager()
+    var body: some View {
+        Button("Haptic Test") {
+            hapticManager.impact(.rigid)
+        }
     }
 }
