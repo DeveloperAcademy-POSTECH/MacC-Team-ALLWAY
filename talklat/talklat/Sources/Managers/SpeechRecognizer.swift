@@ -119,6 +119,8 @@ final class SpeechRecognizer: ObservableObject {
             options: .notifyOthersOnDeactivation
         )
         
+        try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
+        
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(
