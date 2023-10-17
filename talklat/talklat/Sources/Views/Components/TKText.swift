@@ -10,15 +10,18 @@ import SwiftUI
 
 // MARK: - Talklat Text Design System
 public enum TKTextStyle {
-    case bodyText
-    case subtitleText
-    case placeHolderText
+    case body
+    case subtitle
+    case placeHolder
 }
 
 @ViewBuilder
-public func TKText(style: TKTextStyle, _ string: String) -> some View {
+public func TKText(
+    style: TKTextStyle,
+    _ string: String
+) -> some View {
     switch style {
-    case .bodyText:
+    case .body:
         Text(string)
             .font(.system(size: 34))
             .fontWeight(.bold)
@@ -28,7 +31,7 @@ public func TKText(style: TKTextStyle, _ string: String) -> some View {
                 alignment: .leading
             )
         
-    case .subtitleText:
+    case .subtitle:
         Text(string)
             .font(.system(size: 17))
             .fontWeight(.medium)
@@ -39,7 +42,7 @@ public func TKText(style: TKTextStyle, _ string: String) -> some View {
                 alignment: .leading
             )
         
-    case .placeHolderText:
+    case .placeHolder:
         Text(string)
             .font(.system(size: 34))
             .fontWeight(.semibold)
@@ -56,7 +59,17 @@ struct TestingView: View {
     var body: some View {
         VStack {
             TKText(
-                style: .subtitleText,
+                style: .subtitle,
+                "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오"
+            )
+            
+            TKText(
+                style: .body,
+                "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오"
+            )
+            
+            TKText(
+                style: .placeHolder,
                 "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오"
             )
         }
@@ -69,17 +82,3 @@ struct MyPreviewProvider_Previews: PreviewProvider {
         TestingView()
     }
 }
-
-private func guideMessageBuilder() -> some View {
-    Text(Constants.GUIDE_MESSAGE)
-        .font(.largeTitle)
-        .bold()
-        .kerning(2)
-        .lineSpacing(10)
-        .multilineTextAlignment(.leading)
-        .padding(.horizontal, 24)
-        .padding(.top, 40)
-        .foregroundColor(.gray)
-}
-
-
