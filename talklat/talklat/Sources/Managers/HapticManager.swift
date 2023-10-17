@@ -9,13 +9,21 @@ import CoreHaptics
 import SwiftUI
 
 class HapticManager {
-    enum HapticStyle: String {
-        case sttToText
-        case textToStt
+    enum HapticStyle {
+        case rigidTwice
+        case success
     }
     
     static var sharedInstance: HapticManager = HapticManager()
-    var engine: CHHapticEngine?
+    private var _engine: CHHapticEngine?
+    var engine: CHHapticEngine? {
+        get {
+            if self._engine == nil {
+                self._engine = try? CHHapticEngine()
+            }
+            return self._engine
+        }
+    }
     
     init() {
         prepareHapticEngine()
@@ -24,26 +32,21 @@ class HapticManager {
     /// hapticEngine을 준비하는 함수
     func prepareHapticEngine() {
         guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        do {
-            self.engine?.stop()
-            self.engine = try CHHapticEngine()
-            self.engine?.playsHapticsOnly = true
-            self.engine?.isAutoShutdownEnabled = true
-            self.engine?.stoppedHandler = { reason in
-                print("\(reason)")
+        guard let hapticEngine = self.engine else { return }
+        
+        hapticEngine.stop()
+        hapticEngine.playsHapticsOnly = true
+        hapticEngine.isAutoShutdownEnabled = true
+        hapticEngine.stoppedHandler = { reason in
+            print("\(reason)")
+        }
+        hapticEngine.resetHandler = {
+            do {
+                print("reseting core haptic engine")
+                try hapticEngine.start()
+            } catch {
+                print("cannot reset core haptic engine")
             }
-            self.engine?.resetHandler = {
-                do {
-                    print("reseting core haptic engine")
-                    try self.engine?.start()
-                } catch {
-                    print("cannot reset core haptic engine")
-                }
-            }
-        } catch {
-            // 정상적으로 햅틱 엔진 시작 불가
-            //            fatalError("Cannot create haptic engine")
-            print("Cannot create haptic engine")
         }
     }
     
@@ -61,7 +64,7 @@ class HapticManager {
     private func generateHapticPattern(_ style: HapticStyle) -> CHHapticPattern? {
         switch style {
         // rigid twice
-        case .sttToText:
+        case .rigidTwice:
             let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 2)
             let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
             
@@ -73,7 +76,7 @@ class HapticManager {
             return pattern
             
         // success
-        case .textToStt:
+        case .success:
             let firstIntensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
             let firstSharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.4)
             let firstEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [firstIntensity, firstSharpness], relativeTime: 0)
@@ -104,11 +107,11 @@ struct HapticTestView: View {
     var body: some View {
         VStack(spacing: 40) {
             Button("rigid 2번") {
-                HapticManager.sharedInstance.generateHaptic(.sttToText)
+                HapticManager.sharedInstance.generateHaptic(.rigidTwice)
             }
             
             Button("success") {
-                HapticManager.sharedInstance.generateHaptic(.textToStt)
+                HapticManager.sharedInstance.generateHaptic(.success)
             }
         }
         .onAppear {

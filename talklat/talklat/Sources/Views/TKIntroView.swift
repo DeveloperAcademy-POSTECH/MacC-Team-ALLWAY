@@ -32,12 +32,12 @@ struct TKIntroView: View {
             switch facedStatus {
             case .myself:
                 appViewStore.communicationStatusSetter(.writing)
-                HapticManager.sharedInstance.generateHaptic(.sttToText)
+                HapticManager.sharedInstance.generateHaptic(.rigidTwice)
             case .opponent:
                 withAnimation {
                     appViewStore.communicationStatusSetter(.recording)
                 }
-                HapticManager.sharedInstance.generateHaptic(.textToStt)
+                HapticManager.sharedInstance.generateHaptic(.success)
             }
         }
     }
