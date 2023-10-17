@@ -71,6 +71,7 @@ struct TKRecordingView: View {
         }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
             appViewStore.answeredTextSetter(transcript)
+            HapticManager.sharedInstance.generateHaptic(.medium(times: countLastWord(transcript)))
         }
     }
     
@@ -98,6 +99,10 @@ struct TKRecordingView: View {
             Circle()
                 .foregroundColor(.gray)
         }
+    }
+    
+    private func countLastWord(_ transcript: String) -> Int {
+        return transcript.components(separatedBy: " ").last?.count ?? 0
     }
 }
 
