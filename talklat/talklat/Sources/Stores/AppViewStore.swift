@@ -17,6 +17,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
+    @Published private(set) var hasGuidingMessageShown: Bool = false
     
     public let questionTextLimit: Int = 55
     
@@ -46,6 +47,19 @@ final class AppViewStore: ObservableObject {
     
     public func removeQuestionTextButtonTapped() {
         questionText = ""
+    }
+
+    public func onWritingViewAppear() {
+        if questionText.isEmpty { }
+        else { questionText = "" }
+    }
+    
+    public func onRecordingViewAppear() {
+        // TODO: 추후 Transcript 를 배열 등으로 저장하게 되면 해당 속성의 count 등으로 로직 업데이트 예정
+        if !hasGuidingMessageShown,
+           answeredText != nil {
+            hasGuidingMessageShown = true
+        }
     }
     
     public func bindingTextField(_ str: String) {
