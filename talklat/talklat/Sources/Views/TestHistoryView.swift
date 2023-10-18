@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HistoryItem: Identifiable {
-//    var id: ObjectIdentifier
     var id: UUID
     enum MessageType {
         case question, answer
@@ -52,7 +51,6 @@ struct TestHistoryView: View {
         }
     }
 }
-
 
 struct TKHistoryView_Previews: PreviewProvider {
     static var previews: some View {

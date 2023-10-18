@@ -76,18 +76,11 @@ struct TKRecordingView: View {
         }
         .onDisappear {
             // TKHistoryView로 transcript 전달
-            if let answeredText = appViewStore.answeredText, !answeredText.isEmpty {
+            if let answeredText = appViewStore.answeredText, !answeredText.isEmpty && !speechRecognizeManager.transcript.isEmpty {
                 let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
                 appViewStore.historyItems.append(answerItem)
             }
         }
-//        .onDisappear{
-//            // TKHistoryView로 transcript 전달
-//            if !(appViewStore.answeredText?.isEmpty ?? true) {
-//                let answerItem = HistoryItem(text: appViewStore.answeredText ?? "", type: .answer)
-//                appViewStore.historyItems.append(answerItem)
-//            }
-//        }
     }
     
     private func guideMessageBuilder() -> some View {
