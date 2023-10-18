@@ -26,7 +26,7 @@ class HapticManager {
         }
     }
     
-    init() {
+    private init() {
         prepareHapticEngine()
     }
     
