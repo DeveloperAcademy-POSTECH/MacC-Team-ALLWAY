@@ -53,7 +53,7 @@ struct TKHistoryView: View {
                 }
             }
             .padding(.top, 16)
-            .background { Color(.systemGray6 )}
+            .background { Color(.systemGray6) }
             
             VStack {
                 VStack(spacing: 12) {
