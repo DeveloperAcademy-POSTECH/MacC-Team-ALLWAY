@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57806D712ADC5D19003A7B19 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TKHistoryView.swift */; };
+		57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TestHistoryView.swift */; };
 		57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
 		7E8906412ACEA31500C9947A /* TKIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKIntroView.swift */; };
@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		57806D702ADC5D19003A7B19 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
+		57806D702ADC5D19003A7B19 /* TestHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHistoryView.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKIntroView.swift; sourceTree = "<group>"; };
 		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,7 +179,7 @@
 				7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
-				57806D702ADC5D19003A7B19 /* TKHistoryView.swift */,
+				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -367,7 +367,7 @@
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
-				57806D712ADC5D19003A7B19 /* TKHistoryView.swift in Sources */,
+				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,

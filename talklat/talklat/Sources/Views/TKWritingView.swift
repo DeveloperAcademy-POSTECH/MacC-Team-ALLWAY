@@ -21,7 +21,7 @@ struct TKWritingView: View {
             VStack {
                 // (Test용) TKHistoryView로 이동하는 부분
                 // MARK: 추후에 스크롤뷰리더로 화면 이동
-                NavigationLink(destination: TKHistoryView(appViewStore: appViewStore)) {
+                NavigationLink(destination: TestHistoryView(appViewStore: appViewStore)) {
                     Text("History")
                         .foregroundColor(.blue)
                 }

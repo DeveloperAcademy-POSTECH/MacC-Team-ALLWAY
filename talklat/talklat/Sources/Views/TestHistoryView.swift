@@ -18,7 +18,7 @@ struct HistoryItem: Identifiable {
 }
 
 //(Test용)
-struct TKHistoryView: View {
+struct TestHistoryView: View {
     @ObservedObject var appViewStore: AppViewStore
    
     var body: some View {
@@ -68,6 +68,6 @@ struct TKHistoryView_Previews: PreviewProvider {
             HistoryItem(id: UUID(), text: "테스트 해보시겠어요", type: .answer),
         ]
         
-        return TKHistoryView(appViewStore: previewStore)
+        return TestHistoryView(appViewStore: previewStore)
     }
 }
