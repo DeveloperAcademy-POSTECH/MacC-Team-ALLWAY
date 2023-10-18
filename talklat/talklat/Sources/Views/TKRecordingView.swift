@@ -11,7 +11,8 @@ import SwiftUI
 struct TKRecordingView: View {
     @StateObject var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @ObservedObject var appViewStore: AppViewStore
-    
+    @State var historyItems: [HistoryItem] = []
+
     var body: some View {
         VStack {
             VStack {
@@ -68,8 +69,25 @@ struct TKRecordingView: View {
             }
         }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
-            appViewStore.answeredTextSetter(transcript)
+            if !transcript.isEmpty {
+                appViewStore.answeredTextSetter(transcript)
+                print(transcript)
+            }
         }
+        .onDisappear {
+            // TKHistoryView로 transcript 전달
+            if let answeredText = appViewStore.answeredText, !answeredText.isEmpty {
+                let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
+                appViewStore.historyItems.append(answerItem)
+            }
+        }
+//        .onDisappear{
+//            // TKHistoryView로 transcript 전달
+//            if !(appViewStore.answeredText?.isEmpty ?? true) {
+//                let answerItem = HistoryItem(text: appViewStore.answeredText ?? "", type: .answer)
+//                appViewStore.historyItems.append(answerItem)
+//            }
+//        }
     }
     
     private func guideMessageBuilder() -> some View {
@@ -100,6 +118,8 @@ struct TKRecordingView: View {
 }
 
 struct TKRecordingView_Previews: PreviewProvider {
+    @State static var showHistoryView: Bool = false
+    
     static var previews: some View {
         TKRecordingView(
             appViewStore: AppViewStore.makePreviewStore { instance in

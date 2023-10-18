@@ -17,71 +17,87 @@ struct TKWritingView: View {
     
     // MARK: - BODY
     var body: some View {
-        VStack {
-            VStack {                
-                if let answeredText = appViewStore.answeredText {
-                    Text(answeredText)
-                        .font(.headline)
-                        .bold()
-                        .frame(
-                            maxWidth: .infinity,
-                            maxHeight: 100,
-                            alignment: .leading
-                        )
-                        .padding(.top, 40)
-                        .padding(.horizontal, 24)
-                        .padding(.bottom, 80)
+        NavigationView {
+            VStack {
+                // (Test용) TKHistoryView로 이동하는 부분
+                // MARK: 추후에 스크롤뷰리더로 화면 이동
+                NavigationLink(destination: TKHistoryView(appViewStore: appViewStore)) {
+                    Text("History")
+                        .foregroundColor(.blue)
                 }
+                .padding()
                 
-                HStack {
-                    Button {
-                        appViewStore.removeQuestionTextButtonTapped()
-                    } label: {
-                        Text("전체 지우기")
-                            .foregroundColor(.gray)
+                VStack {
+                    if let answeredText = appViewStore.answeredText {
+                        Text(answeredText)
+                            .font(.headline)
+                            .bold()
+                            .frame(
+                                maxWidth: .infinity,
+                                maxHeight: 100,
+                                alignment: .leading
+                            )
+                            .padding(.top, 40)
+                            .padding(.horizontal, 24)
+                            .padding(.bottom, 80)
                     }
-                    .font(.headline)
-                    .padding(.leading, 24)
-                    .padding(.top, 20)
-                    .padding(.bottom, 36)
-                    .disabled(appViewStore.questionText.isEmpty)
                     
-                    Spacer()
-                }
-                .opacity(focusState ? 1.0 : 0.0)
-                .animation(.easeInOut, value: focusState)
-                
-                // MARK: Multiline Placeholder 구현 불가
-                // lofi: 한 줄만 보이는 placeholderㅠㅠ
-                TKTextField(appViewStore: appViewStore)
-                    .focused($focusState)
-                    .overlay(alignment: .topLeading) {
-                        characterLimitView()
-                            .padding(.leading, 24)
-                            .opacity(focusState ? 1.0 : 0.0)
-                            .animation(.easeInOut, value: focusState)
+                    HStack {
+                        Button {
+                            appViewStore.removeQuestionTextButtonTapped()
+                        } label: {
+                            Text("전체 지우기")
+                                .foregroundColor(.gray)
+                        }
+                        .font(.headline)
+                        .padding(.leading, 24)
+                        .padding(.top, 20)
+                        .padding(.bottom, 36)
+                        .disabled(appViewStore.questionText.isEmpty)
+                        
+                        Spacer()
                     }
+                    .opacity(focusState ? 1.0 : 0.0)
+                    .animation(.easeInOut, value: focusState)
+                    
+                    // MARK: Multiline Placeholder 구현 불가
+                    // TODO: TLTextField 코드로 교체
+                    TKTextField(appViewStore: appViewStore)
+                        .focused($focusState)
+                        .overlay(alignment: .topLeading) {
+                            characterLimitView()
+                                .padding(.leading, 24)
+                                .opacity(focusState ? 1.0 : 0.0)
+                                .animation(.easeInOut, value: focusState)
+                        }
+                }
+                
+                Spacer()
+                
+                Button {
+                    // TKHistoryView로 user's text 전달
+                    if !appViewStore.questionText.isEmpty {
+                        let newHistoryItem = HistoryItem(id: UUID(), text: appViewStore.questionText, type: .question)
+                        appViewStore.historyItems.append(newHistoryItem)
+                    }
+                    print(appViewStore.questionText)
+                    appViewStore.enterSpeechRecognizeButtonTapped()
+                } label: {
+                    Text("**음성 인식 전환**")
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+                .background {
+                    Capsule()
+                        .foregroundColor(.gray)
+                }
+                
+                Spacer()
+                    .frame(maxHeight: 60)
             }
-            
-            Spacer()
-            
-            Button {
-                appViewStore.enterSpeechRecognizeButtonTapped()
-            } label: {
-                Text("**음성 인식 전환**")
-                    .foregroundColor(.white)
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
-            .background {
-                Capsule()
-                    .foregroundColor(.gray)
-            }
-            
-            Spacer()
-                .frame(maxHeight: 60)
+            .frame(maxHeight: .infinity)
         }
-        .frame(maxHeight: .infinity)
     }
     
     // MARK: - METHODS
