@@ -12,41 +12,41 @@ enum TLTextFieldStyle {
 }
 
 struct TLTextField<Button: View>: View {
-    @State private var isLetterExceeded: Bool = false
     @Binding var text: String
     
     private var style: TLTextFieldStyle
     private var placeholder: String
-    private var eraseAllButton: Button
-    private let defaultTextPlaceholder: String = "상대방에게 보여주고 싶은 내용을 작성해 주세요."
+    private var leadingButton: Button
+    private let customPlaceholder: String = "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서 텍스트로 변환됩니다."
     
     init(
-        style: TLTextFieldStyle = .normal(textLimit: 55),
+        style: TLTextFieldStyle,
         text: Binding<String>,
         placeholder: String,
-        @ViewBuilder eraseAllButton: () -> Button
+        @ViewBuilder leadingButton: () -> Button
     ){
         self.style = style
         self._text = text
         self.placeholder = placeholder
-        self.eraseAllButton = eraseAllButton()
+        self.leadingButton = leadingButton()
     }
     
     var body: some View {
         switch style {
         case let .normal(textLimit):
             VStack {
-                eraseAllButtonSection
+                leadingButtonSection
                 textCountIndicator(textLimit: textLimit)
                 inputFieldSection(textLimit: textLimit)
             }
         }
     }
     
-    private var eraseAllButtonSection: some View {
+    private var leadingButtonSection: some View {
         HStack {
-            eraseAllButton
+            leadingButton
                 .padding(.leading, 24)
+            
             Spacer()
         }
         .padding(.bottom, 24)
@@ -62,6 +62,7 @@ struct TLTextField<Button: View>: View {
                     : .gray
                 )
                 .padding(.leading, 24)
+            
             Spacer()
         }
     }
@@ -70,24 +71,22 @@ struct TLTextField<Button: View>: View {
         ZStack {
             if text.isEmpty {
                 HStack {
-                    Text(defaultTextPlaceholder)
+                    Text(customPlaceholder)
                         .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.gray)
                         .lineSpacing(19.2)
                         .padding(.leading, 24)
-                        .padding(.bottom, 48)
                     Spacer()
                 }
             }
-            
             TextField(
                 placeholder,
                 text: $text
-//                axis: .vertical
             )
             .font(.system(size: 24, weight: .bold))
             .padding(.leading, 24)
             .padding(.trailing, 24)
+            // (placeholder의 줄 개수 + 1) * 24 한 값
             .padding(.bottom, 96)
             .lineSpacing(10)
             .frame(maxWidth: .infinity)
@@ -96,9 +95,6 @@ struct TLTextField<Button: View>: View {
             .onChange(of: text) { _ in
                 if text.count > textLimit {
                     text = String(text.prefix(textLimit))
-                    isLetterExceeded = true
-                } else {
-                    isLetterExceeded = false
                 }
             }
         }
@@ -114,7 +110,7 @@ struct TLTextFieldTestView: View {
                 style: .normal(textLimit: 55),
                 text: $text,
                 placeholder: "",
-                eraseAllButton: {
+                leadingButton: {
                     Button {
                         text = ""
                     } label: {
