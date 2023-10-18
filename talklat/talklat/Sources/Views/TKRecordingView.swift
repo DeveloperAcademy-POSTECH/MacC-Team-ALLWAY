@@ -71,7 +71,7 @@ struct TKRecordingView: View {
         }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
             appViewStore.answeredTextSetter(transcript)
-            HapticManager.sharedInstance.generateHaptic(.medium(times: countLastWord(transcript)))
+            HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
         }
     }
     

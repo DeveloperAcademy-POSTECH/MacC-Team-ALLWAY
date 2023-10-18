@@ -12,10 +12,10 @@ class HapticManager {
     enum HapticStyle {
         case rigidTwice
         case success
-        case medium(times: Int)
+        case light(times: Int)
     }
     
-    static var sharedInstance: HapticManager = HapticManager()
+    static let sharedInstance: HapticManager = HapticManager()
     private var _engine: CHHapticEngine?
     var engine: CHHapticEngine? {
         get {
@@ -128,23 +128,23 @@ class HapticManager {
             )
             return pattern
             
-        case let .medium(times: times):
+        case let .light(times: times):
             let intensity = CHHapticEventParameter(
                 parameterID: .hapticIntensity,
-                value: 0.8
+                value: 0.5
             )
             let sharpness = CHHapticEventParameter(
                 parameterID: .hapticSharpness,
-                value: 0.5
+                value: 0.3
             )
             
             var events: [CHHapticEvent] = [CHHapticEvent]()
             
-            for i in 0..<times {
+            for i in 0 ..< times {
                 let event = CHHapticEvent(
                     eventType: .hapticTransient,
                     parameters: [intensity, sharpness],
-                    relativeTime: Double(i) * 0.05
+                    relativeTime: Double(i) * 0.1
                 )
                 events.append(event)
             }
@@ -180,8 +180,8 @@ struct HapticTestView: View {
                 HapticManager.sharedInstance.generateHaptic(.success)
             }
             
-            Button("medium") {
-                HapticManager.sharedInstance.generateHaptic(.medium(times: 10))
+            Button("light") {
+                HapticManager.sharedInstance.generateHaptic(.light(times: 10))
             }
         }
         .onAppear {
