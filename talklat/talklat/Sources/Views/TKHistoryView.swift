@@ -76,6 +76,11 @@ struct TKHistoryView: View {
                     .background {
                         Rectangle()
                             .fill(Color.white)
+                            .shadow(
+                                color: Color(.systemGray4),
+                                radius: 30,
+                                y: -1
+                            )
                     }
             }
             .frame(
