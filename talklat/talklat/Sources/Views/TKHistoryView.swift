@@ -9,13 +9,15 @@ import SwiftUI
 
 struct TKHistoryView: View {
     @ObservedObject var appViewStore: AppViewStore
+    @Binding var isHistoryViewShown: Bool
+    @Binding var deviceHeight: CGFloat
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             ScrollView {
                 // TODO: - ForEach의 data 아규먼트 수정
                 // TODO: - 각 Color 값을 디자인 시스템 값으로 추후 수정
-                ForEach(0..<100) { int in
+                ForEach(0 ..< 100) { int in
                     if int % 2 == 0 {
                         VStack(alignment: .leading) {
                             Image(systemName: "waveform.circle.fill")
@@ -51,45 +53,19 @@ struct TKHistoryView: View {
                             .padding(.top, 32)
                     }
                 }
+                .padding(.top, 10)
             }
-            .padding(.top, 16)
+            // FIXME: deviceTopSafeAreaInset 값으로 변경
+            .padding(.top, 100)
             .background { Color(.systemGray6 )}
             
-            VStack {
-                VStack(spacing: 12) {
-                    Text("텍스트 작성 페이지로 돌아가기")
-                        .font(.system(size: 12, weight: .bold))
-                        .bold()
-                        .padding(.top, 24)
-                    
-                    Image(systemName: "chevron.compact.down")
-                        .resizable()
-                        .frame(width: 32, height: 10)
-                        .padding(.bottom, 10)
-                }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: 100,
-                        alignment: .top
-                    )
-                    .foregroundColor(Color(.systemGray))
-                    .background {
-                        Rectangle()
-                            .fill(Color.white)
-                            .shadow(
-                                color: Color(.systemGray4),
-                                radius: 30,
-                                y: -1
-                            )
-                    }
-            }
-            .frame(
-                maxHeight: .infinity,
-                alignment: .bottom
-            )
+            swipeGuideMessage(type: .swipeToBottom)
         }
-        .ignoresSafeArea(edges: .bottom)
-        .navigationTitle("히스토리")
+        .frame(height: deviceHeight)
+        .ignoresSafeArea()
+        .navigationTitle(
+            isHistoryViewShown ? "히스토리" : ""
+        )
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(
             Color(.systemGray6),
@@ -102,12 +78,19 @@ struct TKHistoryView: View {
     }
 }
 
-struct TKHistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            TKHistoryView(appViewStore: .makePreviewStore(condition: { store in
-                
-            }))
-        }
-    }
-}
+
+
+
+
+//struct TKHistoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            TKHistoryView(
+//                appViewStore: .makePreviewStore(condition: { store in
+//
+//            }),
+//                isHistoryViewShown: .constant(true)
+//            )
+//        }
+//    }
+//}

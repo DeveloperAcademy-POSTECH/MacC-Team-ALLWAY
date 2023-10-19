@@ -13,16 +13,52 @@ struct TKIntroView: View {
     @StateObject var gyroMotionStore: GyroScopeStore = GyroScopeStore()
     @ObservedObject var appViewStore: AppViewStore
     
+    @State var isMessageTextShown: Bool = false
+    
+    @Binding var deviceHeight: CGFloat
+    
     var body: some View {
-        Group {            
-            switch appViewStore.communicationStatus {
-            case .writing:
-                TKWritingView(appViewStore: appViewStore)
-                    .transition(.opacity)
+        VStack {
+            Rectangle()
+                .fill(.white)
+                // FIXME: deviceTopSafeAreaInset 값으로 변경
+                .frame(height: 40)
+            
+            VStack {
+                if isMessageTextShown {
+                    Text("위로 스와이프해서 내용을 더 확인하세요")
+                        .font(.system(size: 11))
+                        .foregroundColor(Color(.systemGray))
+                        .padding(.top, 10)
+                }
                 
-            case .recording:
-                TKRecordingView(appViewStore: appViewStore)
-                    .transition(.opacity)
+                swipeGuideMessage(type: .swipeToTop)
+                    .onTapGesture {
+                        withAnimation(
+                            .easeOut(duration: 0.5)
+                            .repeatCount(2, autoreverses: true)
+                        ) {
+                            isMessageTextShown = true
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.96) {
+                                isMessageTextShown = false
+                            }
+                        }
+                    }
+            }
+            // .background(.red) // 스와이프 메세지 탭 영역 확인
+            .frame(height: 50)
+            
+            Group {
+                switch appViewStore.communicationStatus {
+                case .writing:
+                    TKWritingView(appViewStore: appViewStore)
+                        .transition(.opacity)
+                    
+                case .recording:
+                    TKRecordingView(appViewStore: appViewStore)
+                        .transition(.opacity)
+                }
             }
         }
         .onAppear {
@@ -45,10 +81,13 @@ struct TKIntroView: View {
 
 struct TKIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        TKIntroView(appViewStore: .makePreviewStore(condition: { store in
-            store.questionTextSetter("")
-            store.voiceRecordingAuthSetter(.authCompleted)
-            store.communicationStatusSetter(.writing)
-        }))
+        TKIntroView(
+            appViewStore: .makePreviewStore(condition: { store in
+                store.questionTextSetter("")
+                store.voiceRecordingAuthSetter(.authCompleted)
+                store.communicationStatusSetter(.writing)
+            }),
+            deviceHeight: .constant(CGFloat(0))
+        )
     }
 }

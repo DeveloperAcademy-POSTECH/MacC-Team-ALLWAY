@@ -48,6 +48,12 @@ final class AppViewStore: ObservableObject {
     public func removeQuestionTextButtonTapped() {
         questionText = ""
     }
+    
+    public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
+        proxy.scrollTo("introView")
+    }
+    
+    
 
     public func onWritingViewAppear() {
         if questionText.isEmpty { }
