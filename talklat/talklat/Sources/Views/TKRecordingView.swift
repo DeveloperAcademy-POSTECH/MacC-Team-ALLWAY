@@ -76,10 +76,7 @@ struct TKRecordingView: View {
         }
         .onDisappear {
             // TKHistoryView로 transcript 전달
-            if let answeredText = appViewStore.answeredText, !answeredText.isEmpty && !speechRecognizeManager.transcript.isEmpty {
-                let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
-                appViewStore.historyItems.append(answerItem)
-            }
+            appViewStore.onRecordingViewDisappear(transcript: speechRecognizeManager.transcript)
         }
     }
     

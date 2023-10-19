@@ -75,12 +75,6 @@ struct TKWritingView: View {
                 Spacer()
                 
                 Button {
-                    // TKHistoryView로 user's text 전달
-                    if !appViewStore.questionText.isEmpty {
-                        let newHistoryItem = HistoryItem(id: UUID(), text: appViewStore.questionText, type: .question)
-                        appViewStore.historyItems.append(newHistoryItem)
-                    }
-                    print(appViewStore.questionText)
                     appViewStore.enterSpeechRecognizeButtonTapped()
                 } label: {
                     Text("**음성 인식 전환**")
@@ -97,6 +91,10 @@ struct TKWritingView: View {
                     .frame(maxHeight: 60)
             }
             .frame(maxHeight: .infinity)
+        }
+        .onDisappear {
+            // TKHistoryView로 transcript 전달
+            appViewStore.onWritingViewDisappear()
         }
     }
     
