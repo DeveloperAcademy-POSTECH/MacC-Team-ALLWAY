@@ -11,6 +11,8 @@ struct TKWritingView: View {
     @ObservedObject var appViewStore: AppViewStore
     @FocusState var focusState: Bool
     
+    @State private var text = ""
+    
     private var hasQuestionTextReachedMaximumCount: Bool {
         appViewStore.questionText.count == appViewStore.questionTextLimit
     }
@@ -42,34 +44,45 @@ struct TKWritingView: View {
                             .padding(.bottom, 80)
                     }
                     
-                    HStack {
-                        Button {
-                            appViewStore.removeQuestionTextButtonTapped()
-                        } label: {
-                            Text("전체 지우기")
-                                .foregroundColor(.gray)
-                        }
-                        .font(.headline)
-                        .padding(.leading, 24)
-                        .padding(.top, 20)
-                        .padding(.bottom, 36)
-                        .disabled(appViewStore.questionText.isEmpty)
-                        
-                        Spacer()
-                    }
-                    .opacity(focusState ? 1.0 : 0.0)
-                    .animation(.easeInOut, value: focusState)
+//                    HStack {
+//                        Button {
+//                            appViewStore.removeQuestionTextButtonTapped()
+//                        } label: {
+//                            Text("전체 지우기")
+//                                .foregroundColor(.gray)
+//                        }
+//                        .font(.headline)
+//                        .padding(.leading, 24)
+//                        .padding(.top, 20)
+//                        .padding(.bottom, 36)
+//                        .disabled(appViewStore.questionText.isEmpty)
+//
+//                        Spacer()
+//                    }
+//                    .opacity(focusState ? 1.0 : 0.0)
+//                    .animation(.easeInOut, value: focusState)
                     
-                    // MARK: Multiline Placeholder 구현 불가
-                    // TODO: TLTextField 코드로 교체
-                    TKTextField(appViewStore: appViewStore)
-                        .focused($focusState)
-                        .overlay(alignment: .topLeading) {
-                            characterLimitView()
-                                .padding(.leading, 24)
-                                .opacity(focusState ? 1.0 : 0.0)
-                                .animation(.easeInOut, value: focusState)
+                    TLTextField(
+                        style: .normal(textLimit: 55),
+                        text: $appViewStore.questionText,
+                        placeholder: "",
+                        leadingButton: {
+                            Button {
+                                appViewStore.removeQuestionTextButtonTapped()
+                            } label: {
+                                Text("전체 지우기")
+                                    .foregroundColor(.gray)
+                            }
                         }
+                    )
+//                    TKTextField(appViewStore: appViewStore)
+//                        .focused($focusState)
+//                        .overlay(alignment: .topLeading) {
+//                            characterLimitView()
+//                                .padding(.leading, 24)
+//                                .opacity(focusState ? 1.0 : 0.0)
+//                                .animation(.easeInOut, value: focusState)
+//                        }
                 }
                 
                 Spacer()
@@ -97,7 +110,7 @@ struct TKWritingView: View {
         }
         .frame(maxHeight: .infinity)
         .onDisappear {
-            // TKHistoryView로 transcript 전달
+            // TKHistoryView로 text 전달
             appViewStore.onWritingViewDisappear()
         }
     }

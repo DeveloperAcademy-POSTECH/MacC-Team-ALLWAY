@@ -16,6 +16,11 @@ struct TKRecordingView: View {
     var body: some View {
         VStack {
             VStack {
+                guideMessageBuilder()
+                    .transition(
+                        .move(edge: .bottom)
+                        .combined(with: .opacity)
+                    )
                 if appViewStore.questionText.isEmpty { }
                 else if !appViewStore.questionText.isEmpty {
                     Text(appViewStore.questionText)
@@ -31,8 +36,8 @@ struct TKRecordingView: View {
                         )
                 }
                 
-                if speechRecognizeManager.transcript == "",
-                   !appViewStore.hasGuidingMessageShown {
+                if speechRecognizeManager.transcript == "" {
+//                   !appViewStore.hasGuidingMessageShown {
                     guideMessageBuilder()
                         .transition(
                             .move(edge: .bottom)
@@ -41,7 +46,7 @@ struct TKRecordingView: View {
                     
                 } else {
                     Text(speechRecognizeManager.transcript)
-                        .font(.largeTitle)
+                        .font(.system(size: 24))
                         .bold()
                         .lineSpacing(10)
                         .padding(.horizontal, 24)
@@ -84,11 +89,10 @@ struct TKRecordingView: View {
     
     private func guideMessageBuilder() -> some View {
         Text(Constants.GUIDE_MESSAGE)
-            .font(.largeTitle)
-            .bold()
-            .kerning(2)
-            .lineSpacing(10)
+//            .font(.largeTitle)
+            .font(.system(size: 24))
             .multilineTextAlignment(.leading)
+            .lineSpacing(10)
             .padding(.horizontal, 24)
             .padding(.top, 40)
             .foregroundColor(.gray)

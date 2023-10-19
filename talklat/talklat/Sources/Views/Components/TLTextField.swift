@@ -17,7 +17,7 @@ struct TLTextField<Button: View>: View {
     private var style: TLTextFieldStyle
     private var placeholder: String
     private var leadingButton: Button
-    private let customPlaceholder: String = "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서 텍스트로 변환됩니다."
+    private let customPlaceholder: String = "탭해서 전하고 싶은 내용을 작성해주세요."
     
     init(
         style: TLTextFieldStyle,
@@ -72,9 +72,9 @@ struct TLTextField<Button: View>: View {
             if text.isEmpty {
                 HStack {
                     Text(customPlaceholder)
-                        .font(.system(size: 24, weight: .bold))
+                        .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.gray)
-                        .lineSpacing(19.2)
+                        .lineSpacing(180)
                         .padding(.leading, 24)
                     Spacer()
                 }
@@ -83,12 +83,9 @@ struct TLTextField<Button: View>: View {
                 placeholder,
                 text: $text
             )
-            .font(.system(size: 24, weight: .bold))
+            .font(.system(size: 20, weight: .bold))
             .padding(.leading, 24)
             .padding(.trailing, 24)
-            // (placeholder의 줄 개수 + 1) * 24 한 값
-            .padding(.bottom, 96)
-            .lineSpacing(10)
             .frame(maxWidth: .infinity)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)

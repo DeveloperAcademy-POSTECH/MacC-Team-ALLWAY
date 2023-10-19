@@ -14,8 +14,10 @@ final class AppViewStore: ObservableObject {
     }
     
     @Published private(set) var communicationStatus: CommunicationStatus
-    @Published private(set) var questionText: String
+//    @Published private(set) var questionText: String
+    @Published var questionText: String
     @Published private(set) var answeredText: String?
+//    @Published var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
     @Published var historyItems: [HistoryItem] = []
