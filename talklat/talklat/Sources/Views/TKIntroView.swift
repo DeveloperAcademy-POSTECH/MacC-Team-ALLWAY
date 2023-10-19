@@ -14,12 +14,12 @@ struct TKIntroView: View {
     @ObservedObject var appViewStore: AppViewStore
     
     var body: some View {
-        Group {            
+        Group {
             switch appViewStore.communicationStatus {
             case .writing:
                 TKWritingView(appViewStore: appViewStore)
                     .transition(.opacity)
-                
+
             case .recording:
                 TKRecordingView(appViewStore: appViewStore)
                     .transition(.opacity)

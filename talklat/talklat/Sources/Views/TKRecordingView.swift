@@ -11,7 +11,8 @@ import SwiftUI
 struct TKRecordingView: View {
     @StateObject var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @ObservedObject var appViewStore: AppViewStore
-    
+    @State var historyItems: [HistoryItem] = []
+
     var body: some View {
         VStack {
             VStack {
@@ -70,8 +71,16 @@ struct TKRecordingView: View {
             }
         }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
-            appViewStore.answeredTextSetter(transcript)
-            HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
+
+            if !transcript.isEmpty {
+                appViewStore.answeredTextSetter(transcript)
+                HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
+                print(transcript)
+            }
+        }
+        .onDisappear {
+            // TKHistoryView로 transcript 전달
+            appViewStore.onRecordingViewDisappear(transcript: speechRecognizeManager.transcript)
         }
     }
     
@@ -108,6 +117,8 @@ struct TKRecordingView: View {
 }
 
 struct TKRecordingView_Previews: PreviewProvider {
+    @State static var showHistoryView: Bool = false
+    
     static var previews: some View {
         TKRecordingView(
             appViewStore: AppViewStore.makePreviewStore { instance in
