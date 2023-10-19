@@ -31,7 +31,8 @@ struct TKRecordingView: View {
                         )
                 }
                 
-                if speechRecognizeManager.transcript == "" {
+                if speechRecognizeManager.transcript == "",
+                   !appViewStore.hasGuidingMessageShown {
                     guideMessageBuilder()
                         .transition(
                             .move(edge: .bottom)
@@ -58,6 +59,7 @@ struct TKRecordingView: View {
             }
         }
         .onAppear {
+            appViewStore.onRecordingViewAppear()
             speechRecognizeManager.startTranscribing()
         }
         .onChange(of: appViewStore.communicationStatus) { communicationStatus in

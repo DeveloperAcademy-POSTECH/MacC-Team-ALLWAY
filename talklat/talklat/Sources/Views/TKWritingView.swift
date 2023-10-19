@@ -91,7 +91,11 @@ struct TKWritingView: View {
                     .frame(maxHeight: 60)
             }
             .frame(maxHeight: .infinity)
+            .onAppear {
+                appViewStore.onWritingViewAppear()
+            }
         }
+        .frame(maxHeight: .infinity)
         .onDisappear {
             // TKHistoryView로 transcript 전달
             appViewStore.onWritingViewDisappear()

@@ -52,7 +52,7 @@ struct TestHistoryView: View {
     }
 }
 
-struct TKHistoryView_Previews: PreviewProvider {
+struct TKHistoryViewA_Previews: PreviewProvider {
     static var previews: some View {
         let previewStore = AppViewStore(
             communicationStatus: .writing,
