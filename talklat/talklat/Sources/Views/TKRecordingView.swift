@@ -73,6 +73,7 @@ struct TKRecordingView: View {
         .onChange(of: speechRecognizeManager.transcript) { transcript in
             if !transcript.isEmpty {
                 appViewStore.answeredTextSetter(transcript)
+                HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
                 print(transcript)
             }
         }
@@ -97,6 +98,7 @@ struct TKRecordingView: View {
     private func recordButtonBuilder() -> some View {
         Button {
             appViewStore.stopSpeechRecognizeButtonTapped()
+            HapticManager.sharedInstance.generateHaptic(.rigidTwice)
         } label: {
             Image(systemName: "square.fill")
                 .foregroundColor(.white)
@@ -106,6 +108,10 @@ struct TKRecordingView: View {
             Circle()
                 .foregroundColor(.gray)
         }
+    }
+    
+    private func countLastWord(_ transcript: String) -> Int {
+        return transcript.components(separatedBy: " ").last?.count ?? 0
     }
 }
 

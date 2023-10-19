@@ -103,22 +103,23 @@ struct TKWritingView: View {
     }
     
     // MARK: - METHODS
-    private func characterLimitView() -> some View {
-        Text("\(appViewStore.questionText.count)/\(appViewStore.questionTextLimit)")
-            .monospacedDigit()
-            .foregroundColor(
-                hasQuestionTextReachedMaximumCount
-                ? .red
-                : .gray
-            )
-    }
+        private func characterLimitView() -> some View {
+            Text("\(appViewStore.questionText.count)/\(appViewStore.questionTextLimit)")
+                .monospacedDigit()
+                .foregroundColor(
+                    hasQuestionTextReachedMaximumCount
+                    ? .red
+                    : .gray
+                )
+        }
+    
 }
 
 struct TKWritingView_Previews: PreviewProvider {
     static var previews: some View {
         TKWritingView(
             appViewStore: AppViewStore.makePreviewStore { instance in
-                instance.questionTextSetter("Test")
+                instance.questionTextSetter("")
             }
         )
     }
