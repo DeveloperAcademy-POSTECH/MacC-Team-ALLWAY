@@ -10,6 +10,8 @@
 import SwiftUI
 
 struct TKIntroView: View {
+    @Environment(\.scenePhase)
+    var scenePhase
     @StateObject var gyroMotionStore: GyroScopeStore = GyroScopeStore()
     @ObservedObject var appViewStore: AppViewStore
     
@@ -39,6 +41,9 @@ struct TKIntroView: View {
                 }
                 HapticManager.sharedInstance.generateHaptic(.success)
             }
+        }
+        .onChange(of: scenePhase) { _ in
+            Color.colorScheme = UITraitCollection.current.userInterfaceStyle
         }
     }
 }
