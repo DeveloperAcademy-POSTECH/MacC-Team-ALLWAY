@@ -67,6 +67,7 @@ struct TKWritingView: View {
             
             Button {
                 appViewStore.enterSpeechRecognizeButtonTapped()
+                HapticManager.sharedInstance.generateHaptic(.success)
             } label: {
                 Text("**음성 인식 전환**")
                     .foregroundColor(.white)

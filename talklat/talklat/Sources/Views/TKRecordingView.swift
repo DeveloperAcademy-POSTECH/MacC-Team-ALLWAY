@@ -90,6 +90,7 @@ struct TKRecordingView: View {
     private func recordButtonBuilder() -> some View {
         Button {
             appViewStore.stopSpeechRecognizeButtonTapped()
+            HapticManager.sharedInstance.generateHaptic(.rigidTwice)
         } label: {
             Image(systemName: "square.fill")
                 .foregroundColor(.white)
