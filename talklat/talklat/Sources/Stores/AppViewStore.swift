@@ -18,6 +18,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
+    @Published var historyItems: [HistoryItem] = []
     
     public let questionTextLimit: Int = 55
     
@@ -36,6 +37,28 @@ final class AppViewStore: ObservableObject {
     public func enterSpeechRecognizeButtonTapped() {
         withAnimation(.easeIn(duration: 0.75)) {
             communicationStatus = .recording
+        }
+    }
+    
+    public func onWritingViewDisappear() {
+        // TKHistoryView로 user's text 전달
+        if !questionText.isEmpty {
+            let newHistoryItem = HistoryItem(
+                id: UUID(),
+                text: questionText,
+                type: .question
+            )
+            historyItems.append(newHistoryItem)
+        }
+        print(questionText)
+    }
+    
+    public func onRecordingViewDisappear(transcript: String) {
+        if let answeredText = answeredText,
+           !answeredText.isEmpty &&
+            !transcript.isEmpty {
+            let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
+            historyItems.append(answerItem)
         }
     }
     
