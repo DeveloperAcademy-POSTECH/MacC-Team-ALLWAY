@@ -11,6 +11,8 @@
 		57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TestHistoryView.swift */; };
 		57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
+		7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */; };
+		7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */; };
 		7E8906412ACEA31500C9947A /* TKIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKIntroView.swift */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
@@ -52,6 +54,8 @@
 		575677E02ADA6F13002E01BE /* TLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTextField.swift; sourceTree = "<group>"; };
 		57806D702ADC5D19003A7B19 /* TestHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHistoryView.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
+		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKIntroView.swift; sourceTree = "<group>"; };
 		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatApp.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				7EF737962AD43EE000FCBA21 /* TKTextField.swift */,
+				7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */,
 				575677E02ADA6F13002E01BE /* TLTextField.swift */,
 			);
 			path = Components;
@@ -222,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
+				7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -375,7 +381,9 @@
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
+				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
+				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
