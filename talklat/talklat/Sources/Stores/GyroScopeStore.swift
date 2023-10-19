@@ -48,7 +48,7 @@ final class GyroScopeStore: ObservableObject {
         } else {
             // device에서 core motion을 지원 안할때
             // 근데 iOS 4.0 이상 전부 지원하니까 괜찮지 않을까 하는 생각
-            fatalError("기기가 CoreMotion을 지원 안함")
+//            fatalError("기기가 CoreMotion을 지원 안함")
             
         }
     }
