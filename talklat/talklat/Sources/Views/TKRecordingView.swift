@@ -29,7 +29,7 @@ struct TKRecordingView: View {
                                 maxWidth: .infinity,
                                 alignment: .leading
                             )
-                        //TODO: transition?
+                        //TODO: transition? animation!
                     } else {
                         guideMessageBuilder()
                     }
@@ -50,29 +50,27 @@ struct TKRecordingView: View {
                             maxWidth: .infinity,
                             alignment: .leading
                         )
-                        .transition(.moveAndFade)
-                    
+                        .animation(.easeInOut(duration: 0.5), value: checkisRecording())
                 }
-                
                 Spacer()
                 // 음성 인식 텍스트
                 if(checkisRecording()) {
                     ZStack {
-                        Rectangle()
-                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.6)
-                            .foregroundStyle(.gray.opacity(0.1))
+                        VStack {
+                            Spacer()
+                            Rectangle()
+                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
+                                .foregroundStyle(.gray.opacity(0.1))
+                        }
                         Text(speechRecognizeManager.transcript)
                             .font(.system(size: 24))
                             .bold()
                             .lineSpacing(12)
                             .padding(.horizontal, 24)
-                            .padding(.bottom, UIScreen.main.bounds.height * 0.5)
-                            .padding(.top, 24)
-                            .frame(
-                                maxWidth: .infinity,
-                                maxHeight: UIScreen.main.bounds.height * 0.6,
-                                alignment: .leading
-                            )
+                            .padding(.bottom, 100)//ㅠㅠ
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
             }
@@ -160,15 +158,6 @@ struct TKRecordingView: View {
         } else {
             return false
         }
-    }
-}
-
-extension AnyTransition {
-    static var moveAndFade: AnyTransition {
-        .asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .scale.combined(with: .opacity)
-        )
     }
 }
 

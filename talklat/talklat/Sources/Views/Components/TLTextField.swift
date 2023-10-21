@@ -54,6 +54,7 @@ struct TLTextField<Button: View>: View {
     private func textCountIndicator(textLimit: Int) -> some View {
         HStack {
             Text("\($text.wrappedValue.count)/\(textLimit)")
+                .font(.system(size: 12, weight: .regular))
                 .monospacedDigit()
                 .foregroundColor(
                     text.count >= textLimit
@@ -68,16 +69,6 @@ struct TLTextField<Button: View>: View {
     
     private func inputFieldSection(textLimit: Int) -> some View {
         ZStack {
-//            if text.isEmpty {
-//                HStack {
-//                    Text()
-//                        .font(.system(size: 20, weight: .bold))
-//                        .foregroundColor(.gray)
-//                        .lineSpacing(180)
-//                        .padding(.leading, 24)
-//                    Spacer()
-//                }
-//            }
             TextField(
                 placeholder,
                 text: $text,
@@ -104,7 +95,7 @@ struct TLTextFieldTestView: View {
     var body: some View {
         ZStack {
             TLTextField(
-                style: .normal(textLimit: 55),
+                style: .normal(textLimit: 160),
                 text: $text,
                 placeholder: "탭해서 전하고 싶은 내용을 작성해주세요.",
                 leadingButton: {
