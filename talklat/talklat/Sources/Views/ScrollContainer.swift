@@ -10,10 +10,7 @@ import SwiftUI
 struct ScrollContainer: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var appViewStore: AppViewStore
-    
-    @State public var scrollOffset: CGPoint = .zero
-    @State public var deviceHeight: CGFloat = CGFloat(0)
-    @State public var isHistoryViewShown: Bool = false
+    @State private var scrollOffset: CGPoint = .zero
     
     var body: some View {
         GeometryReader { geo in
@@ -23,18 +20,11 @@ struct ScrollContainer: View {
                     offset: $scrollOffset
                 ) {
                     VStack {
-                        TKHistoryView(
-                            appViewStore: appViewStore,
-                            isHistoryViewShown: $appViewStore.isHistoryViewShown,
-                            deviceHeight: $appViewStore.deviceHeight
-                        )
+                        TKHistoryView(appViewStore: appViewStore)
                         .frame(maxWidth: .infinity)
                         .id("historyView")
                         
-                        TKIntroView(
-                            appViewStore: appViewStore,
-                            deviceHeight: $appViewStore.deviceHeight
-                        )
+                        TKIntroView(appViewStore: appViewStore)
                         .padding(.top, -10) // View 사이의 디폴트 공백 제거
                         .frame(
                             height: geo.size.height + geo.safeAreaInsets.magnitude
@@ -46,30 +36,17 @@ struct ScrollContainer: View {
                     .onAppear {
                         appViewStore.onIntroViewAppear(proxy)
                         appViewStore.deviceHeight = geo.size.height
-                        /// ignoreSafeArea()하면 값도 받아오지 못함
-                        // deviceTopSafeAreaInset = geo.safeAreaInsets.magnitude
-                    }
-                    .onChange(of: scrollOffset) { _ in
-//                        appViewStore.historyViewIndicator()
-//                        appViewStore.scrolledToIntroView(proxy)
-//                        appViewStore.scrolledToHistoryView(proxy)
-                        
-//                        print("isHistoryViewShown: ", appViewStore.isHistoryViewShown)
-//                        print("deviceHeight: ", appViewStore.deviceHeight)
-//                        print("scrollOffset: ", appViewStore.scrollOffset)
-//                        print("----------------------------")
                     }
                 }
                 .overlay {
                     VStack {
-                        Rectangle() // SafeAreaInset 역할
-                            .fill(.white)
-                            // FIXME: deviceTopSafeAreaInset 값으로 변경
-                            .frame(height: 40)
-                        
                         ZStack {
                             Rectangle()
-                                .fill(appViewStore.isHistoryViewShown ? Color.clear : .red)
+                                .fill(
+                                    appViewStore.isHistoryViewShown
+                                    ? Color.clear
+                                    : .red
+                                )
                                 .opacity(0.001)
                             
                             VStack {
@@ -83,7 +60,11 @@ struct ScrollContainer: View {
                                         .padding(.top, 10)
                                     
                                     swipeGuideMessage(type: .swipeToTop)
-                                        .offset(y: appViewStore.isMessageTapped ? 30 : 0)
+                                        .offset(
+                                            y: appViewStore.isMessageTapped
+                                            ? 30
+                                            : 0
+                                        )
                                         .onTapGesture {
                                             withAnimation(
                                                 Animation.spring(
@@ -93,11 +74,7 @@ struct ScrollContainer: View {
                                                 )
                                                 .speed(0.5)
                                             ) {
-                                                appViewStore.isMessageTapped = true
-                                                
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                    appViewStore.isMessageTapped = false
-                                                }
+                                                appViewStore.swipeGuideMessageTapped()
                                             }
                                         }
                                 }
@@ -112,23 +89,29 @@ struct ScrollContainer: View {
                         Spacer()
                             .frame(maxHeight: .infinity)
                     }
+                    .safeAreaInset(
+                        edge: .top,
+                        content: {
+                            Rectangle()
+                                .fill(.white)
+                            // TODO: - deviceTopSafeAreaInset 값으로 변경
+                                .frame(height: 50)
+                        }
+                    )
                     .ignoresSafeArea()
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
-                                print("위로 올라가는 드래그 됨!")
-                                appViewStore.isScrollDisabled = false
+                                appViewStore.scrollAvailabilityIndicator(false)
                             }
                             .onEnded { gesture in
                                 withAnimation {
-                                    print("위로 올라가는 드래그 끝~")
-                                    appViewStore.isHistoryViewShown = true
+                                    appViewStore.historyViewIndicator(true)
                                     
-                                    // 뷰 전환
-                                    proxy.scrollTo("historyView", anchor: .top)
-                                    
-                                    print("isHistoryViewShown: ", appViewStore.isHistoryViewShown)
-                                    print("isScrolledDisabled: ", appViewStore.isScrollDisabled)
+                                    appViewStore.scrollDestinationIndicator(
+                                        scrollReader: proxy,
+                                        destination: "historyView"
+                                    )
                                 }
                             }
                     )
@@ -139,7 +122,11 @@ struct ScrollContainer: View {
                             .frame(maxHeight: .infinity)
                         
                         Rectangle()
-                            .fill(appViewStore.isHistoryViewShown ? .blue : Color.clear)
+                            .fill(
+                                appViewStore.isHistoryViewShown
+                                ? .blue
+                                : Color.clear
+                            )
                             .opacity(0.01)
                             .frame(maxWidth: .infinity)
                             .frame(height: 100)
@@ -148,44 +135,23 @@ struct ScrollContainer: View {
                     .gesture(
                         DragGesture(minimumDistance: 1)
                             .onChanged { gesture in
-                                print("밑으로 내려가는 드래그 됨!")
-                                appViewStore.isScrollDisabled = true
-                                
-                                // offset 애니메이션
-                                if gesture.translation.height > -50 {
-                                    appViewStore.messageOffset.height = gesture.translation.height
-        
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                                        appViewStore.messageOffset.height = .zero
-                                    }
-                                }
+                                appViewStore.scrollAvailabilityIndicator(true)
+                                appViewStore.swipeGuideMessageDragged(gesture)
                             }
                             .onEnded { gesture in
                                 withAnimation {
-                                    print("밑으로 내려가는 드래그 끝~")
+                                    appViewStore.scrollDestinationIndicator(
+                                        scrollReader: proxy,
+                                        destination: "introView"
+                                    )
                                     
-                                    // 뷰 전환
-                                    proxy.scrollTo("introView", anchor: .top)
-                                    appViewStore.isHistoryViewShown = false
-                                    
-                                    print(appViewStore.isHistoryViewShown)
-                                    
-                                    print("isHistoryViewShown: ", appViewStore.isHistoryViewShown)
-                                    print("isScrolledDisabled: ", appViewStore.isScrollDisabled)
+                                    appViewStore.historyViewIndicator(false)
                                 }
                             }
                     )
                 }
             }
             .scrollIndicators(.hidden)
-            .onChange(of: appViewStore.isHistoryViewShown) { isHistoryViewShown in
-//                if isHistoryViewShown == true {
-//                    appViewStore.isScrollDisabled = false
-//                } else {
-//                    appViewStore.isScrollDisabled = true
-//                }
-            }
-
         }
         .ignoresSafeArea()
     }
@@ -203,7 +169,9 @@ struct PositionObservingView<Content: View>: View {
             .background(GeometryReader { geometry in
                 Color.clear.preference(
                     key: PreferenceKey.self,
-                    value: geometry.frame(in: coordinateSpace).origin
+                    value: geometry
+                        .frame(in: coordinateSpace)
+                        .origin
                 )
             })
             .onPreferenceChange(PreferenceKey.self) { position in
@@ -260,9 +228,9 @@ struct OffsetObservingScrollView<Content: View>: View {
 
 
 
-//struct NewTestingView_Previews: PreviewProvider {
+//struct ScrollContainer_Previews: PreviewProvider {
 //    static var previews: some View {
-//        NewTestingView()
+//        ScrollContainer()
 //    }
 //}
 

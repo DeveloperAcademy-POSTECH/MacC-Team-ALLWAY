@@ -9,9 +9,6 @@ import SwiftUI
 
 struct TKHistoryView: View {
     @ObservedObject var appViewStore: AppViewStore
-  
-    @Binding var isHistoryViewShown: Bool
-    @Binding var deviceHeight: CGFloat
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -56,42 +53,30 @@ struct TKHistoryView: View {
                 }
                 .padding(.top, 10)
             }
-            // FIXME: deviceTopSafeAreaInset 값으로 변경
+            // TODO: - deviceTopSafeAreaInset 값으로 변경
             .padding(.top, 100)
             .background { Color(.systemGray6 )}
             
             ZStack(alignment: .bottom) {
-                VStack(spacing: 12) {
-                    Text("텍스트 작성 페이지로 돌아가기")
-                        .foregroundColor(.clear)
-                        .bold()
-                        .padding(.top, 24)
-                    
-                    Image(systemName: "chevron.compact.down")
-                        .resizable()
-                        .foregroundColor(.clear)
-                        .frame(width: 32, height: 10)
-                        .padding(.bottom, 10)
-                }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: 100
-                )
-                .background {
-                    Rectangle()
-                        .fill(Color.white)
-                }
+                Rectangle()
+                    .fill(.white)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: 100
+                    )
                 
                 swipeGuideMessage(type: .swipeToBottom)
                     .offset(appViewStore.messageOffset)
-
             }
-            .shadow(color: Color.black.opacity(0.03), radius: 5, x: 0, y: -6)
+            .shadow(
+                color: Color.black.opacity(0.03),
+                radius: 5, x: 0, y: -6
+            )
         }
-        .frame(height: deviceHeight)
+        .frame(height: appViewStore.deviceHeight)
         .ignoresSafeArea()
         .navigationTitle(
-            isHistoryViewShown ? "히스토리" : ""
+            appViewStore.isHistoryViewShown ? "히스토리" : ""
         )
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(
@@ -104,8 +89,6 @@ struct TKHistoryView: View {
         )
     }
 }
-
-
 
 
 

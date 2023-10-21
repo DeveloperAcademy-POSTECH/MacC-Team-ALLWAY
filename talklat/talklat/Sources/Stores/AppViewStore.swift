@@ -58,6 +58,27 @@ final class AppViewStore: ObservableObject {
         questionText = ""
     }
     
+    public func swipeGuideMessageTapped() {
+        isMessageTapped = true
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.5
+        ) {
+            self.isMessageTapped = false
+        }
+    }
+    
+    public func swipeGuideMessageDragged(_ gesture: DragGesture.Value) {
+        if gesture.translation.height > -50 {
+            messageOffset.height = gesture.translation.height
+            
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 0.15
+            ) {
+                self.messageOffset.height = .zero
+            }
+        }
+    }
+    
     public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
         withAnimation {
             proxy.scrollTo("introView")
@@ -77,26 +98,27 @@ final class AppViewStore: ObservableObject {
         }
     }
     
-    public func historyViewIndicator() {
-//        if scrollOffset.y <= 652 {
+    public func historyViewIndicator(_ shouldShow: Bool) {
+        if shouldShow {
             isHistoryViewShown = true
-//        } else {
+        } else {
             isHistoryViewShown = false
-//        }
+        }
     }
     
-    public func scrolledToHistoryView(_ proxy: ScrollViewProxy) {
-//        if !isHistoryViewShown,
-//           scrollOffset.y <= 771 {
-            proxy.scrollTo("historyView")
-//        }
+    public func scrollDestinationIndicator(
+        scrollReader: ScrollViewProxy,
+        destination: String
+    ) {
+        scrollReader.scrollTo(destination, anchor: .top)
     }
     
-    public func scrolledToIntroView(_ proxy: ScrollViewProxy) {
-//        if isHistoryViewShown,
-//           scrollOffset.y > 73 {
-            proxy.scrollTo("introView")
-//        }
+    public func scrollAvailabilityIndicator(_ isEnabled: Bool) {
+        if isEnabled {
+            isScrollDisabled = true
+        } else {
+            isScrollDisabled = false
+        }
     }
     
     public func bindingTextField(_ str: String) {
