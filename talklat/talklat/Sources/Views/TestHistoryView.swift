@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct HistoryItem: Identifiable {
-    var id: UUID
-    enum MessageType {
-        case question, answer
-    }
-    let text: String
-    let type: MessageType
-}
-
 //(Test용)
 struct TestHistoryView: View {
     @ObservedObject var appViewStore: AppViewStore

@@ -17,7 +17,6 @@ struct TLTextField<Button: View>: View {
     private var style: TLTextFieldStyle
     private var placeholder: String
     private var leadingButton: Button
-    private let customPlaceholder: String = "탭해서 전하고 싶은 내용을 작성해주세요."
     
     init(
         style: TLTextFieldStyle,
@@ -69,19 +68,20 @@ struct TLTextField<Button: View>: View {
     
     private func inputFieldSection(textLimit: Int) -> some View {
         ZStack {
-            if text.isEmpty {
-                HStack {
-                    Text(customPlaceholder)
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.gray)
-                        .lineSpacing(180)
-                        .padding(.leading, 24)
-                    Spacer()
-                }
-            }
+//            if text.isEmpty {
+//                HStack {
+//                    Text()
+//                        .font(.system(size: 20, weight: .bold))
+//                        .foregroundColor(.gray)
+//                        .lineSpacing(180)
+//                        .padding(.leading, 24)
+//                    Spacer()
+//                }
+//            }
             TextField(
                 placeholder,
-                text: $text
+                text: $text,
+                axis: .vertical
             )
             .font(.system(size: 20, weight: .bold))
             .padding(.leading, 24)
@@ -106,7 +106,7 @@ struct TLTextFieldTestView: View {
             TLTextField(
                 style: .normal(textLimit: 55),
                 text: $text,
-                placeholder: "",
+                placeholder: "탭해서 전하고 싶은 내용을 작성해주세요.",
                 leadingButton: {
                     Button {
                         text = ""

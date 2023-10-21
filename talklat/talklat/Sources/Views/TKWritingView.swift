@@ -27,10 +27,12 @@ struct TKWritingView: View {
                     Text("History")
                         .foregroundColor(.blue)
                 }
-                .padding()
                 
-                VStack {
-                    if let answeredText = appViewStore.answeredText {
+                if let answeredText = appViewStore.answeredText {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 224)
+                            .foregroundStyle(.gray.opacity(0.1))
                         Text(answeredText)
                             .font(.headline)
                             .bold()
@@ -39,51 +41,31 @@ struct TKWritingView: View {
                                 maxHeight: 100,
                                 alignment: .leading
                             )
-                            .padding(.top, 40)
+                            .padding(.top, 32)
                             .padding(.horizontal, 24)
                             .padding(.bottom, 80)
+                            .transition(
+                                .move(edge: .bottom)
+                                .combined(with: .opacity)
+                            )
                     }
                     
-//                    HStack {
-//                        Button {
-//                            appViewStore.removeQuestionTextButtonTapped()
-//                        } label: {
-//                            Text("전체 지우기")
-//                                .foregroundColor(.gray)
-//                        }
-//                        .font(.headline)
-//                        .padding(.leading, 24)
-//                        .padding(.top, 20)
-//                        .padding(.bottom, 36)
-//                        .disabled(appViewStore.questionText.isEmpty)
-//
-//                        Spacer()
-//                    }
-//                    .opacity(focusState ? 1.0 : 0.0)
-//                    .animation(.easeInOut, value: focusState)
-                    
-                    TLTextField(
-                        style: .normal(textLimit: 55),
-                        text: $appViewStore.questionText,
-                        placeholder: "",
-                        leadingButton: {
-                            Button {
-                                appViewStore.removeQuestionTextButtonTapped()
-                            } label: {
-                                Text("전체 지우기")
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                    )
-//                    TKTextField(appViewStore: appViewStore)
-//                        .focused($focusState)
-//                        .overlay(alignment: .topLeading) {
-//                            characterLimitView()
-//                                .padding(.leading, 24)
-//                                .opacity(focusState ? 1.0 : 0.0)
-//                                .animation(.easeInOut, value: focusState)
-//                        }
                 }
+                
+                TLTextField(
+                    style: .normal(textLimit: 160),
+                    text: $appViewStore.questionText,
+                    placeholder: "탭해서 전하고 싶은 내용을 작성해주세요.",
+                    leadingButton: {
+                        Button {
+                            appViewStore.removeQuestionTextButtonTapped()
+                        } label: {
+                            Text("전체 지우기")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                )
+                .padding(.top, 24)
                 
                 Spacer()
                 
@@ -108,6 +90,9 @@ struct TKWritingView: View {
                 appViewStore.onWritingViewAppear()
             }
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
         .frame(maxHeight: .infinity)
         .onDisappear {
             // TKHistoryView로 text 전달
@@ -127,12 +112,28 @@ struct TKWritingView: View {
     }
 }
 
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+//
+//struct TKWritingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TKWritingView(
+//            appViewStore: AppViewStore.makePreviewStore { instance in
+//                instance.questionTextSetter("Test")
+//            }
+//        )
+//    }
+//}
+
 struct TKWritingView_Previews: PreviewProvider {
     static var previews: some View {
-        TKWritingView(
-            appViewStore: AppViewStore.makePreviewStore { instance in
-                instance.questionTextSetter("Test")
-            }
-        )
+        TKWritingView(appViewStore: AppViewStore.makePreviewStore {
+            instance in
+            instance.questionTextSetter("test")
+        })
     }
 }
