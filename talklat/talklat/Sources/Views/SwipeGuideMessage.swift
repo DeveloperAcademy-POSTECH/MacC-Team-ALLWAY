@@ -13,7 +13,9 @@ public enum SwipeGuideType {
 }
 
 @ViewBuilder
-public func swipeGuideMessage(type: SwipeGuideType) -> some View {
+public func swipeGuideMessage(
+    type: SwipeGuideType
+) -> some View {
     switch type {
     case SwipeGuideType.swipeToTop:
         VStack {
@@ -60,11 +62,8 @@ public func swipeGuideMessage(type: SwipeGuideType) -> some View {
             maxHeight: .infinity,
             alignment: .bottom
         )
-    }
-}
-
-struct SwipeGuideSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        swipeGuideMessage(type: .swipeToBottom)
+        .onAppear {
+            
+        }
     }
 }

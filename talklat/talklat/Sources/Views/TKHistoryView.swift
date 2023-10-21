@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TKHistoryView: View {
     @ObservedObject var appViewStore: AppViewStore
+  
     @Binding var isHistoryViewShown: Bool
     @Binding var deviceHeight: CGFloat
     
@@ -59,7 +60,33 @@ struct TKHistoryView: View {
             .padding(.top, 100)
             .background { Color(.systemGray6 )}
             
-            swipeGuideMessage(type: .swipeToBottom)
+            ZStack(alignment: .bottom) {
+                VStack(spacing: 12) {
+                    Text("텍스트 작성 페이지로 돌아가기")
+                        .foregroundColor(.clear)
+                        .bold()
+                        .padding(.top, 24)
+                    
+                    Image(systemName: "chevron.compact.down")
+                        .resizable()
+                        .foregroundColor(.clear)
+                        .frame(width: 32, height: 10)
+                        .padding(.bottom, 10)
+                }
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: 100
+                )
+                .background {
+                    Rectangle()
+                        .fill(Color.white)
+                }
+                
+                swipeGuideMessage(type: .swipeToBottom)
+                    .offset(appViewStore.messageOffset)
+
+            }
+            .shadow(color: Color.black.opacity(0.03), radius: 5, x: 0, y: -6)
         }
         .frame(height: deviceHeight)
         .ignoresSafeArea()

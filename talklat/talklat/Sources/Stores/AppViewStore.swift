@@ -19,6 +19,15 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
     
+    @Published public var scrollOffset: CGPoint = .zero
+    @Published public var deviceHeight: CGFloat = CGFloat(0)
+    @Published public var isHistoryViewShown: Bool = false
+    
+    @Published public var isScrollDisabled: Bool = true
+    
+    @Published public var messageOffset: CGSize = .zero
+    @Published public var isMessageTapped: Bool = false
+    
     public let questionTextLimit: Int = 55
     
     // MARK: INIT
@@ -50,11 +59,11 @@ final class AppViewStore: ObservableObject {
     }
     
     public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
-        proxy.scrollTo("introView")
+        withAnimation {
+            proxy.scrollTo("introView")
+        }
     }
     
-    
-
     public func onWritingViewAppear() {
         if questionText.isEmpty { }
         else { questionText = "" }
@@ -66,6 +75,28 @@ final class AppViewStore: ObservableObject {
            answeredText != nil {
             hasGuidingMessageShown = true
         }
+    }
+    
+    public func historyViewIndicator() {
+//        if scrollOffset.y <= 652 {
+            isHistoryViewShown = true
+//        } else {
+            isHistoryViewShown = false
+//        }
+    }
+    
+    public func scrolledToHistoryView(_ proxy: ScrollViewProxy) {
+//        if !isHistoryViewShown,
+//           scrollOffset.y <= 771 {
+            proxy.scrollTo("historyView")
+//        }
+    }
+    
+    public func scrolledToIntroView(_ proxy: ScrollViewProxy) {
+//        if isHistoryViewShown,
+//           scrollOffset.y > 73 {
+            proxy.scrollTo("introView")
+//        }
     }
     
     public func bindingTextField(_ str: String) {
