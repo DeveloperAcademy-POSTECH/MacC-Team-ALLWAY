@@ -10,34 +10,32 @@ import SwiftUI
 struct ScrollContainer: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var appViewStore: AppViewStore
-    @State private var scrollOffset: CGPoint = .zero
     
     var body: some View {
-        GeometryReader { geo in
-            ScrollViewReader { proxy in
-                OffsetObservingScrollView(
-                    appViewStore: appViewStore,
-                    offset: $scrollOffset
-                ) {
+        GeometryReader { geo in /// TKIntroView가 디바이스 height를 차지하도록 사용
+            ScrollViewReader { proxy in /// 스크롤 위치 이동시 proxy 사용
+                ScrollView {
                     VStack {
                         TKHistoryView(appViewStore: appViewStore)
-                        .frame(maxWidth: .infinity)
-                        .id("historyView")
+                            .frame(maxWidth: .infinity)
+                            .id("TKHistoryView")
                         
                         TKIntroView(appViewStore: appViewStore)
-                        .padding(.top, -10) // View 사이의 디폴트 공백 제거
-                        .frame(
-                            height: geo.size.height + geo.safeAreaInsets.magnitude
-                        )
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .id("introView")
+                            .padding(.top, -10) /// View 사이의 디폴트 공백 제거
+                            .frame(
+                                height: geo.size.height + geo.safeAreaInsets.magnitude
+                            )
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .id("TKIntroView")
                     }
                     .onAppear {
                         appViewStore.onIntroViewAppear(proxy)
                         appViewStore.deviceHeight = geo.size.height
                     }
                 }
+                .scrollDisabled(appViewStore.isScrollDisabled)
+                // MARK: - 상단 스와이프 영역
                 .overlay {
                     VStack {
                         ZStack {
@@ -78,9 +76,7 @@ struct ScrollContainer: View {
                                             }
                                         }
                                 }
-                               
                             }
-                            // .background(.red) // 스와이프 메세지 탭 영역 확인
                             .frame(height: 50)
                         }
                         .frame(maxWidth: .infinity)
@@ -102,13 +98,13 @@ struct ScrollContainer: View {
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
-                                appViewStore.scrollAvailabilityIndicator(false)
+                                appViewStore.scrollAvailabilitySetter(false)
                             }
                             .onEnded { gesture in
                                 withAnimation {
-                                    appViewStore.historyViewIndicator(true)
+                                    appViewStore.historyViewSetter(true)
                                     
-                                    appViewStore.scrollDestinationIndicator(
+                                    appViewStore.scrollDestinationSetter(
                                         scrollReader: proxy,
                                         destination: "historyView"
                                     )
@@ -116,6 +112,7 @@ struct ScrollContainer: View {
                             }
                     )
                 }
+                // MARK: - 하단 스와이프 영역
                 .overlay {
                     VStack {
                         Spacer()
@@ -135,17 +132,17 @@ struct ScrollContainer: View {
                     .gesture(
                         DragGesture(minimumDistance: 1)
                             .onChanged { gesture in
-                                appViewStore.scrollAvailabilityIndicator(true)
+                                appViewStore.scrollAvailabilitySetter(true)
                                 appViewStore.swipeGuideMessageDragged(gesture)
                             }
                             .onEnded { gesture in
                                 withAnimation {
-                                    appViewStore.scrollDestinationIndicator(
+                                    appViewStore.scrollDestinationSetter(
                                         scrollReader: proxy,
                                         destination: "introView"
                                     )
                                     
-                                    appViewStore.historyViewIndicator(false)
+                                    appViewStore.historyViewSetter(false)
                                 }
                             }
                     )
@@ -156,83 +153,15 @@ struct ScrollContainer: View {
         .ignoresSafeArea()
     }
 }
-    
 
-// .onPreferenceChange에 값 넣기
-struct PositionObservingView<Content: View>: View {
-    var coordinateSpace: CoordinateSpace
-    @Binding var position: CGPoint
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        content()
-            .background(GeometryReader { geometry in
-                Color.clear.preference(
-                    key: PreferenceKey.self,
-                    value: geometry
-                        .frame(in: coordinateSpace)
-                        .origin
-                )
-            })
-            .onPreferenceChange(PreferenceKey.self) { position in
-                self.position = position
-            }
-    }
-}
-
-// PreferenceKey:
-private extension PositionObservingView {
-    struct PreferenceKey: SwiftUI.PreferenceKey {
-        static var defaultValue: CGPoint { .zero }
-        static func reduce(
-            value: inout CGPoint,
-            nextValue: () -> CGPoint
-        ) { }
-    }
-}
-
-
-struct OffsetObservingScrollView<Content: View>: View {
-    private(set) var axes: Axis.Set = [.vertical]
-    private(set) var showsIndicators = true
-   
-    @ObservedObject var appViewStore: AppViewStore
-    
-    @Binding private(set) var offset: CGPoint
-    @ViewBuilder private(set) var content: () -> Content
-    
-    var body: some View {
-        ScrollView(
-            axes,
-            showsIndicators: showsIndicators
-        ) {
-            PositionObservingView(
-                coordinateSpace: .named("talklat"),
-                position: Binding(
-                    get: { offset },
-                    set: { newOffset in
-                        offset = CGPoint(
-                            x: -newOffset.x,
-                            y: -newOffset.y
-                        )
-                    }
-                ),
-                content: content
+struct ScrollContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollContainer(
+            appViewStore: AppViewStore(
+                communicationStatus: .recording,
+                questionText: "",
+                currentAuthStatus: .authCompleted
             )
-        }
-        .scrollDisabled(appViewStore.isScrollDisabled)
-        .coordinateSpace(name: "talklat")
-        
+        )
     }
 }
-
-
-
-//struct ScrollContainer_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ScrollContainer()
-//    }
-//}
-
-
-

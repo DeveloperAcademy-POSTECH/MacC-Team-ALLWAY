@@ -19,7 +19,6 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
     
-    @Published public var scrollOffset: CGPoint = .zero
     @Published public var deviceHeight: CGFloat = CGFloat(0)
     @Published public var isHistoryViewShown: Bool = false
     
@@ -81,7 +80,7 @@ final class AppViewStore: ObservableObject {
     
     public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
         withAnimation {
-            proxy.scrollTo("introView")
+            proxy.scrollTo("TKIntroView")
         }
     }
     
@@ -98,7 +97,7 @@ final class AppViewStore: ObservableObject {
         }
     }
     
-    public func historyViewIndicator(_ shouldShow: Bool) {
+    public func historyViewSetter(_ shouldShow: Bool) {
         if shouldShow {
             isHistoryViewShown = true
         } else {
@@ -106,14 +105,14 @@ final class AppViewStore: ObservableObject {
         }
     }
     
-    public func scrollDestinationIndicator(
+    public func scrollDestinationSetter(
         scrollReader: ScrollViewProxy,
         destination: String
     ) {
         scrollReader.scrollTo(destination, anchor: .top)
     }
     
-    public func scrollAvailabilityIndicator(_ isEnabled: Bool) {
+    public func scrollAvailabilitySetter(_ isEnabled: Bool) {
         if isEnabled {
             isScrollDisabled = true
         } else {
