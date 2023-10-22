@@ -11,8 +11,6 @@ struct TKWritingView: View {
     @ObservedObject var appViewStore: AppViewStore
     @FocusState var focusState: Bool
     
-    @State private var text = ""
-    
     private var hasQuestionTextReachedMaximumCount: Bool {
         appViewStore.questionText.count == appViewStore.questionTextLimit
     }
@@ -33,6 +31,7 @@ struct TKWritingView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.2)
                             .foregroundStyle(.gray.opacity(0.1))
+                        
                         HStack {
                             Image(systemName: "waveform.circle.fill")
                                 .resizable()
@@ -44,11 +43,14 @@ struct TKWritingView: View {
                                     .move(edge: .bottom)
                                     .combined(with: .opacity)
                                 )
+                            
                             Spacer()
                         }
+                        
                         Text("        " + answeredText)
                             .font(.headline)
                             .bold()
+                            .lineSpacing(10)
                             .frame(
                                 maxWidth: .infinity,
                                 alignment: .leading
@@ -72,7 +74,10 @@ struct TKWritingView: View {
                             appViewStore.removeQuestionTextButtonTapped()
                         } label: {
                             Text("전체 지우기")
-                                .foregroundColor(.gray)
+                                .foregroundColor(appViewStore.questionText.isEmpty
+                                                 ? .gray.opacity(0.5)
+                                                 : .gray
+                                )
                         }
                     }
                 )

@@ -11,14 +11,17 @@ import SwiftUI
 struct TKRecordingView: View {
     @StateObject var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @ObservedObject var appViewStore: AppViewStore
-    @State var historyItems: [HistoryItem] = []
+    
+    private var isRecording: Bool {
+        return !speechRecognizeManager.transcript.isEmpty
+    }
 
     var body: some View {
         ZStack {
             VStack {
                 HStack {
                     // 가이드 메세지 -> 이전 유저의 질문 텍스트가 있고 & 음성 인식이 시작되면 질문 텍스트로 변경
-                    if (!appViewStore.questionText.isEmpty && checkisRecording()) {
+                    if (!appViewStore.questionText.isEmpty && isRecording) {
                         Text(appViewStore.questionText)
                             .font(.system(size: 17, weight: .medium))
                             .lineSpacing(10)
@@ -29,7 +32,7 @@ struct TKRecordingView: View {
                                 maxWidth: .infinity,
                                 alignment: .leading
                             )
-                        //TODO: transition? animation!
+                        //TODO: <이전 화면의 유저 질문 텍스트> 위치 이동 animation!
                     } else {
                         guideMessageBuilder()
                     }
@@ -37,7 +40,7 @@ struct TKRecordingView: View {
                 }
                 
                 // 이전 화면의 유저의 질문 텍스트가 있을 때에만 표시
-                if (!appViewStore.questionText.isEmpty && !checkisRecording()) {
+                if (!appViewStore.questionText.isEmpty && !isRecording) {
                     // 유저의 질문 텍스트
                     Text(appViewStore.questionText)
                         .font(appViewStore.communicationStatus == .recording ? .title2 : .largeTitle)
@@ -50,11 +53,11 @@ struct TKRecordingView: View {
                             maxWidth: .infinity,
                             alignment: .leading
                         )
-                        .animation(.easeInOut(duration: 0.5), value: checkisRecording())
                 }
+                
                 Spacer()
                 // 음성 인식 텍스트
-                if(checkisRecording()) {
+                if(isRecording) {
                     ZStack {
                         VStack {
                             Spacer()
@@ -65,9 +68,8 @@ struct TKRecordingView: View {
                         Text(speechRecognizeManager.transcript)
                             .font(.system(size: 24))
                             .bold()
-                            .lineSpacing(12)
+                            .lineSpacing(14)
                             .padding(.horizontal, 24)
-                            .padding(.bottom, 100)//ㅠㅠ
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
@@ -80,46 +82,22 @@ struct TKRecordingView: View {
                     .padding(.bottom, 40)
             }
         }
-        
         .ignoresSafeArea()
         .onAppear {
             appViewStore.onRecordingViewAppear()
-            
-            #if DEBUG
-            if !ProcessInfo.processInfo.environment.keys.contains("XCODE_RUNNING_FOR_PREVIEWS") {
-                speechRecognizeManager.startTranscribing()
-            }
-            #endif
+            speechRecognizeManager.startTranscribing()
         }
-//        .onAppear {
-//            appViewStore.onRecordingViewAppear()
-//            speechRecognizeManager.startTranscribing()
-//        }
         .onChange(of: appViewStore.communicationStatus) { communicationStatus in
-            #if DEBUG
-            if !ProcessInfo.processInfo.environment.keys.contains("XCODE_RUNNING_FOR_PREVIEWS") {
-                switch communicationStatus {
-                case .recording:
-                    speechRecognizeManager.startTranscribing()
-                case .writing:
-                    speechRecognizeManager.stopAndResetTranscribing()
-                }
+            switch communicationStatus {
+            case .recording:
+                speechRecognizeManager.startTranscribing()
+            case .writing:
+                speechRecognizeManager.stopAndResetTranscribing()
             }
-            #endif
         }
-
-//        .onChange(of: appViewStore.communicationStatus) { communicationStatus in
-//            switch communicationStatus {
-//            case .recording:
-//                speechRecognizeManager.startTranscribing()
-//            case .writing:
-//                speechRecognizeManager.stopAndResetTranscribing()
-//            }
-//        }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
             if !transcript.isEmpty {
                 appViewStore.answeredTextSetter(transcript)
-                print(transcript)
             }
         }
         .onDisappear {
@@ -149,14 +127,6 @@ struct TKRecordingView: View {
         .background {
             Circle()
                 .foregroundColor(.gray)
-        }
-    }
-    
-    private func checkisRecording() -> Bool {
-        if speechRecognizeManager.transcript != "" {
-            return true
-        } else {
-            return false
         }
     }
 }
