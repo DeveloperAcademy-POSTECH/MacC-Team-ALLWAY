@@ -12,7 +12,7 @@ struct ScrollContainer: View {
     @ObservedObject var appViewStore: AppViewStore
     
     var body: some View {
-        GeometryReader { geo in /// TKIntroView가 디바이스 height를 차지하도록 사용
+        GeometryReader { geo in // TKIntroView가 디바이스 height를 차지하도록 사용
             ScrollViewReader { proxy in /// 스크롤 위치 이동시 proxy 사용
                 ScrollView {
                     VStack {
@@ -40,11 +40,7 @@ struct ScrollContainer: View {
                     VStack {
                         ZStack {
                             Rectangle()
-                                .fill(
-                                    appViewStore.isHistoryViewShown
-                                    ? Color.clear
-                                    : .red
-                                )
+                                .fill(.red)
                                 .opacity(0.001)
                             
                             VStack {
@@ -53,7 +49,9 @@ struct ScrollContainer: View {
                                         .font(.system(size: 11))
                                         .foregroundColor(Color(.systemGray2))
                                         .opacity(
-                                            appViewStore.isMessageTapped ? 1.0 : 0.0
+                                            appViewStore.isMessageTapped
+                                            ? 1.0
+                                            : 0.0
                                         )
                                         .padding(.top, 10)
                                     
@@ -106,7 +104,7 @@ struct ScrollContainer: View {
                                     
                                     appViewStore.scrollDestinationSetter(
                                         scrollReader: proxy,
-                                        destination: "historyView"
+                                        destination: "TKHistoryView"
                                     )
                                 }
                             }
@@ -119,11 +117,7 @@ struct ScrollContainer: View {
                             .frame(maxHeight: .infinity)
                         
                         Rectangle()
-                            .fill(
-                                appViewStore.isHistoryViewShown
-                                ? .blue
-                                : Color.clear
-                            )
+                            .fill(.blue)
                             .opacity(0.01)
                             .frame(maxWidth: .infinity)
                             .frame(height: 100)
@@ -139,7 +133,7 @@ struct ScrollContainer: View {
                                 withAnimation {
                                     appViewStore.scrollDestinationSetter(
                                         scrollReader: proxy,
-                                        destination: "introView"
+                                        destination: "TKIntroView"
                                     )
                                     
                                     appViewStore.historyViewSetter(false)
@@ -154,14 +148,4 @@ struct ScrollContainer: View {
     }
 }
 
-struct ScrollContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollContainer(
-            appViewStore: AppViewStore(
-                communicationStatus: .recording,
-                questionText: "",
-                currentAuthStatus: .authCompleted
-            )
-        )
-    }
-}
+

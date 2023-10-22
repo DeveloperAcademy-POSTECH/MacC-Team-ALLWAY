@@ -21,9 +21,7 @@ final class AppViewStore: ObservableObject {
     
     @Published public var deviceHeight: CGFloat = CGFloat(0)
     @Published public var isHistoryViewShown: Bool = false
-    
     @Published public var isScrollDisabled: Bool = true
-    
     @Published public var messageOffset: CGSize = .zero
     @Published public var isMessageTapped: Bool = false
     
