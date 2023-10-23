@@ -30,12 +30,12 @@ struct TKIntroView: View {
             }
         }
         // TODO: - 디자인 팀이랑 상의 후 패딩 값 조절 (전체 지우기, swipeGuideMessage의 거리 등)
-        .safeAreaInset(edge: .top) {
-            Rectangle()
-                .fill(.white)
-            // TODO: - deviceTopSafeAreaInset 값으로 변경
-                .frame(height: 50)
-        }
+//        .safeAreaInset(edge: .top) {
+//            Rectangle()
+//                .fill(.white)
+//            // TODO: - deviceTopSafeAreaInset 값으로 변경
+//                .frame(height: 50)
+//        }
         .onAppear {
             gyroMotionStore.detectDeviceMotion()
         }
@@ -45,9 +45,7 @@ struct TKIntroView: View {
                 appViewStore.communicationStatusSetter(.writing)
                 HapticManager.sharedInstance.generateHaptic(.rigidTwice)
             case .opponent:
-                withAnimation {
-                    appViewStore.communicationStatusSetter(.recording)
-                }
+                appViewStore.communicationStatusSetter(.recording)
                 HapticManager.sharedInstance.generateHaptic(.success)
             }
         }
