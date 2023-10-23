@@ -14,13 +14,17 @@ final class AppViewStore: ObservableObject {
     }
     
     @Published private(set) var communicationStatus: CommunicationStatus
-//    @Published private(set) var questionText: String
-    @Published var questionText: String
+    @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
-//    @Published var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
-    @Published var historyItems: [HistoryItem] = []
+    @Published public var historyItems: [HistoryItem] = []
+    
+    @Published public var deviceHeight: CGFloat = CGFloat(0)
+    @Published public var isHistoryViewShown: Bool = false
+    @Published public var isScrollDisabled: Bool = true
+    @Published public var messageOffset: CGSize = .zero
+    @Published public var isMessageTapped: Bool = false
     
     public let questionTextLimit: Int = 55
     
@@ -73,7 +77,34 @@ final class AppViewStore: ObservableObject {
     public func removeQuestionTextButtonTapped() {
         questionText = ""
     }
-
+    
+    public func swipeGuideMessageTapped() {
+        isMessageTapped = true
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.5
+        ) {
+            self.isMessageTapped = false
+        }
+    }
+    
+    public func swipeGuideMessageDragged(_ gesture: DragGesture.Value) {
+        if gesture.translation.height > -50 {
+            messageOffset.height = gesture.translation.height
+            
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 0.15
+            ) {
+                self.messageOffset.height = .zero
+            }
+        }
+    }
+    
+    public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
+        withAnimation {
+            proxy.scrollTo("TKIntroView")
+        }
+    }
+    
     public func onWritingViewAppear() {
         if questionText.isEmpty { }
         else { questionText = "" }
@@ -84,6 +115,29 @@ final class AppViewStore: ObservableObject {
         if !hasGuidingMessageShown,
            answeredText != nil {
             hasGuidingMessageShown = true
+        }
+    }
+    
+    public func historyViewSetter(_ shouldShow: Bool) {
+        if shouldShow {
+            isHistoryViewShown = true
+        } else {
+            isHistoryViewShown = false
+        }
+    }
+    
+    public func scrollDestinationSetter(
+        scrollReader: ScrollViewProxy,
+        destination: String
+    ) {
+        scrollReader.scrollTo(destination, anchor: .top)
+    }
+    
+    public func scrollAvailabilitySetter(_ isEnabled: Bool) {
+        if isEnabled {
+            isScrollDisabled = true
+        } else {
+            isScrollDisabled = false
         }
     }
     

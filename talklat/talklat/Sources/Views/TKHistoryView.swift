@@ -7,89 +7,97 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct TKHistoryView: View {
+    @Environment(\.colorScheme)
+       var colorScheme
     @ObservedObject var appViewStore: AppViewStore
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             ScrollView {
                 // TODO: - ForEach의 data 아규먼트 수정
                 // TODO: - 각 Color 값을 디자인 시스템 값으로 추후 수정
-                ForEach(0..<100) { int in
-                    if int % 2 == 0 {
+                ForEach(
+                    appViewStore.historyItems,
+                    id: \.id
+                ) { item in
+                    switch item.type {
+                    case .question:
+                        Text(item.text)
+                            .font(.subheadline)
+                            .foregroundColor(.gray700)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray200)
+                            }
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .trailing
+                            )
+                            .padding(.trailing, 24)
+                            .padding(.leading, 68)
+                            .padding(.top, 32)
+                   
+                    case .answer:
                         VStack(alignment: .leading) {
                             Image(systemName: "waveform.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(Color(.systemGray))
+                                .foregroundColor(Color.gray700)
                                 .padding(.leading, 4)
                             
-                            Text("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠")
+                            Text(item.text)
                                 .font(.headline)
+                                .foregroundColor(.gray700)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)
                                 .background {
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill(Color(.white))
-                                        .frame(maxHeight: 100)
                                 }
                         }
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
                         .padding(.horizontal, 24)
-                        
-                    } else {
-                        Text("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠")
-                            .font(.subheadline)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray4))
-                                    .frame(maxHeight: 100)
-                            }
-                            .padding(.trailing, 24)
-                            .padding(.leading, 68)
-                            .padding(.top, 32)
                     }
                 }
+                .padding(.top, 10)
             }
-            .padding(.top, 16)
+            // TODO: - deviceTopSafeAreaInset 값으로 변경
+            .padding(.top, 100)
             .background { Color(.systemGray6 )}
-            
-            VStack {
-                VStack(spacing: 12) {
-                    Text("텍스트 작성 페이지로 돌아가기")
-                        .font(.system(size: 12, weight: .bold))
-                        .bold()
-                        .padding(.top, 24)
-                    
-                    Image(systemName: "chevron.compact.down")
-                        .resizable()
-                        .frame(width: 32, height: 10)
-                        .padding(.bottom, 10)
-                }
+        }
+        .safeAreaInset(edge: .bottom) {
+            ZStack(alignment: .top) {
+                Rectangle()
+                    .fill(
+                        colorScheme == .light
+                        ? Color.white
+                        : Color.black
+                    )
                     .frame(
                         maxWidth: .infinity,
-                        maxHeight: 100,
-                        alignment: .top
+                        maxHeight: 100
                     )
-                    .foregroundColor(Color(.systemGray))
-                    .background {
-                        Rectangle()
-                            .fill(Color.white)
-                            .shadow(
-                                color: Color(.systemGray4),
-                                radius: 30,
-                                y: -1
-                            )
-                    }
+                
+                swipeGuideMessage(type: .swipeToBottom)
+                    .offset(appViewStore.messageOffset)
             }
-            .frame(
-                maxHeight: .infinity,
-                alignment: .bottom
+            .shadow(
+                color: Color.gray300,
+                radius: 5, x: 0, y: -6
             )
         }
-        .ignoresSafeArea(edges: .bottom)
-        .navigationTitle("히스토리")
+        .ignoresSafeArea()
+        .navigationTitle(
+            appViewStore.isHistoryViewShown ? "히스토리" : ""
+        )
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(
             Color(.systemGray6),
@@ -105,7 +113,13 @@ struct TKHistoryView: View {
 struct TKHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            TKHistoryView(appViewStore: .makePreviewStore(condition: { store in
+            ScrollContainer(appViewStore: .makePreviewStore(condition: { store in
+                store.historyItems.append(.init(id: .init(), text: "대답1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "질문1", type: .question))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .question))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .question))
                 
             }))
         }

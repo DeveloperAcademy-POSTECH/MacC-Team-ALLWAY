@@ -50,12 +50,12 @@ struct TKHistoryViewA_Previews: PreviewProvider {
             questionText: "",
             currentAuthStatus: .authCompleted
         )
-        previewStore.historyItems = [
-            HistoryItem(id: UUID(), text: "잠이 옵니다", type: .question),
-            HistoryItem(id: UUID(), text: "그럴 수 있어요", type: .answer),
-            HistoryItem(id: UUID(), text: "아이스아메리카노 있나요?", type: .question),
-            HistoryItem(id: UUID(), text: "테스트 해보시겠어요", type: .answer),
-        ]
+//        previewStore.historyItems = [
+//            HistoryItem(id: UUID(), text: "잠이 옵니다", type: .question),
+//            HistoryItem(id: UUID(), text: "그럴 수 있어요", type: .answer),
+//            HistoryItem(id: UUID(), text: "아이스아메리카노 있나요?", type: .question),
+//            HistoryItem(id: UUID(), text: "테스트 해보시겠어요", type: .answer),
+//        ]
         
         return TestHistoryView(appViewStore: previewStore)
     }
