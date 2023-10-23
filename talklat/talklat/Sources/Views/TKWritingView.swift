@@ -20,11 +20,14 @@ struct TKWritingView: View {
         VStack {
             // (Test용) TKHistoryView로 이동하는 부분
             // TODO: Upper Chevron
-            
-            if let answeredText = appViewStore.answeredText {
+            if let lastItem = appViewStore.historyItems.last,
+               lastItem.type == .answer {
                 ZStack(alignment: .top) {
                     RoundedRectangle(cornerRadius: 12)
-                        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.2)
+                        .frame(
+                            width: UIScreen.main.bounds.width * 0.9,
+                            height: UIScreen.main.bounds.height * 0.2
+                        )
                         .foregroundStyle(.gray.opacity(0.1))
                     
                     HStack {
@@ -42,7 +45,7 @@ struct TKWritingView: View {
                         Spacer()
                     }
                     
-                    Text("        " + answeredText)
+                    Text("        " + lastItem.text)
                         .font(.headline)
                         .bold()
                         .lineSpacing(10)
@@ -57,7 +60,6 @@ struct TKWritingView: View {
                             .combined(with: .opacity)
                         )
                 }
-                
             }
             
             TLTextField(
@@ -89,16 +91,15 @@ struct TKWritingView: View {
             } label: {
                 Text("**음성 인식 전환**")
                     .foregroundColor(.white)
+                    .padding(.horizontal, 25)
+                    .padding(.vertical, 22)
+                    .background {
+                        Capsule()
+                            .foregroundColor(.gray)
+                    }
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
-            .background {
-                Capsule()
-                    .foregroundColor(.gray)
-            }
+            .padding(.bottom, 20)
             
-            Spacer()
-                .frame(maxHeight: 60)
         }
         .onAppear {
             appViewStore.onWritingViewAppear()
@@ -116,7 +117,7 @@ struct TKWritingView: View {
 struct TKWritingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            ScrollContainer(appViewStore: AppViewStore.makePreviewStore {
+            TKWritingView(appViewStore: AppViewStore.makePreviewStore {
                 instance in
                 instance.questionTextSetter("test")
                 instance.historyItems.append(.init(id: .init(), text: "dfdf", type: .answer))
