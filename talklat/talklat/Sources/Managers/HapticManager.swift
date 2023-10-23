@@ -12,9 +12,10 @@ class HapticManager {
     enum HapticStyle {
         case rigidTwice
         case success
+        case light(times: Int)
     }
     
-    static var sharedInstance: HapticManager = HapticManager()
+    static let sharedInstance: HapticManager = HapticManager()
     private var _engine: CHHapticEngine?
     var engine: CHHapticEngine? {
         get {
@@ -25,7 +26,7 @@ class HapticManager {
         }
     }
     
-    init() {
+    private init() {
         prepareHapticEngine()
     }
     
@@ -65,29 +66,94 @@ class HapticManager {
         switch style {
         // rigid twice
         case .rigidTwice:
-            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 2)
-            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+            let intensity = CHHapticEventParameter(
+                parameterID: .hapticIntensity,
+                value: 2
+            )
+            let sharpness = CHHapticEventParameter(
+                parameterID: .hapticSharpness,
+                value: 1
+            )
             
+            let firstEvent = CHHapticEvent(
+                eventType: .hapticTransient,
+                parameters: [intensity, sharpness],
+                relativeTime: 0
+            )
+            let secondEvent = CHHapticEvent(
+                eventType: .hapticTransient,
+                parameters: [intensity, sharpness],
+                relativeTime: 0.1
+            )
             
-            let firstEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
-            let secondEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0.1)
-            
-            let pattern = try? CHHapticPattern(events: [firstEvent, secondEvent], parameters: [])
+            let pattern = try? CHHapticPattern(
+                events: [firstEvent, secondEvent],
+                parameters: []
+            )
             return pattern
             
         // success
         case .success:
-            let firstIntensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
-            let firstSharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.4)
-            let firstEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [firstIntensity, firstSharpness], relativeTime: 0)
+            let firstIntensity = CHHapticEventParameter(
+                parameterID: .hapticIntensity,
+                value: 1
+            )
+            let firstSharpness = CHHapticEventParameter(
+                parameterID: .hapticSharpness,
+                value: 0.4
+            )
+            let firstEvent = CHHapticEvent(
+                eventType: .hapticTransient,
+                parameters: [firstIntensity, firstSharpness],
+                relativeTime: 0
+            )
             
-            let secondIntensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 2)
-            let secondSharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.8)
-            let secondEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [secondIntensity, secondSharpness], relativeTime: 0.15)
+            let secondIntensity = CHHapticEventParameter(
+                parameterID: .hapticIntensity,
+                value: 2
+            )
+            let secondSharpness = CHHapticEventParameter(
+                parameterID: .hapticSharpness,
+                value: 0.8
+            )
+            let secondEvent = CHHapticEvent(
+                eventType: .hapticTransient,
+                parameters: [secondIntensity, secondSharpness],
+                relativeTime: 0.15
+            )
             
-            let pattern = try? CHHapticPattern(events: [firstEvent, secondEvent], parameters: [])
+            let pattern = try? CHHapticPattern(
+                events: [firstEvent, secondEvent],
+                parameters: []
+            )
             return pattern
             
+        case let .light(times: times):
+            let intensity = CHHapticEventParameter(
+                parameterID: .hapticIntensity,
+                value: 0.5
+            )
+            let sharpness = CHHapticEventParameter(
+                parameterID: .hapticSharpness,
+                value: 0.3
+            )
+            
+            var events: [CHHapticEvent] = [CHHapticEvent]()
+            
+            for i in 0 ..< times {
+                let event = CHHapticEvent(
+                    eventType: .hapticTransient,
+                    parameters: [intensity, sharpness],
+                    relativeTime: Double(i) * 0.1
+                )
+                events.append(event)
+            }
+            
+            let pattern = try? CHHapticPattern(
+                events: events,
+                parameters: []
+            )
+            return pattern
         }
     }
     
@@ -112,6 +178,10 @@ struct HapticTestView: View {
             
             Button("success") {
                 HapticManager.sharedInstance.generateHaptic(.success)
+            }
+            
+            Button("light") {
+                HapticManager.sharedInstance.generateHaptic(.light(times: 10))
             }
         }
         .onAppear {

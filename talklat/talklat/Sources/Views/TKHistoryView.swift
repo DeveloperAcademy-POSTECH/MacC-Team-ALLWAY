@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct TKHistoryView: View {
+    @Environment(\.colorScheme)
+       var colorScheme
     @ObservedObject var appViewStore: AppViewStore
     
     var body: some View {
@@ -15,40 +19,52 @@ struct TKHistoryView: View {
             ScrollView {
                 // TODO: - ForEach의 data 아규먼트 수정
                 // TODO: - 각 Color 값을 디자인 시스템 값으로 추후 수정
-                ForEach(0 ..< 100) { int in
-                    if int % 2 == 0 {
+                ForEach(
+                    appViewStore.historyItems,
+                    id: \.id)
+                { item in
+                    switch item.type {
+                    case .question:
+                        Text(item.text)
+                            .font(.subheadline)
+                            .foregroundColor(.gray700)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray200)
+                            }
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .trailing
+                            )
+                            .padding(.trailing, 24)
+                            .padding(.leading, 68)
+                            .padding(.top, 32)
+                   
+                    case .answer:
                         VStack(alignment: .leading) {
                             Image(systemName: "waveform.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(Color(.systemGray))
+                                .foregroundColor(Color.gray700)
                                 .padding(.leading, 4)
                             
-                            Text("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠")
+                            Text(item.text)
                                 .font(.headline)
+                                .foregroundColor(.gray700)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)
                                 .background {
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill(Color(.white))
-                                        .frame(maxHeight: 100)
                                 }
                         }
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
                         .padding(.horizontal, 24)
-                        
-                    } else {
-                        Text("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠")
-                            .font(.subheadline)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray4))
-                                    .frame(maxHeight: 100)
-                            }
-                            .padding(.trailing, 24)
-                            .padding(.leading, 68)
-                            .padding(.top, 32)
                     }
                 }
                 .padding(.top, 10)
@@ -59,7 +75,11 @@ struct TKHistoryView: View {
             
             ZStack(alignment: .bottom) {
                 Rectangle()
-                    .fill(.white)
+                    .fill(
+                        colorScheme == .light
+                        ? Color.white
+                        : Color.black
+                    )
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: 100
@@ -69,7 +89,7 @@ struct TKHistoryView: View {
                     .offset(appViewStore.messageOffset)
             }
             .shadow(
-                color: Color.black.opacity(0.03),
+                color: Color.gray300,
                 radius: 5, x: 0, y: -6
             )
         }
@@ -90,17 +110,18 @@ struct TKHistoryView: View {
     }
 }
 
-
-
-//struct TKHistoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            TKHistoryView(
-//                appViewStore: .makePreviewStore(condition: { store in
-//
-//            }),
-//                isHistoryViewShown: .constant(true)
-//            )
-//        }
-//    }
-//}
+struct TKHistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ScrollContainer(appViewStore: .makePreviewStore(condition: { store in
+                store.historyItems.append(.init(id: .init(), text: "대답1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "질문1", type: .question))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .question))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .question))
+                
+            }))
+        }
+    }
+}
