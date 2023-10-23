@@ -167,9 +167,10 @@ final class SpeechRecognizer: ObservableObject {
         } else {
             errorMessage += error.localizedDescription
         }
-        Task { @MainActor [errorMessage] in
-            transcript = "<< \(errorMessage) >>"
-        }
+        // MARK: Answered Text에 에러 메시지가 쌓이지 않도록 후속 작업 각주 처리
+//        Task { @MainActor _ in
+//            transcript = "<< \(errorMessage) >>"
+//        }
     }
 }
 
