@@ -20,6 +20,13 @@ public enum Constants {
     말씀하신 내용은 음성인식되어서
     텍스트로 변환됩니다.
     """
+    
+    static let SECOND_GUIDE_MESSAGE: String =
+    """
+    저는 청각장애가 있어요.
+    말씀하신 내용은 음성인식되어서
+    텍스트로 변환됩니다.
+    """
 }
 
 public enum AuthStatus: String {

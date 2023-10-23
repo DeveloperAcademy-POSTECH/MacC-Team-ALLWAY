@@ -91,6 +91,7 @@ struct TKRecordingView: View {
             switch communicationStatus {
             case .recording:
                 speechRecognizeManager.startTranscribing()
+                appViewStore.recognitionCount += 1
             case .writing:
                 speechRecognizeManager.stopAndResetTranscribing()
             }
@@ -111,7 +112,14 @@ struct TKRecordingView: View {
     }
     
     private func guideMessageBuilder() -> some View {
-        Text(Constants.GUIDE_MESSAGE)
+        let message: String
+        if appViewStore.recognitionCount == 0 {
+            message = Constants.GUIDE_MESSAGE
+        } else {
+            message = Constants.SECOND_GUIDE_MESSAGE
+        }
+        
+        return Text(message)
             .font(.system(size: 24, weight: .medium))
             .multilineTextAlignment(.leading)
             .lineSpacing(12)
