@@ -21,8 +21,8 @@ struct TKHistoryView: View {
                 // TODO: - 각 Color 값을 디자인 시스템 값으로 추후 수정
                 ForEach(
                     appViewStore.historyItems,
-                    id: \.id)
-                { item in
+                    id: \.id
+                ) { item in
                     switch item.type {
                     case .question:
                         Text(item.text)
@@ -72,8 +72,9 @@ struct TKHistoryView: View {
             // TODO: - deviceTopSafeAreaInset 값으로 변경
             .padding(.top, 100)
             .background { Color(.systemGray6 )}
-            
-            ZStack(alignment: .bottom) {
+        }
+        .safeAreaInset(edge: .bottom) {
+            ZStack(alignment: .top) {
                 Rectangle()
                     .fill(
                         colorScheme == .light
@@ -93,7 +94,6 @@ struct TKHistoryView: View {
                 radius: 5, x: 0, y: -6
             )
         }
-        .frame(height: appViewStore.deviceHeight)
         .ignoresSafeArea()
         .navigationTitle(
             appViewStore.isHistoryViewShown ? "히스토리" : ""

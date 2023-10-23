@@ -17,7 +17,8 @@ public enum Constants {
     static let GUIDE_MESSAGE: String =
     """
     저는 청각장애가 있어요.
-    음성 인식을 위해 천천히 크게 말해주세요.
+    말씀하신 내용은 음성인식되어서
+    텍스트로 변환됩니다.
     """
 }
 
