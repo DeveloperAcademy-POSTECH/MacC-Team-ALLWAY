@@ -23,6 +23,7 @@ public enum Constants {
 }
 
 public enum AuthStatus: String {
+    case splash
     case authCompleted
     case speechRecognitionAuthIncompleted = "음성 인식"
     case microphoneAuthIncompleted = "마이크"
