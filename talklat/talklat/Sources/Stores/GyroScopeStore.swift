@@ -42,8 +42,8 @@ final class GyroScopeStore: ObservableObject {
                     // MARK: roll, pitch, yaw를 전부 사용해서 attitude를 판단
                     self?.rotationDegree = abs(validData.attitude.pitch.toDegrees()) + abs(validData.attitude.roll.toDegrees()) + abs(validData.attitude.yaw.toDegrees())
                     
-                    //y축 각속도가 2 이상일때
-                    if abs(validData.rotationRate.y) > 2 {
+                    let yVelocity: Double = abs(validData.rotationRate.y)
+                    if yVelocity > 2 {
                         //MARK: 실제 뷰의 UI를 변경하는 부분은 Main Queue에서 업데이트
                         DispatchQueue.main.async {
                             self?.faced = self?.motionStatusSetter(self?.rotationDegree) ?? .myself
@@ -70,7 +70,7 @@ final class GyroScopeStore: ObservableObject {
         guard let degree = rotationDegree else { return nil }
         
         let degreeDifference: Double = abs(degree - standardDegree)
-        let degreeArea: DegreeArea = checkArea(degree)
+        let degreeArea: EachCommunicationArea = checkArea(degree)
         
         // 새 값이 중립지역에서 관측되면 기준을 옮기지도 않고, 상태변화도 없음
         guard degreeArea != .neutralArea else {
@@ -101,7 +101,7 @@ final class GyroScopeStore: ObservableObject {
     }
     
     /// 화면이 어느 영역(myself, neutral, opponent) 중 어느 영역에 있는지 확인하는 함수
-    private func checkArea(_ degree: Double) -> DegreeArea {
+    private func checkArea(_ degree: Double) -> EachCommunicationArea {
         switch degree {
         case ...writingDegreeLimit:
             return .writingArea
@@ -113,7 +113,7 @@ final class GyroScopeStore: ObservableObject {
     }
     
     //사용자가 수동으로 motionManager를 재설정 가능한 함수
-    public func reinitialzie() {
+    public func reinitialize() {
         self.coreMotionManager = nil
         self.coreMotionManager = CMMotionManager()
         self.detectDeviceMotion()

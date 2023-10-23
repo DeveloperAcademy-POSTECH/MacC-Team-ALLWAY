@@ -34,7 +34,7 @@ public enum FlippedStatus: String {
     case myself
 }
 
-public enum DegreeArea {
+public enum EachCommunicationArea {
     case writingArea
     case neutralArea
     case recordingArea
