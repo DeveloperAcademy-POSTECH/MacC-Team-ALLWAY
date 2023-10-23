@@ -31,6 +31,8 @@
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
+		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
+		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
+		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
+		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,10 +189,13 @@
 			children = (
 				7EF737952AD43E8300FCBA21 /* Components */,
 				7E8906402ACEA31500C9947A /* TKIntroView.swift */,
+				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
 				7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
+				EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */,
+				EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 			);
@@ -377,10 +384,12 @@
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
+				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
 				7E8906412ACEA31500C9947A /* TKIntroView.swift in Sources */,
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
+				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
@@ -551,6 +560,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 34U36L8239;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -569,9 +579,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -583,6 +596,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 34U36L8239;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -601,9 +615,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Celan.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

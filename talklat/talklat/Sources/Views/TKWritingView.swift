@@ -19,16 +19,6 @@ struct TKWritingView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // (Test용) TKHistoryView로 이동하는 부분
-                // MARK: 추후에 스크롤뷰리더로 화면 이동
-                NavigationLink {
-                  TKHistoryView(appViewStore: appViewStore)
-                } label: {
-                    Text("History")
-                        .foregroundColor(.blue)
-                }
-                .padding()
-                
                 VStack {
                     if let answeredText = appViewStore.answeredText {
                         Text(answeredText)
