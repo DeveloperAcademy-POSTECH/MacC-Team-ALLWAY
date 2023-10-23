@@ -61,7 +61,6 @@ struct TKWritingView: View {
                         )
                 }
             }
-            
             TLTextField(
                 style: .normal(textLimit: 160),
                 text: Binding(
@@ -80,8 +79,17 @@ struct TKWritingView: View {
                                 : .gray
                             )
                     }
+                    .opacity(focusState ? 1.0 : 0.0)
                 }
             )
+            .focused($focusState)
+            .overlay(alignment: .topLeading) {
+                characterLimitView()
+                    .padding(.leading, 24)
+                    .padding(.top, 36)
+                    .opacity(focusState ? 1.0 : 0.0)
+                    .animation(.easeInOut, value: focusState)
+            }
             .padding(.top, 24)
             
             Spacer()
@@ -112,6 +120,18 @@ struct TKWritingView: View {
             appViewStore.onWritingViewDisappear()
         }
     }
+    
+    // MARK: - METHODS
+        private func characterLimitView() -> some View {
+            Text("\(appViewStore.questionText.count)/\(appViewStore.questionTextLimit)")
+                .font(.system(size: 12, weight: .regular))
+                .monospacedDigit()
+                .foregroundColor(
+                    hasQuestionTextReachedMaximumCount
+                    ? .red
+                    : .gray
+                )
+        }
 }
 
 struct TKWritingView_Previews: PreviewProvider {

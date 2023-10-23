@@ -26,7 +26,7 @@ final class AppViewStore: ObservableObject {
     @Published public var messageOffset: CGSize = .zero
     @Published public var isMessageTapped: Bool = false
     
-    public let questionTextLimit: Int = 55
+    public let questionTextLimit: Int = 160
     
     // MARK: INIT
     init(

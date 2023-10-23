@@ -35,7 +35,6 @@ struct TLTextField<Button: View>: View {
         case let .normal(textLimit):
             VStack {
                 leadingButtonSection
-                textCountIndicator(textLimit: textLimit)
                 inputFieldSection(textLimit: textLimit)
             }
         }
@@ -51,22 +50,6 @@ struct TLTextField<Button: View>: View {
         .padding(.bottom, 24)
     }
     
-    private func textCountIndicator(textLimit: Int) -> some View {
-        HStack {
-            Text("\($text.wrappedValue.count)/\(textLimit)")
-                .font(.system(size: 12, weight: .regular))
-                .monospacedDigit()
-                .foregroundColor(
-                    text.count >= textLimit
-                    ? .red
-                    : .gray
-                )
-                .padding(.leading, 24)
-            
-            Spacer()
-        }
-    }
-    
     private func inputFieldSection(textLimit: Int) -> some View {
         ZStack {
             TextField(
@@ -75,8 +58,8 @@ struct TLTextField<Button: View>: View {
                 axis: .vertical
             )
             .font(.system(size: 20, weight: .bold))
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
+            .lineSpacing(12)
+            .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
