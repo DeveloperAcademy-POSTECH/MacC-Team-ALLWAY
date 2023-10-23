@@ -208,8 +208,8 @@
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
 				EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */,
 				EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */,
-				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
+				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -575,7 +575,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -610,7 +610,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";

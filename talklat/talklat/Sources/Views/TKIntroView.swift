@@ -22,6 +22,7 @@ struct TKIntroView: View {
                 case .writing:
                     TKWritingView(appViewStore: appViewStore)
                         .transition(.opacity)
+                        .padding(.top, 50)
                     
                 case .recording:
                     TKRecordingView(appViewStore: appViewStore)
@@ -31,10 +32,12 @@ struct TKIntroView: View {
         }
         // TODO: - 디자인 팀이랑 상의 후 패딩 값 조절 (전체 지우기, swipeGuideMessage의 거리 등)
         .safeAreaInset(edge: .top) {
-            Rectangle()
-                .fill(.white)
-            // TODO: - deviceTopSafeAreaInset 값으로 변경
-                .frame(height: 50)
+            if appViewStore.communicationStatus == .writing {
+                Rectangle()
+                    .fill(.white)
+                // TODO: - deviceTopSafeAreaInset 값으로 변경
+                    .frame(height: 50)
+            }
         }
         .onAppear {
             gyroMotionStore.detectDeviceMotion()

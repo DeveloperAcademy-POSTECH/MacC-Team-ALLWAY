@@ -18,7 +18,29 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
-    @Published public var historyItems: [HistoryItem] = []
+    @Published public var historyItems: [HistoryItem] = [
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
+        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question)
+    ]
     
     @Published public var deviceHeight: CGFloat = CGFloat(0)
     @Published public var isHistoryViewShown: Bool = false
@@ -26,6 +48,12 @@ final class AppViewStore: ObservableObject {
     @Published public var messageOffset: CGSize = .zero
     @Published public var isMessageTapped: Bool = false
     
+    @Published public var historyScrollViewHeight: CGFloat = CGFloat(0)
+    
+    @Published public var containerScrollOffset: CGPoint = .zero
+    @Published public var historyScrollOffset: CGPoint = .zero
+    @Published public var hasHistoryTransitionEnded: Bool = false
+
     public let questionTextLimit: Int = 55
     
     // MARK: INIT
@@ -133,11 +161,15 @@ final class AppViewStore: ObservableObject {
         scrollReader.scrollTo(destination, anchor: .top)
     }
     
-    public func scrollAvailabilitySetter(_ isEnabled: Bool) {
-        if isEnabled {
-            isScrollDisabled = true
+    public func scrollAvailabilitySetter(isDisabled: Bool) {
+        if !isDisabled,
+           historyScrollViewHeight + 120 > deviceHeight
+        {
+            isScrollDisabled = false // 스크롤 허용
+            print("스크롤 허용 됨")
         } else {
-            isScrollDisabled = false
+            isScrollDisabled = true // 스크롤 비허용
+            print("스크롤 비허용 됨!")
         }
     }
     
