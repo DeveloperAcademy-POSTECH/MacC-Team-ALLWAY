@@ -46,6 +46,12 @@ final class AppViewStore: ObservableObject {
         }
     }
     
+    public func stopSpeechRecognizeButtonTapped() {
+        withAnimation(.easeIn(duration: 0.75)) {
+            communicationStatus = .writing
+        }
+    }
+    
     public func onWritingViewDisappear() {
         // TKHistoryView로 user's text 전달
         if !questionText.isEmpty {
@@ -59,18 +65,11 @@ final class AppViewStore: ObservableObject {
         print(questionText)
     }
     
-    public func onRecordingViewDisappear(transcript: String) {
+    public func onRecordingViewDisappear() {
         if let answeredText = answeredText,
-           !answeredText.isEmpty &&
-            !transcript.isEmpty {
+           !answeredText.isEmpty {
             let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
             historyItems.append(answerItem)
-        }
-    }
-    
-    public func stopSpeechRecognizeButtonTapped() {
-        withAnimation(.easeIn(duration: 0.75)) {
-            communicationStatus = .writing
         }
     }
     
