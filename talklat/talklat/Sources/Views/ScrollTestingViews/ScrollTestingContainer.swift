@@ -17,25 +17,41 @@ struct ScrollTestingContainer: View {
     
     var body: some View {
         VStack {
+            /*
+             TKHistoryView(
+                 appViewStore: AppViewStore(
+                     communicationStatus: .writing,
+                     questionText: "String",
+                     currentAuthStatus: .authCompleted
+                 )
+             )
+             */
+            
             TopView(
-                isTopViewShown: $isTopViewShown
+                isTopViewShown: $isTopViewShown,
+                deviceHeight: $deviceHeight,
+                topInset: $topInset,
+                bottomInset: $bottomInset
             )
             .frame(
                 height: isTopViewShown
-                ? currentViewHeight
+                ? currentViewHeight + bottomInset + topInset // 임시방편
                 : nil
             )
             
             BottomView(
-                isTopViewShown: $isTopViewShown
+                isTopViewShown: $isTopViewShown,
+                deviceHeight: $deviceHeight,
+                topInset: $topInset,
+                bottomInset: $bottomInset
             )
             .frame(
                 height: isTopViewShown
                 ? nil
-                : currentViewHeight
+                : currentViewHeight + bottomInset + topInset + topInset
             )
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
         .background {
             GeometryReader { geo in
                 Rectangle()
@@ -49,6 +65,10 @@ struct ScrollTestingContainer: View {
         }
         .onAppear {
             currentViewHeight = deviceHeight + topInset + bottomInset
+            print("device: ", deviceHeight)
+            print("topInset: ", topInset)
+            print("bottomInset: ", bottomInset)
+            print("-----------------")
         }
     }
 }
@@ -58,12 +78,18 @@ struct TopView: View {
     @State private var scrollOffset: CGPoint = .zero
     
     @Binding var isTopViewShown: Bool
+    @Binding var deviceHeight: CGFloat
+    @Binding var topInset: CGFloat
+    @Binding var bottomInset: CGFloat
     
     var body: some View {
         VStack {
             OffsetObservingScrollView(
                 offset: $scrollOffset
             ) {
+                Spacer()
+                    .frame(height: 150)
+                
                 VStack(spacing: 10) {
                     ForEach(0 ..< 50) { item in
                         Text("\(item)")
@@ -71,20 +97,21 @@ struct TopView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            .background(.red)
             .onChange(of: scrollOffset) { offset in
                 print("---> top scroll: ", offset)
             }
             
-            Button(action: {
+            Button {
                 isTopViewShown = false
-            }, label: {
+            } label: {
                 Image(systemName: "chevron.compact.down")
                     .resizable()
                     .frame(width: 32, height: 10)
                     .foregroundColor(.gray500)
-            })
+            }
+            .padding(.vertical, 50)
         }
+        .background(.red)
     }
 }
 
@@ -93,6 +120,9 @@ struct BottomView: View {
     @State private var text: String = ""
     
     @Binding var isTopViewShown: Bool
+    @Binding var deviceHeight: CGFloat
+    @Binding var topInset: CGFloat
+    @Binding var bottomInset: CGFloat
     
     var body: some View {
         VStack {
@@ -111,11 +141,12 @@ struct BottomView: View {
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal, 20)
         }
+        .frame(maxHeight: .infinity)
         .background(.blue)
         .onChange(of: scrollOffset) { offset in
             print("---> bottom scroll: ", offset)
             
-            if offset.y < -100 {
+            if offset.y < -120 {
                 isTopViewShown = true
             }
         }
