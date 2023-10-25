@@ -17,7 +17,6 @@ struct ScrollTestingContainer: View {
     
     var body: some View {
         VStack {
-            /*
              TKHistoryView(
                  appViewStore: AppViewStore(
                      communicationStatus: .writing,
@@ -25,14 +24,28 @@ struct ScrollTestingContainer: View {
                      currentAuthStatus: .authCompleted
                  )
              )
-             */
+             .overlay {
+                 VStack {
+                     Spacer()
+                     
+                     Button {
+                         isTopViewShown = false
+                     } label: {
+                         Image(systemName: "chevron.compact.down")
+                             .resizable()
+                             .frame(width: 32, height: 10)
+                             .foregroundColor(.gray500)
+                     }
+                     .padding(.vertical, 50)
+                 }
+             }
             
-            TopView(
-                isTopViewShown: $isTopViewShown,
-                deviceHeight: $deviceHeight,
-                topInset: $topInset,
-                bottomInset: $bottomInset
-            )
+//            TopView(
+//                isTopViewShown: $isTopViewShown,
+//                deviceHeight: $deviceHeight,
+//                topInset: $topInset,
+//                bottomInset: $bottomInset
+//            )
             .frame(
                 height: isTopViewShown
                 ? currentViewHeight + bottomInset + topInset // 임시방편
@@ -48,9 +61,8 @@ struct ScrollTestingContainer: View {
             .frame(
                 height: isTopViewShown
                 ? nil
-                : currentViewHeight + bottomInset + topInset + topInset
+                : currentViewHeight + topInset + bottomInset + topInset // 임시방편
             )
-            .ignoresSafeArea()
         }
         .background {
             GeometryReader { geo in
@@ -136,6 +148,7 @@ struct BottomView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+            .padding(.vertical, 20)
             
             TextField("", text: $text)
                 .textFieldStyle(.roundedBorder)
@@ -147,7 +160,12 @@ struct BottomView: View {
             print("---> bottom scroll: ", offset)
             
             if offset.y < -120 {
-                isTopViewShown = true
+                withAnimation(.spring(dampingFraction: 0.7)) {
+                    isTopViewShown = true
+                }
+//                withAnimation(.easeIn(duration: 0.2)) {
+//                    isTopViewShown = true
+//                }
             }
         }
     }
