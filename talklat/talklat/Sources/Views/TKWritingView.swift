@@ -10,6 +10,7 @@ import SwiftUI
 struct TKWritingView: View {
     @ObservedObject var appViewStore: AppViewStore
     @FocusState var focusState: Bool
+    @FocusState var neverFocus: Bool
     
     private var hasQuestionTextReachedMaximumCount: Bool {
         appViewStore.questionText.count == appViewStore.questionTextLimit
@@ -18,49 +19,32 @@ struct TKWritingView: View {
     // MARK: - BODY
     var body: some View {
         VStack {
-            // (Test용) TKHistoryView로 이동하는 부분
             // TODO: Upper Chevron
             if let lastItem = appViewStore.historyItems.last,
                lastItem.type == .answer {
-                ZStack(alignment: .top) {
-                    RoundedRectangle(cornerRadius: 12)
-                        .frame(
-                            width: UIScreen.main.bounds.width * 0.9,
-                            height: UIScreen.main.bounds.height * 0.2
-                        )
-                        .foregroundStyle(.gray.opacity(0.1))
-                    
-                    HStack {
-                        Image(systemName: "waveform.circle.fill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Color(.systemGray))
-                            .padding(.top, 24)
-                            .padding(.leading, 40)
-                            .transition(
-                                .move(edge: .bottom)
-                                .combined(with: .opacity)
-                            )
-                        
-                        Spacer()
+                VStack {
+                    ScrollView {
+                        Text(lastItem.text)
+                            .font(.title3)
+                            .bold()
+                            .lineSpacing(8)
                     }
+                    .frame(height: 200)
                     
-                    Text("        " + lastItem.text)
-                        .font(.headline)
-                        .bold()
-                        .lineSpacing(10)
-                        .frame(
-                            maxWidth: .infinity,
-                            alignment: .leading
-                        )
-                        .padding(.top, 24)
-                        .padding(.horizontal, 40)
-                        .transition(
-                            .move(edge: .bottom)
-                            .combined(with: .opacity)
-                        )
+                    Divider()
+                    
+                    Image(systemName: "waveform.circle.fill")
                 }
+                .padding(.vertical, 24)
+                .padding(.horizontal, 40)
+                .background {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.gray.opacity(0.1))
+                        .padding(.horizontal)
+                }
+                .padding(.top, 16)
             }
+            
             TLTextField(
                 style: .normal(textLimit: 160),
                 text: Binding(
@@ -93,21 +77,22 @@ struct TKWritingView: View {
             .padding(.top, 24)
             
             Spacer()
-            
+        }
+        .overlay(alignment: .bottom) {
             Button {
                 appViewStore.enterSpeechRecognizeButtonTapped()
+                HapticManager.sharedInstance.generateHaptic(.rigidTwice)
             } label: {
                 Text("**음성 인식 전환**")
                     .foregroundColor(.white)
                     .padding(.horizontal, 25)
-                    .padding(.vertical, 22)
+                    .padding(.vertical, 20)
                     .background {
                         Capsule()
                             .foregroundColor(.gray)
                     }
             }
             .padding(.bottom, 20)
-            
         }
         .onAppear {
             appViewStore.onWritingViewAppear()
@@ -139,9 +124,8 @@ struct TKWritingView_Previews: PreviewProvider {
         NavigationStack {
             TKWritingView(appViewStore: AppViewStore.makePreviewStore {
                 instance in
-                instance.questionTextSetter("test")
-                instance.historyItems.append(.init(id: .init(), text: "dfdf", type: .answer))
-                instance.historyItems.append(.init(id: .init(), text: "sdf", type: .question))
+                instance.answeredTextSetter("testtesttesttesttesttesttest")
+                instance.historyItems.append(.init(id: .init(), text: "A long string of text that goes on an A long string of text A long string of text that goes on an A long string of text that goes on an A long string of text that goes on an ", type: .answer))
             })
         }
     }

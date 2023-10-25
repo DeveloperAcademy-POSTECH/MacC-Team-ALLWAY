@@ -57,7 +57,8 @@ struct TLTextField<Button: View>: View {
                 text: $text,
                 axis: .vertical
             )
-            .font(.system(size: 20, weight: .bold))
+            .font(.title3)
+            .bold()
             .lineSpacing(12)
             .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
