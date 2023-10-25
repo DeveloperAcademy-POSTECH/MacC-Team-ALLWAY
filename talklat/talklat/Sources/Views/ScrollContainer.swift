@@ -38,13 +38,13 @@ struct ScrollContainer: View {
                         }
                         .onChange(of: appViewStore.containerScrollOffset) { offset in
                             if appViewStore.isHistoryViewShown { // TKHistoryView
-                                print("offset: ", offset)
+                                // print("offset: ", offset)
                                 
                                 // 화면 전환이 끝났는지 파악
                                 if offset.y == -0.0 {
                                     appViewStore.hasHistoryTransitionEnded = true
                                 }
-                                print("hasContainerScrollEnded: ", appViewStore.hasHistoryTransitionEnded)
+                                // print("hasContainerScrollEnded: ", appViewStore.hasHistoryTransitionEnded)
                             
                                 if appViewStore.hasHistoryTransitionEnded {
                                     if offset.y > 0 {
@@ -62,7 +62,7 @@ struct ScrollContainer: View {
                                             appViewStore.scrollAvailabilitySetter(
                                                 isDisabled: false
                                             )
-                                            print("!!!!!!다시측정시작!!!!!!")
+                                            // print("!!!!!!다시측정시작!!!!!!")
                                         }
                                     }
                                 }
@@ -82,7 +82,7 @@ struct ScrollContainer: View {
                                         appViewStore.scrollAvailabilitySetter(
                                             isDisabled: false
                                         )
-                                        print("!!!!!!다시측정시작!!!!!!")
+                                        // print("!!!!!!다시측정시작!!!!!!")
                                     }
                                 } 
                             }
@@ -90,43 +90,12 @@ struct ScrollContainer: View {
                         .onChange(of: appViewStore.historyScrollOffset) { _ in
                             if appViewStore.isHistoryViewShown {
                                 appViewStore.scrollAvailabilitySetter(isDisabled: false)
-                                print("!!!!!풀림!!!!!!!")
-                                print("historyView scroll offset: ", appViewStore.historyScrollOffset)
+                                // print("!!!!!풀림!!!!!!!")
+                                // print("historyView scroll offset: ", appViewStore.historyScrollOffset)
                             }
                         }
                     }
                     .scrollDisabled(appViewStore.isScrollDisabled)
-                    // MARK: - 전체 overlay
-//                    .overlay {
-//                        if !appViewStore.isHistoryViewShown {
-//                            Rectangle()
-//                                .fill(.orange)
-//                                .opacity(0.01)
-//                                .frame(
-//                                    maxWidth: .infinity,
-//                                    maxHeight: .infinity
-//                                )
-////                                .gesture(
-////                                    DragGesture()
-////                                        .onChanged { gesture in
-////                                            appViewStore.scrollAvailabilitySetter(
-////                                                isDisabled: false
-////                                            )
-////                                        }
-////                                        .onEnded { gesture in
-////                                            print("~~~~")
-////                                            withAnimation {
-////                                                hideKeyboard()
-////                                                appViewStore.historyViewSetter(true)
-////                                                appViewStore.scrollDestinationSetter(
-////                                                    scrollReader: proxy,
-////                                                    destination: "TKHistoryView"
-////                                                )
-////                                            }
-////                                        }
-////                                )
-//                        }
-//                    }
                     // MARK: - 상단 스와이프 영역
                     .overlay {
                         if appViewStore.communicationStatus == .writing,
@@ -247,10 +216,12 @@ struct ScrollContainer: View {
                     }
             }
             .scrollIndicators(.hidden)
-            .onChange(of: appViewStore.containerScrollOffset) { _ in
-                print(">>> containerScrollOffset: ", appViewStore.containerScrollOffset)
-                print("---------------------------")
-            }
+            /*
+             .onChange(of: appViewStore.containerScrollOffset) { _ in
+                 print(">>> containerScrollOffset: ", appViewStore.containerScrollOffset)
+                 print("---------------------------")
+             }
+             */
         }
         .ignoresSafeArea()
     }

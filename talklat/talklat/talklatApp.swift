@@ -22,9 +22,10 @@ struct talklatApp: App {
             Group {
                 switch appViewStore.currentAuthStatus {
                 case .authCompleted:
-                    NavigationStack {
-                        ScrollContainer(appViewStore: appViewStore)
-                    }
+//                    NavigationStack {
+//                        ScrollContainer(appViewStore: appViewStore)
+//                    }
+                    ScrollTestingContainer()
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted

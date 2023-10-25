@@ -33,6 +33,7 @@
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
+		EF73AE9B2AE94B43007C3EBF /* ScrollTestingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */; };
 		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
+		EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTestingContainer.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +202,7 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF73AE992AE94B2E007C3EBF /* ScrollTestingViews */,
 				7EF737952AD43E8300FCBA21 /* Components */,
 				7E8906402ACEA31500C9947A /* TKIntroView.swift */,
 				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
@@ -260,6 +263,14 @@
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		EF73AE992AE94B2E007C3EBF /* ScrollTestingViews */ = {
+			isa = PBXGroup;
+			children = (
+				EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */,
+			);
+			path = ScrollTestingViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +418,7 @@
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
+				EF73AE9B2AE94B43007C3EBF /* ScrollTestingContainer.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
