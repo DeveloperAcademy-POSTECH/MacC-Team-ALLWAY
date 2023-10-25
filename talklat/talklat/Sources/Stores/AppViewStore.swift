@@ -39,7 +39,7 @@ final class AppViewStore: ObservableObject {
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question)
+        HistoryItem(id: UUID(), text: "dfsfwerwfsdfsfwerfsfdsfsdfwewererfdsfdsfwerwe", type: .question)
     ]
     
     @Published public var deviceHeight: CGFloat = CGFloat(0)
@@ -51,7 +51,7 @@ final class AppViewStore: ObservableObject {
     @Published public var historyScrollViewHeight: CGFloat = CGFloat(0)
     
     @Published public var containerScrollOffset: CGPoint = .zero
-    @Published public var historyScrollOffset: CGPoint = .zero
+    @Published public var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
     @Published public var hasHistoryTransitionEnded: Bool = false
 
     public let questionTextLimit: Int = 55
@@ -170,6 +170,14 @@ final class AppViewStore: ObservableObject {
         } else {
             isScrollDisabled = true // 스크롤 비허용
             print("스크롤 비허용 됨!")
+        }
+    }
+    
+    public func checkIfLastItem(_ item: HistoryItem) -> String {
+        if historyItems.last == item {
+            return "lastItem"
+        } else {
+            return item.text
         }
     }
     

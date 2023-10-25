@@ -84,18 +84,50 @@ struct ScrollContainer: View {
                                         )
                                         print("!!!!!!다시측정시작!!!!!!")
                                     }
-                                }
+                                } 
                             }
                         }
                         .onChange(of: appViewStore.historyScrollOffset) { _ in
                             if appViewStore.isHistoryViewShown {
                                 appViewStore.scrollAvailabilitySetter(isDisabled: false)
                                 print("!!!!!풀림!!!!!!!")
+                                print("historyView scroll offset: ", appViewStore.historyScrollOffset)
                             }
                         }
                     }
                     .scrollDisabled(appViewStore.isScrollDisabled)
-                // MARK: - 상단 스와이프 영역
+                    // MARK: - 전체 overlay
+//                    .overlay {
+//                        if !appViewStore.isHistoryViewShown {
+//                            Rectangle()
+//                                .fill(.orange)
+//                                .opacity(0.01)
+//                                .frame(
+//                                    maxWidth: .infinity,
+//                                    maxHeight: .infinity
+//                                )
+////                                .gesture(
+////                                    DragGesture()
+////                                        .onChanged { gesture in
+////                                            appViewStore.scrollAvailabilitySetter(
+////                                                isDisabled: false
+////                                            )
+////                                        }
+////                                        .onEnded { gesture in
+////                                            print("~~~~")
+////                                            withAnimation {
+////                                                hideKeyboard()
+////                                                appViewStore.historyViewSetter(true)
+////                                                appViewStore.scrollDestinationSetter(
+////                                                    scrollReader: proxy,
+////                                                    destination: "TKHistoryView"
+////                                                )
+////                                            }
+////                                        }
+////                                )
+//                        }
+//                    }
+                    // MARK: - 상단 스와이프 영역
                     .overlay {
                         if appViewStore.communicationStatus == .writing,
                             appViewStore.historyItems.count != 0
@@ -178,7 +210,7 @@ struct ScrollContainer: View {
                         }
                         
                     }
-                // MARK: - 하단 스와이프 영역
+                    // MARK: - 하단 스와이프 영역
                     .overlay {
                         if appViewStore.isHistoryViewShown == true {
                             VStack {
@@ -191,7 +223,7 @@ struct ScrollContainer: View {
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 100)
                             }
-                            //                        .ignoresSafeArea()
+                            // .ignoresSafeArea()
                             .gesture(
                                 DragGesture(minimumDistance: 1)
                                     .onChanged { gesture in

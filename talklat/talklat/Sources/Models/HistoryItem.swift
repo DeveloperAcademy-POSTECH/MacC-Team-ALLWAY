@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HistoryItem: Identifiable {
+struct HistoryItem: Identifiable, Equatable {
     var id: UUID
     enum MessageType {
         case question, answer
