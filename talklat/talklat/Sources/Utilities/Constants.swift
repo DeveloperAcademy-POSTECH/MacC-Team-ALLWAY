@@ -40,3 +40,9 @@ public enum EachCommunicationArea {
     case neutralArea
     case recordingArea
 }
+
+public enum TKTransitionObjects {
+    case QUESTION
+    case ANSWER
+    case INTERLUDE
+}
