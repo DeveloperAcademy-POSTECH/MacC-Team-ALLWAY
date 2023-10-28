@@ -33,9 +33,17 @@
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
-		EF73AE9B2AE94B43007C3EBF /* ScrollTestingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */; };
+		EF73AE9B2AE94B43007C3EBF /* ScrollContainerTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */; };
+		EF769DAC2AEB924900E5094C /* FullScreenCoverTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */; };
 		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
+		EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */; };
+		EFD229AB2AEB98FA00DA034D /* ScrollContainerBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */; };
+		EFD229AD2AEB991D00DA034D /* ScrollContainerTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */; };
+		EFD229AF2AEB992F00DA034D /* FullScreenCoverTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */; };
+		EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */; };
+		EFD229B32AEB996200DA034D /* FullScreenCoverTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */; };
+		EFD229B72AEB9F3000DA034D /* TestingTKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,9 +93,17 @@
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
-		EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTestingContainer.swift; sourceTree = "<group>"; };
+		EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTesting.swift; sourceTree = "<group>"; };
+		EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTesting.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
+		EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTopView.swift; sourceTree = "<group>"; };
+		EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerBottomView.swift; sourceTree = "<group>"; };
+		EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTextFieldView.swift; sourceTree = "<group>"; };
+		EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTopView.swift; sourceTree = "<group>"; };
+		EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverBottomView.swift; sourceTree = "<group>"; };
+		EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTextFieldView.swift; sourceTree = "<group>"; };
+		EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingTKHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,9 +284,33 @@
 		EF73AE992AE94B2E007C3EBF /* ScrollTestingViews */ = {
 			isa = PBXGroup;
 			children = (
-				EF73AE9A2AE94B43007C3EBF /* ScrollTestingContainer.swift */,
+				EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */,
+				EFD229B52AEB99A000DA034D /* FullScreenCoverTesting */,
+				EFD229B42AEB999500DA034D /* ScrollContainerTesting */,
 			);
 			path = ScrollTestingViews;
+			sourceTree = "<group>";
+		};
+		EFD229B42AEB999500DA034D /* ScrollContainerTesting */ = {
+			isa = PBXGroup;
+			children = (
+				EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */,
+				EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */,
+				EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */,
+				EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */,
+			);
+			path = ScrollContainerTesting;
+			sourceTree = "<group>";
+		};
+		EFD229B52AEB99A000DA034D /* FullScreenCoverTesting */ = {
+			isa = PBXGroup;
+			children = (
+				EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */,
+				EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */,
+				EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */,
+				EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */,
+			);
+			path = FullScreenCoverTesting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,8 +444,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
+				EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */,
+				EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
+				EFD229AD2AEB991D00DA034D /* ScrollContainerTextFieldView.swift in Sources */,
+				EFD229AB2AEB98FA00DA034D /* ScrollContainerBottomView.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
 				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
@@ -414,11 +458,13 @@
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
+				EFD229AF2AEB992F00DA034D /* FullScreenCoverTopView.swift in Sources */,
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
-				EF73AE9B2AE94B43007C3EBF /* ScrollTestingContainer.swift in Sources */,
+				EF73AE9B2AE94B43007C3EBF /* ScrollContainerTesting.swift in Sources */,
+				EF769DAC2AEB924900E5094C /* FullScreenCoverTesting.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
@@ -427,6 +473,8 @@
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
+				EFD229B32AEB996200DA034D /* FullScreenCoverTextFieldView.swift in Sources */,
+				EFD229B72AEB9F3000DA034D /* TestingTKHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

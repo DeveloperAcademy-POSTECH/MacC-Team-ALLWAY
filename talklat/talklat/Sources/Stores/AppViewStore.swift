@@ -24,21 +24,6 @@ final class AppViewStore: ObservableObject {
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
         HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
         HistoryItem(id: UUID(), text: "dfsfwerwfsdfsfwerfsfdsfsdfwewererfdsfdsfwerwe", type: .question)
     ]
     
