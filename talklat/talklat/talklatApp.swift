@@ -14,12 +14,9 @@ struct talklatApp: App {
         questionText: "",
         currentAuthStatus: .authIncompleted
     )
+    @State private var animateFlagA: Bool = false
     
     private let appRootManager = AppRootManager()
-    
-    @State private var animateFlagA: Bool = false
-    @State private var animateFlagB: Bool = false
-    @State private var isInitCompleted: Bool = false
     
     var body: some Scene {
         WindowGroup {
@@ -37,9 +34,7 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    NavigationStack {
-                        TKIntroView(appViewStore: appViewStore)
-                    }
+                    TKCommunicationView()
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
