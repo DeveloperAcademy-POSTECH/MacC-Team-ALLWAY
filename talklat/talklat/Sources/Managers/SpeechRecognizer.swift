@@ -75,7 +75,7 @@ final class SpeechRecognizer: ObservableObject {
     
     // text 전환을 시작합니다.
     private func beginTranscribe() {
-        guard let recognizer, recognizer.isAvailable else {
+        guard let recognizer = recognizer, recognizer.isAvailable else {
             self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
             return
         }
@@ -96,6 +96,7 @@ final class SpeechRecognizer: ObservableObject {
             self.transcribeFailed(error)
         }
     }
+
     
     private func stopAndResetTranscribe() {
         task?.cancel()
@@ -149,9 +150,14 @@ final class SpeechRecognizer: ObservableObject {
             //signalextractor
             let processedData = signalExtractor.process(buffer: buffer)
             // TODO: 데이터 처리 및 저장 하는 코드 추가 해야함
-            
+            // 노이즈가 제거된 오디오 데이터를 SFSpeechAudioBufferRecognitionRequest 객체에 추가
+            if let processedDataBuffer = processedData.toBuffer() {
+                self.request?.append(processedDataBuffer)
+            } else {
+                print("Error: Failed to convert processed data to buffer")
+            }
         }
-        //처리 다 하고 audioBuffer 비우기
+        // 처리 다 하고 audioBuffer 비우기
         audioBuffers.removeAll()
     }
     
@@ -168,8 +174,10 @@ final class SpeechRecognizer: ObservableObject {
             audioEngine.inputNode.removeTap(onBus: 0)
         }
         
-        if let result {
-            transcribe(result.bestTranscription.formattedString)
+        if let result = result {
+            let recognizedText = result.bestTranscription.formattedString
+            transcribe(recognizedText)
+        } else if let error = error {
         }
     }
     
@@ -208,5 +216,17 @@ extension AVAudioSession {
                 continuation.resume(returning: authorized)
             }
         }
+    }
+}
+
+extension Array where Element == Float {
+    func toBuffer() -> AVAudioPCMBuffer? {
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)! // Sample rate와 channel에 맞게 조정 필요
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(self.count)) else { return nil }
+        buffer.frameLength = AVAudioFrameCount(self.count)
+        for i in 0..<self.count {
+            buffer.floatChannelData?.pointee[i] = self[i]
+        }
+        return buffer
     }
 }

@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct TKRecordingView: View {
+    @StateObject var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @ObservedObject var appViewStore: AppViewStore
+    
+    private var isRecording: Bool {
+        return !speechRecognizeManager.transcript.isEmpty
+    }
     
     var body: some View {
         VStack {
@@ -36,6 +41,11 @@ struct TKRecordingView: View {
                     
                     Spacer()
                     
+                    if isRecording {
+                        Text(speechRecognizeManager.transcript)
+                            .font(.system(size: 24))
+                            .bold()
+                    }
                     guideMessageBuilder()
                         .padding(.bottom, 90)
                     
@@ -44,6 +54,10 @@ struct TKRecordingView: View {
                         
                 }
             }
+        }
+        .onAppear {
+            speechRecognizeManager.startTranscribing()
+            print("startTranscribing() called from onAppear")
         }
     }
     
