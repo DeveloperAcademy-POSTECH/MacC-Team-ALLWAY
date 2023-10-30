@@ -19,6 +19,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
     @Published public var historyItems: [HistoryItem] = []
+    @Published var recognitionCount: Int = 0
     
     @Published public var deviceHeight: CGFloat = CGFloat(0)
     @Published public var isHistoryViewShown: Bool = false
