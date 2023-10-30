@@ -129,7 +129,7 @@ final class SpeechRecognizer: ObservableObject {
             onBus: 0,
             bufferSize: 1024,
             format: recordingFormat
-            //weak self 추가
+            // weak self 추가함
         ) { [weak self] (
             buffer: AVAudioPCMBuffer,
             when: AVAudioTime
@@ -144,27 +144,27 @@ final class SpeechRecognizer: ObservableObject {
         return (audioEngine, request)
     }
     
-    // 오디어 데이터 처리 메서드 추가 -> Maybe 리앤 코드로 대체
     public func processAudioDate() {
         for buffer in audioBuffers {
-            //signalextractor
+            // 노이즈 제거 안할 시
+//            self.request?.append(buffer)
+            // ==== 노이즈 제거 할 시 =====
             let processedData = signalExtractor.process(buffer: buffer)
-            // TODO: 데이터 처리 및 저장 하는 코드 추가 해야함
             // 노이즈가 제거된 오디오 데이터를 SFSpeechAudioBufferRecognitionRequest 객체에 추가
             if let processedDataBuffer = processedData.toBuffer() {
                 self.request?.append(processedDataBuffer)
             } else {
                 print("Error: Failed to convert processed data to buffer")
             }
+            // ==== 노이즈 제거 할 시 =====
         }
-        // 처리 다 하고 audioBuffer 비우기
         audioBuffers.removeAll()
     }
     
     private func recognitionHandler(
-        audioEngine: AVAudioEngine,
-        result: SFSpeechRecognitionResult?,
-        error: Error?
+         audioEngine: AVAudioEngine,
+         result: SFSpeechRecognitionResult?,
+         error: Error?
     ) {
         let receivedFinalResult = result?.isFinal ?? false
         let receivedError = error != nil
@@ -176,16 +176,24 @@ final class SpeechRecognizer: ObservableObject {
         
         if let result = result {
             let recognizedText = result.bestTranscription.formattedString
+            
+            // 인식률 계산용 test
+            let originalText = "이제 2023년이 되어버렸어. 시간 참 빠르다. 아이스 아메리카노 주세요. 크림말고 로션 주세요."
+            let accuracy = calculateRecognitionAccuracy(originalText: originalText, recognizedText: recognizedText)
+            print("인식률: \(accuracy)%")
+            
             transcribe(recognizedText)
         } else if let error = error {
+            // 에러 처리
         }
     }
-    
+
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
             transcript = message
         }
     }
+    
     nonisolated private func transcribeFailed(_ error: Error) {
         var errorMessage = ""
         if let error = error as? RecognizerError {
@@ -197,6 +205,51 @@ final class SpeechRecognizer: ObservableObject {
             transcript = "<< \(errorMessage) >>"
         }
     }
+    
+    // 음성 인식 정확도를 측정하는 함수1
+    private func levenshteinDistanceBetween(_ a: String, and b: String) -> Int {
+        if a.count == 0 {
+            return b.count
+        }
+        
+        if b.count == 0 {
+            return a.count
+        }
+        
+        var matrix: [[Int]] = Array(repeating: Array(repeating: 0, count: b.count + 1), count: a.count + 1)
+        
+        for i in 1...a.count {
+            matrix[i][0] = i
+        }
+        
+        for j in 1...b.count {
+            matrix[0][j] = j
+        }
+        
+        for i in 1...a.count {
+            for j in 1...b.count {
+                if Array(a)[i-1] == Array(b)[j-1] {
+                    matrix[i][j] = matrix[i-1][j-1]
+                } else {
+                    matrix[i][j] = min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1
+                }
+            }
+        }
+        
+        return matrix[a.count][b.count]
+    }
+    
+    // 음성 인식 정확도를 측정하는 함수2
+    private func calculateRecognitionAccuracy(originalText: String, recognizedText: String) -> Double {
+        let distance = levenshteinDistanceBetween(originalText, and: recognizedText)
+        let maxLength = max(originalText.count, recognizedText.count)
+        
+        // 정확도를 백분율로 반환합니다.
+        let accuracy = ((Double(maxLength) - Double(distance)) / Double(maxLength)) * 100.0
+        return accuracy
+    }
+
+
 }
 
 extension SFSpeechRecognizer {

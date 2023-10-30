@@ -49,6 +49,7 @@ class SignalExtractor {
     }
 }
 
+// 라이브 음성을 처리합니다.
 class LiveAudioProcessor {
     let audioEngine = AVAudioEngine()
     var audioBuffers: [AVAudioPCMBuffer] = []
