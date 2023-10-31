@@ -11,16 +11,16 @@ struct ScrollContainer: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var appViewStore: AppViewStore
     
-    @State var scrollOffset: CGPoint = .zero
-    
     var body: some View {
         GeometryReader { geo in /// TKIntroView가 디바이스 height를 차지하도록 사용
             ScrollViewReader { proxy in /// 스크롤 위치 이동시 proxy 사용
                 OffsetObservingScrollView(
-                    offset: $scrollOffset) {
+                    offset: $appViewStore.containerScrollOffset) {
                         VStack {
                             TKHistoryView(appViewStore: appViewStore)
-                                .frame(maxWidth: .infinity)
+                                .frame(
+                                    height: geo.size.height + geo.safeAreaInsets.magnitude
+                                )
                                 .id("TKHistoryView")
                             
 //                            TKCommunicationView(appViewStore: appViewStore)
@@ -36,124 +36,196 @@ struct ScrollContainer: View {
                             appViewStore.onIntroViewAppear(proxy)
                             appViewStore.deviceHeight = geo.size.height
                         }
-                    }
-                    .scrollDisabled(appViewStore.isScrollDisabled)
-                // MARK: - 상단 스와이프 영역
-                    .overlay {
-                        VStack {
-                            ZStack {
-                                Rectangle()
-                                    .fill(.red)
-                                    .opacity(0.001)
+                        .onChange(of: appViewStore.containerScrollOffset) { offset in
+                            if appViewStore.isHistoryViewShown { // TKHistoryView
+                                // print("offset: ", offset)
                                 
-                                VStack {
-                                    ZStack(alignment: .top) {
-                                        Text("위로 스와이프해서 내용을 더 확인하세요")
-                                            .font(.system(size: 11))
-                                            .foregroundColor(Color(.systemGray2))
-                                            .opacity(
-                                                appViewStore.isMessageTapped
-                                                ? 1.0
-                                                : 0.0
-                                            )
-                                            .padding(.top, 10)
-                                        
-                                        swipeGuideMessage(type: .swipeToTop)
-                                            .offset(
-                                                y: appViewStore.isMessageTapped
-                                                ? 30
-                                                : 0
-                                            )
-                                            .onTapGesture {
-                                                withAnimation(
-                                                    Animation.spring(
-                                                        response: 0.24,
-                                                        dampingFraction: 0.5,
-                                                        blendDuration: 0.8
-                                                    )
-                                                    .speed(0.5)
-                                                ) {
-                                                    appViewStore.swipeGuideMessageTapped()
-                                                }
-                                            }
-                                    }
+                                // 화면 전환이 끝났는지 파악
+                                if offset.y == -0.0 {
+                                    appViewStore.hasHistoryTransitionEnded = true
                                 }
-                                .frame(height: 50)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
+                                // print("hasContainerScrollEnded: ", appViewStore.hasHistoryTransitionEnded)
                             
-                            Spacer()
-                                .frame(maxHeight: .infinity)
-                        }
-                        .safeAreaInset(
-                            edge: .top,
-                            content: {
-                                Rectangle()
-                                    .fill(.white)
-                                // TODO: - deviceTopSafeAreaInset 값으로 변경
-                                    .frame(height: 50)
-                            }
-                        )
-                        .ignoresSafeArea()
-                        .gesture(
-                            DragGesture()
-                                .onChanged { gesture in
-                                    appViewStore.scrollAvailabilitySetter(false)
-                                }
-                                .onEnded { gesture in
-                                    withAnimation {
-                                        appViewStore.historyViewSetter(true)
-                                        
+                                if appViewStore.hasHistoryTransitionEnded {
+                                    if offset.y > 0 {
+                                        appViewStore.scrollAvailabilitySetter(
+                                            isDisabled: true
+                                        )
                                         appViewStore.scrollDestinationSetter(
                                             scrollReader: proxy,
                                             destination: "TKHistoryView"
                                         )
-                                    }
-                                }
-                        )
-                    }
-                // MARK: - 하단 스와이프 영역
-                    .overlay {
-                        VStack {
-                            Spacer()
-                                .frame(maxHeight: .infinity)
-                            
-                            Rectangle()
-                                .fill(.blue)
-                                .opacity(0.01)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 100)
-                        }
-                        .ignoresSafeArea()
-                        .gesture(
-                            DragGesture(minimumDistance: 1)
-                                .onChanged { gesture in
-                                    appViewStore.scrollAvailabilitySetter(true)
-                                    appViewStore.swipeGuideMessageDragged(gesture)
-                                }
-                                .onEnded { gesture in
-                                    withAnimation {
-                                        appViewStore.scrollDestinationSetter(
-                                            scrollReader: proxy,
-                                            destination: "TKIntroView"
-                                        )
                                         
-                                        appViewStore.historyViewSetter(false)
+                                        DispatchQueue.main.asyncAfter(
+                                            deadline: .now() + 0.3
+                                        ) {
+                                            appViewStore.scrollAvailabilitySetter(
+                                                isDisabled: false
+                                            )
+                                            // print("!!!!!!다시측정시작!!!!!!")
+                                        }
                                     }
                                 }
-                        )
+                            } else { // TKHistoryView
+                                if offset.y < appViewStore.deviceHeight {
+                                    appViewStore.scrollAvailabilitySetter(
+                                        isDisabled: true
+                                    )
+                                    appViewStore.scrollDestinationSetter(
+                                        scrollReader: proxy,
+                                        destination: "TKIntroView"
+                                    )
+                                    
+                                    DispatchQueue.main.asyncAfter(
+                                        deadline: .now() + 0.3
+                                    ) {
+                                        appViewStore.scrollAvailabilitySetter(
+                                            isDisabled: false
+                                        )
+                                        // print("!!!!!!다시측정시작!!!!!!")
+                                    }
+                                } 
+                            }
+                        }
+                        .onChange(of: appViewStore.historyScrollOffset) { _ in
+                            if appViewStore.isHistoryViewShown {
+                                appViewStore.scrollAvailabilitySetter(isDisabled: false)
+                                // print("!!!!!풀림!!!!!!!")
+                                // print("historyView scroll offset: ", appViewStore.historyScrollOffset)
+                            }
+                        }
+                    }
+                    .scrollDisabled(appViewStore.isScrollDisabled)
+                    // MARK: - 상단 스와이프 영역
+                    .overlay {
+                        if appViewStore.communicationStatus == .writing,
+                            appViewStore.historyItems.count != 0
+                        {
+                            VStack {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(.red)
+                                        .opacity(0.5)
+                                    
+                                    VStack {
+                                        ZStack(alignment: .top) {
+                                            Text("위로 스와이프해서 내용을 더 확인하세요")
+                                                .font(.system(size: 11))
+                                                .foregroundColor(Color(.systemGray2))
+                                                .opacity(
+                                                    appViewStore.isMessageTapped
+                                                    ? 1.0
+                                                    : 0.0
+                                                )
+                                                .padding(.top, 10)
+                                            
+                                            swipeGuideMessage(type: .swipeToTop)
+                                                .offset(
+                                                    y: appViewStore.isMessageTapped
+                                                    ? 30
+                                                    : 0
+                                                )
+                                                .onTapGesture {
+                                                    withAnimation(
+                                                        Animation.spring(
+                                                            response: 0.24,
+                                                            dampingFraction: 0.5,
+                                                            blendDuration: 0.8
+                                                        )
+                                                        .speed(0.5)
+                                                    ) {
+                                                        appViewStore.swipeGuideMessageTapped()
+                                                    }
+                                                }
+                                        }
+                                    }
+                                    .frame(height: 50)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                
+                                Spacer()
+                                    .frame(maxHeight: .infinity)
+                            }
+                            .safeAreaInset(
+                                edge: .top,
+                                content: {
+                                    Rectangle()
+                                        .fill(.white)
+                                    // TODO: - deviceTopSafeAreaInset 값으로 변경
+                                        .frame(height: 50)
+                                }
+                            )
+                            .ignoresSafeArea()
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { gesture in
+                                        appViewStore.scrollAvailabilitySetter(
+                                            isDisabled: false
+                                        )
+                                    }
+                                    .onEnded { gesture in
+                                        withAnimation {
+                                            hideKeyboard()
+                                            appViewStore.historyViewSetter(true)
+                                            appViewStore.scrollDestinationSetter(
+                                                scrollReader: proxy,
+                                                destination: "TKHistoryView"
+                                            )
+                                        }
+                                    }
+                            )
+                            
+                        }
+                        
+                    }
+                    // MARK: - 하단 스와이프 영역
+                    .overlay {
+                        if appViewStore.isHistoryViewShown == true {
+                            VStack {
+                                Spacer()
+                                    .frame(maxHeight: .infinity)
+                                
+                                Rectangle()
+                                    .fill(.blue)
+                                    .opacity(0.5)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 100)
+                            }
+                            // .ignoresSafeArea()
+                            .gesture(
+                                DragGesture(minimumDistance: 1)
+                                    .onChanged { gesture in
+                                        appViewStore.scrollAvailabilitySetter(
+                                            isDisabled: true
+                                        )
+                                        appViewStore.swipeGuideMessageDragged(gesture)
+                                    }
+                                    .onEnded { gesture in
+                                        withAnimation {
+                                            appViewStore.scrollDestinationSetter(
+                                                scrollReader: proxy,
+                                                destination: "TKIntroView"
+                                            )
+                                            
+                                            appViewStore.historyViewSetter(false)
+                                        }
+                                    }
+                            )
+                        }
                     }
             }
             .scrollIndicators(.hidden)
+            /*
+             .onChange(of: appViewStore.containerScrollOffset) { _ in
+                 print(">>> containerScrollOffset: ", appViewStore.containerScrollOffset)
+                 print("---------------------------")
+             }
+             */
         }
         .ignoresSafeArea()
     }
 }
-
-
-
-
 
 
 // MARK: - Offset Observing ScrollView
@@ -219,6 +291,21 @@ struct PositionObservingView<Content: View>: View {
             nextValue: () -> CGPoint
         ) {
             /// 구현 생략 가능
+        }
+    }
+}
+
+
+
+
+struct ScrollContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ScrollContainer(appViewStore: .makePreviewStore(condition: { store in
+                store.historyItems.append(.init(id: .init(), text: "대답1", type: .answer))
+                store.historyItems.append(.init(id: .init(), text: "질문1", type: .question))
+                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
+            }))
         }
     }
 }

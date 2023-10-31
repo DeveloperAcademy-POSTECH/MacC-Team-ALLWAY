@@ -1,21 +1,25 @@
 //
-//  TKHistoryView.swift
+//  TestingTKHistoryView.swift
 //  talklat
 //
-//  Created by Celan on 2023/10/16.
+//  Created by Ye Eun Choi on 2023/10/27.
 //
 
 import SwiftUI
 
-import SwiftUI
-
-struct TKHistoryView: View {
+struct TestingTKHistoryView: View {
     @Environment(\.colorScheme)
     var colorScheme
     @ObservedObject var appViewStore: AppViewStore
     
+    @Binding var isTopViewShown: Bool
+    
     var body: some View {
         ScrollViewReader { proxy in
+            Rectangle()
+                .fill(Color.clear)
+                .frame(height: 30)
+            
             OffsetObservingScrollView(
                 offset: $appViewStore.historyScrollOffset
             ) {
@@ -86,42 +90,30 @@ struct TKHistoryView: View {
                 )
             }
             // TODO: - deviceTopSafeAreaInset 값으로 변경
-            .padding(.top, 100)
-            .background { Color(.systemGray6 )}
-            .safeAreaInset(edge: .bottom) {
-                VStack {
-                    swipeGuideMessage(type: .swipeToBottom)
-                        .offset(appViewStore.messageOffset)
-                        .frame(
-                            maxWidth: .infinity,
-                            maxHeight: 100,
-                            alignment: .top
-                        )
-                        .background {
-                            Rectangle()
-                                .fill(checkColorScheme())
-                                .shadow(
-                                    color: Color.gray300,
-                                    radius: 25,
-                                    y: -5
-                                )
-                        }
-                }
-            }
-            .ignoresSafeArea(edges: .top)
+//            .padding(.top, 100)
+            .background { Color(.systemGray6) }
             .background { Color.gray100 }
             .navigationTitle(
-                appViewStore.isHistoryViewShown ? "히스토리" : ""
+                appViewStore.isHistoryViewShown
+                ? "히스토리"
+                : ""
             )
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(
-                Color(.systemGray6),
-                for: .navigationBar
-            )
-            .toolbarBackground(
-                .visible,
-                for: .navigationBar
-            )
+        }
+        .onChange(
+            of: appViewStore.historyScrollOffset
+        ) { offset in
+            print("---> history offset: ", offset)
+            
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 0.3
+            ) {
+                if offset.y > 870 && offset.y < 920 {
+                    withAnimation(.spring(dampingFraction: 0.7)) {
+                        isTopViewShown = false
+                    }
+                }
+            }
+            print("---> isTopViewShown: ", isTopViewShown)
         }
     }
     
@@ -134,7 +126,7 @@ struct TKHistoryView: View {
     }
 }
 
-struct TKHistoryView_Previews: PreviewProvider {
+struct TestingTKHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         TKHistoryView(appViewStore: .makePreviewStore(condition: { store in
             store.historyItems.append(.init(id: .init(), text: "대답1", type: .answer))
