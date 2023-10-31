@@ -39,7 +39,8 @@ final class SpeechRecognizer: ObservableObject {
     
     // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
-        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
+//        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
+        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
         guard recognizer != nil else {
             transcribeFailed(RecognizerError.nilRecognizer)
             return
@@ -110,6 +111,7 @@ final class SpeechRecognizer: ObservableObject {
         let audioEngine = AVAudioEngine()
         
         let request = SFSpeechAudioBufferRecognitionRequest()
+        request.addsPunctuation = true
         request.shouldReportPartialResults = true
         
         let audioSession = AVAudioSession.sharedInstance()
@@ -129,13 +131,11 @@ final class SpeechRecognizer: ObservableObject {
             onBus: 0,
             bufferSize: 1024,
             format: recordingFormat
-            // weak self 추가함
         ) { [weak self] (
             buffer: AVAudioPCMBuffer,
             when: AVAudioTime
         ) in
             request.append(buffer)
-            // 버퍼 저장 추가
             self?.audioBuffers.append(buffer)
         }
         audioEngine.prepare()
@@ -146,17 +146,16 @@ final class SpeechRecognizer: ObservableObject {
     
     public func processAudioDate() {
         for buffer in audioBuffers {
-            // 노이즈 제거 안할 시
-//            self.request?.append(buffer)
-            // ==== 노이즈 제거 할 시 =====
+            // MARK: 노이즈 제거 안할 때
+            // self.request?.append(buffer)
+            // MARK: 노이즈 제거할 때
             let processedData = signalExtractor.process(buffer: buffer)
             // 노이즈가 제거된 오디오 데이터를 SFSpeechAudioBufferRecognitionRequest 객체에 추가
             if let processedDataBuffer = processedData.toBuffer() {
                 self.request?.append(processedDataBuffer)
             } else {
-                print("Error: Failed to convert processed data to buffer")
+            // print("Error: Failed to convert processed data to buffer")
             }
-            // ==== 노이즈 제거 할 시 =====
         }
         audioBuffers.removeAll()
     }
@@ -177,10 +176,10 @@ final class SpeechRecognizer: ObservableObject {
         if let result = result {
             let recognizedText = result.bestTranscription.formattedString
             
-            // 인식률 계산용 test
-            let originalText = "이제 2023년이 되어버렸어. 시간 참 빠르다. 아이스 아메리카노 주세요. 크림말고 로션 주세요."
-            let accuracy = calculateRecognitionAccuracy(originalText: originalText, recognizedText: recognizedText)
-            print("인식률: \(accuracy)%")
+            // MARK: 음성인식의 인식률을 계산하는 부분입니다.
+            // let originalText = "이제 2023년이 되어버렸어. 시간 참 빠르다. 아이스 아메리카노 주세요. 크림말고 로션 주세요."
+            // let accuracy = calculateRecognitionAccuracy(originalText: originalText, recognizedText: recognizedText)
+            // print("인식률: \(accuracy)%")
             
             transcribe(recognizedText)
         } else if let error = error {
@@ -244,12 +243,9 @@ final class SpeechRecognizer: ObservableObject {
         let distance = levenshteinDistanceBetween(originalText, and: recognizedText)
         let maxLength = max(originalText.count, recognizedText.count)
         
-        // 정확도를 백분율로 반환합니다.
         let accuracy = ((Double(maxLength) - Double(distance)) / Double(maxLength)) * 100.0
         return accuracy
     }
-
-
 }
 
 extension SFSpeechRecognizer {
@@ -272,9 +268,11 @@ extension AVAudioSession {
     }
 }
 
+// 노이즈 제거할 때, 라이브 오디오 데이터 -> 버퍼 변환
 extension Array where Element == Float {
     func toBuffer() -> AVAudioPCMBuffer? {
-        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)! // Sample rate와 channel에 맞게 조정 필요
+        // TODO: Sample rate와 channel에 맞게 조정 필요
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
         guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(self.count)) else { return nil }
         buffer.frameLength = AVAudioFrameCount(self.count)
         for i in 0..<self.count {

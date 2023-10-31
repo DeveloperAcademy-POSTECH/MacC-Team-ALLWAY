@@ -49,7 +49,7 @@ class SignalExtractor {
     }
 }
 
-// 라이브 음성을 처리합니다.
+// 라이브 음성 처리
 class LiveAudioProcessor {
     let audioEngine = AVAudioEngine()
     var audioBuffers: [AVAudioPCMBuffer] = []
@@ -77,6 +77,6 @@ class LiveAudioProcessor {
             let processedData = signalExtractor.process(buffer: buffer)
             // TODO: 필요에 따라 processedData를 사용하여 추가 작업 수행
         }
-        audioBuffers.removeAll() // 처리 후 버퍼 지우기
+        audioBuffers.removeAll()
     }
 }
