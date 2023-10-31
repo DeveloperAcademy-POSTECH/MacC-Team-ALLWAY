@@ -60,6 +60,7 @@ struct TLTextField<Button: View>: View {
             .font(.title3)
             .bold()
             .lineSpacing(12)
+            .lineLimit(5, reservesSpace: true)
             .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
             .autocorrectionDisabled()

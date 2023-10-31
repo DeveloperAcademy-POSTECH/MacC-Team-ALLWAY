@@ -23,14 +23,14 @@ struct ScrollContainer: View {
                                 .frame(maxWidth: .infinity)
                                 .id("TKHistoryView")
                             
-                            TKIntroView(appViewStore: appViewStore)
-                                .padding(.top, -10) /// View 사이의 디폴트 공백 제거
-                                .frame(
-                                    height: geo.size.height + geo.safeAreaInsets.magnitude
-                                )
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .id("TKIntroView")
+//                            TKCommunicationView(appViewStore: appViewStore)
+//                                .padding(.top, -10) /// View 사이의 디폴트 공백 제거
+//                                .frame(
+//                                    height: geo.size.height + geo.safeAreaInsets.magnitude
+//                                )
+//                                .frame(maxWidth: .infinity)
+//                                .background(Color.white)
+//                                .id("TKIntroView")
                         }
                         .onAppear {
                             appViewStore.onIntroViewAppear(proxy)
