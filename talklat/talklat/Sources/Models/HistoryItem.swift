@@ -8,10 +8,11 @@
 import Foundation
 
 struct HistoryItem: Identifiable, Equatable {
-    var id: UUID
     enum MessageType {
         case question, answer
     }
+    
+    var id: UUID
     let text: String
     let type: MessageType
 }

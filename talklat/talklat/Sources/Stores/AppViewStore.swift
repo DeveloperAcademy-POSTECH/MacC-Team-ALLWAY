@@ -18,14 +18,8 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
     @Published private(set) var hasGuidingMessageShown: Bool = false
-    @Published public var historyItems: [HistoryItem] = [
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "뿅뿅뿅뿅?", type: .question),
-        HistoryItem(id: UUID(), text: "dfsfwerwfsdfsfwerfsfdsfsdfwewererfdsfdsfwerwe", type: .question)
-    ]
+    @Published public var historyItems: [HistoryItem] = []
+    @Published var recognitionCount: Int = 0
     
     @Published public var deviceHeight: CGFloat = CGFloat(0)
     @Published public var isHistoryViewShown: Bool = false
@@ -39,7 +33,7 @@ final class AppViewStore: ObservableObject {
     @Published public var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
     @Published public var hasHistoryTransitionEnded: Bool = false
 
-    public let questionTextLimit: Int = 55
+    public let questionTextLimit: Int = 160
     
     // MARK: INIT
     init(
@@ -54,8 +48,14 @@ final class AppViewStore: ObservableObject {
     
     // MARK: HELPERS
     public func enterSpeechRecognizeButtonTapped() {
-        withAnimation(.easeIn(duration: 0.75)) {
+        withAnimation(.easeIn(duration: 0.15)) {
             communicationStatus = .recording
+        }
+    }
+    
+    public func stopSpeechRecognizeButtonTapped() {
+        withAnimation(.easeIn(duration: 0.15)) {
+            communicationStatus = .writing
         }
     }
     
@@ -72,18 +72,11 @@ final class AppViewStore: ObservableObject {
         print(questionText)
     }
     
-    public func onRecordingViewDisappear(transcript: String) {
+    public func onRecordingViewDisappear() {
         if let answeredText = answeredText,
-           !answeredText.isEmpty &&
-            !transcript.isEmpty {
+           !answeredText.isEmpty {
             let answerItem = HistoryItem(id: UUID(), text: answeredText, type: .answer)
             historyItems.append(answerItem)
-        }
-    }
-    
-    public func stopSpeechRecognizeButtonTapped() {
-        withAnimation(.easeIn(duration: 0.75)) {
-            communicationStatus = .writing
         }
     }
     
@@ -178,7 +171,7 @@ final class AppViewStore: ObservableObject {
 // MARK: public Setters
 extension AppViewStore {
     public func communicationStatusSetter(_ status: CommunicationStatus) {
-        withAnimation(.easeIn(duration: 0.75)) {
+        withAnimation(.easeIn(duration: 0.15)) {
             communicationStatus = status
         }
     }

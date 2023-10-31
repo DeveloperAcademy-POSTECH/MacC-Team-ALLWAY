@@ -17,73 +17,86 @@ struct TKRecordingView: View {
     }
 
     var body: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    // 가이드 메세지 -> 이전 유저의 질문 텍스트가 있고 & 음성 인식이 시작되면 질문 텍스트로 변경
-                    if (!appViewStore.questionText.isEmpty && isRecording) {
-                        Text(appViewStore.questionText)
-                            .font(.system(size: 17, weight: .medium))
-                            .lineSpacing(10)
-                            .animation(.easeInOut, value: appViewStore.communicationStatus)
-                            .padding(.horizontal, 24)
-                            .padding(.top, 78)
-                            .frame(
-                                maxWidth: .infinity,
-                                alignment: .leading
-                            )
-                        //TODO: <이전 화면의 유저 질문 텍스트> 위치 이동 animation!
-                    } else {
-                        guideMessageBuilder()
-                    }
-                    Spacer()
-                }
-                
-                // 이전 화면의 유저의 질문 텍스트가 있을 때에만 표시
-                if (!appViewStore.questionText.isEmpty && !isRecording) {
-                    // 유저의 질문 텍스트
+        VStack {
+            HStack(alignment: .top) {
+                // 가이드 메세지 -> 이전 유저의 질문 텍스트가 있고 & 음성 인식이 시작되면 질문 텍스트로 변경
+                if !appViewStore.questionText.isEmpty && isRecording {
                     Text(appViewStore.questionText)
-                        .font(appViewStore.communicationStatus == .recording ? .title2 : .largeTitle)
-                        .bold()
-                        .lineSpacing(appViewStore.communicationStatus == .recording ? 10 : 14)
+                        .font(.headline)
+                        .lineSpacing(10)
                         .animation(.easeInOut, value: appViewStore.communicationStatus)
-                        .padding(.horizontal, 24)
-                        .padding(.top, 40)
-                        .frame(
-                            maxWidth: .infinity,
-                            alignment: .leading
-                        )
+                    //TODO: <이전 화면의 유저 질문 텍스트> 위치 이동 animation!
+                    
+                } else {
+                    guideMessageBuilder()
                 }
-                
-                Spacer()
-                // 음성 인식 텍스트
-                if(isRecording) {
-                    ZStack {
-                        VStack {
-                            Spacer()
-                            Rectangle()
-                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.55)
-                                .foregroundStyle(.gray.opacity(0.1))
-                        }
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 24)
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            
+            // 이전 화면의 유저의 질문 텍스트가 있을 때에만 표시
+            if !appViewStore.questionText.isEmpty && !isRecording {
+                // 유저의 질문 텍스트
+                Text(appViewStore.questionText)
+                    .font(
+                        appViewStore.communicationStatus == .recording
+                        ? .title2
+                        : .largeTitle
+                    )
+                    .bold()
+                    .lineSpacing(
+                        appViewStore.communicationStatus == .recording
+                        ? 10
+                        : 14
+                    )
+                    .animation(
+                        .easeInOut,
+                        value: appViewStore.communicationStatus
+                    )
+                    .padding(.horizontal, 24)
+                    .padding(.top, 24)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+            }
+            
+            Spacer()
+            
+            if isRecording {
+                Rectangle()
+                    .fill(Color.gray100)
+                    .frame(
+                        width: UIScreen.main.bounds.width,
+                        height: UIScreen.main.bounds.height * 0.55
+                    )
+                    .overlay(alignment: .topLeading) {
                         Text(speechRecognizeManager.transcript)
                             .font(.system(size: 24))
                             .bold()
                             .lineSpacing(14)
-                            .padding(.horizontal, 24)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
                             .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 24)
+                            .padding(.horizontal, 24)
                     }
-                }
-            }
-            VStack {
-                Spacer()
-                recordButtonBuilder()
-                    .padding(.bottom, 40)
             }
         }
-        .ignoresSafeArea()
+        .overlay(alignment: .bottom) {
+            recordButtonBuilder()
+                .padding(.bottom, 40)
+        }
+        .frame(maxHeight: .infinity)
+        .ignoresSafeArea(edges: .bottom)
         .onAppear {
+            self.hideKeyboard()
             appViewStore.onRecordingViewAppear()
             speechRecognizeManager.startTranscribing()
         }
@@ -91,32 +104,32 @@ struct TKRecordingView: View {
             switch communicationStatus {
             case .recording:
                 speechRecognizeManager.startTranscribing()
+                appViewStore.recognitionCount += 1
             case .writing:
                 speechRecognizeManager.stopAndResetTranscribing()
+                appViewStore.onRecordingViewDisappear()
             }
         }
         .onChange(of: speechRecognizeManager.transcript) { transcript in
             if !transcript.isEmpty {
                 appViewStore.answeredTextSetter(transcript)
                 HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
-                print("===============================")
-                print("ANSWERED TEXT: ", transcript)
-                print("===============================")
             }
-        }
-        .onDisappear {
-            // TKHistoryView로 transcript 전달
-            appViewStore.onRecordingViewDisappear(transcript: speechRecognizeManager.transcript)
         }
     }
     
     private func guideMessageBuilder() -> some View {
-        Text(Constants.GUIDE_MESSAGE)
+        let message: String
+        if appViewStore.recognitionCount == 0 {
+            message = Constants.GUIDE_MESSAGE
+        } else {
+            message = Constants.SECOND_GUIDE_MESSAGE
+        }
+        
+        return Text(message)
             .font(.system(size: 24, weight: .medium))
             .multilineTextAlignment(.leading)
             .lineSpacing(12)
-            .padding(.horizontal, 24)
-            .padding(.top, 78)
             .foregroundColor(.gray)
     }
     
@@ -141,8 +154,6 @@ struct TKRecordingView: View {
 }
 
 struct TKRecordingView_Previews: PreviewProvider {
-    @State static var showHistoryView: Bool = false
-    
     static var previews: some View {
         TKRecordingView(
             appViewStore: AppViewStore.makePreviewStore { instance in

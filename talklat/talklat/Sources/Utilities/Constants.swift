@@ -20,9 +20,17 @@ public enum Constants {
     말씀하신 내용은 음성인식되어서
     텍스트로 변환됩니다.
     """
+    
+    static let SECOND_GUIDE_MESSAGE: String =
+    """
+    저는 청각장애가 있어요.
+    말씀하신 내용은 음성인식되어서
+    텍스트로 변환됩니다.
+    """
 }
 
 public enum AuthStatus: String {
+    case splash
     case authCompleted
     case speechRecognitionAuthIncompleted = "음성 인식"
     case microphoneAuthIncompleted = "마이크"
@@ -32,4 +40,16 @@ public enum AuthStatus: String {
 public enum FlippedStatus: String {
     case opponent
     case myself
+}
+
+public enum EachCommunicationArea {
+    case writingArea
+    case neutralArea
+    case recordingArea
+}
+
+public enum TKTransitionObjects {
+    case QUESTION
+    case ANSWER
+    case INTERLUDE
 }

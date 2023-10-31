@@ -2,14 +2,15 @@
 <!-- MainIntroView의 UI 구현 (예시) -->
 <!-- Issue Link: #1 -->
 <!-- Figma: Link (선택) -->
+
 <!-- Notion Card: Link (선택) -->
 
 | ⚒️ Title | `title` | 
 | :--- | :--- |
 | 📜 **Description** | description |
-| 📌 **Issue Number** | <!-- #1 --> |
-| ![](https://img.shields.io/badge/-black?logo=figma)**Figma** | [Link](<!-- URL -->) |
-| ![](https://img.shields.io/badge/-black?logo=notion)**Notion Card** | [Link](<!-- URL -->) |
+| 📌 **Issue Number** | #0 |
+| <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/82270058/a42c6a40-0f1d-4372-9c9c-967d44803665" width='20'> **Figma** | [Link](<!-- URL -->) |
+| <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/82270058/c7f9920d-e975-4ed7-ad83-7e6e08611463" width='20'> **Notion** | [Link](<!-- URL -->) |
 
 ---
 
