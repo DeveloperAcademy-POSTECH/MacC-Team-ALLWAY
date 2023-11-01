@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct talklatApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appViewStore: AppViewStore = AppViewStore(
         communicationStatus: .writing,
-        questionText: "",
-        currentAuthStatus: .authIncompleted
+        questionText: ""
     )
-    @State private var animateFlagA: Bool = false
     
     private let appRootManager = AppRootManager()
     
@@ -23,18 +22,15 @@ struct talklatApp: App {
             Group {
                 switch appViewStore.currentAuthStatus {
                 case .splash:
-                    Temp_SplashView(animateFlag: $animateFlagA)
+                    Temp_SplashView()
                         .task {
-                            animateFlagA = true
                             try? await Task.sleep(for: .seconds(1.5))
-                            
                             let status = await appRootManager.switchAuthStatus()
-                            // TODO: Transition
                             appViewStore.voiceRecordingAuthSetter(status)
                         }
                     
                 case .authCompleted:
-                    TKCommunicationView()
+                    TKConversationView()
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -45,12 +41,15 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
+            .onChange(of: scenePhase) { _ in
+                Color.colorScheme = UITraitCollection.current.userInterfaceStyle
+            }
         }
     }
 }
 
 struct Temp_SplashView: View {
-    @Binding var animateFlag: Bool
+    @State private var animateFlag: Bool = false
     
     var body: some View {
         Image("TalklatLogo")
@@ -61,5 +60,8 @@ struct Temp_SplashView: View {
                 value: animateFlag
             )
             .frame(width: 280, height: 100)
+            .onAppear {
+                animateFlag.toggle()
+            }
     }
 }
