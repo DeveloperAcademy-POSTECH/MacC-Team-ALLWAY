@@ -16,7 +16,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var communicationStatus: CommunicationStatus
     @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
-    @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
+    @Published private(set) var currentAuthStatus: AuthStatus = .splash
     @Published private(set) var hasGuidingMessageShown: Bool = false
     @Published public var historyItems: [HistoryItem] = []
     @Published var recognitionCount: Int = 0
@@ -32,12 +32,10 @@ final class AppViewStore: ObservableObject {
     // MARK: INIT
     init(
         communicationStatus: CommunicationStatus,
-        questionText: String,
-        currentAuthStatus: AuthStatus
+        questionText: String
     ) {
         self.communicationStatus = communicationStatus
         self.questionText = questionText
-        self.currentAuthStatus = currentAuthStatus
     }
     
     // MARK: HELPERS
@@ -167,7 +165,9 @@ extension AppViewStore {
     }
     
     public func voiceRecordingAuthSetter(_ status: AuthStatus) {
-        currentAuthStatus = status
+        withAnimation {
+            currentAuthStatus = status
+        }
     }
 }
 
@@ -178,8 +178,7 @@ extension AppViewStore {
     ) -> AppViewStore {
         let appViewStore = AppViewStore(
             communicationStatus: .writing,
-            questionText: "",
-            currentAuthStatus: .authCompleted
+            questionText: ""
         )
         condition(appViewStore)
         return appViewStore
