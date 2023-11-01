@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct TKGuidingView: View {
+    @ObservedObject var store: ConversationViewStore
     @State private var circleTrim: CGFloat = 0.0
     
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     let guide: String =
     """
     이 앱은 당신이 말하는 것을
@@ -24,7 +25,7 @@ struct TKGuidingView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Button {
-                
+                store.onGuideCancelButtonTapped()
             } label: {
                 Text("취소")
                     .font(.title2)
@@ -57,27 +58,23 @@ struct TKGuidingView: View {
                     .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
                     .frame(width: 60, height: 60)
                     .rotationEffect(.degrees(-90))
+                    .animation(.default, value: circleTrim)
             }
             .frame(
                 maxWidth: .infinity,
                 alignment: .center
             )
         }
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity
-        )
         .foregroundColor(.white)
         .padding(.horizontal, 24)
-        .background { Color.orange.ignoresSafeArea() }
-        .onReceive(timer) { _ in
-            withAnimation {
-                if circleTrim <= 1 {
-                    circleTrim += 0.05
-                    print(circleTrim)
-                } else if circleTrim >= 1 {
-                    print("Start Recording")
-                    timer.upstream.connect().cancel()
+        .background { Color.accentColor.ignoresSafeArea() }
+        .onReceive(guideTimer) { _ in
+            if circleTrim <= 1.1 {
+                circleTrim += 0.05
+            } else if circleTrim >= 1.1 {
+                guideTimer.upstream.connect().cancel()
+                withAnimation {
+                    store.onGuideTimeEnded()
                 }
             }
         }
@@ -86,6 +83,6 @@ struct TKGuidingView: View {
 
 struct TKGuidingView_Preview: PreviewProvider {
     static var previews: some View {
-        TKGuidingView()
+        TKGuidingView(store: .init(conversationState: .init(conversationStatus: .guiding)))
     }
 }

@@ -9,56 +9,211 @@ import Combine
 import SwiftUI
 
 struct TKConversationView: View {
-    @Environment(\.scenePhase) private var scenePhase
     @FocusState var focusState: Bool
     @Namespace var communicationAnimation
     
     @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
     @StateObject private var store: ConversationViewStore = ConversationViewStore(
-        communicationState: ConversationViewStore.CommunicationState(communicationStatus: .writing)
+        conversationState: ConversationViewStore.ConversationState(
+            conversationStatus: .writing
+        )
     )
-    
+        
     // MARK: Body
     var body: some View {
-        VStack {
-            
+        NavigationStack {
+            switch store(\.conversationStatus) {
+            case .writing:
+                VStack {
+                    TLTextField(
+                        style: .normal(textLimit: store.questionTextLimit),
+                        text: store.bindingQuestionText(),
+                        placeholder: Constants.TEXTFIELD_PLACEHOLDER
+                    ) {
+                        Button {
+                            store.onEraseAllButtonTapped()
+                        } label: {
+                            Text("전체 지우기")
+                        }
+                        .opacity(focusState ? 1.0 : 0.0)
+                        .animation(
+                            .easeInOut(duration: 0.4),
+                            value: focusState
+                        )
+                    }
+                    .focused($focusState)
+                    .background(alignment: .topLeading) {
+                        characterLimitViewBuilder()
+                            .padding(.top, 40)
+                            .padding(.leading, 24)
+                            .opacity(focusState ? 1.0 : 0.0)
+                            .animation(
+                                .easeInOut(duration: 0.5),
+                                value: focusState
+                            )
+                    }
+                    .padding(.top, 24)
+                    
+                    Spacer()
+                }
+                .frame(maxHeight: .infinity)
+                
+            case .guiding:
+                TKGuidingView(store: store)
+                    .frame(maxHeight: .infinity)
+                
+            case .recording:
+                VStack {
+                    Text(store(\.questionText))
+                        .font(
+                            store(\.answeredText).isEmpty
+                            ? .largeTitle
+                            : .title3
+                        )
+                        .lineSpacing(
+                            store(\.answeredText).isEmpty
+                            ? 10
+                            : 14
+                        )
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .topLeading
+                        )
+                        .padding(.horizontal, 20)
+                        .animation(
+                            .easeInOut,
+                            value: store(\.answeredText).isEmpty
+                        )
+                    
+                    Spacer()
+
+                    if !store(\.answeredText).isEmpty {
+                        ScrollViewReader { proxy in
+                            ScrollView {
+                                Text(store(\.answeredText))
+                                    .font(.title)
+                                    .bold()
+                                    .lineSpacing(14)
+                                    .foregroundStyle(.white)
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .topLeading
+                                    )
+                                    .padding(.top, 24)
+                                    .padding(.horizontal, 24)
+                                    .animation(
+                                        nil,
+                                        value: store(\.answeredText)
+                                    )
+                                
+                                Rectangle()
+                                    .foregroundColor(.accentColor)
+                                    .frame(height: 75)
+                                    .id("SCROLL_BOTTOM")
+                            }
+                            .overlay(alignment: .top) {
+                                scrollViewTopCurtainBuiler()
+                                    .frame(height: 50)
+                            }
+                            // MARK: Scroll Position Here
+                            .onChange(of: store(\.answeredText)) { newValue in
+                                if newValue.count > 50 {
+                                    withAnimation {
+                                        proxy.scrollTo(
+                                            "SCROLL_BOTTOM",
+                                            anchor: .top
+                                        )
+                                    }
+                                }
+                            }
+                            .frame(
+                                maxHeight: UIScreen.main.bounds.height * 0.55
+                            )
+                            .scrollIndicators(.hidden)
+                            .background {
+                                Rectangle()
+                                    .foregroundColor(.accentColor)
+                                    .ignoresSafeArea(edges: .bottom)
+                            }
+                        }
+                        .transition(
+                            .asymmetric(
+                                insertion: .move(edge: .bottom),
+                                removal: .opacity
+                            )
+                        )
+                    }
+                }
+                .frame(maxHeight: .infinity)
+                .onChange(of: speechRecognizeManager.transcript) { transcript in
+                    withAnimation {
+                        store.onSpeechTransicriptionUpdated(transcript)
+                    }
+                }
+                .onAppear {
+                    self.hideKeyboard()
+                }
+                .toolbar {
+                    if store(\.answeredText).isEmpty {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                store.onShowingQuestionCancelButtonTapped()
+                            } label : {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                }
+            }
         }
         .onTapGesture {
             self.hideKeyboard()
         }
         .safeAreaInset(edge: .bottom) {
-            if store(\.communicationStatus) == .writing {
+            if store(\.conversationStatus) == .writing {
                 startRecordingButtonBuilder()
-            } else if store(\.communicationStatus) == .recording {
+            } else if store(\.conversationStatus) == .recording {
                 stopRecordButtonBuilder()
-                    .padding(.top, 12)
                     .frame(maxWidth: .infinity)
+                    .padding(.top, 12)
                     .background {
-                        store(\.answeredText).isEmpty
-                        ? Color.white.ignoresSafeArea(edges: .bottom)
-                        : Color.gray100.ignoresSafeArea(edges: .bottom)
+                        if !store(\.answeredText).isEmpty {
+                            Color.accentColor
+                                .ignoresSafeArea(edges: .bottom)
+                        }
                     }
             }
+        }
+        .safeAreaInset(edge: .top) {
+            chevronButtonBuilder()
+                .opacity(
+                    store.isChevronButtonDisplayable ? 1.0 : 0.0
+                )
         }
         .onAppear {
             gyroScopeStore.detectDeviceMotion()
         }
-        .onChange(of: store(\.communicationStatus)) { newStatus in
+        .onChange(of: store(\.conversationStatus)) { newStatus in
             switch newStatus {
             case .writing:
                 speechRecognizeManager.stopAndResetTranscribing()
+                break
+                
+            case .guiding:
+                break
                 
             case .recording:
                 speechRecognizeManager.startTranscribing()
+                break
                 
             }
         }
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
-        .onChange(of: scenePhase) { _ in
-            Color.colorScheme = UITraitCollection.current.userInterfaceStyle
-        }
     }
 }
 
@@ -77,38 +232,22 @@ extension TKConversationView {
         }
     }
     
-    private func answerTextCardViewBuilder(_ lastItem: HistoryItem) -> some View {
-        VStack {
-            ScrollView {
-                Text(lastItem.text)
-                    .font(.title3)
-                    .lineSpacing(8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .frame(height: 200)
-        }
-        .padding(.vertical, 24)
-        .padding(.horizontal, 40)
-        .background {
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.gray100)
-                .padding(.horizontal, 20)
-        }
-    }
-    
     private func startRecordingButtonBuilder() -> some View {
         Button {
-            store.onStartRecordingButtonTapped()
-            speechRecognizeManager.startTranscribing()
+            self.hideKeyboard()
+            withAnimation {
+                store.onStartRecordingButtonTapped()
+            }
             
         } label: {
-            Text("**음성 인식 전환**")
+            Text("음성 인식 전환")
+                .bold()
                 .foregroundColor(.white)
                 .padding(.horizontal, 25)
                 .padding(.vertical, 20)
                 .background {
                     Capsule()
-                        .foregroundColor(.gray)
+                        .foregroundColor(.accentColor)
                 }
         }
     }
@@ -126,27 +265,33 @@ extension TKConversationView {
     
     private func chevronButtonBuilder() -> some View {
         VStack {
-            if store(\.hasChevronButtonTapped) {
-                Text("위로 스와이프해서 내용을 더 확인하세요.")
-                    .font(.caption2)
-                    .foregroundColor(.gray500)
-                    .opacity(store(\.hasChevronButtonTapped) ? 1.0 : 0.0)
-            }
-            
-            Button {
-                store.onChevronButtonTapped()
-            } label: {
-                Image(systemName: "chevron.compact.up")
-                    .resizable()
-                    .frame(width: 32, height: 10)
-                    .foregroundColor(.gray400)
-            }
+            Text("위로 스와이프해서 내용을 더 확인하세요.")
+                .font(.caption2)
+                .bold()
+                .opacity(store(\.hasChevronButtonTapped) ? 1.0 : 0.0)
+                .overlay {
+                    Button {
+                        store.onChevronButtonTapped()
+                    } label: {
+                        Image(systemName: "chevron.compact.up")
+                            .resizable()
+                            .frame(width: 32, height: 10)
+                            .padding()
+                    }
+                    .offset(
+                        y: store(\.hasChevronButtonTapped)
+                        ? 20
+                        : 0
+                    )
+                }
         }
+        .foregroundColor(.accentColor)
+        .animation(
+            .easeInOut(duration: 0.5),
+            value: store(\.hasChevronButtonTapped)
+        )
         .frame(maxWidth: .infinity)
         .padding(.bottom, 10)
-        .background {
-            Color.white.opacity(0.3)
-        }
     }
     
     private var hasQuestionTextReachedMaximumCount: Bool {
@@ -156,28 +301,51 @@ extension TKConversationView {
 
 // MARK: Recording Component Container
 extension TKConversationView {
-    private func guideMessageBuilder() -> some View {
-        Text(Constants.GUIDE_MESSAGE)
-            .font(.title)
-            .bold()
-            .multilineTextAlignment(.leading)
-            .lineSpacing(12)
-            .foregroundColor(.gray)
-    }
-    
     private func stopRecordButtonBuilder() -> some View {
         Button {
-            store.onStopRecordingButtonTapped()
+            withAnimation {
+                store.onStopRecordingButtonTapped()
+            }
             
         } label: {
-            Image(systemName: "square.fill")
-                .foregroundColor(.white)
-                .padding()
-                .background {
-                    Circle()
-                        .foregroundColor(.gray)
-                }
+            Circle()
+                .frame(width: 64, height: 64)
+                .foregroundColor(
+                    store(\.answeredText).isEmpty
+                    ? .accentColor
+                    : .gray100.opacity(0.8)
+                )
         }
+        .overlay(alignment: .top) {
+            if store(\.answeredText).isEmpty {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .overlay {
+                        Text("듣고 있어요")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .background(alignment: .bottom) {
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(y: 5)
+                    }
+                    .frame(width: 150, height: 50)
+                    .offset(y: -75)
+                    .foregroundColor(.accentColor)
+            }
+        }
+    }
+    
+    private func scrollViewTopCurtainBuiler() -> LinearGradient {
+        LinearGradient(
+            colors: [
+                .accentColor,
+                .clear,
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 }
 
