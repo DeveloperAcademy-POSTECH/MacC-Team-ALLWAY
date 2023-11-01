@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class CommunicationViewStore: ObservableObject {
+final class ConversationViewStore: ObservableObject {
     enum CommunicationStatus: Equatable {
         case recording
         case writing
@@ -107,7 +107,7 @@ final class CommunicationViewStore: ObservableObject {
 }
 
 // MARK: Reduce
-extension CommunicationViewStore {
+extension ConversationViewStore {
     /// ViewState를 업데이트하는 keyPath 기반 메소드
     /// 일반적인 경우, default 만으로 대응이 가능하나, 특별한 로직이 필요할 경우 할당하는 로직을 케이스로 추가할 수 있다.
     /// - Parameters:
