@@ -8,13 +8,14 @@
 import SwiftUI
 
 final class ConversationViewStore: ObservableObject {
-    enum CommunicationStatus: Equatable {
+    enum ConversationStatus: Equatable {
         case recording
+        case guiding
         case writing
     }
     
-    struct CommunicationState: Equatable {
-        var communicationStatus: CommunicationStatus
+    struct ConversationState: Equatable {
+        var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
         var hasGuidingMessageShown: Bool = false
@@ -23,34 +24,37 @@ final class ConversationViewStore: ObservableObject {
         var historyItem: HistoryItem?
     }
     
-    @Published private var viewState: CommunicationState
+    @Published private var viewState: ConversationState
     public let questionTextLimit: Int = 160
-    
-    // MARK: init
-    init(
-        communicationState: CommunicationState
-    ) {
-        self.viewState = communicationState
+    public var isChevronButtonDisplayable: Bool {
+        !self(\.historyItems).isEmpty && self(\.conversationStatus) == .writing
     }
     
-    public func callAsFunction<Value: Equatable>(_ keyPath: KeyPath<CommunicationState, Value>) -> Value {
-        self.viewState[keyPath: keyPath]
+    // MARK: init
+    init(conversationState: ConversationState) {
+        viewState = conversationState
+    }
+    
+    public func callAsFunction<Value: Equatable>(
+        _ keyPath: KeyPath<ConversationState, Value>
+    ) -> Value {
+        viewState[keyPath: keyPath]
     }
     
     // MARK: Helpers
     public func bindingQuestionText() -> Binding<String> {
         Binding(
-            get: { self.viewState.questionText },
+            get: { self(\.questionText) },
             set: {
                 if $0.count > self.questionTextLimit {
-                    self.updateState(
+                    self.reduce(
                         \.questionText,
-                         with: String($0.prefix(self.questionTextLimit))
+                         into: String($0.prefix(self.questionTextLimit))
                     )
                 } else {
-                    self.updateState(
+                    self.reduce(
                         \.questionText,
-                         with: $0
+                         into: $0
                     )
                 }
             }
@@ -58,51 +62,77 @@ final class ConversationViewStore: ObservableObject {
     }
     
     public func onWritingViewAppear() {
-        self.updateState(\.questionText, with: "")
-        self.updateState(\.historyItem, with: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer))
-        self.updateState(\.communicationStatus, with: .writing)
-        HapticManager.sharedInstance.generateHaptic(.rigidTwice)
+        switchConverstaionStatus()
+        reduce(\.questionText, into: "")
+        reduce(
+            \.historyItem,
+             into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
+        )
         
+        HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
     public func onRecordingViewAppear() {
-        self.updateState(\.answeredText, with: "")
-        self.updateState(\.historyItem, with: HistoryItem(id: .init(), text: self(\.questionText), type: .question))
+        switchConverstaionStatus()
+        reduce(\.answeredText, into: "")
+        reduce(
+            \.historyItem,
+             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+        )
         
-        self.updateState(\.communicationStatus, with: .recording)
         HapticManager.sharedInstance.generateHaptic(.success)
-
     }
     
     public func onStartRecordingButtonTapped() {
-        self.onRecordingViewAppear()
+        switchConverstaionStatus()
+        reduce(\.answeredText, into: "")
+        reduce(
+            \.historyItem,
+             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+        )
+        
+        HapticManager.sharedInstance.generateHaptic(.success)
     }
     
     public func onEraseAllButtonTapped() {
-        self.updateState(\.questionText, with: "")
+        reduce(\.questionText, into: "")
     }
     
     public func onStopRecordingButtonTapped() {
-        self.onWritingViewAppear()
+        switchConverstaionStatus()
+        reduce(\.questionText, into: "")
+        reduce(
+            \.historyItem,
+             into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
+        )
+        
+        HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
     public func onChevronButtonTapped() {
-        self.updateState(
+        reduce(
             \.hasChevronButtonTapped,
-             with: self(\.hasChevronButtonTapped)
+             into: self(\.hasChevronButtonTapped)
              ? false
              : true
         )
     }
     
-    public func onSpeechTransicriptionUpdated(_ str: String) {
-        self.updateState(\.answeredText, with: str)
-        self.updateState(\.hasGuidingMessageShown, with: true)
-        HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
+    public func onGuideCancelButtonTapped() {
+        reduce(\.conversationStatus, into: .writing)
     }
     
-    private func countLastWord(_ transcript: String) -> Int {
-        return transcript.components(separatedBy: " ").last?.count ?? 0
+    public func onGuideTimeEnded() {
+        reduce(\.conversationStatus, into: .recording)
+    }
+    
+    public func onShowingQuestionCancelButtonTapped() {
+        reduce(\.conversationStatus, into: .writing)
+    }
+    
+    public func onSpeechTransicriptionUpdated(_ str: String) {
+        reduce(\.answeredText, into: str)
+        HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
     }
 }
 
@@ -113,9 +143,9 @@ extension ConversationViewStore {
     /// - Parameters:
     ///   - state: 업데이트할 ViewState의 속성 전달
     ///   - newValue: 새로 업데이트할 ViweState의 값 전달
-    private func updateState<Value: Equatable>(
-        _ state: WritableKeyPath<CommunicationState, Value>,
-        with newValue: Value
+    private func reduce<Value: Equatable>(
+        _ state: WritableKeyPath<ConversationState, Value>,
+        into newValue: Value
     ) {
         switch state {
         case \.historyItem:
@@ -123,10 +153,9 @@ extension ConversationViewStore {
             if let newHistoryItem = self.viewState.historyItem {
                 self.viewState.historyItems.append(newHistoryItem)
             }
+            
         case \.hasGuidingMessageShown:
-            withAnimation {
-                self.viewState[keyPath: state] = newValue
-            }
+            self.viewState[keyPath: state] = newValue
             
         case \.historyItems:
             break
@@ -134,5 +163,31 @@ extension ConversationViewStore {
         default:
             self.viewState[keyPath: state] = newValue
         }
+    }
+}
+
+// MARK: Helper
+extension ConversationViewStore {
+    private func switchConverstaionStatus() {
+        switch self(\.conversationStatus) {
+        case .writing:
+            if !self(\.hasGuidingMessageShown) {
+                reduce(\.conversationStatus, into: .guiding)
+                reduce(\.hasGuidingMessageShown, into: true)
+                
+            } else {
+                reduce(\.conversationStatus, into: .recording)
+            }
+        
+        case .guiding:
+            reduce(\.conversationStatus, into: .recording)
+            
+        case .recording:
+            reduce(\.conversationStatus, into: .writing)
+        }
+    }
+    
+    private func countLastWord(_ transcript: String) -> Int {
+        return transcript.components(separatedBy: " ").last?.count ?? 0
     }
 }
