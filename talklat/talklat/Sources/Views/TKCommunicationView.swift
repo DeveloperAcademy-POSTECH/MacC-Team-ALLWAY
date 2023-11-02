@@ -21,6 +21,8 @@ struct TKCommunicationView: View {
             questionText: "A long string of text that goes on an A long string of text A long string of text that goes on an A long string of text that goes on an A long string of text that goes on an that goes on an text that goes on an A long"
         )
     )
+    // MARK: 물음표 찍는지 검사 후의 answerText
+    @State private var displayedAnswerText: String = ""
     
     // MARK: Body
     var body: some View {
@@ -133,7 +135,11 @@ struct TKCommunicationView: View {
                 
                 if !store(\.answeredText).isEmpty {
                     ScrollView {
-                        Text(store(\.answeredText))
+                        Text(displayedAnswerText)
+                            .onChange(of: store(\.answeredText)) { newValue in
+                                displayedAnswerText = store.addPunctuation(newValue)
+                                store.updateAnswerText(with: store(\.answeredText))
+                            }
                             .font(.title2)
                             .bold()
                             .lineSpacing(12)
