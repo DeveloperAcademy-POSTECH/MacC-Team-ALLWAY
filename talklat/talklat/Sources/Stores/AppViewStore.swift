@@ -27,6 +27,12 @@ final class AppViewStore: ObservableObject {
     @Published public var messageOffset: CGSize = .zero
     @Published public var isMessageTapped: Bool = false
     
+    @Published public var historyScrollViewHeight: CGFloat = CGFloat(0)
+    
+    @Published public var containerScrollOffset: CGPoint = .zero
+    @Published public var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
+    @Published public var hasHistoryTransitionEnded: Bool = false
+
     public let questionTextLimit: Int = 160
     
     // MARK: INIT
@@ -131,11 +137,23 @@ final class AppViewStore: ObservableObject {
         scrollReader.scrollTo(destination, anchor: .top)
     }
     
-    public func scrollAvailabilitySetter(_ isEnabled: Bool) {
-        if isEnabled {
-            isScrollDisabled = true
+    public func scrollAvailabilitySetter(isDisabled: Bool) {
+        if !isDisabled,
+           historyScrollViewHeight + 120 > deviceHeight
+        {
+            isScrollDisabled = false // 스크롤 허용
+            print("스크롤 허용 됨")
         } else {
-            isScrollDisabled = false
+            isScrollDisabled = true // 스크롤 비허용
+            print("스크롤 비허용 됨!")
+        }
+    }
+    
+    public func checkIfLastItem(_ item: HistoryItem) -> String {
+        if historyItems.last == item {
+            return "lastItem"
+        } else {
+            return item.text
         }
     }
     
