@@ -16,7 +16,8 @@ struct TKConversationView: View {
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
     @StateObject private var store: ConversationViewStore = ConversationViewStore(
         conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing
+            conversationStatus: .writing,
+            answeredText: "Answer AnswerAnswer AnswerAnswer AnswerAnswer AnswerAnswer Answer"
         )
     )
         
@@ -31,16 +32,25 @@ struct TKConversationView: View {
                         text: store.bindingQuestionText(),
                         placeholder: Constants.TEXTFIELD_PLACEHOLDER
                     ) {
-                        Button {
-                            store.onEraseAllButtonTapped()
-                        } label: {
-                            Text("전체 지우기")
+                        HStack {
+                            Button {
+                                store.onEraseAllButtonTapped()
+                            } label: {
+                                Text("전체 지우기")
+                            }
+                            .opacity(focusState ? 1.0 : 0.0)
+                            .animation(
+                                .easeInOut(duration: 0.4),
+                                value: focusState
+                            )
+                            
+                            Spacer()
+                            
+                            Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
+                                Text("오픈 카톡방에서 피드백하기")
+                            }
                         }
-                        .opacity(focusState ? 1.0 : 0.0)
-                        .animation(
-                            .easeInOut(duration: 0.4),
-                            value: focusState
-                        )
+                        .padding(.trailing, 20)
                     }
                     .focused($focusState)
                     .background(alignment: .topLeading) {
@@ -115,8 +125,10 @@ struct TKConversationView: View {
                                     .id("SCROLL_BOTTOM")
                             }
                             .overlay(alignment: .top) {
-                                scrollViewTopCurtainBuiler()
-                                    .frame(height: 50)
+                                if store(\.answeredText).count > 50 {
+                                    scrollViewTopCurtainBuiler()
+                                        .frame(height: 50)
+                                }
                             }
                             // MARK: Scroll Position Here
                             .onChange(of: store(\.answeredText)) { newValue in
@@ -152,9 +164,6 @@ struct TKConversationView: View {
                     withAnimation {
                         store.onSpeechTransicriptionUpdated(transcript)
                     }
-                }
-                .onAppear {
-                    self.hideKeyboard()
                 }
                 .toolbar {
                     if store(\.answeredText).isEmpty {

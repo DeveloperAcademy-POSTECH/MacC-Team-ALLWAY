@@ -55,7 +55,7 @@ struct TKGuidingView: View {
             HStack {
                 Circle()
                     .trim(from: 0, to: circleTrim)
-                    .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .stroke(style: StrokeStyle(lineWidth: 7, lineCap: .round))
                     .frame(width: 60, height: 60)
                     .rotationEffect(.degrees(-90))
                     .animation(.default, value: circleTrim)
@@ -70,7 +70,7 @@ struct TKGuidingView: View {
         .background { Color.accentColor.ignoresSafeArea() }
         .onReceive(guideTimer) { _ in
             if circleTrim <= 1.1 {
-                circleTrim += 0.05
+                circleTrim += 0.04
             } else if circleTrim >= 1.1 {
                 guideTimer.upstream.connect().cancel()
                 withAnimation {
