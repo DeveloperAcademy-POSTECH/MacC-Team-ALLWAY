@@ -30,6 +30,7 @@ struct OffsetObservingScrollView<Content: View>: View {
                 coordinateSpace: .named("coordinate")
             )
         }
+        .scrollIndicators(.hidden)
         .coordinateSpace(name: "coordinate")
     }
 }

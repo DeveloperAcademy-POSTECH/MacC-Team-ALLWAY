@@ -12,12 +12,12 @@ struct TKConversationView: View {
     @FocusState var focusState: Bool
     @Namespace var communicationAnimation
     
-    @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
     
     @State var offset: CGPoint = .zero
     
     @ObservedObject var store: ConversationViewStore
+    @ObservedObject var speechRecognizeManager: SpeechRecognizer
     
     // MARK: Body
     var body: some View {
@@ -25,22 +25,36 @@ struct TKConversationView: View {
             VStack {
                 if store(\.conversationStatus) == .writing {
                     VStack {
+                        chevronButtonBuilder()
+                            .opacity(
+                                store.isChevronButtonDisplayable ? 1.0 : 0.0
+                            )
+                        
                         TLTextField(
                             style: .normal(textLimit: store.questionTextLimit),
                             text: store.bindingQuestionText(),
                             placeholder: Constants.TEXTFIELD_PLACEHOLDER
                         ) {
-                            Button {
-                                store.onEraseAllButtonTapped()
-                            } label: {
-                                Text("전체 지우기")
+                            HStack {
+                                Button {
+                                    store.onEraseAllButtonTapped()
+                                } label: {
+                                    Text("전체 지우기")
+                                }
+                                .opacity(focusState ? 1.0 : 0.0)
+                                .animation(
+                                    .easeInOut(duration: 0.4),
+                                    value: focusState
+                                )
+                                
+                                Spacer()
+                                
+                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
+                                    Text("오픈 카톡방에서 피드백하기")
+                                }
                             }
-                            .opacity(focusState ? 1.0 : 0.0)
-                            .animation(
-                                .easeInOut(duration: 0.4),
-                                value: focusState
-                            )
-                        }
+                            .padding(.trailing, 20)
+                    }
                         .focused($focusState)
                         .background(alignment: .topLeading) {
                             characterLimitViewBuilder()
@@ -56,7 +70,6 @@ struct TKConversationView: View {
                         
                         Spacer()
                     }
-                    
                 } else if store(\.conversationStatus) == .recording {
                     VStack {
                         Spacer()
@@ -107,8 +120,8 @@ struct TKConversationView: View {
                                         )
                                     
                                     Rectangle()
-                                        .foregroundColor(.accentColor)
-                                        .frame(height: 75)
+                                        .foregroundColor(.clear)
+                                        .frame(height: 1)
                                         .id("SCROLL_BOTTOM")
                                 }
                                 .overlay(alignment: .top) {
@@ -145,6 +158,18 @@ struct TKConversationView: View {
                         }
                     }
                     .frame(maxHeight: .infinity)
+                    .safeAreaInset(edge: .bottom) {
+                        stopRecordButtonBuilder()
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 12)
+                            .background {
+                                if !store(\.answeredText).isEmpty {
+                                    Color.accentColor
+                                        .ignoresSafeArea(edges: .bottom)
+                                }
+                            }
+                        
+                    }
                     .onChange(of: speechRecognizeManager.transcript) { transcript in
                         withAnimation {
                             store.onSpeechTransicriptionUpdated(transcript)
@@ -168,9 +193,6 @@ struct TKConversationView: View {
                 }
             }
             .frame(height: store(\.deviceHeight))
-            .onAppear {
-                print("~~> deviceHeight", store(\.deviceHeight))
-            }
             .onChange(of: offset) { offset in
                 if offset.y < -110,
                    store(\.conversationStatus) == .writing,
@@ -189,30 +211,18 @@ struct TKConversationView: View {
             .onTapGesture {
                 self.hideKeyboard()
             }
-            .ignoresSafeArea(edges: .top)
-            .safeAreaInset(edge: .top) {
-                chevronButtonBuilder()
-                    .opacity(
-                        store.isChevronButtonDisplayable ? 1.0 : 0.0
-                    )
-                    .padding(.vertical, 10)
-            }
             .onAppear {
                 gyroScopeStore.detectDeviceMotion()
             }
-            .onChange(of: store(\.conversationStatus)) { newStatus in
-                switch newStatus {
-                case .writing:
-                    speechRecognizeManager.stopAndResetTranscribing()
-                    break
-                    
-                case .guiding:
-                    break
-                    
-                case .recording:
-                    speechRecognizeManager.startTranscribing()
-                    break
+        }
+        .background(alignment: .bottom) {
+            if !store(\.answeredText).isEmpty,
+               store(\.conversationStatus) == .recording {
+                VStack {
+                    Spacer()
+                    Color.accentColor
                 }
+                .frame(height: 100)
             }
         }
         // MARK: - Flip Gesture OnChange Has been Deprecated
@@ -252,6 +262,10 @@ extension TKConversationView {
             .easeInOut(duration: 0.5),
             value: store(\.hasChevronButtonTapped)
         )
+        .opacity(store(\.isTopViewShown)
+                 ? 0.0
+                 : 1.0
+        )
         .frame(maxWidth: .infinity)
         .padding(.bottom, 10)
     }
@@ -286,11 +300,48 @@ extension TKConversationView {
             endPoint: .bottom
         )
     }
+    
+    // Recording 뷰 버튼
+    private func stopRecordButtonBuilder() -> some View {
+        Button {
+            withAnimation {
+                store.onStopRecordingButtonTapped()
+            }
+            
+        } label: {
+            Circle()
+                .frame(width: 64, height: 64)
+                .foregroundColor(
+                    store(\.answeredText).isEmpty
+                    ? .accentColor
+                    : .gray100.opacity(0.8)
+                )
+        }
+        .overlay(alignment: .top) {
+            if store(\.answeredText).isEmpty {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .overlay {
+                        Text("듣고 있어요")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .background(alignment: .bottom) {
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(y: 5)
+                    }
+                    .frame(width: 150, height: 50)
+                    .offset(y: -75)
+                    .foregroundColor(.accentColor)
+            }
+        }
+    }
 }
 
 
-//struct TKConversationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TKConversationView()
-//    }
-//}
+struct TKConversationView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollContainer(store: .init(conversationState: .init(conversationStatus: .writing)))
+    }
+}

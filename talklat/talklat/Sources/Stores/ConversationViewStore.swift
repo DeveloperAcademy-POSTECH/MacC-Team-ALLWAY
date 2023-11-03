@@ -100,13 +100,16 @@ final class ConversationViewStore: ObservableObject {
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
+    @available(*, deprecated, renamed: "onStartRecordingButtonTapepd", message: "TKRecordingView Deprecated")
     public func onRecordingViewAppear() {
         switchConverstaionStatus()
         reduce(\.answeredText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
-        )
+        if !self(\.questionText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.success)
     }
@@ -114,10 +117,13 @@ final class ConversationViewStore: ObservableObject {
     public func onStartRecordingButtonTapped() {
         switchConverstaionStatus()
         reduce(\.answeredText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
-        )
+        
+        if !self(\.questionText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.success)
     }
@@ -129,10 +135,13 @@ final class ConversationViewStore: ObservableObject {
     public func onStopRecordingButtonTapped() {
         switchConverstaionStatus()
         reduce(\.questionText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
-        )
+        
+        if !self(\.answeredText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }

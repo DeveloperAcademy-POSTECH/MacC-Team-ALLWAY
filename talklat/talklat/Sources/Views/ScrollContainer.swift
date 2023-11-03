@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ScrollContainer: View {
+    @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @ObservedObject var store: ConversationViewStore
     
     var body: some View {
@@ -15,6 +16,7 @@ struct ScrollContainer: View {
             if store(\.conversationStatus) == .guiding {
                 TKGuidingView(store: store)
                     .frame(maxHeight: .infinity)
+                
             } else {
                 GeometryReader { _ in
                     VStack {
@@ -22,37 +24,43 @@ struct ScrollContainer: View {
                         if store(\.conversationStatus) == .writing {
                             TKHistoryView(store: store)
                                 .frame(
-                                    height: store(\.isTopViewShown)
-                                    ? store(\.deviceHeight) + store(\.topInset) + store(\.bottomInset) // 임시방편
-                                    : nil
+                                    maxHeight: store(\.isTopViewShown)
+                                    ? .infinity // 임시방편
+                                    : 0
                                 )
-                                .background { Color.gray100 }
                                 .overlay(alignment: .bottom) {
-                                    Button {
-                                        withAnimation(
-                                            .spring(
-                                                response: 0.5,
-                                                dampingFraction: 0.7,
-                                                blendDuration: 0.5
-                                            )
-                                        ) {
-                                            store.onScrollOffsetChanged(false)
+                                    HStack {
+                                        Button {
+                                            withAnimation(
+                                                .spring(
+                                                    response: 0.5,
+                                                    dampingFraction: 0.7,
+                                                    blendDuration: 0.5
+                                                )
+                                            ) {
+                                                store.onScrollOffsetChanged(false)
+                                            }
+                                        } label: {
+                                            Image(systemName: "chevron.compact.down")
+                                                .resizable()
+                                                .frame(width: 32, height: 10)
+                                                .foregroundColor(.gray500)
                                         }
-                                    } label: {
-                                        Image(systemName: "chevron.compact.down")
-                                            .resizable()
-                                            .frame(width: 32, height: 10)
-                                            .foregroundColor(.gray500)
+                                        .opacity(store(\.isTopViewShown)
+                                                 ? 1.0
+                                                 : 0.0)
                                     }
-                                    .padding(.vertical, 30)
                                 }
                         }
                         
                         // View 2
-                        TKConversationView(store: store)
+                        TKConversationView(
+                            store: store,
+                            speechRecognizeManager: speechRecognizeManager
+                        )
                             .frame(
                                 height: store(\.isTopViewShown) && store(\.conversationStatus) == .writing
-                                ? nil
+                                ? 0
                                 : store(\.deviceHeight) + store(\.bottomInset) // 임시방편
                             )
                             .ignoresSafeArea(
@@ -83,23 +91,25 @@ struct ScrollContainer: View {
                 }
             }
             
-            if !store(\.isTopViewShown) {
-                if store(\.conversationStatus) == .writing {
-                    startRecordingButtonBuilder()
-                } else if store(\.conversationStatus) == .recording {
-                    stopRecordButtonBuilder()
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 12)
-                        .background {
-                            if !store(\.answeredText).isEmpty {
-                                Color.accentColor
-                                    .ignoresSafeArea(edges: .bottom)
-                            }
-                        }
-                }
+            if !store(\.isTopViewShown),
+               store(\.conversationStatus) == .writing {
+                startRecordingButtonBuilder()
             }
         }
-        .ignoresSafeArea()
+        .onChange(of: store(\.conversationStatus)) { newStatus in
+            switch newStatus {
+            case .writing:
+                speechRecognizeManager.stopAndResetTranscribing()
+                break
+                
+            case .guiding:
+                break
+                
+            case .recording:
+                speechRecognizeManager.startTranscribing()
+                break
+            }
+        }
     }
 }
 
@@ -138,43 +148,10 @@ extension ScrollContainer {
                 }
         }
     }
-    
-    // Recording 뷰 버튼
-    private func stopRecordButtonBuilder() -> some View {
-        Button {
-            withAnimation {
-                store.onStopRecordingButtonTapped()
-            }
-            
-        } label: {
-            Circle()
-                .frame(width: 64, height: 64)
-                .foregroundColor(
-                    store(\.answeredText).isEmpty
-                    ? .accentColor
-                    : .gray100.opacity(0.8)
-                )
-        }
-        .overlay(alignment: .top) {
-            if store(\.answeredText).isEmpty {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .overlay {
-                        Text("듣고 있어요")
-                            .foregroundColor(.white)
-                            .bold()
-                    }
-                    .background(alignment: .bottom) {
-                        Rectangle()
-                            .frame(width: 20, height: 20)
-                            .rotationEffect(.degrees(45))
-                            .offset(y: 5)
-                    }
-                    .frame(width: 150, height: 50)
-                    .offset(y: -75)
-                    .foregroundColor(.accentColor)
-            }
-        }
-    }
+}
+
+#Preview {
+    ScrollContainer(store: .init(conversationState: .init(conversationStatus: .writing)))
 }
 
 
