@@ -29,6 +29,7 @@
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */; };
 		7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */; };
+		CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79CAEA2AF0CEC20007713B /* LocationStore.swift */; };
 		CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
@@ -80,6 +81,7 @@
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
+		CE79CAEA2AF0CEC20007713B /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
+				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
+				CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
@@ -575,10 +579,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -610,10 +616,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
