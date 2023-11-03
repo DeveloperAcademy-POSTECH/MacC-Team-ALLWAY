@@ -16,8 +16,7 @@ struct TKConversationView: View {
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
     @StateObject private var store: ConversationViewStore = ConversationViewStore(
         conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing,
-            answeredText: "Answer AnswerAnswer AnswerAnswer AnswerAnswer AnswerAnswer Answer"
+            conversationStatus: .recording
         )
     )
         
@@ -172,6 +171,7 @@ struct TKConversationView: View {
                                 store.onShowingQuestionCancelButtonTapped()
                             } label : {
                                 Image(systemName: "chevron.left")
+                                    .fontWeight(.black)
                                     .foregroundColor(.accentColor)
                             }
                         }
