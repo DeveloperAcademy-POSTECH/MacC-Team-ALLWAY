@@ -19,13 +19,7 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var currentAuthStatus: AuthStatus = .splash
     @Published private(set) var hasGuidingMessageShown: Bool = false
     @Published public var historyItems: [HistoryItem] = []
-    @Published var recognitionCount: Int = 0
-    
-    @Published public var deviceHeight: CGFloat = CGFloat(0)
-    @Published public var isHistoryViewShown: Bool = false
-    @Published public var isScrollDisabled: Bool = true
-    @Published public var messageOffset: CGSize = .zero
-    @Published public var isMessageTapped: Bool = false
+    @Published public var recognitionCount: Int = 0
     
     public let questionTextLimit: Int = 160
     
@@ -76,33 +70,6 @@ final class AppViewStore: ObservableObject {
         questionText = ""
     }
     
-    public func swipeGuideMessageTapped() {
-        isMessageTapped = true
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.5
-        ) {
-            self.isMessageTapped = false
-        }
-    }
-    
-    public func swipeGuideMessageDragged(_ gesture: DragGesture.Value) {
-        if gesture.translation.height > -50 {
-            messageOffset.height = gesture.translation.height
-            
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + 0.15
-            ) {
-                self.messageOffset.height = .zero
-            }
-        }
-    }
-    
-    public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
-        withAnimation {
-            proxy.scrollTo("TKIntroView")
-        }
-    }
-    
     public func onWritingViewAppear() {
         if questionText.isEmpty { }
         else { questionText = "" }
@@ -116,26 +83,11 @@ final class AppViewStore: ObservableObject {
         }
     }
     
-    public func historyViewSetter(_ shouldShow: Bool) {
-        if shouldShow {
-            isHistoryViewShown = true
+    public func checkIfLastItem(_ item: HistoryItem) -> String {
+        if historyItems.last == item {
+            return "lastItem"
         } else {
-            isHistoryViewShown = false
-        }
-    }
-    
-    public func scrollDestinationSetter(
-        scrollReader: ScrollViewProxy,
-        destination: String
-    ) {
-        scrollReader.scrollTo(destination, anchor: .top)
-    }
-    
-    public func scrollAvailabilitySetter(_ isEnabled: Bool) {
-        if isEnabled {
-            isScrollDisabled = true
-        } else {
-            isScrollDisabled = false
+            return item.text
         }
     }
     

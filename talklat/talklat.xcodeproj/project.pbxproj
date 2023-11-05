@@ -23,7 +23,6 @@
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
-		7EE71BAB2AF0A6D6001C0A28 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */; };
 		7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */; };
 		7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */; };
 		7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */; };
@@ -38,6 +37,8 @@
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
 		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
+		EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */; };
+		EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +78,6 @@
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
-		7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
 		7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKWritingView.swift; sourceTree = "<group>"; };
@@ -92,6 +92,8 @@
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
+		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
+		EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetObserver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,8 +216,9 @@
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
 				EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */,
 				EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */,
-				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
+				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
+				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,7 +228,7 @@
 			children = (
 				7E8906402ACEA31500C9947A /* TKConversationView.swift */,
 				7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */,
-				7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */,
+				EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -427,14 +430,15 @@
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
+				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
+				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
-				7EE71BAB2AF0A6D6001C0A28 /* TKGuidingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,7 +527,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -579,7 +583,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -608,12 +612,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -644,12 +648,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

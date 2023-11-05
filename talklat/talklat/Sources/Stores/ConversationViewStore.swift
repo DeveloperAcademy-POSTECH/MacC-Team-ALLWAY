@@ -22,6 +22,14 @@ final class ConversationViewStore: ObservableObject {
         var hasChevronButtonTapped: Bool = false
         var historyItems: [HistoryItem] = []
         var historyItem: HistoryItem?
+        
+        // scroll container related - TODO: ScrollStore 분리?
+        var historyScrollViewHeight: CGFloat = CGFloat(0)
+        var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
+        var deviceHeight: CGFloat = 0
+        var topInset: CGFloat = 0
+        var bottomInset: CGFloat = 0
+        var isTopViewShown: Bool = false
     }
     
     @Published private var viewState: ConversationState
@@ -61,6 +69,26 @@ final class ConversationViewStore: ObservableObject {
         )
     }
     
+    public func bindingHistoryScrollOffset() -> Binding<CGPoint> {
+        Binding(
+            get: { self(\.historyScrollOffset) },
+            set: { _ in self(\.historyScrollOffset) }
+        )
+    }
+    
+    public func onScrollContainerAppear(
+        geo: GeometryProxy,
+        insets: UIEdgeInsets
+    ) {
+        reduce(\.deviceHeight, into: geo.size.height)
+        reduce(\.topInset, into: insets.top)
+        reduce(\.bottomInset, into: insets.bottom)
+    }
+    
+    public func onHistoryViewAppear(geo: GeometryProxy) {
+        reduce(\.historyScrollViewHeight, into: geo.size.height)
+    }
+    
     public func onWritingViewAppear() {
         switchConverstaionStatus()
         reduce(\.questionText, into: "")
@@ -72,13 +100,16 @@ final class ConversationViewStore: ObservableObject {
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
+    @available(*, deprecated, renamed: "onStartRecordingButtonTapepd", message: "TKRecordingView Deprecated")
     public func onRecordingViewAppear() {
         switchConverstaionStatus()
         reduce(\.answeredText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
-        )
+        if !self(\.questionText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.success)
     }
@@ -86,10 +117,13 @@ final class ConversationViewStore: ObservableObject {
     public func onStartRecordingButtonTapped() {
         switchConverstaionStatus()
         reduce(\.answeredText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
-        )
+        
+        if !self(\.questionText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.success)
     }
@@ -101,10 +135,13 @@ final class ConversationViewStore: ObservableObject {
     public func onStopRecordingButtonTapped() {
         switchConverstaionStatus()
         reduce(\.questionText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
-        )
+        
+        if !self(\.answeredText).isEmpty {
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
+            )
+        }
         
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
@@ -116,6 +153,10 @@ final class ConversationViewStore: ObservableObject {
              ? false
              : true
         )
+    }
+    
+    public func onScrollOffsetChanged(_ value: Bool) {
+        reduce(\.isTopViewShown, into: value)
     }
     
     public func onGuideCancelButtonTapped() {
