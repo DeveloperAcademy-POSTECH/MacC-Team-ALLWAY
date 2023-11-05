@@ -47,8 +47,7 @@ struct TKHistoryViewA_Previews: PreviewProvider {
     static var previews: some View {
         let previewStore = AppViewStore(
             communicationStatus: .writing,
-            questionText: "",
-            currentAuthStatus: .authCompleted
+            questionText: ""
         )
 //        previewStore.historyItems = [
 //            HistoryItem(id: UUID(), text: "잠이 옵니다", type: .question),

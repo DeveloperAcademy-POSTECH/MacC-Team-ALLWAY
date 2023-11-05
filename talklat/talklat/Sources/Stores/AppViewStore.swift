@@ -16,34 +16,20 @@ final class AppViewStore: ObservableObject {
     @Published private(set) var communicationStatus: CommunicationStatus
     @Published private(set) var questionText: String
     @Published private(set) var answeredText: String?
-    @Published private(set) var currentAuthStatus: AuthStatus = .authIncompleted
+    @Published private(set) var currentAuthStatus: AuthStatus = .splash
     @Published private(set) var hasGuidingMessageShown: Bool = false
     @Published public var historyItems: [HistoryItem] = []
-    @Published var recognitionCount: Int = 0
+    @Published public var recognitionCount: Int = 0
     
-    @Published public var deviceHeight: CGFloat = CGFloat(0)
-    @Published public var isHistoryViewShown: Bool = false
-    @Published public var isScrollDisabled: Bool = true
-    @Published public var messageOffset: CGSize = .zero
-    @Published public var isMessageTapped: Bool = false
-    
-    @Published public var historyScrollViewHeight: CGFloat = CGFloat(0)
-    
-    @Published public var containerScrollOffset: CGPoint = .zero
-    @Published public var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
-    @Published public var hasHistoryTransitionEnded: Bool = false
-
     public let questionTextLimit: Int = 160
     
     // MARK: INIT
     init(
         communicationStatus: CommunicationStatus,
-        questionText: String,
-        currentAuthStatus: AuthStatus
+        questionText: String
     ) {
         self.communicationStatus = communicationStatus
         self.questionText = questionText
-        self.currentAuthStatus = currentAuthStatus
     }
     
     // MARK: HELPERS
@@ -84,33 +70,6 @@ final class AppViewStore: ObservableObject {
         questionText = ""
     }
     
-    public func swipeGuideMessageTapped() {
-        isMessageTapped = true
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.5
-        ) {
-            self.isMessageTapped = false
-        }
-    }
-    
-    public func swipeGuideMessageDragged(_ gesture: DragGesture.Value) {
-        if gesture.translation.height > -50 {
-            messageOffset.height = gesture.translation.height
-            
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + 0.15
-            ) {
-                self.messageOffset.height = .zero
-            }
-        }
-    }
-    
-    public func onIntroViewAppear(_ proxy: ScrollViewProxy) {
-        withAnimation {
-            proxy.scrollTo("TKIntroView")
-        }
-    }
-    
     public func onWritingViewAppear() {
         if questionText.isEmpty { }
         else { questionText = "" }
@@ -121,33 +80,6 @@ final class AppViewStore: ObservableObject {
         if !hasGuidingMessageShown,
            answeredText != nil {
             hasGuidingMessageShown = true
-        }
-    }
-    
-    public func historyViewSetter(_ shouldShow: Bool) {
-        if shouldShow {
-            isHistoryViewShown = true
-        } else {
-            isHistoryViewShown = false
-        }
-    }
-    
-    public func scrollDestinationSetter(
-        scrollReader: ScrollViewProxy,
-        destination: String
-    ) {
-        scrollReader.scrollTo(destination, anchor: .top)
-    }
-    
-    public func scrollAvailabilitySetter(isDisabled: Bool) {
-        if !isDisabled,
-           historyScrollViewHeight + 120 > deviceHeight
-        {
-            isScrollDisabled = false // 스크롤 허용
-            print("스크롤 허용 됨")
-        } else {
-            isScrollDisabled = true // 스크롤 비허용
-            print("스크롤 비허용 됨!")
         }
     }
     
@@ -185,7 +117,9 @@ extension AppViewStore {
     }
     
     public func voiceRecordingAuthSetter(_ status: AuthStatus) {
-        currentAuthStatus = status
+        withAnimation {
+            currentAuthStatus = status
+        }
     }
 }
 
@@ -196,8 +130,7 @@ extension AppViewStore {
     ) -> AppViewStore {
         let appViewStore = AppViewStore(
             communicationStatus: .writing,
-            questionText: "",
-            currentAuthStatus: .authCompleted
+            questionText: ""
         )
         condition(appViewStore)
         return appViewStore
