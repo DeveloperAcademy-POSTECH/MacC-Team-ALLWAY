@@ -9,10 +9,9 @@ import CoreLocation
 import Foundation
 import MapKit
 import SwiftUI
-import UIKit
 
 
-class LocationStore: NSObject, CLLocationManagerDelegate, MKMapViewDelegate, ObservableObject {
+class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
     struct LocationState {
         var userCoordinate: UserCoordinate
@@ -20,6 +19,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, MKMapViewDelegate, Obs
         var authorizationStatus: CLAuthorizationStatus?
     }
     
+    // 현재는 C5의 좌표값을 하드코딩 해놨는데 어떻게 해야할까?
     struct UserCoordinate: Equatable {
         var userLatitude: Double = 36.014088
         var userLongitude: Double = 129.325848
@@ -77,7 +77,11 @@ class LocationStore: NSObject, CLLocationManagerDelegate, MKMapViewDelegate, Obs
         with newValue: Value
     ) {
         switch state {
-        case \.userCoordinate, \.authorizationStatus, \.locationName:
+        case \.userCoordinate:
+            withAnimation {
+                self.locationState[keyPath: state] = newValue
+            }
+        case \.authorizationStatus, \.locationName:
             self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
         default:
             break
