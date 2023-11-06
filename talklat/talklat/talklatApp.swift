@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct talklatApp: App {
@@ -22,6 +23,20 @@ struct talklatApp: App {
     )
     
     private let appRootManager = AppRootManager()
+    private var container: ModelContainer
+
+    init() {
+        do {
+            container = try ModelContainer(
+                for: TKConversation.self, TKTextReplacement.self
+            )
+        } catch {
+            fatalError("Failed to configure SwiftData container.")
+        }
+        
+        // DB 파일이 저장된 경로
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
+    }
     
     var body: some Scene {
         WindowGroup {
@@ -51,6 +66,7 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
+        .modelContainer(container)
     }
 }
 

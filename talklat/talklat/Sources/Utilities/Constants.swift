@@ -53,3 +53,9 @@ public enum TKTransitionObjects {
     case ANSWER
     case INTERLUDE
 }
+
+// HistoryItem이 없어지고 enum이 public이 될 것
+public enum MessageType: String {
+    case question = "question"
+    case answer = "answer"
+}
