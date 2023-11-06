@@ -10,11 +10,12 @@ import SwiftData
 @Model
 class TKConversation {
     @Attribute(.unique) var id: String /// 유니크함 지정
+    @Relationship(deleteRule: .cascade) var content: [TKContent]
+    @Relationship(deleteRule: .cascade) var location: TKLocation
     var title: String
     var createdAt: Date
     var updatedAt: Date
-    @Relationship(deleteRule: .cascade) var content: [TKContent]
-    @Relationship(deleteRule: .cascade) var location: TKLocation
+   
     
     init(
         id: String,
