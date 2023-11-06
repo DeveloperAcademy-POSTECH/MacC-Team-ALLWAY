@@ -19,6 +19,14 @@
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
+		7E9FEF552AF8CEAD000C4D49 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9FEF542AF8CEAD000C4D49 /* WidgetKit.framework */; };
+		7E9FEF572AF8CEAD000C4D49 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9FEF562AF8CEAD000C4D49 /* SwiftUI.framework */; };
+		7E9FEF5A2AF8CEAD000C4D49 /* talklatWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF592AF8CEAD000C4D49 /* talklatWidgetBundle.swift */; };
+		7E9FEF5C2AF8CEAD000C4D49 /* talklatWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF5B2AF8CEAD000C4D49 /* talklatWidgetLiveActivity.swift */; };
+		7E9FEF5E2AF8CEAD000C4D49 /* talklatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF5D2AF8CEAD000C4D49 /* talklatWidget.swift */; };
+		7E9FEF602AF8CEAD000C4D49 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FEF5F2AF8CEAD000C4D49 /* AppIntent.swift */; };
+		7E9FEF622AF8CEAE000C4D49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E9FEF612AF8CEAE000C4D49 /* Assets.xcassets */; };
+		7E9FEF672AF8CEAE000C4D49 /* talklatWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E9FEF522AF8CEAD000C4D49 /* talklatWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
@@ -56,7 +64,28 @@
 			remoteGlobalIDString = 7E8D17C02ACE8AEC00E904E5;
 			remoteInfo = talklat;
 		};
+		7E9FEF642AF8CEAE000C4D49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E8D17B92ACE8AEC00E904E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E9FEF512AF8CEAD000C4D49;
+			remoteInfo = talklatWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7E9FEF662AF8CEAE000C4D49 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7E9FEF672AF8CEAE000C4D49 /* talklatWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		575677E02ADA6F13002E01BE /* TLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTextField.swift; sourceTree = "<group>"; };
@@ -76,6 +105,17 @@
 		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7E9FEF522AF8CEAD000C4D49 /* talklatWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = talklatWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E9FEF542AF8CEAD000C4D49 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		7E9FEF562AF8CEAD000C4D49 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		7E9FEF592AF8CEAD000C4D49 /* talklatWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatWidgetBundle.swift; sourceTree = "<group>"; };
+		7E9FEF5B2AF8CEAD000C4D49 /* talklatWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		7E9FEF5D2AF8CEAD000C4D49 /* talklatWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatWidget.swift; sourceTree = "<group>"; };
+		7E9FEF5F2AF8CEAD000C4D49 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		7E9FEF612AF8CEAE000C4D49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7E9FEF632AF8CEAE000C4D49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E9FEF6C2AF8D93D000C4D49 /* talklat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = talklat.entitlements; sourceTree = "<group>"; };
+		7E9FEF6D2AF8D95C000C4D49 /* talklatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = talklatWidgetExtension.entitlements; sourceTree = "<group>"; };
 		7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
@@ -118,6 +158,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E9FEF4F2AF8CEAD000C4D49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9FEF572AF8CEAD000C4D49 /* SwiftUI.framework in Frameworks */,
+				7E9FEF552AF8CEAD000C4D49 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -132,9 +181,12 @@
 		7E8D17B82ACE8AEC00E904E5 = {
 			isa = PBXGroup;
 			children = (
+				7E9FEF6D2AF8D95C000C4D49 /* talklatWidgetExtension.entitlements */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
+				7E9FEF582AF8CEAD000C4D49 /* talklatWidget */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
+				7E9FEF532AF8CEAD000C4D49 /* Frameworks */,
 				7E8D17C22ACE8AEC00E904E5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -145,6 +197,7 @@
 				7E8D17C12ACE8AEC00E904E5 /* talklat.app */,
 				7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */,
 				7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */,
+				7E9FEF522AF8CEAD000C4D49 /* talklatWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,6 +205,7 @@
 		7E8D17C32ACE8AEC00E904E5 /* talklat */ = {
 			isa = PBXGroup;
 			children = (
+				7E9FEF6C2AF8D93D000C4D49 /* talklat.entitlements */,
 				7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */,
 				7E8D17EF2ACE8B8900E904E5 /* Sources */,
 				7E8D17EE2ACE8B1400E904E5 /* Resources */,
@@ -219,6 +273,36 @@
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E9FEF532AF8CEAD000C4D49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E9FEF542AF8CEAD000C4D49 /* WidgetKit.framework */,
+				7E9FEF562AF8CEAD000C4D49 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7E9FEF582AF8CEAD000C4D49 /* talklatWidget */ = {
+			isa = PBXGroup;
+			children = (
+				7E9FEF6B2AF8D3FE000C4D49 /* Views */,
+				7E9FEF592AF8CEAD000C4D49 /* talklatWidgetBundle.swift */,
+				7E9FEF5B2AF8CEAD000C4D49 /* talklatWidgetLiveActivity.swift */,
+				7E9FEF5D2AF8CEAD000C4D49 /* talklatWidget.swift */,
+				7E9FEF5F2AF8CEAD000C4D49 /* AppIntent.swift */,
+				7E9FEF612AF8CEAE000C4D49 /* Assets.xcassets */,
+				7E9FEF632AF8CEAE000C4D49 /* Info.plist */,
+			);
+			path = talklatWidget;
+			sourceTree = "<group>";
+		};
+		7E9FEF6B2AF8D3FE000C4D49 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -292,10 +376,12 @@
 				7E8D17BD2ACE8AEC00E904E5 /* Sources */,
 				7E8D17BE2ACE8AEC00E904E5 /* Frameworks */,
 				7E8D17BF2ACE8AEC00E904E5 /* Resources */,
+				7E9FEF662AF8CEAE000C4D49 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7E9FEF652AF8CEAE000C4D49 /* PBXTargetDependency */,
 			);
 			name = talklat;
 			productName = talklat;
@@ -338,6 +424,23 @@
 			productReference = 7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		7E9FEF512AF8CEAD000C4D49 /* talklatWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E9FEF6A2AF8CEAE000C4D49 /* Build configuration list for PBXNativeTarget "talklatWidgetExtension" */;
+			buildPhases = (
+				7E9FEF4E2AF8CEAD000C4D49 /* Sources */,
+				7E9FEF4F2AF8CEAD000C4D49 /* Frameworks */,
+				7E9FEF502AF8CEAD000C4D49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = talklatWidgetExtension;
+			productName = talklatWidgetExtension;
+			productReference = 7E9FEF522AF8CEAD000C4D49 /* talklatWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -345,7 +448,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					7E8D17C02ACE8AEC00E904E5 = {
@@ -358,6 +461,9 @@
 					7E8D17DA2ACE8AED00E904E5 = {
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 7E8D17C02ACE8AEC00E904E5;
+					};
+					7E9FEF512AF8CEAD000C4D49 = {
+						CreatedOnToolsVersion = 15.0.1;
 					};
 				};
 			};
@@ -375,6 +481,7 @@
 			projectRoot = "";
 			targets = (
 				7E8D17C02ACE8AEC00E904E5 /* talklat */,
+				7E9FEF512AF8CEAD000C4D49 /* talklatWidgetExtension */,
 				7E8D17D02ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DA2ACE8AED00E904E5 /* talklatUITests */,
 			);
@@ -402,6 +509,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E9FEF502AF8CEAD000C4D49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9FEF622AF8CEAE000C4D49 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +574,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E9FEF4E2AF8CEAD000C4D49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9FEF5C2AF8CEAD000C4D49 /* talklatWidgetLiveActivity.swift in Sources */,
+				7E9FEF602AF8CEAD000C4D49 /* AppIntent.swift in Sources */,
+				7E9FEF5A2AF8CEAD000C4D49 /* talklatWidgetBundle.swift in Sources */,
+				7E9FEF5E2AF8CEAD000C4D49 /* talklatWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -471,6 +597,11 @@
 			isa = PBXTargetDependency;
 			target = 7E8D17C02ACE8AEC00E904E5 /* talklat */;
 			targetProxy = 7E8D17DC2ACE8AED00E904E5 /* PBXContainerItemProxy */;
+		};
+		7E9FEF652AF8CEAE000C4D49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E9FEF512AF8CEAD000C4D49 /* talklatWidgetExtension */;
+			targetProxy = 7E9FEF642AF8CEAE000C4D49 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -596,8 +727,10 @@
 		7E8D17E62ACE8AED00E904E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = talklat/talklat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
@@ -632,8 +765,10 @@
 		7E8D17E72ACE8AED00E904E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = talklat/talklat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
@@ -741,6 +876,75 @@
 			};
 			name = Release;
 		};
+		7E9FEF682AF8CEAE000C4D49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = talklatWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talklatWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = talklatWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat.talklatWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7E9FEF692AF8CEAE000C4D49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = talklatWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talklatWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = talklatWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat.talklatWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -776,6 +980,15 @@
 			buildConfigurations = (
 				7E8D17EC2ACE8AED00E904E5 /* Debug */,
 				7E8D17ED2ACE8AED00E904E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E9FEF6A2AF8CEAE000C4D49 /* Build configuration list for PBXNativeTarget "talklatWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E9FEF682AF8CEAE000C4D49 /* Debug */,
+				7E9FEF692AF8CEAE000C4D49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
