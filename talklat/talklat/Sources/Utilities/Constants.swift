@@ -53,3 +53,8 @@ public enum TKTransitionObjects {
     case ANSWER
     case INTERLUDE
 }
+
+public enum LocationCallType {
+    case track
+    case get
+}

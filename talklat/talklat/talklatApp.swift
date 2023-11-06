@@ -20,28 +20,29 @@ struct talklatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
-                switch appViewStore.currentAuthStatus {
-                case .splash:
-                    Temp_SplashView(animateFlag: $animateFlagA)
-                        .task {
-                            animateFlagA = true
-                            try? await Task.sleep(for: .seconds(1.5))
-                            
-                            let status = await appRootManager.switchAuthStatus()
-                            // TODO: Transition
-                            appViewStore.voiceRecordingAuthSetter(status)
-                        }
-                    
-                case .authCompleted:
-                    TKCommunicationView()
-                    
-                case .speechRecognitionAuthIncompleted
-                    ,.microphoneAuthIncompleted
-                    ,.authIncompleted:
-                    AuthorizationRequestView(currentAuthStatus: appViewStore.currentAuthStatus)
-                }
-            }
+//            Group {
+//                switch appViewStore.currentAuthStatus {
+//                case .splash:
+//                    Temp_SplashView(animateFlag: $animateFlagA)
+//                        .task {
+//                            animateFlagA = true
+//                            try? await Task.sleep(for: .seconds(1.5))
+//                            
+//                            let status = await appRootManager.switchAuthStatus()
+//                            // TODO: Transition
+//                            appViewStore.voiceRecordingAuthSetter(status)
+//                        }
+//                    
+//                case .authCompleted:
+//                    TKCommunicationView()
+//                    
+//                case .speechRecognitionAuthIncompleted
+//                    ,.microphoneAuthIncompleted
+//                    ,.authIncompleted:
+//                    AuthorizationRequestView(currentAuthStatus: appViewStore.currentAuthStatus)
+//                }
+//            }
+            LocationTestView()
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }

@@ -25,18 +25,12 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         var userLongitude: Double = 129.325848
     }
     
-    enum LocationCallType {
-        case track
-        case get
-    }
-    
     // 왜 이게 private 처리를 할 수 없을까? -> 아하 call as function을 한다음에 쓰는곳마다 keypath를 이용해서 불러와줘야하는구나
     @Published private var locationState: LocationState = LocationState(
         userCoordinate: UserCoordinate()
     )
     private let locationManager: CLLocationManager = .init()
     private let geocoder: CLGeocoder = .init()
-    private let radius: Double = 20.0
     
     override init() {
         super.init()
@@ -54,8 +48,6 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     private func configureLocationManager() {
         // location delegate
         self.locationManager.delegate = self
-        
-        // mapView delegate -> mapView delegate가 되려면 mapview를 이 class 안에 선언해놔야하는데 이게 맞나?
         
         // location indicator
         self.locationManager.showsBackgroundLocationIndicator = true
@@ -111,27 +103,22 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
                     latitude: userCoordinate.userLatitude,
                     longitude: userCoordinate.userLongitude
                 ),
-                latitudinalMeters: 0.001,
-                longitudinalMeters: 0.001
+                span: MKCoordinateSpan(
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005
+                )
             )
             return userMKRegion
         }
     }
     
-    
-    
     // 동네 이름을 가져와서 뿌려주기
     func getCityName(_ coordinateRegion: MKCoordinateRegion) {
-        // Geocoder사용
-//        guard let location2d = locationManager.location?.coordinate else {
-//            print("Cannot get user location coordinate")
-//            return
-//        }
+        
         var location = CLLocation(
             latitude: coordinateRegion.center.latitude,
             longitude: coordinateRegion.center.longitude
         )
-        
         
         //MARK: 이 부분 asychronous하게 바꾸고 싶다.
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
@@ -145,7 +132,6 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
             
             //MARK: 이 부분 수정. 국가, 시, 동 중에서 있는거 2개만 채택해서 넣어주기 -> 만약 1개만 있거나 다 없다면?
-            
             for placemark in placemarks {
                 if let locality =  placemark.locality, let subLocality = placemark.subLocality {
                     let locationName = locality + " " + subLocality
@@ -154,15 +140,9 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
                 }
             }
         }
-        
     }
     
-    // 무슨시 무슨동인지 맵이 보여주는 지역이 바뀌면 업데이트해주기 -> 가능하려나 -> MapView Delegate가 된다면 될거같은데
-    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    internal func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         updateState(\.authorizationStatus, with: self.locationManager.authorizationStatus)
         
         switch self.locationState.authorizationStatus {
@@ -173,7 +153,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
     
-    func getAuthorizationStatus() -> CLAuthorizationStatus {
+    private func getAuthorizationStatus() -> CLAuthorizationStatus {
         return self.locationState.authorizationStatus ?? .denied
     }
 }
@@ -203,8 +183,10 @@ struct InformationEditView: View {
             latitude: 36.014088,
             longitude: 129.325848
         ),
-        latitudinalMeters: 0.001,
-        longitudinalMeters: 0.001
+        span: MKCoordinateSpan(
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005
+        )
     )
     var body: some View {
         NavigationView {
@@ -239,7 +221,7 @@ struct InformationEditView: View {
                     Text("\(text.count)/30")
                 }
                 
-                switch locationStore.getAuthorizationStatus() {
+                switch locationStore(\.authorizationStatus) {
                 case .authorized:
                     Map(
                         coordinateRegion: $coordinateRegion,
@@ -291,8 +273,10 @@ struct InformationEditView: View {
                                 latitude: locationStore(\.userCoordinate.userLatitude),
                                 longitude: locationStore(\.userCoordinate.userLongitude)
                             ),
-                            latitudinalMeters: 0.001,
-                            longitudinalMeters: 0.001
+                            span: MKCoordinateSpan(
+                                latitudeDelta: 0.005,
+                                longitudeDelta: 0.005
+                            )
                         )
                         locationStore.getCityName(coordinateRegion)
                     }
