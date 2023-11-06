@@ -9,6 +9,11 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
+    struct SimpleEntry: TimelineEntry {
+        let date: Date
+        let configuration: ConfigurationAppIntent
+    }
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
     }
@@ -18,67 +23,64 @@ struct Provider: AppIntentTimelineProvider {
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-
+        let entries: [SimpleEntry] = []
         return Timeline(entries: entries, policy: .atEnd)
     }
 }
 
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let configuration: ConfigurationAppIntent
-}
-
-struct talklatWidgetEntryView : View {
-    var entry: Provider.Entry
-
+struct talklatWidgetSystemSmallView: View {
     var body: some View {
         VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+            Text("TALKLAT")
+                .bold()
+            
+            Text("새 대화 시작")
+                .font(.caption)
+                .bold()
         }
-    }
-}
-
-struct talklatWidget: Widget {
-    let kind: String = "talklatWidget"
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-            talklatWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+        .unredacted()
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .background {
+            Circle()
+                .foregroundStyle(.accent)
+                .padding()
+                .shadow(radius: 10)
         }
-    }
-}
-
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
+        .background {
+            Circle()
+                .foregroundStyle(.accent.opacity(0.7))
+                .offset(x: 30, y: 30)
+        }
+        .background {
+            Circle()
+                .foregroundStyle(Color.red)
+                .offset(x: 30, y: 30)
+        }
+        .background {
+            Circle()
+                .foregroundStyle(.accent.opacity(0.5))
+                .offset(x: -24, y: -24)
+        }
+        .background {
+            Circle()
+                .frame(width: 100, height: 100)
+                .foregroundStyle(.accent.opacity(0.5))
+                .offset(x: 40, y: -48)
+        }
+        .background {
+            Circle()
+                .frame(width: 100, height: 100)
+                .foregroundStyle(.accent.opacity(0.9))
+                .offset(x: -40, y: 48)
+        }
     }
 }
 
 #Preview(as: .systemSmall) {
-    talklatWidget()
+    TalklatWidgetSystemSmall()
 } timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
+    Provider.SimpleEntry(date: .now, configuration: ConfigurationAppIntent())
 }
