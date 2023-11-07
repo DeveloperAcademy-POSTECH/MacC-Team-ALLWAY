@@ -20,6 +20,7 @@
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
 		7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
+		7EA9D34D2AFA19BE00A0EE99 /* TKReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
@@ -77,6 +78,7 @@
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
+		7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKReducer.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7EE909BE2AFA6B6A0048AF77 /* Protocols */,
 				57806D7E2AE28E85003A7B19 /* Models */,
 				7EF737922AD3DE4C00FCBA21 /* Utilities */,
 				7EF7378D2AD3D23F00FCBA21 /* Stores */,
@@ -231,6 +234,14 @@
 				EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */,
 			);
 			path = Conversation;
+			sourceTree = "<group>";
+		};
+		7EE909BE2AFA6B6A0048AF77 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		7EF7378D2AD3D23F00FCBA21 /* Stores */ = {
@@ -425,6 +436,7 @@
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
+				7EA9D34D2AFA19BE00A0EE99 /* TKReducer.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
