@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-/// ObservableObject를 채택하는 프로토콜
+/// ObservableObject를 채택하는 프로토콜이다.
 /// 채택할 때, ViewState 타입인 구조체를 생성해야 하며
-/// 해당 구조체를 reduce 할 로직을 직접 구현해야 한다.
-/// 추가 로직이 불필요할 경우, ``self[keyPath: path] = newValue`` 한 줄로 갈음할 수 있다.
+/// State을 업데이트할 추가적인 로직이 불필요할 경우, ``reduce(_:into:)``의 구현을 생략할 수 있다.
 protocol TKReducer: ObservableObject, AnyObject {
     associatedtype ViewState
     
