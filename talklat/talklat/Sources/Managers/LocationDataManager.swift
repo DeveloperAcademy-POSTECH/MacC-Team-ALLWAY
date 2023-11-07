@@ -10,19 +10,12 @@ import SwiftUI
 
 class LocationDataManager {
     @Environment(\.modelContext) private var context
-//    @Bindable private var location: TKLocation = TKLocation(latitude: 0, longitude: 0)
-    
-//    Bindable을 사용하게 될 경우 사용할 메서드
-//    func setLocation(_ object: TKLocation) {
-//        self.location = object
-//        self.saveContext()
-//    }
     
     func createLocation(conversation: TKConversation, location: TKLocation) throws {
         context.insert(location)
         conversation.location = location
         
-        saveContext()
+        context.saveContext()
     }
     
     func readLocation(conversation: TKConversation) -> TKLocation? {
@@ -32,36 +25,57 @@ class LocationDataManager {
     
     func updateLocation(conversation: TKConversation, newLocation: TKLocation) {
         guard let oldLocationValue: TKLocation = conversation.location else { return } // conversation에 location이 nil이 아닌지 확인
-        guard let oldLocationModel: TKLocation = context.registeredModel(for: oldLocationValue.persistentModelID) else { return } // location이 context안에 존재하는지 확인
         
-        // fetch 하는 과정
-        let predicate = #Predicate<TKLocation> {
-            $0.persistentModelID == oldLocationModel.persistentModelID
-        }
-        let fetchDescriptor = FetchDescriptor<TKLocation>(predicate: predicate)
-        guard let fetchedLocations = try? context.fetch(fetchDescriptor), fetchedLocations.count == 1, let fetchedLocation = fetchedLocations.first  else { return } // predicate를 이용해 하나의 TKLocation만 fetch해오기
-        
+        guard 
+            let fetchedLocation = try? context.fetchSamePersistentModel(oldLocationValue) else { return }
         // fetchedLocation은 그대로인데 이렇게 안의 내용물을 바꾼다면 이게 context.hasChanged를 통과할 수 있을까?
         fetchedLocation.latitude = newLocation.latitude
         fetchedLocation.longitude = newLocation.longitude
         fetchedLocation.blockName = newLocation.blockName
         
-        saveContext()
-        
-        // Bindable에 더미 값을 넣어놓고, 그냥 그거를 쓰면 안될까요?
-//        self.setLocation(newLocation)
+        context.saveContext()
     }
     
     func deleteLocation(conversation: TKConversation, location: TKLocation) {
+        guard
+            let fetchedLocation = try? context.fetchSamePersistentModel(location) else { return }
+
         conversation.location = nil
-        context.delete(location)
+        context.delete(fetchedLocation)
         
-        saveContext()
+        context.saveContext()
+    }
+}
+
+extension ModelContext {
+    // 해당 Model type을 container에서 전부 불러오는 함수
+    func fetchPersistentModelItems<T>(_ object: T) -> [T]? where T: PersistentModel {
+        // fetch 하는 과정
+        let fetchDescriptor = FetchDescriptor<T>()
+        guard let fetchedItems = try? self.fetch(fetchDescriptor) else { return nil }
+        
+        return fetchedItems
     }
     
-    private func saveContext() {
-        if context.hasChanges {
-            try? context.save()
+    // 같은 persistentModelID를 갖고 있는 하나의 model만 불러오는 함수
+    func fetchSamePersistentModel<T>(_ object: T) throws -> T? where T: PersistentModel {
+        guard let objectModel: T = self.registeredModel(for: object.persistentModelID) else { return nil } // location이 context안에 존재하는지 확인
+        
+        // fetch 하는 과정
+        let predicate = #Predicate<T> {
+            $0.persistentModelID == objectModel.persistentModelID
+        }
+        let fetchDescriptor = FetchDescriptor<T>(predicate: predicate)
+        guard let fetchedItems = try? self.fetch(fetchDescriptor),
+                let fetchedItem = fetchedItems.first else { return nil }
+        
+        return fetchedItem
+    }
+    
+    // 변경 사항이 있을때만 context를 저장하는 함수 -> CoreData에서는 이렇게 하라고 했음. SwiftData는 다를수도
+    func saveContext() {
+        if self.hasChanges {
+           try? self.save()
         }
     }
 }
