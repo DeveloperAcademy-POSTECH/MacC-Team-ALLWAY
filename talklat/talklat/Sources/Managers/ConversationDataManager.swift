@@ -1,5 +1,5 @@
 //
-//  HistoryViewStore.swift
+//  ConversationDataManager.swift
 //  talklat
 //
 //  Created by Ye Eun Choi on 11/6/23.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-final class HistoryViewStore: ObservableObject {
+final class ConversationDataManager: ObservableObject {
     @Environment(\.modelContext) private var context
     
     // MARK: - CREATE
