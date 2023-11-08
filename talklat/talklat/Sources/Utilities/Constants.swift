@@ -27,6 +27,12 @@ public enum Constants {
     말씀하신 내용은 음성인식되어서
     텍스트로 변환됩니다.
     """
+    
+    static let START_CONVERSATION_MESSAGE: String =
+    """
+    새 대화
+    시작하기
+    """
 }
 
 public enum AuthStatus: String {
