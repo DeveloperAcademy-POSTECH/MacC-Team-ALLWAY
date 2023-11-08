@@ -53,3 +53,9 @@ public enum TKTransitionObjects {
     case ANSWER
     case INTERLUDE
 }
+
+//
+public enum MessageType: String {
+    case question = "question"
+    case answer = "answer"
+}
