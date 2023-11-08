@@ -47,7 +47,7 @@ struct TLTextField<Button: View>: View {
             
             Spacer()
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, 32)
     }
     
     private func inputFieldSection(textLimit: Int) -> some View {

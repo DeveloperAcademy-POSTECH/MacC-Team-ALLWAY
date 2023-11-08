@@ -12,10 +12,10 @@
 		57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */; };
 		57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
-		7E427EE12AE9559D0028E4F4 /* CommunicationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* CommunicationViewStore.swift */; };
+		7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */; };
 		7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */; };
 		7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */; };
-		7E8906412ACEA31500C9947A /* TKCommunicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKCommunicationView.swift */; };
+		7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKConversationView.swift */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -23,7 +23,7 @@
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
-		7EE71BAB2AF0A6D6001C0A28 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */; };
+		7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */; };
 		7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */; };
 		7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */; };
 		7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737932AD3DE5600FCBA21 /* Constants.swift */; };
@@ -38,17 +38,10 @@
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
-		EF73AE9B2AE94B43007C3EBF /* ScrollContainerTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */; };
-		EF769DAC2AEB924900E5094C /* FullScreenCoverTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */; };
 		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
-		EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */; };
-		EFD229AB2AEB98FA00DA034D /* ScrollContainerBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */; };
-		EFD229AD2AEB991D00DA034D /* ScrollContainerTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */; };
-		EFD229AF2AEB992F00DA034D /* FullScreenCoverTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */; };
-		EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */; };
-		EFD229B32AEB996200DA034D /* FullScreenCoverTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */; };
-		EFD229B72AEB9F3000DA034D /* TestingTKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */; };
+		EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */; };
+		EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,10 +66,10 @@
 		57806D702ADC5D19003A7B19 /* TestHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHistoryView.swift; sourceTree = "<group>"; };
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
-		7E427EE02AE9559D0028E4F4 /* CommunicationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationViewStore.swift; sourceTree = "<group>"; };
+		7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewStore.swift; sourceTree = "<group>"; };
 		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
-		7E8906402ACEA31500C9947A /* TKCommunicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKCommunicationView.swift; sourceTree = "<group>"; };
+		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
 		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatApp.swift; sourceTree = "<group>"; };
 		7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,7 +81,7 @@
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GyroScopeStore.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
-		7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
+		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
 		7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKWritingView.swift; sourceTree = "<group>"; };
 		7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecordingView.swift; sourceTree = "<group>"; };
@@ -103,17 +96,10 @@
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
-		EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTesting.swift; sourceTree = "<group>"; };
-		EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTesting.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
-		EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTopView.swift; sourceTree = "<group>"; };
-		EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerBottomView.swift; sourceTree = "<group>"; };
-		EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainerTextFieldView.swift; sourceTree = "<group>"; };
-		EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTopView.swift; sourceTree = "<group>"; };
-		EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverBottomView.swift; sourceTree = "<group>"; };
-		EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverTextFieldView.swift; sourceTree = "<group>"; };
-		EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingTKHistoryView.swift; sourceTree = "<group>"; };
+		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
+		EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetObserver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,9 +214,8 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EF73AE992AE94B2E007C3EBF /* ScrollTestingViews */,
+				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
-				7E8906402ACEA31500C9947A /* TKCommunicationView.swift */,
 				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
 				7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
@@ -242,15 +227,26 @@
 				7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */,
 				CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */,
 				CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */,
+				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7EE71BAC2AF0E175001C0A28 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				7E8906402ACEA31500C9947A /* TKConversationView.swift */,
+				7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */,
+				EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */,
+			);
+			path = Conversation;
 			sourceTree = "<group>";
 		};
 		7EF7378D2AD3D23F00FCBA21 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
-				7E427EE02AE9559D0028E4F4 /* CommunicationViewStore.swift */,
+				7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
 			);
@@ -294,38 +290,6 @@
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		EF73AE992AE94B2E007C3EBF /* ScrollTestingViews */ = {
-			isa = PBXGroup;
-			children = (
-				EFD229B62AEB9F3000DA034D /* TestingTKHistoryView.swift */,
-				EFD229B52AEB99A000DA034D /* FullScreenCoverTesting */,
-				EFD229B42AEB999500DA034D /* ScrollContainerTesting */,
-			);
-			path = ScrollTestingViews;
-			sourceTree = "<group>";
-		};
-		EFD229B42AEB999500DA034D /* ScrollContainerTesting */ = {
-			isa = PBXGroup;
-			children = (
-				EF73AE9A2AE94B43007C3EBF /* ScrollContainerTesting.swift */,
-				EFD229A82AEB98DF00DA034D /* ScrollContainerTopView.swift */,
-				EFD229AA2AEB98FA00DA034D /* ScrollContainerBottomView.swift */,
-				EFD229AC2AEB991D00DA034D /* ScrollContainerTextFieldView.swift */,
-			);
-			path = ScrollContainerTesting;
-			sourceTree = "<group>";
-		};
-		EFD229B52AEB99A000DA034D /* FullScreenCoverTesting */ = {
-			isa = PBXGroup;
-			children = (
-				EF769DAB2AEB924900E5094C /* FullScreenCoverTesting.swift */,
-				EFD229AE2AEB992F00DA034D /* FullScreenCoverTopView.swift */,
-				EFD229B02AEB994900DA034D /* FullScreenCoverBottomView.swift */,
-				EFD229B22AEB996200DA034D /* FullScreenCoverTextFieldView.swift */,
-			);
-			path = FullScreenCoverTesting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,7 +356,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					7E8D17C02ACE8AEC00E904E5 = {
 						CreatedOnToolsVersion = 14.2;
@@ -465,36 +429,31 @@
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
-				EFD229AD2AEB991D00DA034D /* ScrollContainerTextFieldView.swift in Sources */,
-				EFD229AB2AEB98FA00DA034D /* ScrollContainerBottomView.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
+				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
 				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
-				7E8906412ACEA31500C9947A /* TKCommunicationView.swift in Sources */,
+				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
-				EFD229AF2AEB992F00DA034D /* FullScreenCoverTopView.swift in Sources */,
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
-				EF73AE9B2AE94B43007C3EBF /* ScrollContainerTesting.swift in Sources */,
-				EF769DAC2AEB924900E5094C /* FullScreenCoverTesting.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
+				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
+				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
 				CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
-				7E427EE12AE9559D0028E4F4 /* CommunicationViewStore.swift in Sources */,
+				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
-				EFD229B32AEB996200DA034D /* FullScreenCoverTextFieldView.swift in Sources */,
-				EFD229B72AEB9F3000DA034D /* TestingTKHistoryView.swift in Sources */,
-				7EE71BAB2AF0A6D6001C0A28 /* TKGuidingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +527,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -582,7 +542,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -629,6 +589,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -637,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -673,7 +634,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -711,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
