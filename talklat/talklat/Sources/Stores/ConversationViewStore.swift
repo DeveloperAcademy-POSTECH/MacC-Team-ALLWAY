@@ -52,15 +52,15 @@ final class ConversationViewStore: ObservableObject {
     // MARK: Helpers
     public func bindingQuestionText() -> Binding<String> {
         Binding(
-            get: { self(\.questionText) },//현재 questionText값 가져오기
-            set: {// 새 값이 설정될때 호출
-                if $0.count > self.questionTextLimit {//$0: 새로 설정하려는 값
-                    self.reduce(// 주어진 값을 questionText에 할당
+            get: { self(\.questionText) },
+            set: {
+                if $0.count > self.questionTextLimit {
+                    self.reduce(
                         \.questionText,
                          into: String($0.prefix(self.questionTextLimit))
                     )
                 } else {
-                    self.reduce(//아무 일도 안하는거겠지?
+                    self.reduce(
                         \.questionText,
                          into: $0
                     )
