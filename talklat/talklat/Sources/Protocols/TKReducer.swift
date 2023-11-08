@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-/// ObservableObject를 채택하는 프로토콜이다.
-/// 채택할 때, ViewState 타입인 구조체를 생성해야 하며
-/// State을 업데이트할 추가적인 로직이 불필요할 경우, ``reduce(_:into:)``의 구현을 생략할 수 있다.
+/// ObservableObject를 채택하는 TKReducer 프로토콜
+///
+/// ViewState 타입 구조체, ``reduce(_:into:)`` 구현을 요구
+/// store 역할을 수행할 class 타입에서 채택
 protocol TKReducer: ObservableObject, AnyObject {
     associatedtype ViewState
     
@@ -26,12 +27,6 @@ extension TKReducer {
     (_ path: KeyPath<ViewState, Value>) -> Value {
         self.callAsFunction(path)
     }
-    
-    func reduce<Value: Equatable>
-    (_ path: WritableKeyPath<ViewState, Value>,
-     into newValue: Value) {
-        self.reduce(path, into: newValue)
-    }
 }
 
 // MARK: - USAGE EXAMPLE
@@ -44,6 +39,13 @@ final class MyStore: TKReducer {
     
     func onUpdateName(with str: String) {
         reduce(\.name, into: str)
+    }
+    
+    func reduce<Value: Equatable>(
+        _ path: WritableKeyPath<ViewState, Value>,
+        into newValue: Value)
+    {
+        self.viewState[keyPath: path] = newValue
     }
 }
 
