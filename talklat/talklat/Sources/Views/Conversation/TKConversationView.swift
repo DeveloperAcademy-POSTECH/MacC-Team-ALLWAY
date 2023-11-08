@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftData
 import SwiftUI
 
 struct TKConversationView: View {
@@ -15,6 +16,17 @@ struct TKConversationView: View {
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
     
     @State var offset: CGPoint = .zero
+    
+    // MARK: text replacement 관련 변수
+    @State private var textFieldText: String = ""
+    
+    // TextReplacement
+    @Environment(\.modelContext) private var context
+    @Query private var lists: [TKTextReplacement]
+    @State private var matchedTextReplacement: TKTextReplacement? = nil
+    
+    //MARK: Test용
+    @State private var navigateToSettings = false
     
     @ObservedObject var store: ConversationViewStore
     @ObservedObject var speechRecognizeManager: SpeechRecognizer
@@ -30,6 +42,12 @@ struct TKConversationView: View {
                                 store.isChevronButtonDisplayable ? 1.0 : 0.0
                             )
                         
+                        //MARK: 설정으로 가기 위한 Test용
+                        NavigationLink(destination: TestTKSettingView(), isActive: $navigateToSettings) {
+                            EmptyView()
+                        }
+                        .hidden()
+                        
                         TLTextField(
                             style: .normal(textLimit: store.questionTextLimit),
                             text: store.bindingQuestionText(),
@@ -37,7 +55,9 @@ struct TKConversationView: View {
                         ) {
                             HStack {
                                 Button {
-                                    store.onEraseAllButtonTapped()
+                                    //MARK: Test용
+                                    navigateToSettings = true
+//                                    store.onEraseAllButtonTapped()
                                 } label: {
                                     Text("전체 지우기")
                                 }
@@ -46,30 +66,49 @@ struct TKConversationView: View {
                                     .easeInOut(duration: 0.4),
                                     value: focusState
                                 )
-                                
+                                .fullScreenCover(isPresented: $navigateToSettings) {
+                                    TestTKSettingView()
+                                }
                                 Spacer()
                                 
-                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
-                                    Text("오픈 카톡방에서 피드백하기")
-                                }
+//                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
+//                                    Text("오픈 카톡방에서 피드백하기")
+//                                }
                             }
                             .padding(.trailing, 20)
-                    }
-                        .focused($focusState)
-                        .background(alignment: .topLeading) {
-                            characterLimitViewBuilder()
-                                .padding(.top, 40)
-                                .padding(.leading, 24)
-                                .opacity(focusState ? 1.0 : 0.0)
-                                .animation(
-                                    .easeInOut(duration: 0.5),
-                                    value: focusState
-                                )
                         }
-                        .padding(.top, 24)
                         
-                        Spacer()
+                        // MARK: TextReplacement 키보드 위 툴바
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                let keys = replacementKeysForCurrentText()
+                                
+                                ForEach(keys, id: \.self) { key in
+                                    if let value = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
+                                        Button(action: {
+                                            store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
+                                        }) {
+                                            Text(value)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
+                    .focused($focusState)
+                    .background(alignment: .topLeading) {
+                        characterLimitViewBuilder()
+                            .padding(.top, 40)
+                            .padding(.leading, 24)
+                            .opacity(focusState ? 1.0 : 0.0)
+                            .animation(
+                                .easeInOut(duration: 0.5),
+                                value: focusState
+                            )
+                    }
+                    .padding(.top, 24)
+                    
+                    Spacer()
                 } else if store(\.conversationStatus) == .recording {
                     VStack {
                         Spacer()
@@ -168,7 +207,6 @@ struct TKConversationView: View {
                                         .ignoresSafeArea(edges: .bottom)
                                 }
                             }
-                        
                     }
                     .onChange(of: speechRecognizeManager.transcript) { transcript in
                         withAnimation {
@@ -339,6 +377,17 @@ extension TKConversationView {
     }
 }
 
+extension TKConversationView {
+    func replacementKeysForCurrentText() -> [String] {
+        // 여기서 옵셔널 바인딩이 필요하지 않습니다.
+        let currentText = store.bindingQuestionText().wrappedValue.lowercased()
+        return lists.flatMap { list in
+            list.wordDictionary.keys.filter { key in
+                currentText.contains(key.lowercased())
+            }
+        }
+    }
+}
 
 struct TKConversationView_Previews: PreviewProvider {
     static var previews: some View {
