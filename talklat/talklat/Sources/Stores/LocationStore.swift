@@ -10,27 +10,48 @@ import Foundation
 import MapKit
 import SwiftUI
 
-
 class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
     struct LocationState {
-        var userCoordinate: UserCoordinate
-        var locationName: String?
+        var userCoordinate: UserCoordinate? = nil
+        var locationThumbnail: UIImage? = nil
+        var placeMark: CLPlacemark? = nil
         var authorizationStatus: CLAuthorizationStatus?
+        var fullBlockName: String {
+            guard let placeMark = placeMark else { return "위치 정보 없음" }
+            
+            let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
+            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+            let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
+            let subLocality = (placeMark.subLocality != nil) ? placeMark.subLocality! : ""
+            let name = (placeMark.name != nil) ? placeMark.name! : ""
+            
+            return "\(administrativeArea) \(subAdministrativeArea) \(locality) \(subLocality) \(name)"
+        }
+        
+        var shortBlockName: String {
+            guard let placeMark = placeMark else { return "위치 정보 없음"}
+            
+            let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
+            let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
+            let name = (placeMark.name != nil) ? placeMark.name! : ""
+            
+            return "\(subAdministrativeArea) \(locality) \(name)"
+        }
     }
     
-    // 현재는 C5의 좌표값을 하드코딩 해놨는데 어떻게 해야할까?
+    // 사용자의 좌표는 nil일 수 있다.
     struct UserCoordinate: Equatable {
-        var userLatitude: Double = 36.014088
-        var userLongitude: Double = 129.325848
+        var latitude: Double
+        var longitude: Double
     }
     
     // 왜 이게 private 처리를 할 수 없을까? -> 아하 call as function을 한다음에 쓰는곳마다 keypath를 이용해서 불러와줘야하는구나
-    @Published private var locationState: LocationState = LocationState(
-        userCoordinate: UserCoordinate()
-    )
-    private let locationManager: CLLocationManager = .init()
-    private let geocoder: CLGeocoder = .init()
+    @Published private var locationState: LocationState = LocationState()
+    
+    private let locationManager: CLLocationManager = CLLocationManager()
+    private let geocoder: CLGeocoder = CLGeocoder()
+    
     
     override init() {
         super.init()
@@ -43,6 +64,10 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         default:
             self.locationManager.requestAlwaysAuthorization()
         }
+        
+        self.updateState(\.authorizationStatus, with: self.locationManager.authorizationStatus)
+        
+        self.locationState = LocationState(userCoordinate: initialUserTracking())
     }
     
     private func configureLocationManager() {
@@ -73,7 +98,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             withAnimation {
                 self.locationState[keyPath: state] = newValue
             }
-        case \.authorizationStatus, \.locationName:
+        case \.authorizationStatus, \.locationThumbnail, \.placeMark:
             self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
         default:
             break
@@ -87,9 +112,9 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     func trackUserCoordinate(type: LocationCallType) -> MKCoordinateRegion? {
         guard let userLocation: CLLocationCoordinate2D = locationManager.location?.coordinate else { return nil }
         
-        var userCoordinate = UserCoordinate(
-            userLatitude: userLocation.latitude,
-            userLongitude: userLocation.longitude
+        let userCoordinate = UserCoordinate(
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude
         )
         
         updateState(\.userCoordinate, with: userCoordinate)
@@ -100,43 +125,41 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         case .get:
             let userMKRegion = MKCoordinateRegion(
                 center: CLLocationCoordinate2D(
-                    latitude: userCoordinate.userLatitude,
-                    longitude: userCoordinate.userLongitude
+                    latitude: userCoordinate.latitude,
+                    longitude: userCoordinate.longitude
                 ),
-                span: MKCoordinateSpan(
-                    latitudeDelta: 0.005,
-                    longitudeDelta: 0.005
-                )
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
             )
             return userMKRegion
         }
     }
     
     // 동네 이름을 가져와서 뿌려주기
-    func getCityName(_ coordinateRegion: MKCoordinateRegion) {
-        
-        var location = CLLocation(
+    func fetchCityName(_ coordinateRegion: MKCoordinateRegion) {
+        let location = CLLocation(
             latitude: coordinateRegion.center.latitude,
             longitude: coordinateRegion.center.longitude
         )
         
-        //MARK: 이 부분 asychronous하게 바꾸고 싶다.
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            guard error == nil else {
-                print("Geocoder revser geocode location error: \(String(describing: error?.localizedDescription))")
-                return
-            }
-            guard let placemarks = placemarks else {
-                print("Error: cannot get placemarks")
-                return
-            }
-            
-            //MARK: 이 부분 수정. 국가, 시, 동 중에서 있는거 2개만 채택해서 넣어주기 -> 만약 1개만 있거나 다 없다면?
-            for placemark in placemarks {
-                if let locality =  placemark.locality, let subLocality = placemark.subLocality {
-                    let locationName = locality + " " + subLocality
-                    
-                    self.updateState(\.locationName, with: locationName)
+        // MARK: 비동기 처리 및 weak self 처리 완료
+        let geocoderQueue = DispatchQueue(label: "geocoderQueue")
+        geocoderQueue.async { [weak self] in
+            self?.geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                guard error == nil else {
+                    print("Geocoder revser geocode location error: \(String(describing: error?.localizedDescription))")
+                    return
+                }
+                guard let placemarks = placemarks else {
+                    print("Error: cannot get placemarks")
+                    return
+                }
+                
+                //MARK: placemark 자체를 저장하고 추후 computed property로 처리
+                for placemark in placemarks {
+                    DispatchQueue.main.async { // UI update
+                        self?.updateState(\.placeMark, with: placemark)
+                    }
                 }
             }
         }
@@ -153,172 +176,20 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
     
-    private func getAuthorizationStatus() -> CLAuthorizationStatus {
-        return self.locationState.authorizationStatus ?? .denied
-    }
-}
-
-
-struct LocationTestView: View {
-    @State private var isSheetOpen: Bool = false
-    @State private var text: String = "Talklat(5)"
-    var body: some View {
-        Button {
-            isSheetOpen = true
-        } label: {
-            Text("Push")
+    private func initialUserTracking() -> UserCoordinate? {
+        guard let coordinate = self.locationManager.location?.coordinate else { //MARK: 사용자 좌표를 구하지 못할 때 -> 일단은 서울역 좌표. 추후 논의를 통해 변경 예정
+            return nil
         }
-        .sheet(isPresented: $isSheetOpen) {
-            InformationEditView(isSheetOpen: $isSheetOpen, text: $text)
-        }
-    }
-}
-
-struct InformationEditView: View {
-    @Binding var isSheetOpen: Bool
-    @Binding var text: String
-    @StateObject private var locationStore: LocationStore = .init()
-    @State var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 36.014088,
-            longitude: 129.325848
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
+        
+        return UserCoordinate(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude
         )
-    )
-    var body: some View {
-        NavigationView {
-            VStack {
-                Divider()
-                Group {
-                    Text("제목")
-                    
-                    TextField("", text: $text)
-                        .padding()
-                        .background {
-                            Rectangle()
-                                .fill(
-                                    Color(uiColor: UIColor.systemGray3)
-                                )
-                                .cornerRadius(12)
-                        }
-                        .overlay {
-                            HStack {
-                                Spacer()
-                                Button {
-                                    text = ""
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                }
-                                .padding()
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                    
-                    Text("\(text.count)/30")
-                }
-                
-                switch locationStore(\.authorizationStatus) {
-                case .authorized:
-                    Map(
-                        coordinateRegion: $coordinateRegion,
-                        showsUserLocation: true
-                    )
-                    .overlay {
-                        Circle()
-                            .fill(.orange)
-                            .frame(width: 15, height: 15)
-                            .opacity(0.5)
-                    }
-                    .overlay {
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Button {
-                                    //MARK: 사용자 위치로 이동하는 로직
-                                    moveToUserLocation()
-                                } label: {
-                                    Image(systemName: "scope")
-                                        .background {
-                                            Circle()
-                                                .fill(.white)
-                                        }
-                                }
-                                
-                                Text(locationStore(\.locationName) ?? "위치정보 없음")
-                                
-                                Spacer()
-                                
-                                Button {
-                                    //MARK: 현재 위치 사용자 친화적인 주소로 바꿔주기
-                                    locationStore.getCityName(coordinateRegion)
-                                } label: {
-                                    Text("조정")
-                                }
-                            }
-                            .padding()
-                            .background {
-                                Rectangle()
-                                    .fill(Color(uiColor: UIColor.systemGray3))
-                            }
-                        }
-                    }
-                    .onAppear {
-                        locationStore.trackUserCoordinate(type: .track)
-                        coordinateRegion = MKCoordinateRegion(
-                            center: CLLocationCoordinate2D(
-                                latitude: locationStore(\.userCoordinate.userLatitude),
-                                longitude: locationStore(\.userCoordinate.userLongitude)
-                            ),
-                            span: MKCoordinateSpan(
-                                latitudeDelta: 0.005,
-                                longitudeDelta: 0.005
-                            )
-                        )
-                        locationStore.getCityName(coordinateRegion)
-                    }
-                default:
-                    Text("지도 안보임")
-                }
-            }
-            .navigationTitle("정보 편집")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    
-                    Button {
-                        isSheetOpen = false
-                    } label: {
-                        Text("취소")
-                            .foregroundColor(.red)
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        //MARK: 저장 로직
-                        isSheetOpen = false
-                    } label: {
-                        Text("완료")
-                    }
-                    .disabled(text.isEmpty)
-                }
-            }
-        }
     }
     
-    func moveToUserLocation() {
-        guard let coordinateRegion = locationStore.trackUserCoordinate(type: .get) else { return }
-        self.coordinateRegion = coordinateRegion
-    }
-}
-
-struct LocationTestViewPreview: PreviewProvider {
-    static var previews: some View {
-        LocationTestView()
+    func updateLocationThumbnail(_ image: UIImage?) {
+        guard let image = image else { return }
+        self.updateState(\.locationThumbnail, with: image)
     }
 }
 

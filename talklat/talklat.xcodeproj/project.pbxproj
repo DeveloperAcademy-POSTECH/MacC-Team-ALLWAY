@@ -31,6 +31,8 @@
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */; };
 		7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */; };
+		CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */; };
+		CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */; };
 		CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79CAEA2AF0CEC20007713B /* LocationStore.swift */; };
 		CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
@@ -94,6 +96,8 @@
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
+		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
+		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
@@ -236,6 +240,8 @@
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */,
+				CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */,
+				CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -455,7 +461,9 @@
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
 				EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */,
 				EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */,
+				CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
+				CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
 				EFD229AD2AEB991D00DA034D /* ScrollContainerTextFieldView.swift in Sources */,
 				EFD229AB2AEB98FA00DA034D /* ScrollContainerBottomView.swift in Sources */,

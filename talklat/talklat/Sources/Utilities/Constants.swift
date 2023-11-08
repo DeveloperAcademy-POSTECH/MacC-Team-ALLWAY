@@ -58,3 +58,14 @@ public enum LocationCallType {
     case track
     case get
 }
+
+public enum LocationAuthorizationStatus {
+    case notAuthorized
+    case noCoordinate
+    case authorized
+}
+
+public enum BlockNameType {
+    case fullName
+    case shortName
+}
