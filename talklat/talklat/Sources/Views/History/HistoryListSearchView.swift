@@ -14,14 +14,13 @@ private enum searchStatus {
 }
 
 struct HistoryListSearchView: View {
+    @State private var searchStatus: searchStatus = .inactive
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
     
-    @State private var searchingStatus: searchStatus = .inactive
-    
     var body: some View {
         Group {
-            switch searchingStatus {
+            switch searchStatus {
             case .inactive:
                 EmptyView()
                 
@@ -49,10 +48,10 @@ struct HistoryListSearchView: View {
             withAnimation {
                 // Search Status
                 if searchText == "" {
-                    searchingStatus = .resultNotFound
+                    searchStatus = .inactive
                 } else {
                     // TODO: if else matching TKContent 존재
-                    searchingStatus = .resultFound
+                    searchStatus = .resultFound
                 }
             }
         }
