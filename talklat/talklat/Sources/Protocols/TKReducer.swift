@@ -22,13 +22,6 @@ protocol TKReducer: ObservableObject, AnyObject {
      into newValue: Value)
 }
 
-extension TKReducer {
-    func callAsFunction<Value: Equatable>
-    (_ path: KeyPath<ViewState, Value>) -> Value {
-        self.callAsFunction(path)
-    }
-}
-
 // MARK: - USAGE EXAMPLE
 final class MyStore: TKReducer {
     struct ViewState {
@@ -46,6 +39,10 @@ final class MyStore: TKReducer {
         into newValue: Value)
     {
         self.viewState[keyPath: path] = newValue
+    }
+    
+    func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
+        self.viewState[keyPath: path]
     }
 }
 

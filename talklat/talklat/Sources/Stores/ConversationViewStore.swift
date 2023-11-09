@@ -198,6 +198,10 @@ extension ConversationViewStore: TKReducer {
             self.viewState[keyPath: path] = newValue
         }
     }
+    
+    func callAsFunction<Value>(_ path: KeyPath<ConversationState, Value>) -> Value where Value : Equatable {
+        self.viewState[keyPath: path]
+    }
 }
 
 // MARK: Helper
