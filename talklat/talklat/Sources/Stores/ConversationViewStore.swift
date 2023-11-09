@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class ConversationViewStore: ObservableObject {
+final class ConversationViewStore {
     enum ConversationStatus: Equatable {
         case recording
         case guiding
@@ -41,12 +41,6 @@ final class ConversationViewStore: ObservableObject {
     // MARK: init
     init(conversationState: ConversationState) {
         viewState = conversationState
-    }
-    
-    public func callAsFunction<Value: Equatable>(
-        _ keyPath: KeyPath<ConversationState, Value>
-    ) -> Value {
-        viewState[keyPath: keyPath]
     }
     
     // MARK: Helpers
@@ -178,31 +172,30 @@ final class ConversationViewStore: ObservableObject {
 }
 
 // MARK: Reduce
-extension ConversationViewStore {
+extension ConversationViewStore: TKReducer {
     /// ViewState를 업데이트하는 keyPath 기반 메소드
-    /// 일반적인 경우, default 만으로 대응이 가능하나, 특별한 로직이 필요할 경우 할당하는 로직을 케이스로 추가할 수 있다.
+    /// 일반적인 경우, protocol의 기본 구현으로 대응할 수 있다.
+    /// 특별한 로직이 필요할 경우 할당하는 로직을 케이스로 추가하기 위해 reduce를 직접 구현한다.
+    /// public 호출이 가능하다.
     /// - Parameters:
-    ///   - state: 업데이트할 ViewState의 속성 전달
+    ///   - state: 업데이트할 ViewState의 경로 전달
     ///   - newValue: 새로 업데이트할 ViweState의 값 전달
-    private func reduce<Value: Equatable>(
-        _ state: WritableKeyPath<ConversationState, Value>,
+    internal func reduce<Value: Equatable>(
+        _ path: WritableKeyPath<ConversationState, Value>,
         into newValue: Value
     ) {
-        switch state {
+        switch path {
         case \.historyItem:
-            self.viewState[keyPath: state] = newValue
+            self.viewState[keyPath: path] = newValue
             if let newHistoryItem = self.viewState.historyItem {
                 self.viewState.historyItems.append(newHistoryItem)
             }
-            
-        case \.hasGuidingMessageShown:
-            self.viewState[keyPath: state] = newValue
             
         case \.historyItems:
             break
             
         default:
-            self.viewState[keyPath: state] = newValue
+            self.viewState[keyPath: path] = newValue
         }
     }
 }
