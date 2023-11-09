@@ -8,8 +8,9 @@
 import SwiftData
 import SwiftUI
 
+// Test용 <텍스트 대치 화면>, <새 텍스트 대치 추가 화면>
 struct TestTKSettingView: View {
-    // Test용
+    
     @Environment(\.presentationMode) var presentationMode
     
     // SwiftData 연결 + R
@@ -104,7 +105,7 @@ struct AddTextReplacementView: View {
                 isPresented = false
             })
             .navigationBarItems(trailing: Button("완료") {
-                // TODO: save
+                // TODO: Save New Dictionary of TextReplacement
                 let newItem = TKTextReplacement(wordDictionary: [phrase: replacement])
                 context.insert(newItem)
                 isPresented = false

@@ -9,6 +9,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 
+// 아래 매니저 현재는 사용하지 않고, 뷰에서 바로 접근해서 CRU(D) 하고 있습니다.
 class TKTextReplacementManager {
     @Environment(\.modelContext) private var context
 
@@ -16,7 +17,6 @@ class TKTextReplacementManager {
         context.insert(textReplacement)
     }
 
-    // MARK: - UPDATE
     public func updateTextReplacement(
         phrase: TKTextReplacement,
         replacement: TKTextReplacement

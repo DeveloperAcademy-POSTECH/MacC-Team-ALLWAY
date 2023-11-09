@@ -43,10 +43,10 @@ struct TKConversationView: View {
                             )
                         
                         //MARK: 설정으로 가기 위한 Test용
-                        NavigationLink(destination: TestTKSettingView(), isActive: $navigateToSettings) {
-                            EmptyView()
-                        }
-                        .hidden()
+//                        NavigationLink(destination: TestTKSettingView(), isActive: $navigateToSettings) {
+//                            EmptyView()
+//                        }
+//                        .hidden()
                         
                         TLTextField(
                             style: .normal(textLimit: store.questionTextLimit),
@@ -56,8 +56,8 @@ struct TKConversationView: View {
                             HStack {
                                 Button {
                                     //MARK: Test용
-                                    navigateToSettings = true
-//                                    store.onEraseAllButtonTapped()
+                                    // navigateToSettings = true
+                                    store.onEraseAllButtonTapped()
                                 } label: {
                                     Text("전체 지우기")
                                 }
@@ -374,11 +374,11 @@ extension TKConversationView {
     }
 }
 
-// MARK: 텍스트 대치 - case 2가지 중 추후 선택
+// MARK: 텍스트 대치
 extension TKConversationView {
     
     func replacementKeyForCurrentText() -> String? {
-        // case1: 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
+        // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
         guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
             return nil
         }
@@ -388,14 +388,6 @@ extension TKConversationView {
         }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         
         return sortedKeys.first { $0.lowercased() == lastWord }
-        
-        // case2: 텍스트 필드에 입력하는 전체 텍스트 안에 key 값이 있는지 검사(띄어쓰기 있어도 됨)
-//        let currentText = store.bindingQuestionText().wrappedValue.lowercased()
-//        return lists.flatMap { list in
-//            list.wordDictionary.keys.filter { key in
-//                currentText.contains(key.lowercased())
-//            }
-//        }
     }
 }
 
