@@ -71,9 +71,9 @@ struct TKConversationView: View {
                                 }
                                 Spacer()
                                 
-//                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
-//                                    Text("오픈 카톡방에서 피드백하기")
-//                                }
+                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
+                                    Text("오픈 카톡방에서 피드백하기")
+                                }
                             }
                             .padding(.trailing, 20)
                         }
@@ -81,15 +81,12 @@ struct TKConversationView: View {
                         // MARK: TextReplacement 키보드 위 툴바
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
-                                let keys = replacementKeysForCurrentText()
-                                
-                                ForEach(keys, id: \.self) { key in
-                                    if let value = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
-                                        Button(action: {
-                                            store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
-                                        }) {
-                                            Text(value)
-                                        }
+                                if let key = replacementKeyForCurrentText(), !key.isEmpty,
+                                   let value = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
+                                    Button(action: {
+                                        store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
+                                    }) {
+                                        Text(value)
                                     }
                                 }
                             }
@@ -377,15 +374,28 @@ extension TKConversationView {
     }
 }
 
+// MARK: 텍스트 대치 - case 2가지 중 추후 선택
 extension TKConversationView {
-    func replacementKeysForCurrentText() -> [String] {
-        // 여기서 옵셔널 바인딩이 필요하지 않습니다.
-        let currentText = store.bindingQuestionText().wrappedValue.lowercased()
-        return lists.flatMap { list in
-            list.wordDictionary.keys.filter { key in
-                currentText.contains(key.lowercased())
-            }
+    
+    func replacementKeyForCurrentText() -> String? {
+        // case1: 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
+        guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
+            return nil
         }
+        
+        let sortedKeys = lists.flatMap { list in
+            list.wordDictionary.keys
+        }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        
+        return sortedKeys.first { $0.lowercased() == lastWord }
+        
+        // case2: 텍스트 필드에 입력하는 전체 텍스트 안에 key 값이 있는지 검사(띄어쓰기 있어도 됨)
+//        let currentText = store.bindingQuestionText().wrappedValue.lowercased()
+//        return lists.flatMap { list in
+//            list.wordDictionary.keys.filter { key in
+//                currentText.contains(key.lowercased())
+//            }
+//        }
     }
 }
 
