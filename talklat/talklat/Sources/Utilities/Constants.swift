@@ -69,3 +69,11 @@ public enum BlockNameType {
     case fullName
     case shortName
 }
+
+enum MapAnnotationType {
+    case fixed
+    case movable
+}
+
+public let initialLatitude: Double = 37.554577
+public let initialLongitude: Double = 126.970828

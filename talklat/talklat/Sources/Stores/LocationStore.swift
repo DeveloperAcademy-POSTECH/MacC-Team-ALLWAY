@@ -187,9 +187,19 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         )
     }
     
+    @MainActor
     func updateLocationThumbnail(_ image: UIImage?) {
         guard let image = image else { return }
         self.updateState(\.locationThumbnail, with: image)
+    }
+    
+    func detectAuthorization() -> Bool {
+        switch locationState.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            return true
+        default:
+            return false
+        }
     }
 }
 

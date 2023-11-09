@@ -5,6 +5,7 @@
 //  Created by user on 11/9/23.
 //
 
+import MapKit
 import SwiftUI
 
 struct HistoryInfoItemView: View {
@@ -13,7 +14,18 @@ struct HistoryInfoItemView: View {
     @State var isShowingSheet: Bool = false
     @State private var text: String = "토크랫(5)"
     @State private var textLimitMessage: String = ""
+    @State private var isChanged: Bool = false
     @FocusState var isTextfieldFocused: Bool
+    
+    //MARK: 이거 나중에 SwiftData에서 불러온 값으로 변경
+    let dummyLocation: MKCoordinateRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: initialLatitude,
+            longitude: initialLongitude
+        ),
+        latitudinalMeters: 500,
+        longitudinalMeters: 500
+    )
     
     var body: some View {
         NavigationView {
@@ -22,7 +34,10 @@ struct HistoryInfoItemView: View {
                     .padding()
                 
                 mapThumbnailView
+                    .clipShape(RoundedRectangle(cornerRadius: 22))
+                    .clipped()
                     .padding()
+                
                 
                 Spacer()
             }
@@ -33,7 +48,7 @@ struct HistoryInfoItemView: View {
                     }
             }
             .sheet(isPresented: $isShowingSheet) {
-                HistoryItemLocationEditView(locationStore: locationStore, isShowingSheet: $isShowingSheet)
+                HistoryItemLocationEditView(locationStore: locationStore, isShowingSheet: $isShowingSheet, coordinateRegion: dummyLocation)
             }
             .navigationTitle("정보")
             .navigationBarTitleDisplayMode(.inline)
@@ -66,7 +81,7 @@ struct HistoryInfoItemView: View {
         }
     }
     
-    var textFieldView: some View {
+    private var textFieldView: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("제목")
                 .padding(.leading, 10)
@@ -122,7 +137,7 @@ struct HistoryInfoItemView: View {
         }
     }
     
-    var mapThumbnailView: some View {
+    private var mapThumbnailView: some View {
         VStack(alignment: .leading) {
             Text("위치")
                 .font(.headline)
@@ -149,16 +164,12 @@ struct HistoryInfoItemView: View {
                 
             default:
                 Image(uiImage: locationStore(\.locationThumbnail) ?? UIImage(named: "TalklatLogo")!)
+                    .clipShape(RoundedRectangle(cornerRadius: 22))
+                    .clipped()
                     .aspectRatio(
-                        1.0,
+                        1.5,
                         contentMode: .fit
                     )
-                    .overlay {
-                        Circle()
-                            .fill(.orange)
-                            .frame(width: 15, height: 15)
-                            .opacity(0.5)
-                    }
                     .overlay {
                         VStack {
                             Spacer()
