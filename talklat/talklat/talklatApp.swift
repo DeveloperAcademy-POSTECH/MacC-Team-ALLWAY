@@ -37,7 +37,10 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    ScrollContainer(store: store)
+                    NavigationStack {
+                        HistoryListView()
+                    }
+                    // ScrollContainer(store: store)
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
