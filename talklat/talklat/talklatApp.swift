@@ -15,12 +15,6 @@ struct talklatApp: App {
         questionText: ""
     )
     
-    @StateObject private var store: ConversationViewStore = ConversationViewStore(
-        conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing
-        )
-    )
-    
     private let appRootManager = AppRootManager()
     
     var body: some Scene {
@@ -36,7 +30,11 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    ScrollContainer(store: store)
+//                    ScrollContainer(store: store)
+                    
+                    NavigationStack {
+                        TKMainView()
+                    }
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
