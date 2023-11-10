@@ -63,5 +63,10 @@ struct TKOrbitCircles: View {
 }
 
 #Preview {
-    TKOrbitCircles()
+    NavigationStack {
+        VStack {
+            TKOrbitCircles()
+                .background { Color.red }
+        }
+    }
 }

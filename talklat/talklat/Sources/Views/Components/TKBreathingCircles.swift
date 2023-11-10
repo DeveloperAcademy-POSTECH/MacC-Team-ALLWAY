@@ -9,45 +9,51 @@ import SwiftUI
 
 struct TKBreathingCircles: View {
     struct BreathingCircleRender: Hashable {
-        let frame: CGFloat
+        let widthDiff: CGFloat
         let opacity: CGFloat
     }
     
     let breathingCircles: [BreathingCircleRender] = [
-        BreathingCircleRender(frame: 240, opacity: 0.4),
-        BreathingCircleRender(frame: 200, opacity: 0.6),
-        BreathingCircleRender(frame: 160, opacity: 1.0),
+        BreathingCircleRender(widthDiff: 10, opacity: 0.4),
+        BreathingCircleRender(widthDiff: 50, opacity: 0.6),
+        BreathingCircleRender(widthDiff: 90, opacity: 1.0),
     ]
     
     @State private var animationFlag: Bool = false
     
     var body: some View {
         GeometryReader { proxy in
-            ForEach(breathingCircles, id: \.self) { circle in
-                Circle()
-                    .foregroundStyle(Color.white)
-                    .opacity(
-                        animationFlag && circle.opacity != 1.0
-                        ? circle.opacity / 2
-                        : circle.opacity
-                    )
-                    .frame(
-                        maxWidth: circle.frame,
-                        maxHeight: circle.frame
-                    )
-                    .animation(
+            ForEach(
+                breathingCircles,
+                id: \.self
+            ) { circles in
+                Group {
+                    Circle()
+                        .foregroundStyle(Color.white)
+                        .frame(
+                            width: abs(proxy.size.width - circles.widthDiff),
+                            alignment: .center
+                        )
+                        .opacity(
+                            animationFlag && circles.opacity != 1.0
+                            ? circles.opacity / 2
+                            : circles.opacity
+                        )
+                }
+                .frame(
+                    width: proxy.size.width,
+                    height: proxy.size.height
+                )
+                .animation(
+                    Animation
                         .easeInOut
-                            .speed(0.2)
-                            .repeatForever(autoreverses: true),
-                        value: animationFlag
-                    )
+                        .speed(0.2)
+                        .repeatForever(autoreverses: true),
+                    value: animationFlag
+                )
             }
-            .frame(
-                maxWidth: proxy.size.width,
-                maxHeight: proxy.size.height,
-                alignment: .center
-            )
         }
+        .aspectRatio(1, contentMode: .fit)
         .onAppear {
             animationFlag.toggle()
         }
@@ -55,5 +61,8 @@ struct TKBreathingCircles: View {
 }
 
 #Preview {
-    TKBreathingCircles()
+    NavigationStack {
+        TKBreathingCircles()
+            .background { Color.black }
+    }
 }
