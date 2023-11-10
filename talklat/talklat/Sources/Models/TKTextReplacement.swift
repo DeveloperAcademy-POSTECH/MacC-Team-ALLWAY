@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class TKTextReplacement {
-    var wordDictionary: [String: String] = ["key": "value"]
+    var wordDictionary: [String: String] = [:]
     
     init(
         wordDictionary: [String : String]

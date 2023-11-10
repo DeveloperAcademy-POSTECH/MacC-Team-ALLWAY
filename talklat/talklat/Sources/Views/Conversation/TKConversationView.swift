@@ -24,6 +24,7 @@ struct TKConversationView: View {
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
+    let manager = TKTextReplacementManager()
     
     //MARK: Test용
     @State private var navigateToSettings = false
@@ -82,7 +83,7 @@ struct TKConversationView: View {
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
                                 if let key = replacementKeyForCurrentText(), !key.isEmpty,
-                                   let value = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
+                                   let value = manager.findValueForKeyInLists(key: key, lists: lists) {
                                     Button(action: {
                                         store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
                                     }) {
