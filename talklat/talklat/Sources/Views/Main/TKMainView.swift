@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TKMainView: View {
-    #warning("Location Manager Here")
     @StateObject private var store = TKMainViewStore()
     
     var body: some View {
@@ -30,26 +29,17 @@ struct TKMainView: View {
                         .foregroundStyle(Color.white)
                 }
                 .padding(.bottom, 32)
-                
-                TKBreathingCircles()
+
+                TKOrbitCircles(store: store)
                     .frame(maxHeight: 250)
                     .overlay {
-                        NavigationLink {
-                            ScrollContainer()
-                                .navigationBarBackButtonHidden()
-                        } label: {
-                            ZStack {
-                                Image(systemName: "bubble.middle.bottom.fill")
-                                    .resizable()
-                                    .frame(width: 84, height: 77)
-                                
-                                Image(systemName: "ellipsis")
-                                    .resizable()
-                                    .frame(width: 40, height: 10)
-                                    .foregroundStyle(Color.white)
-                                    .padding(.bottom, 12)
-                            }
-                        }
+                        Circle()
+                            .fill(Color.white)
+                            .opacity(0.5)
+                            .frame(width: 200, height: 200)
+                    }
+                    .overlay {
+                        startConversationButtonBuilder()
                     }
             }
             .frame(
@@ -59,6 +49,11 @@ struct TKMainView: View {
             
             // MARK: BottomSheet
             TKDraggableList(store: store)
+        }
+        .fullScreenCover(
+            isPresented: store.bindingConversationFullScreenCover()
+        ) {
+            ScrollContainer()
         }
         .toolbarBackground(
             Color.accentColor,
@@ -91,6 +86,34 @@ struct TKMainView: View {
             }
         }
         .background { Color.accentColor.ignoresSafeArea(edges: .top) }
+    }
+    
+    private func startConversationButtonBuilder() -> some View {
+        Button {
+            store.onStartConversationButtonTapped()
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(Color.white)
+                    .opacity(0.3)
+                    .frame(width: 160, height: 160)
+                
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 150, height: 150)
+                
+                Image(systemName: "bubble.middle.bottom.fill")
+                    .resizable()
+                    .frame(width: 84, height: 77)
+                
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .bold()
+                    .foregroundStyle(Color.white)
+                    .padding(.bottom, 12)
+            }
+        }
     }
 }
 

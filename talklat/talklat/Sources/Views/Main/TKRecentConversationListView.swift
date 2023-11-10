@@ -9,22 +9,29 @@ import SwiftUI
 
 struct TKRecentConversationListView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             VStack(alignment: .leading) {
-                Text("내 근처 대화 목록")
-                    .font(.title3)
-                    .bold()
+                HStack(spacing: 2) {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                    
+                    Text("내 근처 대화 목록")
+                        .font(.title3)
+                        .bold()
+                }
+                .foregroundStyle(Color.gray500)
             }
             .frame(
                 maxWidth: .infinity,
                 alignment: .leading
             )
             .padding(.leading, 32)
+            .padding(.bottom, 16)
             
             ScrollView {
                 #warning("CONVERSATION LIST COUNT")
                 ForEach(0..<10) { _ in
                     NavigationLink {
+                        #warning("Navigate To HISTORY DETAIL")
                         Text("?")
                     } label: {
                         VStack(alignment: .leading) {

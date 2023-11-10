@@ -27,8 +27,6 @@ struct TKDraggableList: View {
                                 .fill(Color.gray700)
                                 .frame(width: 36, height: 4)
                                 .padding(.vertical)
-                                .opacity(height - 175 <= abs(store(\.lastOffset)) ? 0.0 : 1.0)
-                                .animation(.easeInOut, value: store(\.lastOffset))
                             
                             // MARK: - RECENT CONVERSATION LIST
                             TKRecentConversationListView()
