@@ -18,6 +18,7 @@
 		7E4A6CDD2AFB7F7C0014DDB8 /* TKOrbitCircles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */; };
 		7E4A6CDF2AFBAB980014DDB8 /* TKDraggableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */; };
 		7E4A6CE12AFBABC90014DDB8 /* TKRecentConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */; };
+		7E6494CA2AFCD08100FB478C /* TKBreathingCircles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */; };
 		7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */; };
 		7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */; };
 		7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKConversationView.swift */; };
@@ -75,6 +76,7 @@
 		7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOrbitCircles.swift; sourceTree = "<group>"; };
 		7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableList.swift; sourceTree = "<group>"; };
 		7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecentConversationListView.swift; sourceTree = "<group>"; };
+		7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKBreathingCircles.swift; sourceTree = "<group>"; };
 		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
@@ -145,8 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */,
-				7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */,
 				7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */,
+				7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -292,6 +294,7 @@
 				7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */,
 				575677E02ADA6F13002E01BE /* TLTextField.swift */,
 				7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */,
+				7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
+				7E6494CA2AFCD08100FB478C /* TKBreathingCircles.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
 				7E4A6CD92AFB2C100014DDB8 /* TKMainView.swift in Sources */,
