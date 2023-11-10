@@ -8,13 +8,30 @@
 import SwiftUI
 
 final class TKMainViewStore {
-    struct ViewState {
+    struct ViewState: TKAnimatable {
+        var animationFlag: Bool = false
+        var isConversationFullScreenCoverDisplayed: Bool = false
         var isBottomSheetMaxed: Bool = false
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
     }
     
-    @Published private var viewState: ViewState = ViewState()
+    @Published var viewState: ViewState = ViewState()
+    
+    public func bindingConversationFullScreenCover() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isConversationFullScreenCoverDisplayed) },
+            set: { self.reduce(\.isConversationFullScreenCoverDisplayed, into: $0) }
+        )
+    }
+    
+    public func triggerAnimation(_ flag: Bool) {
+        self.reduce(\.animationFlag, into: flag)
+    }
+    
+    public func onStartConversationButtonTapped() {
+        reduce(\.isConversationFullScreenCoverDisplayed, into: true)
+    }
     
     public func onBottomSheetMaxed(_ height: CGFloat) {
         let flag = height <= abs(self(\.lastOffset))
