@@ -7,66 +7,73 @@
 
 import SwiftUI
 
-struct TKOrbitCircles: View {
-    struct CircleOffset: Hashable {
+struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnimatable {
+    @ObservedObject var store: TKStore
+    
+    struct CircleRenderInfo: Hashable {
+//        let radiusDiff: CGFloat
         let x: CGFloat
         let y: CGFloat
+        var bool: Bool {
+            return true
+        }
     }
     
-    @State private var isAnimating: Bool = false
-    
-    private let startingOffset: [CircleOffset] = [
-        CircleOffset(x: 37, y: -5),
-        CircleOffset(x: -11, y: 42),
-        CircleOffset(x: -30, y: -21),
+    private let circleRenderInfos: [CircleRenderInfo] = [
+        CircleRenderInfo(/*radiusDiff: 54, */x: -25, y: -15),
+        CircleRenderInfo(/*radiusDiff: 54, */x: 0, y: 27),
+        CircleRenderInfo(/*radiusDiff: 54, */x: 25, y: -15),
     ]
     
     var body: some View {
         GeometryReader { proxy in
             ForEach(
-                startingOffset,
+                circleRenderInfos,
                 id: \.self
             ) { offset in
                 Group {
                     Circle()
                         .frame(
-                            width: proxy.size.width / 2,
-                            height: proxy.size.height / 2,
+                            width: proxy.size.width,
                             alignment: .center
                         )
                         .offset(
                             x: offset.x,
                             y: offset.y
                         )
-                        .foregroundStyle(Color.accentColor.opacity(0.3))
+                        .foregroundStyle(Color.white)
+                        .opacity(0.3)
                 }
                 .frame(
                     width: proxy.size.width,
                     height: proxy.size.height
                 )
                 .rotationEffect(
-                    self.isAnimating ? .degrees(360) : .zero
+                    store(\.animationFlag) ? .degrees(180) : .zero
+                )
+                .scaleEffect(
+                    store(\.animationFlag) ? 1.0 : 0.85
                 )
                 .animation(
                     Animation
-                        .linear(duration: 30.0)
-                        .repeatForever(autoreverses: false),
-                    value: isAnimating
+                        .easeInOut
+                        .speed(0.05)
+                        .repeatForever(autoreverses: true),
+                    value: store(\.animationFlag)
                 )
             }
         }
         .aspectRatio(1, contentMode: .fit)
-        .onAppear {
-            isAnimating = true
+        .task {
+            store.triggerAnimation(true)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        VStack {
-            TKOrbitCircles()
-                .background { Color.red }
-        }
+        TKOrbitCircles(store: TKMainViewStore())
+            .frame(width: 200, height: 200)
+            .background { Color.red }
     }
 }
