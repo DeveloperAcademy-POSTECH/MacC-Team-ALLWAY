@@ -9,9 +9,6 @@ import SwiftUI
 
 struct TKDraggableList: View {
     @ObservedObject var store: TKMainViewStore
-    
-    @State var offset: CGFloat = 0
-    @State var lastOffset: CGFloat = 0
     @GestureState var gestureOffset: CGFloat = 0
     
     var body: some View {
@@ -23,56 +20,45 @@ struct TKDraggableList: View {
                     ZStack {
                         // MARK: - BOTTOM SHEET BACKGROUND
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundStyle(Color.gray100)
+                            .foregroundStyle(Color.white)
                         
                         VStack {
                             Capsule()
                                 .fill(Color.gray700)
                                 .frame(width: 36, height: 4)
                                 .padding(.vertical)
-                                .opacity(height - 175 <= abs(lastOffset) ? 0.0 : 1.0)
-                                .animation(.easeInOut, value: lastOffset)
+                                .opacity(height - 175 <= abs(store(\.lastOffset)) ? 0.0 : 1.0)
+                                .animation(.easeInOut, value: store(\.lastOffset))
                             
                             // MARK: - RECENT CONVERSATION LIST
                             TKRecentConversationListView()
-                                .scrollDisabled(!isBottomSheetMaxed(height))
+                                .scrollDisabled(!store(\.isBottomSheetMaxed))
+                        }
+                        .onChange(of: store(\.lastOffset)) { _, _ in
+                            store.onBottomSheetMaxed(height - 200)
                         }
                     }
-                        .offset(y: height - 100)
-                        .offset(y: -offset > 100 ? -offset <= (height - 100) ? offset : -(height - 100) : 0)
-                        .gesture(
-                            DragGesture()
-                                .updating($gestureOffset) { value, out, _ in
-                                    out = value.translation.height
-                                    onChange()
-                                }
-                                .onEnded { _ in
-                                    let maxHeight = height
-                                    
-                                    withAnimation(.spring()) {
-                                        if -offset > maxHeight / 2 {
-                                            offset = -maxHeight
-                                        } else {
-                                            offset = 0
-                                        }
-                                    }
-                                    
-                                    lastOffset = offset
-                                })
+                    .offset(y: height - 180)
+                    .offset(
+                        y: -store(\.offset) > 180
+                        ? -store(\.offset) <= (height - 180)
+                        ? store(\.offset)
+                        : -(height - 180)
+                        : 0
+                    )
+                    .gesture(
+                        DragGesture()
+                            .updating($gestureOffset) { value, out, _ in
+                                out = value.translation.height
+                                store.onUpdatingDragOffset(gestureOffset)
+                            }
+                            .onEnded { _ in
+                                store.onDragEnded(height)
+                            })
                 )
             }
             .ignoresSafeArea(.all, edges: .bottom)
         }
-    }
-    
-    func onChange() {
-        DispatchQueue.main.async {
-            self.offset = gestureOffset + lastOffset
-        }
-    }
-    
-    func isBottomSheetMaxed(_ height: CGFloat) -> Bool {
-        height - 200 <= abs(lastOffset)
     }
 }
 

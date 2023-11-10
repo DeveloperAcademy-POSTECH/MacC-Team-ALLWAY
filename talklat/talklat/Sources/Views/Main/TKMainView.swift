@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TKMainView: View {
+    #warning("Location Manager Here")
     @StateObject private var store = TKMainViewStore()
     
     var body: some View {
@@ -16,38 +17,42 @@ struct TKMainView: View {
                 Spacer()
                     .frame(maxHeight: 120)
                 
-                HStack(spacing: 2) {
-                    Image(systemName: "location.fill")
-                    
-                    Text("${CURRENT_LOCATION}")
-                }
-                .font(.caption)
-                .bold()
-                .foregroundStyle(Color.gray)
-                .padding(.bottom, 10)
-                
-                Text("새 대화 시작하기")
-                    .font(.title3)
-                    .bold()
-                    .foregroundStyle(Color.white)
-                    
-                ZStack {
-                    TKBreathingCircles()
-                    
-                    NavigationLink {
-                        Text("?")
-                    } label: {
-                        Image(systemName: "ellipsis.message.fill")
-                            .resizable()
-                            .frame(maxWidth: 86, maxHeight: 77)
+                VStack(spacing: 10) {
+                    HStack(spacing: 2) {
+                        Image(systemName: "location.fill")
+                        
+                        Text("현재 위치")
                     }
+                    
+                    Text("새 대화 시작하기")
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(Color.white)
                 }
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 250)
-                .padding(.top, 32)
+                .padding(.bottom, 32)
+                
+                TKBreathingCircles()
+                    .frame(maxHeight: 250)
+                    .overlay {
+                        NavigationLink {
+                            ScrollContainer()
+                                .navigationBarBackButtonHidden()
+                        } label: {
+                            ZStack {
+                                Image(systemName: "bubble.middle.bottom.fill")
+                                    .resizable()
+                                    .frame(width: 84, height: 77)
+                                
+                                Image(systemName: "ellipsis")
+                                    .resizable()
+                                    .frame(width: 40, height: 10)
+                                    .foregroundStyle(Color.white)
+                                    .padding(.bottom, 12)
+                            }
+                        }
+                    }
             }
             .frame(
-                maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
@@ -55,7 +60,6 @@ struct TKMainView: View {
             // MARK: BottomSheet
             TKDraggableList(store: store)
         }
-        .background { Color.accentColor.ignoresSafeArea(edges: .top) }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("TALKLAT")
@@ -82,6 +86,7 @@ struct TKMainView: View {
                 }
             }
         }
+        .background { Color.accentColor.ignoresSafeArea(edges: .top) }
     }
 }
 

@@ -58,7 +58,7 @@ struct TKRecentConversationListView: View {
                         .padding(.vertical, 16)
                         .background {
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.white)
+                                .fill(Color.gray100)
                                 .padding(.horizontal, 16)
                         }
                     }
