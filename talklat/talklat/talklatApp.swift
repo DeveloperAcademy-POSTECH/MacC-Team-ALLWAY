@@ -10,10 +10,7 @@ import SwiftUI
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: ""
-    )
+    @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     private let appRootManager = AppRootManager()
     
@@ -30,8 +27,6 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-//                    ScrollContainer(store: store)
-                    
                     NavigationStack {
                         TKMainView()
                     }
@@ -45,7 +40,7 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
-            .onChange(of: scenePhase) { _ in
+            .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
