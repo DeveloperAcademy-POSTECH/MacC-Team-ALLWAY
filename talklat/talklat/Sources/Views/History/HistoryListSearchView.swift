@@ -14,6 +14,9 @@ private enum searchStatus {
 }
 
 struct HistoryListSearchView: View {
+    var sampleConversations: [TKConversation]
+    
+    @State var matchingContents: [TKConversation.TKContent] = []
     @State private var searchStatus: searchStatus = .inactive
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
@@ -27,8 +30,11 @@ struct HistoryListSearchView: View {
             case .resultFound:
                 ScrollView {
                     // TODO: matching [TKContent]의 matching [TKConversation.location]
-                    ForEach(1 ..< 10) { _ in
-                        SearchResultSection()
+                    ForEach(0 ..< 1) { _ in
+                        SearchResultSection(
+                            matchingContents: $matchingContents,
+                            searchText: $searchText
+                        )
                     }
                 }
                 .scrollIndicators(.hidden)
@@ -50,8 +56,32 @@ struct HistoryListSearchView: View {
                 if searchText == "" {
                     searchStatus = .inactive
                 } else {
-                    // TODO: if else matching TKContent 존재
-                    searchStatus = .resultFound
+                    if matchingContents.isEmpty {
+                        searchStatus = .resultNotFound
+                    }
+                }
+            }
+            
+            // Search Filter
+            matchingContents = []
+            sampleConversations.forEach { conversation in
+                let matchingContent = conversation.content.filter({ content in
+                    content.text.contains(searchText)
+                })
+                print("-- matchingContent: ", matchingContent)
+                matchingContents.append(contentsOf: matchingContent)
+                print("-- matchingContents: ", matchingContents)
+            }
+        }
+        .onChange(of: matchingContents) { _, _ in
+            // TODO: if else matching TKContent 존재
+            if !matchingContents.isEmpty {
+                searchStatus = .resultFound
+            } else {
+                if searchText != "" {
+                    searchStatus = .resultNotFound
+                } else {
+                    searchStatus = .inactive
                 }
             }
         }
@@ -60,6 +90,8 @@ struct HistoryListSearchView: View {
 
 // MARK: - (Matching) Location Unit
 struct SearchResultSection: View {
+    @Binding var matchingContents: [TKConversation.TKContent]
+    @Binding var searchText: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -74,14 +106,17 @@ struct SearchResultSection: View {
                 
                 Spacer()
                 
-                Text("~개 발견됨") // TODO: matching [TKContent].count
+                Text("\(matchingContents.count)개 발견됨") // TODO: matching [TKContent].count
                     .foregroundColor(.gray500)
                     .font(.system(size: 15, weight: .medium))
             }
             
             // Contents
-            ForEach(1 ..< 3) { _ in // TODO: matching [TKContent]
-                SearchResultItems()
+            ForEach(matchingContents, id: \.self) { content in // TODO: matching [TKContent]
+                SearchResultItem(
+                    matchingContent: content,
+                    searchText: $searchText
+                )
             }
         }
         .padding(.top, 24)
@@ -89,7 +124,11 @@ struct SearchResultSection: View {
 }
 
 // MARK: - (Matching) Conversation Item Unit
-struct SearchResultItems: View {
+struct SearchResultItem: View {
+    var matchingContent: TKConversation.TKContent
+    
+    @State var highlightIndex: String.Index = String.Index(utf16Offset: 0, in: "")
+    @Binding var searchText: String
     
     var body: some View {
         // Cell Contents
@@ -98,13 +137,32 @@ struct SearchResultItems: View {
                 Text("Title") // TODO: title
                     .font(.system(size: 17, weight: .medium))
                
-                Text("아이스 아메리카노 한 잔 주시겠사와요 저는 보통 그란데 사이즈를 먹는데 하지만") // TODO: matching TKContent
-                    .foregroundColor(.gray700)
-                    .font(.system(size: 15, weight: .medium))
-                    .lineLimit(1)
+                // 검색 키워드와 일치하는 한 개의 TKContent.text
+                let matchingText =  String(matchingContent.text[highlightIndex ..< matchingContent.text.endIndex])
+                
+                // 임시 ScrollView
+                ScrollView(.horizontal) {
+                    HStack(spacing: 0) {
+                        ForEach(Array(matchingText.enumerated()), id: \.offset) { character in
+                            var isHighlighted: Bool = false
+                            if searchText.contains(character.element) {
+                                let _ = isHighlighted = true
+                            } else {
+                                let _ = isHighlighted = false
+                            }
+                            
+                            Text(String(character.element))
+                                .foregroundStyle(
+                                    isHighlighted
+                                    ? Color.accentColor
+                                    : Color.black
+                                )
+                        }
+                    }
+                }
                 
                 Text(
-                    Date().formatted( // TODO: createdAt
+                    matchingContent.createdAt.formatted( // TODO: createdAt
                         date: .abbreviated,
                         time: .omitted
                    )
@@ -119,13 +177,35 @@ struct SearchResultItems: View {
         .padding()
         .background(Color.gray100)
         .cornerRadius(22)
+        .onAppear {
+            let searchTextKeywords = searchText.split(separator: " ")
+            print("searchTextKeyword: ", searchTextKeywords)
+            
+//            let hightlightedText = matchingContent.text.filter({ character in
+//                searchText.contains(character)
+//            })
+            
+            // StartingIndex 구하기
+            
+            var isCharacterFound: Bool = false
+            
+            Array(matchingContent.text).forEach { character in
+                if !isCharacterFound {
+                    if searchTextKeywords[0].contains(character) {
+                        highlightIndex = matchingContent.text.firstIndex(of: character) ?? searchText.startIndex
+                        isCharacterFound = true
+                    }
+                }
+            }
+        }
 
     }
 }
 
-#Preview {
-    HistoryListSearchView(
-        isSearching: .constant(true),
-        searchText: .constant("ㅇ")
-    )
-}
+//#Preview {
+//    HistoryListSearchView(
+//        sampleConversations: [TKConversation],
+//        isSearching: .constant(true),
+//        searchText: .constant("ㅇ")
+//    )
+//}

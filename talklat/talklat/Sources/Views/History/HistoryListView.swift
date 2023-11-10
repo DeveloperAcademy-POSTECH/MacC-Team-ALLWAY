@@ -9,9 +9,6 @@ import SwiftUI
 import SwiftData
 
 struct HistoryListView: View {
-    //    @Environment(\.modelContext) var context
-    //    @Query private var conversations: [TKConversation]
-    
     @State var isCollapsed: Bool = false
     
     private var sampleConversations: [TKConversation] {
@@ -126,7 +123,7 @@ struct HistoryListView: View {
                         )
                         // emptyViewBuilder()
                     } else {
-                        ForEach(0..<4) { _ in // TODO: all [TKLocation]
+                        ForEach(0 ..< 4) { _ in // TODO: all [TKLocation]
                             LocationList(
                                 samples: sampleConversations,
                                 selectedConversationID: $selectedConversationID,
@@ -143,25 +140,28 @@ struct HistoryListView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         // Edit Button
-                        Button {
-                            withAnimation(
-                                .spring(
-                                    dampingFraction: 0.7,
-                                    blendDuration: 0.3
-                                )
-                            ) {
-                                isEditing.toggle()
+                        ZStack {
+                            Button {
+                                withAnimation(
+                                    .spring(
+                                        dampingFraction: 0.7,
+                                        blendDuration: 0.4
+                                    )
+                                ) {
+                                    isEditing.toggle()
+                                }
+                            } label: {
+                                Text("편집")
+                                    .foregroundColor(.accentColor)
+                                    .fontWeight(.medium)
                             }
-                        } label: {
-                            Text("편집")
-                                .foregroundColor(.accentColor)
-                                .fontWeight(.medium)
                         }
                     }
                 }
             } else {
                 // MARK: - History Search
                 HistoryListSearchView(
+                    sampleConversations: sampleConversations,
                     isSearching: $isSearching,
                     searchText: $searchText
                 )
@@ -170,7 +170,7 @@ struct HistoryListView: View {
         .padding(.horizontal, 20)
         .overlay {
             if isDialogShowing {
-                Color.black.opacity(0.3)
+                Color.black.opacity(0.5)
                     .ignoresSafeArea()
                 CustomDialog(
                     selectedConversationID: $selectedConversationID,
@@ -183,7 +183,7 @@ struct HistoryListView: View {
             withAnimation(
                 .spring(
                     dampingFraction: 0.8,
-                    blendDuration: 0.7
+                    blendDuration: 0.4
                 )
             ) {
                 if $isSearchFocused.wrappedValue {
@@ -225,7 +225,7 @@ struct LocationList: View {
                     withAnimation(
                         .spring(
                             .bouncy,
-                            blendDuration: 0.3
+                            blendDuration: 0.4
                         )
                     ) {
                         if !isEditing {
@@ -257,10 +257,9 @@ struct LocationList: View {
                                     removal: .identity
                                 )
                             )
-                            .disabled(isEditing)
                     }
-                    
                 }
+                .disabled(isEditing)
             }
             
             // Each List Cell
@@ -294,13 +293,13 @@ struct CellItem: View {
     var body: some View {
         HStack {
             HStack {
+                // Leading Remove Button Appear
                 if isEditing {
-                    // Remove Button
                     Button {
                         withAnimation(
                             .spring(
                                 .bouncy,
-                                blendDuration: 0.3
+                                blendDuration: 0.4
                             )
                         ) {
                             isRemoving.toggle()
@@ -312,10 +311,8 @@ struct CellItem: View {
                                 .font(.system(size: 20))
                                 .padding(.trailing, 5)
                                 .transition(
-                                    .asymmetric(
-                                        insertion: .opacity,
-                                        removal: .identity
-                                    )
+                                    .push(from: .trailing)
+                                    .combined(with: .opacity)
                                 )
                         }
                     }
@@ -351,7 +348,20 @@ struct CellItem: View {
             .padding()
             .background(Color.gray100)
             .cornerRadius(22)
+            .onTapGesture {
+                if isRemoving {
+                    withAnimation(
+                        .spring(
+                            dampingFraction: 0.7,
+                            blendDuration: 0.4
+                        )
+                    ) {
+                        isRemoving = false
+                    }
+                }
+            }
 
+            // TrashBin Appear
             if isRemoving && isEditing {
                 Button {
                     withAnimation {
@@ -370,18 +380,15 @@ struct CellItem: View {
             }
         }
         .onChange(of: isEditing) { _, _ in
-            isRemoving = false
-        }
-        .onAppear {
-            CustomDialog(
-                selectedConversationID: $selectedConversationID,
-                isDialogShowing: $isDialogShowing,
-                isEditing: $isEditing
-            )
+            withAnimation {
+                isRemoving = false
+            }
         }
     }
 }
 
+// TODO: 바인딩 스토어 생성 후 TKDialogBuilder로 분리
+/// enum case .destruction (빨간색), .cancel (주황색) 필요
 struct CustomDialog: View {
     @Binding internal var selectedConversationID: String
     @Binding internal var isDialogShowing: Bool
@@ -392,9 +399,12 @@ struct CustomDialog: View {
             VStack(spacing: 16) {
                 Image(systemName: "trash.fill")
                     .foregroundColor(.red)
+                    .font(.system(size: 20))
+                
                 Text("대화 삭제")
                     .foregroundColor(.gray900)
                     .font(.system(size: 17, weight: .bold))
+                
                 Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: TKConversation.title
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray600)
@@ -410,7 +420,7 @@ struct CustomDialog: View {
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
                             .background(Color.gray200)
-                            .cornerRadius(22)
+                            .cornerRadius(16)
                     }
                     
                     Button {
@@ -424,7 +434,7 @@ struct CustomDialog: View {
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
                             .background(Color.red)
-                            .cornerRadius(22)
+                            .cornerRadius(16)
                     }
                 }
             }

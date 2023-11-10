@@ -23,12 +23,14 @@ struct SearchBarView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray400)
             } trailingButton: {
-                Button {
-                    // Remove All
-                    searchText = ""
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray400)
+                if isSearching {
+                    Button {
+                        // Remove All
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray400)
+                    }
                 }
             }
             
@@ -36,6 +38,7 @@ struct SearchBarView: View {
                 Button {
                     // Dismiss Search UI
                     isSearching = false
+                    searchText = ""
                 } label: {
                     Text("취소")
                 }

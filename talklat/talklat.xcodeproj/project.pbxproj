@@ -36,6 +36,7 @@
 		EF1162AE2AFCBB6F000D0F5B /* AWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1162AD2AFCBB6F000D0F5B /* AWTextField.swift */; };
 		EF1162B02AFCEBD7000D0F5B /* TKUnavailableViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1162AF2AFCEBD7000D0F5B /* TKUnavailableViewBuilder.swift */; };
 		EF1162B22AFCF30C000D0F5B /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1162B12AFCF30C000D0F5B /* SearchBarView.swift */; };
+		EF3B16AD2AFE144300CDB484 /* HistoryViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16AC2AFE144300CDB484 /* HistoryViewStore.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
@@ -97,6 +98,7 @@
 		EF1162AD2AFCBB6F000D0F5B /* AWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWTextField.swift; sourceTree = "<group>"; };
 		EF1162AF2AFCEBD7000D0F5B /* TKUnavailableViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKUnavailableViewBuilder.swift; sourceTree = "<group>"; };
 		EF1162B12AFCF30C000D0F5B /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		EF3B16AC2AFE144300CDB484 /* HistoryViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewStore.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
 				7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
+				EF3B16AC2AFE144300CDB484 /* HistoryViewStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -302,8 +305,8 @@
 			children = (
 				EF7938962AFB748100402A4E /* HistoryListView.swift */,
 				EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */,
-				EF1162AF2AFCEBD7000D0F5B /* TKUnavailableViewBuilder.swift */,
 				EF1162B12AFCF30C000D0F5B /* SearchBarView.swift */,
+				EF1162AF2AFCEBD7000D0F5B /* TKUnavailableViewBuilder.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				EF1162AB2AFCB90F000D0F5B /* HistoryListSearchView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
+				EF3B16AD2AFE144300CDB484 /* HistoryViewStore.swift in Sources */,
 				EF79389B2AFB754200402A4E /* SampleTKConversation.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
