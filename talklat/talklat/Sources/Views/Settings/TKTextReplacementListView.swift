@@ -24,29 +24,41 @@ struct TKTextReplacementListView: View {
             ScrollViewReader { proxy in
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        ForEach(sortedGroupKeys, id: \.self) { groupKey in
-                            // Header
-                            Section(header: Text(groupKey)
-                                .id(groupKey)
-                                .font(.subheadline)
-                                .foregroundColor(.gray500)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 32)
-                                .padding(.top, 24)
-                                .lineSpacing(15 * 1.35 - 15)
-                            )
-                            {
-                                listSection(groupKey)
+                        if sortedGroupKeys.isEmpty {
+                            Spacer()
+                            Image(systemName: "ellipsis.message")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100)
+                            Text("아직 설정한 텍스트 대치가 없어요")
+                            Spacer()
+                        } else {
+                            ForEach(sortedGroupKeys, id: \.self) { groupKey in
+                                // Header
+                                Section(header: Text(groupKey)
+                                    .id(groupKey)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray500)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 32)
+                                    .padding(.top, 24)
+                                    .lineSpacing(15 * 1.35 - 15)
+                                )
+                                {
+                                    listSection(groupKey)
+                                }
+                                
                             }
-                            
                         }
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .overlay(
-                    SectionIndexTitles(proxy: proxy)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                )
+                .overlay {
+                    if(!sortedGroupKeys.isEmpty) {
+                        SectionIndexTitles(proxy: proxy)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                }
             }
             .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
