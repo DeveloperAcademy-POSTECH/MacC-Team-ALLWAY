@@ -35,7 +35,7 @@ struct TKDraggableList: View {
                                 .scrollDisabled(!store(\.isBottomSheetMaxed))
                         }
                         .onChange(of: store(\.lastOffset)) { _, _ in
-                            store.onBottomSheetMaxed(height - 200)
+                            store.onBottomSheetMaxed(height - 180)
                         }
                     }
                     .offset(y: height - 180)

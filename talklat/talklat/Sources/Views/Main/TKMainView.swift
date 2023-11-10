@@ -60,6 +60,10 @@ struct TKMainView: View {
             // MARK: BottomSheet
             TKDraggableList(store: store)
         }
+        .toolbarBackground(
+            Color.accentColor,
+            for: .navigationBar
+        )
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("TALKLAT")
