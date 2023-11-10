@@ -27,6 +27,9 @@ public enum Constants {
     말씀하신 내용은 음성인식되어서
     텍스트로 변환됩니다.
     """
+    
+    static let SectionIndexTitles = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"]
+    
 }
 
 public enum AuthStatus: String {

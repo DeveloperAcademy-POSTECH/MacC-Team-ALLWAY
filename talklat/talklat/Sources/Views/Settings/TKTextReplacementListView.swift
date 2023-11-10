@@ -9,12 +9,9 @@ import SwiftData
 import SwiftUI
 
 struct TKTextReplacementListView: View {
-    
     @Environment(\.presentationMode) var presentationMode
-    
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
-    
     @State private var selectedList: TKTextReplacement? = nil
     @State private var showingAddView = false
     
@@ -24,17 +21,32 @@ struct TKTextReplacementListView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(groupedLists.keys.sorted(), id: \.self) { groupKey in
-                    Section(header: Text(groupKey).frame(maxWidth: .infinity, alignment: .leading).background(Color.white)) {
-                        ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
-                            ForEach(list.wordDictionary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                                TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    LazyVStack {
+                        ForEach(sortedGroupKeys, id: \.self) { groupKey in
+                            // Header
+                            Section(header: Text(groupKey)
+                                .id(groupKey)
+                                .font(.subheadline)
+                                .foregroundColor(.gray500)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 32)
+                                .padding(.top, 24)
+                                .lineSpacing(15 * 1.35 - 15)
+                            )
+                            {
+                                listSection(groupKey)
                             }
+                            
                         }
                     }
-                    
                 }
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    SectionIndexTitles(proxy: proxy)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                )
             }
             .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
@@ -62,51 +74,19 @@ struct TKTextReplacementListView: View {
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
-}
-
-struct TextReplacementRow: View {
-    var key: String
-    var value: String
-    var list: TKTextReplacement
-    @Binding var selectedList: TKTextReplacement?
-
-    var body: some View {
-        Button(action: {
-            selectedList = list
-        }) {
-            VStack(spacing: 0) {
-                Text(key)
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(Color.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineSpacing(17 * 1.3 - 17)
-//                    .padding(.vertical, (17 * 1.3 - 17) / 2)
-                    .padding(.vertical, 10)
-                    .padding(.leading, 16)
-                
-                Divider()
-                    .padding(.leading, 16)
-                
-                Text(value)
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(Color.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineSpacing(15 * 1.35 - 15)
-//                    .padding(.vertical, (15 * 1.35 - 15) / 2)
-                    .padding(.vertical, 10)
-                    .padding(.leading, 16)
-                    
-            }
-            .cornerRadius(20)
-        }
-        .background(Color.gray100)
+    
+    var sortedGroupKeys: [String] {
+        groupedLists.keys.sorted()
     }
-}
-
-struct TextReplacementRow_Previews: PreviewProvider {
-    @State static var selectedList: TKTextReplacement?
-
-    static var previews: some View {
-        TextReplacementRow(key: "Sample Key", value: "Sample Value", list: TKTextReplacement(wordDictionary: ["아이스":"아메리카노"]), selectedList: $selectedList)
+    
+    func listSection(_ groupKey: String) -> some View {
+        ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
+            ForEach(list.wordDictionary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
+                    .padding(.horizontal, 16)
+//                    .padding(.bottom, 24)
+                    .cornerRadius(20)
+            }
+        }
     }
 }
