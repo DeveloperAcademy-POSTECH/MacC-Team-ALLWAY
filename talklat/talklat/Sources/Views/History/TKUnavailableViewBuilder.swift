@@ -28,6 +28,12 @@ func TKUnavailableViewBuilder(
                 .font(.system(size: 17, weight: .medium))
                 .foregroundColor(.gray300)
         }
-        
     }
+}
+
+#Preview {
+    TKUnavailableViewBuilder(
+        icon: "circle",
+        description: "동그라미밖에 없어요.."
+    )
 }
