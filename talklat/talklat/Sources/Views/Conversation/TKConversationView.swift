@@ -24,6 +24,7 @@ struct TKConversationView: View {
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
+    let manager = TKTextReplacementManager()
     
     //MARK: Test용
     @State private var navigateToSettings = false
@@ -43,10 +44,10 @@ struct TKConversationView: View {
                             )
                         
                         //MARK: 설정으로 가기 위한 Test용
-//                        NavigationLink(destination: TestTKSettingView(), isActive: $navigateToSettings) {
-//                            EmptyView()
-//                        }
-//                        .hidden()
+                        NavigationLink(destination: TKTextReplacementListView(), isActive: $navigateToSettings) {
+                            EmptyView()
+                        }
+                        .hidden()
                         
                         TLTextField(
                             style: .normal(textLimit: store.questionTextLimit),
@@ -56,8 +57,8 @@ struct TKConversationView: View {
                             HStack {
                                 Button {
                                     //MARK: Test용
-                                    // navigateToSettings = true
-                                    store.onEraseAllButtonTapped()
+                                     navigateToSettings = true
+//                                    store.onEraseAllButtonTapped()
                                 } label: {
                                     Text("전체 지우기")
                                 }
@@ -67,7 +68,7 @@ struct TKConversationView: View {
                                     value: focusState
                                 )
                                 .fullScreenCover(isPresented: $navigateToSettings) {
-                                    TestTKSettingView()
+                                    TKTextReplacementListView()
                                 }
                                 Spacer()
                                 

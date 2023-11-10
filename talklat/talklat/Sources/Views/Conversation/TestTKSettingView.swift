@@ -54,13 +54,6 @@ struct TestTKSettingView: View {
             .sheet(isPresented: $showingAddView) {
                 AddTextReplacementView(isPresented: self.$showingAddView)
             }
-            .onAppear {
-                for list in lists {
-                    for (key, value) in list.wordDictionary {
-                        print("\(key): \(value)")
-                    }
-                }
-            }
         }
     }
 }
