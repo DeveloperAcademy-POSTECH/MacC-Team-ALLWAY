@@ -19,28 +19,27 @@ final class TKConversationViewStore {
         var questionText: String = ""
         var answeredText: String = ""
         var hasGuidingMessageShown: Bool = false
+        var hasSavingViewDisplayed: Bool = false
         var hasChevronButtonTapped: Bool = false
         var historyItems: [HistoryItem] = []
         var historyItem: HistoryItem?
+        var blockButtonDoubleTap: Bool = false
         
         // scroll container related - TODO: ScrollStore 분리?
-        var historyScrollViewHeight: CGFloat = CGFloat(0)
+        var historyScrollViewHeight: CGFloat = 0
         var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
         var deviceHeight: CGFloat = 0
         var topInset: CGFloat = 0
         var bottomInset: CGFloat = 0
         var isTopViewShown: Bool = false
+        var isHistoryViewShownWithTransition: Bool = false
     }
     
-    @Published private var viewState: ConversationState
+    @Published private var viewState: ConversationState = ConversationState(conversationStatus: .writing)
+    
     public let questionTextLimit: Int = 160
-    public var isChevronButtonDisplayable: Bool {
+    public var isTopPreviewChevronDisplayable: Bool {
         !self(\.historyItems).isEmpty && self(\.conversationStatus) == .writing
-    }
-    
-    // MARK: init
-    init(conversationState: ConversationState) {
-        viewState = conversationState
     }
     
     // MARK: Helpers
@@ -66,7 +65,45 @@ final class TKConversationViewStore {
     public func bindingHistoryScrollOffset() -> Binding<CGPoint> {
         Binding(
             get: { self(\.historyScrollOffset) },
-            set: { _ in self(\.historyScrollOffset) }
+            set: { _ in }
+        )
+    }
+    
+    public func bindingSaveConversationViewFlag() -> Binding<Bool> {
+        Binding(
+            get: { self(\.hasSavingViewDisplayed) },
+            set: { _ in }
+        )
+    }
+    
+    public func onBackToWritingChevronTapped() {
+        withAnimation {
+            switchConverstaionStatus()
+        }
+    }
+    
+    public func blockButtonDoubleTap(completion: () -> Void) {
+        defer {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(0.75))
+                reduce(\.blockButtonDoubleTap, into: false)
+            }
+        }
+        reduce(\.blockButtonDoubleTap, into: true)
+        completion()
+    }
+    
+    public func onSaveConversationButtonTapped() {
+        reduce(
+            \.hasSavingViewDisplayed,
+             into: true
+        )
+    }
+    
+    public func onDismissConversationButtonTapped() {
+        reduce(
+            \.hasSavingViewDisplayed,
+             into: false
         )
     }
     
@@ -83,34 +120,10 @@ final class TKConversationViewStore {
         reduce(\.historyScrollViewHeight, into: geo.size.height)
     }
     
-    public func onWritingViewAppear() {
-        switchConverstaionStatus()
-        reduce(\.questionText, into: "")
-        reduce(
-            \.historyItem,
-             into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
-        )
-        
-        HapticManager.sharedInstance.generateHaptic(.rigidTwice)
-    }
-    
-    @available(*, deprecated, renamed: "onStartRecordingButtonTapepd", message: "TKRecordingView Deprecated")
-    public func onRecordingViewAppear() {
-        switchConverstaionStatus()
-        reduce(\.answeredText, into: "")
-        if !self(\.questionText).isEmpty {
-            reduce(
-                \.historyItem,
-                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
-            )
-        }
-        
-        HapticManager.sharedInstance.generateHaptic(.success)
-    }
-    
     public func onStartRecordingButtonTapped() {
-        switchConverstaionStatus()
-        reduce(\.answeredText, into: "")
+        withAnimation {
+            switchConverstaionStatus()
+        }
         
         if !self(\.questionText).isEmpty {
             reduce(
@@ -127,7 +140,6 @@ final class TKConversationViewStore {
     }
     
     public func onStopRecordingButtonTapped() {
-        switchConverstaionStatus()
         reduce(\.questionText, into: "")
         
         if !self(\.answeredText).isEmpty {
@@ -137,6 +149,13 @@ final class TKConversationViewStore {
             )
         }
         
+        withAnimation {
+            reduce(\.answeredText, into: "")
+        }
+        
+        withAnimation {
+            switchConverstaionStatus()
+        }
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
@@ -150,19 +169,38 @@ final class TKConversationViewStore {
     }
     
     public func onScrollOffsetChanged(_ value: Bool) {
-        reduce(\.isTopViewShown, into: value)
+        withAnimation(
+            .spring(
+                response: 0.5,
+                dampingFraction: 0.7
+            )
+            .speed(0.7)
+        ) {
+            reduce(\.isTopViewShown, into: value)
+        }
+        
+        withAnimation(.easeIn.speed(0.2)) {
+            reduce(\.isHistoryViewShownWithTransition, into: value)
+        }
     }
     
     public func onGuideCancelButtonTapped() {
-        reduce(\.conversationStatus, into: .writing)
+        withAnimation {
+            reduce(\.conversationStatus, into: .writing)
+        }
     }
     
     public func onGuideTimeEnded() {
-        reduce(\.conversationStatus, into: .recording)
+        withAnimation {
+            reduce(\.conversationStatus, into: .recording)
+        }
+        
     }
     
     public func onShowingQuestionCancelButtonTapped() {
-        reduce(\.conversationStatus, into: .writing)
+        withAnimation {
+            reduce(\.conversationStatus, into: .writing)
+        }
     }
     
     public func onSpeechTransicriptionUpdated(_ str: String) {
