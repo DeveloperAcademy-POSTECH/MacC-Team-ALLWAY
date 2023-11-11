@@ -85,13 +85,13 @@ final class SpeechRecognizer: ObservableObject {
             let (audioEngine, request) = try prepareEngine()
             self.audioEngine = audioEngine
             self.request = request
-            self.task = recognizer.recognitionTask(with: request, resultHandler: { [weak self] result, error in
+            self.task = recognizer.recognitionTask(with: request) { [weak self] result, error in
                 self?.recognitionHandler(
                     audioEngine: audioEngine,
                     result: result,
                     error: error
                 )
-            })
+            }
         } catch {
             self.stopAndResetTranscribe()
             self.transcribeFailed(error)
@@ -118,18 +118,20 @@ final class SpeechRecognizer: ObservableObject {
         try audioSession.setCategory(
             .playAndRecord,
             mode: .measurement,
-            options: .duckOthers
+            options: .defaultToSpeaker
         )
         try audioSession.setActive(
             true,
             options: .notifyOthersOnDeactivation
         )
-        let inputNode = audioEngine.inputNode
         
+        try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
+        
+        let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(
             onBus: 0,
-            bufferSize: 1024,
+            bufferSize: 2048,
             format: recordingFormat
         ) { [weak self] (
             buffer: AVAudioPCMBuffer,
@@ -200,9 +202,10 @@ final class SpeechRecognizer: ObservableObject {
         } else {
             errorMessage += error.localizedDescription
         }
-        Task { @MainActor [errorMessage] in
-            transcript = "<< \(errorMessage) >>"
-        }
+        // MARK: Answered Text에 에러 메시지가 쌓이지 않도록 후속 작업 각주 처리
+//        Task { @MainActor _ in
+//            transcript = "<< \(errorMessage) >>"
+//        }
     }
     
     // 음성 인식 정확도를 측정하는 함수1
