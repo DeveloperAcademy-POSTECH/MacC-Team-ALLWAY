@@ -181,12 +181,7 @@ struct SearchResultItem: View {
             let searchTextKeywords = searchText.split(separator: " ")
             print("searchTextKeyword: ", searchTextKeywords)
             
-//            let hightlightedText = matchingContent.text.filter({ character in
-//                searchText.contains(character)
-//            })
-            
             // StartingIndex 구하기
-            
             var isCharacterFound: Bool = false
             
             Array(matchingContent.text).forEach { character in
