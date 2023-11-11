@@ -9,8 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct HistoryListView: View {
-    @State var isCollapsed: Bool = false
+    @State private var selectedConversationID: String = ""
+    @State private var isEditing: Bool = false
+    @State private var isDialogShowing: Bool = false
+    @State internal var isSearching: Bool = false
+    @State internal var searchText: String = ""
     
+    // not in store
     private var sampleConversations: [TKConversation] {
         [
             // TKConversation 1
@@ -93,15 +98,8 @@ struct HistoryListView: View {
         ]
     }
     
-    @State private var isHistoryEmpty: Bool = false
-    @State private var selectedConversationID: String = ""
-    @State private var isEditing: Bool = false
-    @State private var isDialogShowing: Bool = false
-
     @FocusState internal var isSearchFocused: Bool
-    @State internal var isSearching: Bool = false
-    @State internal var searchText: String = ""
-    
+   
     var body: some View {
         VStack {
             // Search Bar
@@ -110,18 +108,19 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
+            // .disabled(isEditing ? true : false)
             
             Spacer()
             
             // MARK: - History List
             if !isSearching {
                 ScrollView {
-                    if isHistoryEmpty {
+                    // Unavailable View
+                    if sampleConversations.isEmpty {
                         TKUnavailableViewBuilder(
                             icon: "bubble.left.and.bubble.right.fill",
                             description: "아직 대화 기록이 없어요"
                         )
-                        // emptyViewBuilder()
                     } else {
                         ForEach(0 ..< 4) { _ in // TODO: all [TKLocation]
                             LocationList(
@@ -148,7 +147,9 @@ struct HistoryListView: View {
                                         blendDuration: 0.4
                                     )
                                 ) {
-                                    isEditing.toggle()
+                                    withAnimation {
+                                        isEditing.toggle()
+                                    }
                                 }
                             } label: {
                                 Text("편집")
@@ -228,9 +229,7 @@ struct LocationList: View {
                             blendDuration: 0.4
                         )
                     ) {
-                        if !isEditing {
-                            isCollapsed.toggle()
-                        }
+                        isCollapsed.toggle()
                     }
                 } label: {
                     if isCollapsed {
@@ -316,6 +315,10 @@ struct CellItem: View {
                                 )
                         }
                     }
+                    .transition(
+                        .push(from: .trailing)
+                        .combined(with: .identity)
+                    )
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
@@ -387,7 +390,7 @@ struct CellItem: View {
     }
 }
 
-// TODO: 바인딩 스토어 생성 후 TKDialogBuilder로 분리
+// TODO: 히스토리뷰 스토어 생성 후 TKDialogBuilder로 분리
 /// enum case .destruction (빨간색), .cancel (주황색) 필요
 struct CustomDialog: View {
     @Binding internal var selectedConversationID: String
@@ -414,6 +417,7 @@ struct CustomDialog: View {
                     Button {
                         isDialogShowing = false
                         isEditing = false
+                        
                     } label: {
                         Text("아니요, 취소할래요")
                             .foregroundColor(.gray600)
