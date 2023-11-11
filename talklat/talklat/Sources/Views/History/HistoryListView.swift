@@ -316,7 +316,10 @@ struct CellItem: View {
                         }
                     }
                     .transition(
-                        .push(from: .trailing)
+                        .asymmetric(
+                            insertion: .opacity,
+                            removal: .push(from: .trailing)
+                        )
                         .combined(with: .identity)
                     )
                 }
