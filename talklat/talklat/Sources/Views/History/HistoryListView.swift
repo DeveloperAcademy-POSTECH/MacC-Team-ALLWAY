@@ -15,7 +15,6 @@ struct HistoryListView: View {
     @State internal var isSearching: Bool = false
     @State internal var searchText: String = ""
     
-    // not in store
     private var sampleConversations: [TKConversation] {
         [
             // TKConversation 1
@@ -98,6 +97,7 @@ struct HistoryListView: View {
         ]
     }
     
+    // not in store
     @FocusState internal var isSearchFocused: Bool
    
     var body: some View {
