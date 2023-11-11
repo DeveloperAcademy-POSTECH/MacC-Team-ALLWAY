@@ -9,6 +9,14 @@ import SwiftUI
 
 extension Color {
     static var colorScheme = UITraitCollection.current.userInterfaceStyle
+    
+    static var OR5: Color {
+        get { Color(hex: "FF6838") }
+    }
+    
+    static var OR6: Color {
+        get {  Color(hex: "#F75927") }
+    }
 
     static var gray100: Color {
         get {
