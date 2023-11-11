@@ -68,9 +68,8 @@ struct HistoryListSearchView: View {
                 let matchingContent = conversation.content.filter({ content in
                     content.text.contains(searchText)
                 })
-                print("-- matchingContent: ", matchingContent)
+                
                 matchingContents.append(contentsOf: matchingContent)
-                print("-- matchingContents: ", matchingContents)
             }
         }
         .onChange(of: matchingContents) { _, _ in
@@ -179,8 +178,7 @@ struct SearchResultItem: View {
         .cornerRadius(22)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")
-            print("searchTextKeyword: ", searchTextKeywords)
-            
+        
             // StartingIndex 구하기
             var isCharacterFound: Bool = false
             
