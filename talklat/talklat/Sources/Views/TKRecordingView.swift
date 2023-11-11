@@ -15,7 +15,6 @@ struct TKRecordingView: View {
     private var isRecording: Bool {
         return !speechRecognizeManager.transcript.isEmpty
     }
-
     var body: some View {
         VStack {
             HStack(alignment: .top) {
@@ -115,6 +114,10 @@ struct TKRecordingView: View {
                 appViewStore.answeredTextSetter(transcript)
                 HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
             }
+        }
+        .onAppear {
+            speechRecognizeManager.startTranscribing()
+            print("startTranscribing() called from onAppear")
         }
     }
     
