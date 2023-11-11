@@ -15,11 +15,7 @@ struct talklatApp: App {
         questionText: ""
     )
     
-    @StateObject private var store: ConversationViewStore = ConversationViewStore(
-        conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing
-        )
-    )
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
     
     private let appRootManager = AppRootManager()
     
@@ -36,7 +32,7 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    ScrollContainer(store: store)
+                    TKConversationView(store: store)
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -47,7 +43,7 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
-            .onChange(of: scenePhase) { _ in
+            .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
