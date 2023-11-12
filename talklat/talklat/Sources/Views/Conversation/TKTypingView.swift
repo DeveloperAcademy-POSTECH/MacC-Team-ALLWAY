@@ -13,18 +13,22 @@ struct TKTypingView: View {
     
     var body: some View {
             VStack(spacing: 0) {
-                if store.isTopPreviewChevronDisplayable {
+                if store.isAnswerCardDisplayable {
                     VStack(alignment: .leading) {
                         scrollIndicateChevronBuilder()
                         
                         ScrollView {
-                            Text(store(\.answeredText))
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundStyle(Color.white)
-                                .lineSpacing(8)
-                                .padding(.horizontal, 24)
-                                .padding(.vertical, 24)
+                            if let recentAnswer = store(\.historyItems).first(where: {
+                                $0.type == .answer
+                            }) {
+                                Text(recentAnswer.text)
+                                    .font(.title3)
+                                    .fontWeight(.heavy)
+                                    .foregroundStyle(Color.white)
+                                    .lineSpacing(8)
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 24)
+                            }
                         }
                         .scrollIndicators(.hidden)
                     }
@@ -39,6 +43,9 @@ struct TKTypingView: View {
                 } else {
                     endConversationButtonBuilder()
                 }
+                
+                Spacer()
+                    .frame(maxHeight: 32)
                 
                 characterLimitViewBuilder()
                     .opacity(focusState ? 1.0 : 0.0)
@@ -101,7 +108,7 @@ struct TKTypingView: View {
                         endConversationButtonBuilder()
                     }
                     .opacity(
-                        store.isTopPreviewChevronDisplayable
+                        store.isAnswerCardDisplayable
                         ? 1.0
                         : 0.0
                     )

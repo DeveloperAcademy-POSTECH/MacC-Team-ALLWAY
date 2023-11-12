@@ -75,9 +75,7 @@ struct TKConversationView: View {
 }
 
 #Preview {
-    
     TKConversationView(store: .init())
-    
 }
 
 // MARK: BACKUP
