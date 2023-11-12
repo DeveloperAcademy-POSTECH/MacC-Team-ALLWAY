@@ -166,7 +166,7 @@ struct TKListeningView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .push(from: .top)
+                        removal: .opacity
                     )
                 )
             }
