@@ -38,7 +38,7 @@ final class TKConversationViewStore {
     @Published private var viewState: ConversationState = ConversationState(conversationStatus: .writing)
     
     public let questionTextLimit: Int = 160
-    public var isTopPreviewChevronDisplayable: Bool {
+    public var isAnswerCardDisplayable: Bool {
         !self(\.historyItems).isEmpty && self(\.conversationStatus) == .writing
     }
     
