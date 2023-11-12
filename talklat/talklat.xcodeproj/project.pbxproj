@@ -42,6 +42,9 @@
 		CE0CBF232B0119030048C784 /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		CE0CBF262B011EF70048C784 /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF252B011EF70048C784 /* Date+Formatter.swift */; };
 		CE0CBF282B0122F70048C784 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF272B0122F70048C784 /* ChatMessage.swift */; };
+		CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */; };
+		CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */; };
+		CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79CAEA2AF0CEC20007713B /* LocationStore.swift */; };
 		CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
@@ -108,6 +111,9 @@
 		CE0CBF222B0119030048C784 /* CustomHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHistoryView.swift; sourceTree = "<group>"; };
 		CE0CBF252B011EF70048C784 /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
 		CE0CBF272B0122F70048C784 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
+		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
+		CE79CAEA2AF0CEC20007713B /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
@@ -243,6 +249,9 @@
 				EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */,
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
+				7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */,
+				CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */,
+				CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */,
 				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
 				CE0CBF222B0119030048C784 /* CustomHistoryView.swift */,
 			);
@@ -273,6 +282,7 @@
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
 				7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
+				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -462,7 +472,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
+				EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */,
+				EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */,
+				CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
+				CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
 				CE0CBF212B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
@@ -493,6 +507,7 @@
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
 				CE0CBF192B0115F80048C784 /* CustomTableViewController.swift in Sources */,
+				CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
@@ -666,6 +681,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -702,6 +719,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

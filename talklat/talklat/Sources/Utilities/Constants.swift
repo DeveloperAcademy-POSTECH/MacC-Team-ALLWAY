@@ -54,6 +54,30 @@ public enum TKTransitionObjects {
     case INTERLUDE
 }
 
+public enum LocationCallType {
+    case track
+    case get
+}
+
+public enum LocationAuthorizationStatus {
+    case notAuthorized
+    case noCoordinate
+    case authorized
+}
+
+public enum BlockNameType {
+    case fullName
+    case shortName
+}
+
+enum MapAnnotationType {
+    case fixed
+    case movable
+}
+
+public let initialLatitude: Double = 37.554577
+public let initialLongitude: Double = 126.970828
+
 public enum VisibleStatus {
     case visible
     case hidden
@@ -145,4 +169,3 @@ public let longMessages: [[ChatMessage]] = [
         ChatMessage(text: "Fourth ChatMessage on the way", textType: .outGoing, date: "23/05/31")
     ]
 ]
-
