@@ -12,39 +12,48 @@ struct TKConversationView: View {
     @ObservedObject var store: TKConversationViewStore
     @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
-    @Namespace var questionTextSpace
+    @Namespace var TKTransitionNamespace
     
     // MARK: Body
     var body: some View {
         VStack {
             if store(\.conversationStatus) == .writing {
-                TKTypingView(store: store)
-                    .transition(.opacity)
-                
-            } else if store(\.conversationStatus) == .guiding {
+                TKTypingView(
+                    store: store,
+                    namespaceID: TKTransitionNamespace
+                )
+                // MARK: Curtain 애니메이션 어색함.
+                .transition(.opacity)
+            }
+            
+            if store(\.conversationStatus) == .guiding {
                 TKGuidingView(store: store)
                     .transition(.opacity)
                     .frame(maxHeight: .infinity)
-                
-            } else if store(\.conversationStatus) == .recording {
-                TKListeningView(store: store)
-                    .onChange(of: speechRecognizeManager.transcript) { _, transcript in
-                        withAnimation {
-                            store.onSpeechTransicriptionUpdated(transcript)
-                        }
+            }
+            
+            if store(\.conversationStatus) == .recording {
+                TKListeningView(
+                    store: store,
+                    namespaceID: TKTransitionNamespace
+                )
+                .onChange(of: speechRecognizeManager.transcript) { _, transcript in
+                    withAnimation {
+                        store.onSpeechTransicriptionUpdated(transcript)
                     }
-                    .toolbar {
-                        if store(\.answeredText).isEmpty {
-                            ToolbarItem(placement: .topBarLeading) {
-                                Button {
-                                    store.onShowingQuestionCancelButtonTapped()
-                                } label : {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundColor(.accentColor)
-                                }
+                }
+                .toolbar {
+                    if store(\.answeredText).isEmpty {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                store.onShowingQuestionCancelButtonTapped()
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.accentColor)
                             }
                         }
                     }
+                }
             }
         }
         .frame(maxHeight: .infinity)
