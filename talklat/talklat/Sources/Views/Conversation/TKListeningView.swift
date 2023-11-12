@@ -67,19 +67,22 @@ struct TKListeningView: View {
             .padding(.trailing, 24)
             .padding(.bottom, 24)
             
-            TKScrollView(
-                style: .question(
-                    question: store(\.questionText),
-                    answer: store(\.answeredText),
-                    curtainAlignment: .bottom
-                ), curtain: {
-                    LinearGradient(
-                        colors: [.white, .clear],
-                        startPoint: .bottom,
-                        endPoint: .top
-                    )
-                }
-            )
+            if store(\.conversationStatus) == .recording {
+                TKScrollView(
+                    style: .question(
+                        question: store(\.questionText),
+                        answer: store(\.answeredText),
+                        curtainAlignment: .bottom
+                    ), curtain: {
+                        LinearGradient(
+                            colors: [.white, .clear],
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                    }
+                )
+                .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+            }
             
             if !store(\.answeredText).isEmpty {
                 TKScrollView(
@@ -105,7 +108,7 @@ struct TKListeningView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .identity
+                        removal: .opacity
                     )
                 )
             }
