@@ -12,8 +12,13 @@ struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
+    //    @StateObject private var settingStore = SettingViewStore(settingState: .init())
     @State private var selectedList: TKTextReplacement? = nil
     @State private var showingAddView = false
+    
+    //    @StateObject var settingStore = SettingViewStore(settingState: .init())
+    @ObservedObject var settingStore = SettingViewStore(settingState: .init())
+    
     
     var groupedLists: [String: [TKTextReplacement]] {
         Dictionary(grouping: lists) { $0.wordDictionary.keys.first?.headerKey ?? "#" }
@@ -73,14 +78,24 @@ struct TKTextReplacementListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        showingAddView = true
+                        settingStore.showTextReplacementAddView()
                     }) {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showingAddView) {
-                AddTextReplacementView(isPresented: self.$showingAddView)
+            .sheet(isPresented: settingStore.bindingToShowTextReplacementAddView()) {
+                TKTextReplacementAddView()
+            }
+            .sheet(isPresented: settingStore.bindingToShowTextReplacementEditView()) {
+                if let selectedPhrase = settingStore.selectedPhrase,
+                   let selectedReplacement = settingStore.selectedReplacement {
+                    TKTextReplacementEditView(
+                        phrase: selectedPhrase,
+                        replacement: selectedReplacement,
+                        isPresented: settingStore.bindingToShowTextReplacementEditView()
+                    )
+                }
             }
         }
         .background(Color.white)
@@ -94,11 +109,44 @@ struct TKTextReplacementListView: View {
     func listSection(_ groupKey: String) -> some View {
         ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
             ForEach(list.wordDictionary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
-                    .padding(.horizontal, 16)
-//                    .padding(.bottom, 24)
-                    .cornerRadius(20)
+                Button(action: {
+                    print("왜 \n")
+                    settingStore.selectTextReplacement(phrase: key, replacement: value)
+                    print("안돼\n")
+                }) {
+                    TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
+                        .padding(.horizontal, 16)
+                        .cornerRadius(16)
+                        .onTapGesture{
+                            settingStore.selectTextReplacement(phrase: key, replacement: value)
+                        }
+                }
+                
+                
+                //                TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
+                //                    .padding(.horizontal, 16)
+                //                    .cornerRadius(16)
+                //                    .onTapGesture {
+                //                        settingStore.selectTextReplacement(phrase: key, replacement: value)
+                //                    }
             }
         }
     }
 }
+
+
+
+#if DEBUG
+struct TKTextReplacementListView_Previews: PreviewProvider {
+    static var previews: some View {
+        TKTextReplacementListView().environmentObject(ModelData())
+    }
+    
+    class ModelData: ObservableObject {
+        @Published var lists: [TKTextReplacement] = [
+            TKTextReplacement(wordDictionary: ["아아": "아이스 아메리카노", "플라플": "플랫 화이트"]),
+            TKTextReplacement(wordDictionary: ["감사": "감사합니다", "안녕": "안녕하세요"])
+        ]
+    }
+}
+#endif

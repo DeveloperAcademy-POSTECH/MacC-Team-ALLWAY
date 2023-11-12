@@ -31,18 +31,16 @@ extension Character {
     
     // 한글 첫 자음 추출 (쌍자음 포함)
     var koreanFirstConsonant: String? {
-        let hangulStart: UInt32 = 0xAC00 // '가' 값
-        // 쌍자음 포함한 초기 자음 배열
+        let hangulStart: UInt32 = 0xAC00 // '가'
+        
+        // TODO: 쌍자음 제외한 배열로 수정ㅠㅠ
         let initialConsonants = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"]
         
         guard let scalarValue = UnicodeScalar(String(self))?.value else { return nil }
-        
-        print("Character: \(self), Scalar Value: \(scalarValue)")
-        
+
         // 한글 범위 내에 있는지 확인
         if scalarValue >= hangulStart, scalarValue <= 0xD7A3 {
             let index = Int((scalarValue - hangulStart) / 588)
-            print("Index: \(index), Consonant: \(initialConsonants[min(index, initialConsonants.count - 1)])")
             return initialConsonants[min(index, initialConsonants.count - 1)]
         }
         return nil

@@ -22,6 +22,8 @@ struct talklatApp: App {
         )
     )
     
+    @StateObject var settingStore = SettingViewStore(settingState: .init())
+    
     private let appRootManager = AppRootManager()
     private var container: ModelContainer
 
@@ -67,6 +69,7 @@ struct talklatApp: App {
             }
         }
         .modelContainer(container)
+        .environmentObject(settingStore)
     }
 }
 

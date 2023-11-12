@@ -10,53 +10,52 @@ import SwiftUI
 
 struct TKTextReplacementAddView: View {
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var settingStore: SettingViewStore
+    @Environment(\.presentationMode) var presentationMode
     
-    @Binding var isPresented: Bool
-    
+    @FocusState var focusState: Bool
     @State private var phrase: String = ""
     @State private var replacement: String = ""
     
-    let manager = TKTextReplacementManager()
-    
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                HStack {
-                    Text("문구")
-                    Spacer()
-                }
-
-                TextField("줄임말을 입력해주세요 ex)아아", text: $phrase)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(22)
+            VStack(spacing: 10) {
                 
-                HStack {
-                    Text("변환 문구")
-                    Spacer()
-                }
-                
-                TextField("대치할 텍스트를 입력해주세요 ex)아이스 아메리카노", text: $replacement)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(22)
+                SettingTRTextField(title: "단축 문구", placeholder: "아아", limit: 20, text: $phrase, focusState: _focusState)
+                SettingTRTextField(title: "변환 문구", placeholder: "아이스 아메리카노 한 잔 주시겠어요?", limit: 160, text: $replacement)
+                    .padding(.top, 36)
                 
                 Spacer()
             }
             .padding()
             .navigationTitle("텍스트 대치 추가")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("취소") {
-                isPresented = false
+//                settingStore.closeTextReplacementAddView()
+                presentationMode.wrappedValue.dismiss()
             })
             .navigationBarItems(trailing: Button("완료") {
-                // TODO: Save New Dictionary of TextReplacement
-                manager.addTextReplacement(phrase: phrase, replacement: replacement)
-                isPresented = false
-                
-//                let newItem = TKTextReplacement(wordDictionary: [phrase: replacement])
-//                context.insert(newItem)
-//                isPresented = false
+                let newItem = TKTextReplacement(wordDictionary: [phrase: replacement])
+                context.insert(newItem)
+                presentationMode.wrappedValue.dismiss()
             })
         }
+    }
+    
+    private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {
+        let displayCount = min(currentCount, limit)
+        return Text("\(displayCount)/\(limit)")
+            .font(.system(size: 13, weight: .medium))
+            .monospacedDigit()
+            .foregroundColor(.gray400)
+    }
+}
+
+
+struct TKTextReplacementAddView_Previews: PreviewProvider {
+    @State static var isPresented = true
+    
+    static var previews: some View {
+        TKTextReplacementAddView()
     }
 }
