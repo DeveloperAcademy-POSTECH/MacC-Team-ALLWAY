@@ -33,6 +33,15 @@
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */; };
 		7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */; };
+		CE0CBF152B01157A0048C784 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */; };
+		CE0CBF172B0115900048C784 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF162B0115900048C784 /* ChatMessageCell.swift */; };
+		CE0CBF192B0115F80048C784 /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF182B0115F80048C784 /* CustomTableViewController.swift */; };
+		CE0CBF1B2B01160D0048C784 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF1A2B01160D0048C784 /* HistoryViewController.swift */; };
+		CE0CBF1F2B01186E0048C784 /* SheetWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF1E2B01186E0048C784 /* SheetWebView.swift */; };
+		CE0CBF212B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF202B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift */; };
+		CE0CBF232B0119030048C784 /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
+		CE0CBF262B011EF70048C784 /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF252B011EF70048C784 /* Date+Formatter.swift */; };
+		CE0CBF282B0122F70048C784 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF272B0122F70048C784 /* ChatMessage.swift */; };
 		CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
@@ -90,6 +99,15 @@
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
+		CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		CE0CBF162B0115900048C784 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		CE0CBF182B0115F80048C784 /* CustomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
+		CE0CBF1A2B01160D0048C784 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		CE0CBF1E2B01186E0048C784 /* SheetWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetWebView.swift; sourceTree = "<group>"; };
+		CE0CBF202B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHistoryViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		CE0CBF222B0119030048C784 /* CustomHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHistoryView.swift; sourceTree = "<group>"; };
+		CE0CBF252B011EF70048C784 /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
+		CE0CBF272B0122F70048C784 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
@@ -129,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */,
+				CE0CBF272B0122F70048C784 /* ChatMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -213,6 +232,7 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
 				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
@@ -224,6 +244,7 @@
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
 				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
+				CE0CBF222B0119030048C784 /* CustomHistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,8 +302,22 @@
 				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
 				7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */,
 				7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */,
+				CE0CBF252B011EF70048C784 /* Date+Formatter.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CE0CBF202B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift */,
+				CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */,
+				CE0CBF162B0115900048C784 /* ChatMessageCell.swift */,
+				CE0CBF182B0115F80048C784 /* CustomTableViewController.swift */,
+				CE0CBF1E2B01186E0048C784 /* SheetWebView.swift */,
+				CE0CBF1A2B01160D0048C784 /* HistoryViewController.swift */,
+			);
+			path = CustomHistoryViewController;
 			sourceTree = "<group>";
 		};
 		EF67C6492ACEB65400C1074E /* Managers */ = {
@@ -429,34 +464,42 @@
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
+				CE0CBF212B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
-				7E8906412ACEA31500C9947A /* TKIntroView.swift in Sources */,
-				7EF7378F2AD3DCE500FCBA21 /* TKWritingView.swift in Sources */,
+				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
 				575677DF2AD6BE47002E01BE /* SignalExtractor.swift in Sources */,
 				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
 				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
 				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
+				CE0CBF152B01157A0048C784 /* SectionHeaderView.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
+				CE0CBF282B0122F70048C784 /* ChatMessage.swift in Sources */,
 				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
+				CE0CBF1B2B01160D0048C784 /* HistoryViewController.swift in Sources */,
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EA9D34D2AFA19BE00A0EE99 /* TKReducer.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,
+				CE0CBF172B0115900048C784 /* ChatMessageCell.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
 				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
+				CE0CBF192B0115F80048C784 /* CustomTableViewController.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
+				CE0CBF232B0119030048C784 /* CustomHistoryView.swift in Sources */,
+				CE0CBF262B011EF70048C784 /* Date+Formatter.swift in Sources */,
+				CE0CBF1F2B01186E0048C784 /* SheetWebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +662,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -655,7 +698,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";

@@ -49,8 +49,16 @@ struct TKConversationView: View {
                                 
                                 Spacer()
                                 
-                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
-                                    Text("오픈 카톡방에서 피드백하기")
+//                                Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
+//                                    Text("오픈 카톡방에서 피드백하기")
+//                                }
+                                Button {
+                                    withAnimation {
+                                        store.reduce(\.conversationStatus, into: .writing)
+                                        store.reduce(\.isTopViewShown, into: true)
+                                    }
+                                } label: {
+                                    Text("Go up")
                                 }
                             }
                             .padding(.trailing, 20)
