@@ -69,17 +69,20 @@ struct TKTypingView: View {
                 .padding(.leading, 24)
                 .padding(.bottom, 6)
             
-            TLTextField(
-                style: .typing(
-                    textLimit: store.questionTextLimit
-                ),
-                text: store.bindingQuestionText(),
-                placeholder: Constants.TEXTFIELD_PLACEHOLDER
-            ) {
-                EmptyView()
+            if store(\.conversationStatus) == .writing {
+                TLTextField(
+                    style: .typing(
+                        textLimit: store.questionTextLimit
+                    ),
+                    text: store.bindingQuestionText(),
+                    placeholder: Constants.TEXTFIELD_PLACEHOLDER
+                ) {
+                    EmptyView()
+                }
+                .frame(maxWidth: .infinity)
+                .focused($focusState)
+                .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
             }
-            .frame(maxWidth: .infinity)
-            .focused($focusState)
             
             Spacer()
             
