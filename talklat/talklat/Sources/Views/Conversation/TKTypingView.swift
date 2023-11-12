@@ -10,78 +10,129 @@ import SwiftUI
 struct TKTypingView: View {
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
+    let namespaceID: Namespace.ID
     
     var body: some View {
-            VStack(spacing: 0) {
-                if store.isAnswerCardDisplayable {
-                    VStack(alignment: .leading) {
-                        scrollIndicateChevronBuilder()
-                        
-                        ScrollView {
-                            if let recentAnswer = store(\.historyItems).first(where: {
-                                $0.type == .answer
-                            }) {
-                                Text(recentAnswer.text)
-                                    .font(.title3)
-                                    .fontWeight(.heavy)
-                                    .foregroundStyle(Color.white)
-                                    .lineSpacing(8)
-                                    .padding(.horizontal, 24)
-                                    .padding(.vertical, 24)
+        VStack(spacing: 0) {
+            if store.isAnswerCardDisplayable {
+                VStack(alignment: .leading) {
+                    conversationPreviewChevronBuilder()
+                    
+                    if let recentAnswer = store(\.historyItems).last(where: {
+                        $0.type == .answer
+                    }) {
+                        TKScrollView(
+                            style: .answerCard(
+                                text: recentAnswer.text,
+                                curtainAlignment: .bottom
+                            ), curtain: {
+                                LinearGradient(
+                                    colors: [],
+                                    startPoint: .bottom,
+                                    endPoint: .top
+                                )
                             }
-                        }
-                        .scrollIndicators(.hidden)
+                        )
                     }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: 250,
-                        alignment: .leading
-                    )
-                    .background {
-                        Color.OR5.ignoresSafeArea(edges: .top)
-                    }
-                } else {
-                    endConversationButtonBuilder()
+                }
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: 250,
+                    alignment: .top
+                )
+                .background {
+                    Color.OR5
+                        .matchedGeometryEffect(
+                            id: "ORANGE_BACKGROUND",
+                            in: namespaceID
+                        )
+                        .ignoresSafeArea(edges: .top)
                 }
                 
-                Spacer()
-                    .frame(maxHeight: 32)
-                
-                characterLimitViewBuilder()
-                    .opacity(focusState ? 1.0 : 0.0)
-                    .animation(
-                        .easeInOut(duration: 0.5),
-                        value: focusState
-                    )
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.bottom, 6)
-                
-                TLTextField(
-                    style: .typing(textLimit: store.questionTextLimit),
-                    text: store.bindingQuestionText(),
-                    placeholder: Constants.TEXTFIELD_PLACEHOLDER
-                ) {
-                    EmptyView()
-                }
-                .frame(maxWidth: .infinity)
-                .focused($focusState)
-                
-                Spacer()
-                
-                startRecordingButtonBuilder()
-                    .padding(.bottom, 12)
+            } else {
+                endConversationButtonBuilder()
+            }
+            
+            Spacer()
+                .frame(maxHeight: 32)
+            
+            characterLimitViewBuilder()
+                .opacity(focusState ? 1.0 : 0.0)
+                .animation(
+                    .easeInOut(duration: 0.5),
+                    value: focusState
+                )
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .padding(.leading, 24)
+                .padding(.bottom, 6)
+            
+            TLTextField(
+                style: .typing(
+                    textLimit: store.questionTextLimit
+                ),
+                text: store.bindingQuestionText(),
+                placeholder: Constants.TEXTFIELD_PLACEHOLDER
+            ) {
+                EmptyView()
             }
             .frame(maxWidth: .infinity)
+            .focused($focusState)
+            
+            Spacer()
+            
+            startRecordingButtonBuilder()
+                .padding(.bottom, 12)
+        }
+        .frame(maxWidth: .infinity)
     }
     
-    private func scrollIndicateChevronBuilder() -> some View {
+    private func characterLimitViewBuilder() -> some View {
+        Text("\(store(\.questionText).count)/\(store.questionTextLimit)")
+            .font(.system(size: 12, weight: .regular))
+            .monospacedDigit()
+            .foregroundColor(
+                hasQuestionTextReachedMaximumCount
+                ? .red
+                : .gray
+            )
+    }
+    
+    private var hasQuestionTextReachedMaximumCount: Bool {
+        store(\.questionText).count == store.questionTextLimit
+    }
+    
+    private func startRecordingButtonBuilder() -> some View {
+        Button {
+            self.hideKeyboard()
+            store.blockButtonDoubleTap {
+                store.onStartRecordingButtonTapped()
+            }
+            
+        } label: {
+            Text("음성 인식 전환")
+                .bold()
+                .foregroundColor(.white)
+                .padding(.horizontal, 25)
+                .padding(.vertical, 20)
+        }
+        .background {
+            Capsule()
+                .foregroundStyle(Color.OR5)
+        }
+        .disabled(store(\.blockButtonDoubleTap))
+    }
+    
+    private func conversationPreviewChevronBuilder() -> some View {
         VStack {
             HStack {
                 ZStack {
                     Group {
                         Button {
                             store.onChevronButtonTapped()
+                            
                         } label: {
                             Image(systemName: "chevron.compact.up")
                                 .resizable()
@@ -124,42 +175,6 @@ struct TKTypingView: View {
             ? 0.0
             : 1.0
         )
-    }
-    
-    private func characterLimitViewBuilder() -> some View {
-        Text("\(store(\.questionText).count)/\(store.questionTextLimit)")
-            .font(.system(size: 12, weight: .regular))
-            .monospacedDigit()
-            .foregroundColor(
-                hasQuestionTextReachedMaximumCount
-                ? .red
-                : .gray
-            )
-    }
-    
-    private var hasQuestionTextReachedMaximumCount: Bool {
-        store(\.questionText).count == store.questionTextLimit
-    }
-    
-    private func startRecordingButtonBuilder() -> some View {
-        Button {
-            self.hideKeyboard()
-            store.blockButtonDoubleTap {
-                store.onStartRecordingButtonTapped()
-            }
-            
-        } label: {
-            Text("음성 인식 전환")
-                .bold()
-                .foregroundColor(.white)
-                .padding(.horizontal, 25)
-                .padding(.vertical, 20)
-        }
-        .background {
-            Capsule()
-                .foregroundStyle(Color.OR5)
-        }
-        .disabled(store(\.blockButtonDoubleTap))
     }
     
     private func endConversationButtonBuilder() -> some View {

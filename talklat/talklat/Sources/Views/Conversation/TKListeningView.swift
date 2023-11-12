@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TKListeningView: View {
     @ObservedObject var store: TKConversationViewStore
+    let namespaceID: Namespace.ID
     
     var body: some View {
         VStack {
@@ -66,107 +67,45 @@ struct TKListeningView: View {
             .padding(.trailing, 24)
             .padding(.bottom, 24)
             
-            ScrollView {
-                Text(store(\.questionText))
-                    .font(
-                        store(\.answeredText).isEmpty
-                        ? .title
-                        : .title3
+            TKScrollView(
+                style: .question(
+                    question: store(\.questionText),
+                    answer: store(\.answeredText),
+                    curtainAlignment: .bottom
+                ), curtain: {
+                    LinearGradient(
+                        colors: [.white, .clear],
+                        startPoint: .bottom,
+                        endPoint: .top
                     )
-                    .lineSpacing(
-                        store(\.answeredText).isEmpty
-                        ? 10
-                        : 14
-                    )
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .topLeading
-                    )
-                    .padding(.horizontal, 24)
-                    .animation(
-                        .easeInOut,
-                        value: store(\.answeredText).isEmpty
-                    )       
-            }
-            .scrollIndicators(.hidden)
-            .overlay(alignment: .bottom) {
-                scrollViewCurtainBuilder(
-                    colors: [
-                        .white,
-                        .clear,
-                    ],
-                    .bottom,
-                    .top
-                )
-                .frame(height: 40)
-            }
-            .frame(maxHeight: 250)
+                }
+            )
             
             if !store(\.answeredText).isEmpty {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        Text(store(\.answeredText))
-                            .font(.title)
-                            .bold()
-                            .lineSpacing(14)
-                            .foregroundStyle(.white)
-                            .frame(
-                                maxWidth: .infinity,
-                                alignment: .topLeading
-                            )
-                            .padding(.top, 24)
-                            .padding(.horizontal, 24)
-                            .animation(
-                                nil,
-                                value: store(\.answeredText)
-                            )
-                        
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(height: 0)
-                            .id("SCROLL_BOTTOM")
+                TKScrollView(
+                    style: .answer(
+                        answer: store(\.answeredText),
+                        curtainAlignment: .top
+                    ), curtain: {
+                        LinearGradient(
+                            colors: [.OR5, .clear],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
                     }
-                    .overlay(alignment: .top) {
-                        if store(\.answeredText).count > 50 {
-                            scrollViewCurtainBuilder(
-                                colors: [
-                                    .OR5,
-                                    .clear,
-                                ],
-                                .top,
-                                .bottom
-                            )
-                            .frame(height: 50)
-                        }
-                    }
-                    // MARK: Scroll Position Here
-                    .onChange(of: store(\.answeredText)) { _, newValue in
-                        if newValue.count > 50 {
-                            withAnimation {
-                                proxy.scrollTo(
-                                    "SCROLL_BOTTOM",
-                                    anchor: .top
-                                )
-                            }
-                        }
-                    }
-                    .frame(
-                        maxHeight: UIScreen.main.bounds.height * 0.55
-                    )
-                    .scrollIndicators(.hidden)
-                    .background {
-                        Rectangle()
-                            .fill(Color.OR6)
-                            .ignoresSafeArea(edges: .bottom)
-                    }
-                    .padding(.top, 16)
+                )
+                .background {
+                    Color.OR5
+                        .ignoresSafeArea(edges: .bottom)
+                        .matchedGeometryEffect(
+                            id: "ORANGE_BACKGROUND",
+                            in: namespaceID
+                        )
                 }
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .opacity
+                        removal: .identity
                     )
                 )
             }
@@ -177,24 +116,12 @@ struct TKListeningView: View {
                 bottomListeningButtonBuilder()
                     .transition(
                         .asymmetric(
-                            insertion: .move(edge: .trailing),
+                            insertion: .opacity.animation(.easeInOut),
                             removal: .move(edge: .trailing)
                         )
                     )
             }
         }
-    }
-    
-    private func scrollViewCurtainBuilder(
-        colors: [Color],
-        _ startPoint: UnitPoint,
-        _ endPoint: UnitPoint
-    ) -> LinearGradient {
-        LinearGradient(
-            colors: colors,
-            startPoint: startPoint,
-            endPoint: endPoint
-        )
     }
     
     private func bottomListeningButtonBuilder() -> some View {
