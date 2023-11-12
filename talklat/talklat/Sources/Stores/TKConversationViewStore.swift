@@ -151,11 +151,9 @@ final class TKConversationViewStore {
         
         withAnimation {
             reduce(\.answeredText, into: "")
-        }
-        
-        withAnimation {
             switchConverstaionStatus()
         }
+        
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
@@ -195,6 +193,7 @@ final class TKConversationViewStore {
             reduce(\.conversationStatus, into: .recording)
         }
         
+        HapticManager.sharedInstance.generateHaptic(.success)
     }
     
     public func onShowingQuestionCancelButtonTapped() {

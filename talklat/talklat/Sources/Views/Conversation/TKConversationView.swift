@@ -22,7 +22,6 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-                // MARK: Curtain 애니메이션 어색함.
                 .transition(.opacity)
             }
             
