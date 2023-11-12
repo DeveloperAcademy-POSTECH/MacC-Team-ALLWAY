@@ -57,16 +57,12 @@ struct TKConversationView: View {
                             HStack {
                                 Button {
                                     //MARK: Test용
-                                     navigateToSettings = true
-//                                    store.onEraseAllButtonTapped()
+                                    navigateToSettings = true
+                                    //                                    store.onEraseAllButtonTapped()
                                 } label: {
-                                    Text("전체 지우기")
+                                    Text("🛞")
                                 }
-                                .opacity(focusState ? 1.0 : 0.0)
-                                .animation(
-                                    .easeInOut(duration: 0.4),
-                                    value: focusState
-                                )
+                                .padding(.bottom, 5)
                                 .fullScreenCover(isPresented: $navigateToSettings) {
                                     TKTextReplacementListView()
                                 }
@@ -77,20 +73,6 @@ struct TKConversationView: View {
                                 }
                             }
                             .padding(.trailing, 20)
-                        }
-                        
-                        // MARK: TextReplacement 키보드 위 툴바
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                if let key = replacementKeyForCurrentText(), !key.isEmpty,
-                                   let value = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
-                                    Button(action: {
-                                        store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
-                                    }) {
-                                        Text(value)
-                                    }
-                                }
-                            }
                         }
                     }
                     .focused($focusState)
@@ -105,7 +87,9 @@ struct TKConversationView: View {
                             )
                     }
                     .padding(.top, 24)
-                    
+                    if focusState {
+                        customToolbar
+                    }
                     Spacer()
                 } else if store(\.conversationStatus) == .recording {
                     VStack {
@@ -261,6 +245,7 @@ struct TKConversationView: View {
                 .frame(height: 100)
             }
         }
+        .edgesIgnoringSafeArea(.all)
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
     }
@@ -392,6 +377,52 @@ extension TKConversationView {
     }
 }
 
+extension TKConversationView {
+    private var customToolbar: some View {
+        VStack {
+            HStack {
+                // Eraser button
+                Button(action: {
+                    store.bindingQuestionText().wrappedValue = ""
+                }) {
+                    Image(systemName: "eraser.fill")
+                        .foregroundColor(focusState ? Color.gray500 : Color.gray300)
+                        .padding(10)
+                        .background(focusState ? Color.gray300 : Color.gray200)
+                        .clipShape(Circle())
+                }
+                .accessibilityLabel(Text("Clear text"))
+                
+                // TextReplacement Button
+                if let key = replacementKeyForCurrentText(),
+                   let replacement = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
+                    Button(action: {
+                        let currentText = store.bindingQuestionText().wrappedValue
+                        let newText = currentText
+                            .replacingOccurrences(of: "\(key)", with: replacement, options: [.caseInsensitive], range: nil)
+                        store.bindingQuestionText().wrappedValue = newText
+                    }) {
+                        Text(replacement)
+                            .foregroundColor(.gray600)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .cornerRadius(22)
+                            .overlay(RoundedRectangle(cornerRadius: 20))
+                            .background(Color.gray300)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding(16)
+//            .frame(maxWidth: .infinity)
+            .background(Color.gray200)
+            .cornerRadius(22)
+            .transition(.move(edge: .bottom))
+            .animation(.default, value: focusState)
+        }
+    }
+}
 struct TKConversationView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollContainer(store: .init(conversationState: .init(conversationStatus: .writing)))

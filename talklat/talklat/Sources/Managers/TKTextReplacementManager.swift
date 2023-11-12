@@ -35,5 +35,10 @@ class TKTextReplacementManager {
     public func deleteTextReplacement(textReplacement: TKTextReplacement) {
         context.delete(textReplacement)
     }
+    
+    public func findReplacement(for inputText: String) -> String? {
+        // Assuming inputText is the phrase to be replaced
+        return replacements.first(where: { $0.wordDictionary.keys.contains(inputText) })?.wordDictionary[inputText]
+    }
 }
 
