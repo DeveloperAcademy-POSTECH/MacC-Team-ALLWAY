@@ -24,6 +24,7 @@
 		7EAEEC9D2AFF43B20066B36C /* TKTypingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAEEC9C2AFF43B20066B36C /* TKTypingView.swift */; };
 		7EAEEC9F2AFF447F0066B36C /* TKListeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAEEC9E2AFF447F0066B36C /* TKListeningView.swift */; };
 		7EAEECA12AFF8F810066B36C /* TKSavingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAEECA02AFF8F810066B36C /* TKSavingView.swift */; };
+		7ED6BB142B00B2F5006D02DC /* TKScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED6BB132B00B2F5006D02DC /* TKScrollView.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
@@ -85,6 +86,7 @@
 		7EAEEC9C2AFF43B20066B36C /* TKTypingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTypingView.swift; sourceTree = "<group>"; };
 		7EAEEC9E2AFF447F0066B36C /* TKListeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKListeningView.swift; sourceTree = "<group>"; };
 		7EAEECA02AFF8F810066B36C /* TKSavingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSavingView.swift; sourceTree = "<group>"; };
+		7ED6BB132B00B2F5006D02DC /* TKScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKScrollView.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				7EF737962AD43EE000FCBA21 /* TKTextField.swift */,
 				7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */,
 				575677E02ADA6F13002E01BE /* TLTextField.swift */,
+				7ED6BB132B00B2F5006D02DC /* TKScrollView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				7EAEECA12AFF8F810066B36C /* TKSavingView.swift in Sources */,
 				7EA146AD2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift in Sources */,
 				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
+				7ED6BB142B00B2F5006D02DC /* TKScrollView.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
