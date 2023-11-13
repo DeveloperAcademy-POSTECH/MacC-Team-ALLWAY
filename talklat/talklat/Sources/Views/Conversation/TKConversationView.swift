@@ -136,6 +136,7 @@ struct TKConversationView: View {
 //    // .onChange(of: gyroScopeStore.faced) { _ in }
 //    // .onAppear { gyroScopeStore.detectDeviceMotion() }
 //    }
+
 //
 //// MARK: - Components
 //// TODO: Component Container..?
@@ -248,4 +249,3 @@ struct TKConversationView: View {
 //        ScrollContainer()
 //    }
 //}
-
