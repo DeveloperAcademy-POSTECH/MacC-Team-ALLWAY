@@ -31,17 +31,25 @@ struct TKMainView: View {
                 }
                 .padding(.bottom, 32)
 
-                TKOrbitCircles(store: store)
-                    .frame(maxHeight: 250)
-                    .overlay {
-                        Circle()
-                            .fill(Color.white)
-                            .opacity(0.5)
-                            .frame(width: 200, height: 200)
-                    }
-                    .overlay {
-                        startConversationButtonBuilder()
-                    }
+                TKOrbitCircles(
+                    store: store,
+                    circleRenderInfos: [
+                        CircleRenderInfo(x: -25, y: -15),
+                        CircleRenderInfo(x: 0, y: 27),
+                        CircleRenderInfo(x: 25, y: -15),
+                    ],
+                    circleColor: .white
+                )
+                .frame(maxHeight: 250)
+                .overlay {
+                    Circle()
+                        .fill(Color.white)
+                        .opacity(0.5)
+                        .frame(width: 200, height: 200)
+                }
+                .overlay {
+                    startConversationButtonBuilder()
+                }
             }
             .frame(
                 maxHeight: .infinity,
