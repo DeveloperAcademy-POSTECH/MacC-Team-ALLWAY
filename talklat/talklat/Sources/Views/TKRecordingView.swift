@@ -15,7 +15,6 @@ struct TKRecordingView: View {
     private var isRecording: Bool {
         return !speechRecognizeManager.transcript.isEmpty
     }
-
     var body: some View {
         VStack {
             HStack(alignment: .top) {
@@ -116,6 +115,10 @@ struct TKRecordingView: View {
                 HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(transcript)))
             }
         }
+        .onAppear {
+            speechRecognizeManager.startTranscribing()
+            print("startTranscribing() called from onAppear")
+        }
     }
     
     private func guideMessageBuilder() -> some View {
@@ -156,12 +159,7 @@ struct TKRecordingView: View {
 struct TKRecordingView_Previews: PreviewProvider {
     static var previews: some View {
         TKRecordingView(
-            appViewStore: AppViewStore.makePreviewStore { instance in
-                instance.communicationStatusSetter(.recording)
-                instance.questionTextSetter("""
-                아아
-                """)
-            }
+            appViewStore: AppViewStore()
         )
     }
 }
