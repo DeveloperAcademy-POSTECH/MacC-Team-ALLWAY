@@ -13,12 +13,12 @@ import SwiftData
  ItemDataSource -> Container를 접근하기 위한 View 계층이 아닌 위치
  */
 
-final class TKDataSource {
+struct TKDataManager {
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
 
     @MainActor /// mainContext를 접근해야 하기 때문에 (컴파일 에러 방지)
-    static let shared = TKDataSource() /// 단일 ModelContainer 인스턴스 사용
+    static let shared = TKDataManager() /// 단일 ModelContainer 인스턴스 사용
 
     @MainActor
     private init() {
@@ -30,7 +30,7 @@ final class TKDataSource {
 }
 
 // MARK: - Basic CRUD
-extension TKDataSource {
+extension TKDataManager {
     // FETCH
     internal func fetchItems<T: PersistentModel>(
         _ itemType: T.Type
@@ -61,9 +61,4 @@ extension TKDataSource {
             fatalError(error.localizedDescription)
         }
     }
-}
-
-// MARK: - Additional Methods
-extension TKDataSource {
-    //
 }

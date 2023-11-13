@@ -9,38 +9,38 @@ import SwiftUI
 import SwiftData
 
 @Observable
-final class SwiftDataManager {
+final class SwiftDataStore {
     @ObservationIgnored
-    private let dataSource: TKDataSource
+    private let dataManager: TKDataManager
     
     var conversations: [TKConversation] = []
     var contents: [TKContent] = []
     var locations: [TKLocation] = []
     var textReplacements: [TKTextReplacement] = []
     
-    init(dataSource: TKDataSource = TKDataSource.shared) {
-        self.dataSource = dataSource
+    init(dataSource: TKDataManager = TKDataManager.shared) {
+        self.dataManager = dataSource
         refreshData()
     }
     
     private func refreshData() {
         do {
-            conversations = try dataSource.fetchItems(TKConversation.self) ?? []
-            contents = try dataSource.fetchItems(TKContent.self) ?? []
-            locations = try dataSource.fetchItems(TKLocation.self) ?? []
-            textReplacements = try dataSource.fetchItems(TKTextReplacement.self) ?? []
+            conversations = try dataManager.fetchItems(TKConversation.self) ?? []
+            contents = try dataManager.fetchItems(TKContent.self) ?? []
+            locations = try dataManager.fetchItems(TKLocation.self) ?? []
+            textReplacements = try dataManager.fetchItems(TKTextReplacement.self) ?? []
         } catch {
             fatalError(error.localizedDescription)
         }
     }
     
     public func appendItem(_ item: any PersistentModel) {
-        dataSource.appendItem(item)
+        dataManager.appendItem(item)
         refreshData()
     }
     
     public func removeItem(_ item: any PersistentModel) {
-        dataSource.removeItem(item)
+        dataManager.removeItem(item)
         refreshData()
     }
 
@@ -48,5 +48,9 @@ final class SwiftDataManager {
 //    }
 }
 
+// MARK: - Additional Methods
+extension SwiftDataStore {
+    // 
+}
 
 

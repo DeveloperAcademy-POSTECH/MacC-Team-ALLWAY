@@ -34,8 +34,8 @@
 		CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
 		EF3B16C32B00C5A500CDB484 /* TKContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C22B00C5A500CDB484 /* TKContent.swift */; };
 		EF3B16C52B00C5C200CDB484 /* TKLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C42B00C5C200CDB484 /* TKLocation.swift */; };
-		EF3B16C72B00C5DD00CDB484 /* TKDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C62B00C5DD00CDB484 /* TKDataSource.swift */; };
-		EF3B16C92B00C5FC00CDB484 /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C82B00C5FC00CDB484 /* SwiftDataManager.swift */; };
+		EF3B16C72B00C5DD00CDB484 /* TKDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */; };
+		EF3B16C92B00C5FC00CDB484 /* SwiftDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C82B00C5FC00CDB484 /* SwiftDataStore.swift */; };
 		EF3B16CB2B00C61E00CDB484 /* DataTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */; };
 		EF3F439E2AF7FF4700DFC98B /* TKConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3F439D2AF7FF4700DFC98B /* TKConversation.swift */; };
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
@@ -96,8 +96,8 @@
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF3B16C22B00C5A500CDB484 /* TKContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKContent.swift; sourceTree = "<group>"; };
 		EF3B16C42B00C5C200CDB484 /* TKLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocation.swift; sourceTree = "<group>"; };
-		EF3B16C62B00C5DD00CDB484 /* TKDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDataSource.swift; sourceTree = "<group>"; };
-		EF3B16C82B00C5FC00CDB484 /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
+		EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDataManager.swift; sourceTree = "<group>"; };
+		EF3B16C82B00C5FC00CDB484 /* SwiftDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataStore.swift; sourceTree = "<group>"; };
 		EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTestingView.swift; sourceTree = "<group>"; };
 		EF3F439D2AF7FF4700DFC98B /* TKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversation.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
@@ -296,8 +296,8 @@
 				EF67C6522AD13BF700C1074E /* AppRootManager.swift */,
 				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
-				EF3B16C62B00C5DD00CDB484 /* TKDataSource.swift */,
-				EF3B16C82B00C5FC00CDB484 /* SwiftDataManager.swift */,
+				EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */,
+				EF3B16C82B00C5FC00CDB484 /* SwiftDataStore.swift */,
 				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
 			);
 			path = Managers;
@@ -438,7 +438,7 @@
 				575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */,
 				EF3B16C52B00C5C200CDB484 /* TKLocation.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
-				EF3B16C92B00C5FC00CDB484 /* SwiftDataManager.swift in Sources */,
+				EF3B16C92B00C5FC00CDB484 /* SwiftDataStore.swift in Sources */,
 				EF3F439E2AF7FF4700DFC98B /* TKConversation.swift in Sources */,
 				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
@@ -453,7 +453,7 @@
 				7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */,
 				7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */,
 				EF3B16C32B00C5A500CDB484 /* TKContent.swift in Sources */,
-				EF3B16C72B00C5DD00CDB484 /* TKDataSource.swift in Sources */,
+				EF3B16C72B00C5DD00CDB484 /* TKDataManager.swift in Sources */,
 				7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */,
 				EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */,
 				57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */,

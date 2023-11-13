@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct CreateConversationView: View {
-    var dataManager: SwiftDataManager = SwiftDataManager()
+    var dataStore: SwiftDataStore = SwiftDataStore()
     
     // TKConversation
     @State private var title: String = "Talklat"
@@ -47,7 +47,7 @@ struct CreateConversationView: View {
             .buttonStyle(.borderedProminent)
             
             NavigationLink("Switch to List View") {
-                ConversationListView(dataManager: dataManager)
+                ConversationListView(dataManager: dataStore)
             }
             .padding(.vertical, 40)
         }
@@ -79,13 +79,13 @@ struct CreateConversationView: View {
                 location: location
             )
             
-            dataManager.appendItem(conversation)
+            dataStore.appendItem(conversation)
         }
     }
 }
 
 struct ConversationListView: View {
-    var dataManager: SwiftDataManager
+    var dataManager: SwiftDataStore
     
     var body: some View {
         VStack {
@@ -119,7 +119,7 @@ struct ConversationListView: View {
 }
 
 struct ItemCell: View {
-    var dataManager: SwiftDataManager
+    var dataManager: SwiftDataStore
     var conversation: TKConversation
     // var location: TKLocation
     
