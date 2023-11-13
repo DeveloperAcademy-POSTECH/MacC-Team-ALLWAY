@@ -22,22 +22,7 @@ struct talklatApp: App {
         )
     )
     
-    let container: ModelContainer
-    init() {
-        do {
-            container = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
-            )
-        } catch {
-            fatalError("Failed to configure SwiftData container.")
-        }
-        
-        // DB 파일이 저장된 경로
-        print(URL.applicationSupportDirectory.path(percentEncoded: false))
-    }
-    
     private let appRootManager = AppRootManager()
-    
     
     var body: some Scene {
         WindowGroup {
@@ -52,10 +37,7 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    NavigationStack {
-                        CreateConversationView()
-                    }
-                    // ScrollContainer(store: store)
+                    ScrollContainer(store: store)
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -70,7 +52,6 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
-//        .modelContainer(container)
     }
 }
 
