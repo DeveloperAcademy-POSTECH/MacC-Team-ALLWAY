@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class ConversationViewStore {
+final class TKConversationViewStore {
     enum ConversationStatus: Equatable {
         case recording
         case guiding
@@ -172,7 +172,7 @@ final class ConversationViewStore {
 }
 
 // MARK: Reduce
-extension ConversationViewStore: TKReducer {
+extension TKConversationViewStore: TKReducer {
     /// ViewState를 업데이트하는 keyPath 기반 메소드
     /// 일반적인 경우, protocol의 기본 구현으로 대응할 수 있다.
     /// 특별한 로직이 필요할 경우 할당하는 로직을 케이스로 추가하기 위해 reduce를 직접 구현한다.
@@ -205,7 +205,7 @@ extension ConversationViewStore: TKReducer {
 }
 
 // MARK: Helper
-extension ConversationViewStore {
+extension TKConversationViewStore {
     private func switchConverstaionStatus() {
         switch self(\.conversationStatus) {
         case .writing:

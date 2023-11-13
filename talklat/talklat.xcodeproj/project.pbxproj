@@ -10,7 +10,6 @@
 		575677DF2AD6BE47002E01BE /* SignalExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677DE2AD6BE47002E01BE /* SignalExtractor.swift */; };
 		575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677E02ADA6F13002E01BE /* TLTextField.swift */; };
 		57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TestHistoryView.swift */; };
-		57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */; };
 		57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
 		7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */; };
@@ -33,7 +32,6 @@
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
 		7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */; };
 		7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */; };
-		7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */; };
 		7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737932AD3DE5600FCBA21 /* Constants.swift */; };
 		7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737962AD43EE000FCBA21 /* TKTextField.swift */; };
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
@@ -107,8 +105,6 @@
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
-		7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKWritingView.swift; sourceTree = "<group>"; };
-		7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecordingView.swift; sourceTree = "<group>"; };
 		7EF737932AD3DE5600FCBA21 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
@@ -264,8 +260,6 @@
 				7E4A6CD72AFB2C030014DDB8 /* Main */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
-				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
-				7EF737902AD3DCF900FCBA21 /* TKRecordingView.swift */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
 				EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */,
@@ -303,7 +297,6 @@
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
 				7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
-				EF7938782AF8A58B00402A4E /* HistoryViewStore.swift */,
 				7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
 			);
@@ -487,7 +480,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC836702B01F2DD00F20ADF /* TKConversationView.swift in Sources */,
-				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
 				7E6494CA2AFCD08100FB478C /* TKBreathingCircles.swift in Sources */,
 				CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
@@ -496,14 +488,12 @@
 				7E4A6CD92AFB2C100014DDB8 /* TKMainView.swift in Sources */,
 				7E4A6CDF2AFBAB980014DDB8 /* TKDraggableList.swift in Sources */,
 				EF3B16C52B00C5C200CDB484 /* TKLocation.swift in Sources */,
-				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
 				EF3B16C92B00C5FC00CDB484 /* TKSwiftDataStore.swift in Sources */,
 				EF3F439E2AF7FF4700DFC98B /* TKConversation.swift in Sources */,
 				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
 				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
 				EF8067502AF7ECF4004E8955 /* TKTextReplacement.swift in Sources */,
-				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
 				575677DF2AD6BE47002E01BE /* SignalExtractor.swift in Sources */,
 				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
