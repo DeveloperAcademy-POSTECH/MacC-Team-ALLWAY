@@ -40,9 +40,6 @@ struct TKTextField: View {
 
 struct TKTextField_Previews: PreviewProvider {
     static var previews: some View {
-        TKTextField(appViewStore: .makePreviewStore { instance in
-            instance.communicationStatusSetter(.writing)
-            instance.questionTextSetter("")
-        })
+        TKTextField(appViewStore: AppViewStore())
     }
 }
