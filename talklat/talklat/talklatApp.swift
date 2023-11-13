@@ -46,6 +46,7 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
+//        .modelContainer(for: [TKConversation.self, TKContent.self])
     }
 }
 

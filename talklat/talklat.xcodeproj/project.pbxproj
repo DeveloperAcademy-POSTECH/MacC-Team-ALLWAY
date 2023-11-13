@@ -58,6 +58,8 @@
 		EF67C6532AD13BF700C1074E /* AppRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* AppRootManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
 		EF8067502AF7ECF4004E8955 /* TKTextReplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80674F2AF7ECF4004E8955 /* TKTextReplacement.swift */; };
+		EF7938972AFB748100402A4E /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7938962AFB748100402A4E /* HistoryListView.swift */; };
+		EF79389B2AFB754200402A4E /* SampleTKConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF79389A2AFB754100402A4E /* SampleTKConversation.swift */; };
 		EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
 		EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */; };
@@ -136,6 +138,8 @@
 		EF67C6522AD13BF700C1074E /* AppRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
 		EF80674F2AF7ECF4004E8955 /* TKTextReplacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacement.swift; sourceTree = "<group>"; };
+		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
+		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
 		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 				EF3F439D2AF7FF4700DFC98B /* TKConversation.swift */,
 				EF3B16C22B00C5A500CDB484 /* TKContent.swift */,
 				EF3B16C42B00C5C200CDB484 /* TKLocation.swift */,
+				EF79389A2AFB754100402A4E /* SampleTKConversation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				7E4A6CD72AFB2C030014DDB8 /* Main */,
+				EF7938952AFB746D00402A4E /* History */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
@@ -364,6 +370,14 @@
 				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		EF7938952AFB746D00402A4E /* History */ = {
+			isa = PBXGroup;
+			children = (
+				EF7938962AFB748100402A4E /* HistoryListView.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,6 +532,7 @@
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				7E4A6CE12AFBABC90014DDB8 /* TKRecentConversationListView.swift in Sources */,
 				EF3B16CB2B00C61E00CDB484 /* DataTestingView.swift in Sources */,
+				EF7938972AFB748100402A4E /* HistoryListView.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				EF90C51F2AE0B39B00A95BD7 /* ScrollContainer.swift in Sources */,
@@ -542,6 +557,7 @@
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
 				CE79CAEB2AF0CEC20007713B /* LocationStore.swift in Sources */,
+				EF79389B2AFB754200402A4E /* SampleTKConversation.swift in Sources */,
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7EAEEC9D2AFF43B20066B36C /* TKTypingView.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* TKConversationViewStore.swift in Sources */,
