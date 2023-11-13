@@ -26,7 +26,11 @@ struct SettingTRTextField: View {
                 Spacer()
             }
 
-            TextField(placeholder, text: $text)
+            TextField(
+                placeholder,
+                text: $text,
+                axis: .vertical
+            )
                 .onChange(of: text) { newValue in
                     if newValue.count > limit {
                         let lastCharIndex = text.index(text.startIndex, offsetBy: limit - 1)
@@ -45,12 +49,11 @@ struct SettingTRTextField: View {
                 }
         }
     }
-
     private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {
         let displayCount = min(currentCount, limit)
         return Text("\(displayCount)/\(limit)")
             .font(.system(size: 13, weight: .medium))
             .monospacedDigit()
-            .foregroundColor(.gray400)
+            .foregroundColor(currentCount == limit ? .accentColor : .gray400)
     }
 }

@@ -17,10 +17,10 @@ final class SettingViewStore: ObservableObject {
         var selectedTextReplacement: TKTextReplacement? = nil
     }
     
-    @Published private var viewState: SettingState
-    @Published var selectedTextReplacement: TKTextReplacement? = nil
-    @Published var selectedPhrase: String? = nil
-    @Published var selectedReplacement: String? = nil
+    @Published var viewState: SettingState
+    var selectedTextReplacement: TKTextReplacement? = nil
+    var selectedPhrase: String? = nil
+    var selectedReplacement: String? = nil
     
     init(settingState: SettingState) {
         viewState = settingState
@@ -31,6 +31,7 @@ final class SettingViewStore: ObservableObject {
         viewState.selectedPhrase = phrase
         viewState.selectedReplacement = replacement
         viewState.showingTextReplacementEditView = true
+        print("selectTextReplacement 후: selectedPhrase = \(String(describing: viewState.selectedPhrase)), selectedReplacement = \(String(describing: viewState.selectedReplacement))")
     }
     
     func bindingToShowTextReplacementEditView() -> Binding<Bool> {

@@ -10,11 +10,13 @@ import SwiftData
 
 @Model
 class TKTextReplacement {
-    var wordDictionary: [String: String] = [:]
+    var wordDictionary: [String: [String]] = [:]
     
     init(
-        wordDictionary: [String : String]
+        wordDictionary: [String: [String]]
     ) {
         self.wordDictionary = wordDictionary
     }
 }
+
+// 같은 key면 append하기

@@ -8,9 +8,6 @@
 import SwiftUI
 import SwiftData
 
-import SwiftUI
-import SwiftData
-
 struct TKTextReplacementEditView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.presentationMode) var presentationMode
@@ -28,6 +25,7 @@ struct TKTextReplacementEditView: View {
         _phrase = State(initialValue: phrase)
         _replacement = State(initialValue: replacement)
         _isPresented = isPresented
+        print("phrase: \(phrase), key: \(replacement)")
     }
 
     var body: some View {
@@ -68,13 +66,15 @@ struct TKTextReplacementEditView: View {
             })
             .navigationBarItems(trailing: Button("저장") {
                 if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-                    existingItem.wordDictionary = [phrase: replacement]
+                    existingItem.wordDictionary[phrase] = [replacement]
                 } else {
-                    let newItem = TKTextReplacement(wordDictionary: [phrase: replacement])
+                    let newItem = TKTextReplacement(wordDictionary: [phrase: [replacement]])
                     context.insert(newItem)
                 }
                 isPresented = false
+                presentationMode.wrappedValue.dismiss()
             })
+
         }
         .background(
             Group {
@@ -163,7 +163,6 @@ struct CustomDialog: View {
     }
 }
 
-// TKTextReplacementEditView_Previews 구조체
 struct TKTextReplacementEditView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isPresented = true

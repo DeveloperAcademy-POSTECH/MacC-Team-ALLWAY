@@ -12,20 +12,21 @@ struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
-    //    @StateObject private var settingStore = SettingViewStore(settingState: .init())
+    
     @State private var selectedList: TKTextReplacement? = nil
     @State private var showingAddView = false
     
-    //    @StateObject var settingStore = SettingViewStore(settingState: .init())
     @ObservedObject var settingStore = SettingViewStore(settingState: .init())
     
-    
     var groupedLists: [String: [TKTextReplacement]] {
-        Dictionary(grouping: lists) { $0.wordDictionary.keys.first?.headerKey ?? "#" }
+        Dictionary(grouping: lists) { entry in
+            entry.wordDictionary.keys.first?.headerKey ?? "#"
+        }
     }
     
     var body: some View {
         NavigationView {
+            // TODO: SearchBar
             ScrollViewReader { proxy in
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
@@ -87,66 +88,80 @@ struct TKTextReplacementListView: View {
             .sheet(isPresented: settingStore.bindingToShowTextReplacementAddView()) {
                 TKTextReplacementAddView()
             }
-            .sheet(isPresented: settingStore.bindingToShowTextReplacementEditView()) {
-                if let selectedPhrase = settingStore.selectedPhrase,
-                   let selectedReplacement = settingStore.selectedReplacement {
+            .fullScreenCover(isPresented: settingStore.bindingToShowTextReplacementEditView(), content: {
+                if let selectedPhrase = settingStore.viewState.selectedPhrase,
+                   let selectedReplacement = settingStore.viewState.selectedReplacement {
                     TKTextReplacementEditView(
                         phrase: selectedPhrase,
                         replacement: selectedReplacement,
                         isPresented: settingStore.bindingToShowTextReplacementEditView()
                     )
                 }
-            }
+            })
         }
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
-    
     var sortedGroupKeys: [String] {
-        groupedLists.keys.sorted()
+        return groupedLists.keys.sorted { key1, key2 in
+            let firstCharKey1 = key1.first
+            let firstCharKey2 = key2.first
+
+            // 한글을 가장 앞에 배치
+            if firstCharKey1?.isKorean == true && firstCharKey2?.isKorean == false {
+                return false  // key1이 한글일 때 앞에 오도록
+            } else if firstCharKey1?.isKorean == false && firstCharKey2?.isKorean == true {
+                return true  // key2가 한글일 때 뒤에 오도록
+            }
+
+            // 영어를 그 다음으로 배치
+            if firstCharKey1?.isEnglish == true && firstCharKey2?.isEnglish == false {
+                return false  // key1이 영어일 때 앞에 오도록
+            } else if firstCharKey1?.isEnglish == false && firstCharKey2?.isEnglish == true {
+                return true  // key2가 영어일 때 뒤에 오도록
+            }
+
+            // 그 외 문자들은 자연스러운 문자열 순서에 따라 배치
+            return key1 < key2
+        }
     }
-    
+
     func listSection(_ groupKey: String) -> some View {
         ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
-            ForEach(list.wordDictionary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                Button(action: {
-                    print("왜 \n")
-                    settingStore.selectTextReplacement(phrase: key, replacement: value)
-                    print("안돼\n")
-                }) {
-                    TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
+            ForEach(list.wordDictionary.sorted { $0.key < $1.key }, id: \.key) { key, values in
+                // 첫 번째 값만 사용
+                if let firstValue = values.first {
+                    TextReplacementRow(key: key, value: firstValue, list: list, selectedList: $selectedList)
                         .padding(.horizontal, 16)
                         .cornerRadius(16)
-                        .onTapGesture{
-                            settingStore.selectTextReplacement(phrase: key, replacement: value)
-                        }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            print("Tap gesture on Button\n")
+                            settingStore.selectTextReplacement(phrase: key, replacement: firstValue)
+                        })
                 }
-                
-                
-                //                TextReplacementRow(key: key, value: value, list: list, selectedList: $selectedList)
-                //                    .padding(.horizontal, 16)
-                //                    .cornerRadius(16)
-                //                    .onTapGesture {
-                //                        settingStore.selectTextReplacement(phrase: key, replacement: value)
-                //                    }
             }
         }
     }
+
 }
 
-
-
-#if DEBUG
-struct TKTextReplacementListView_Previews: PreviewProvider {
-    static var previews: some View {
-        TKTextReplacementListView().environmentObject(ModelData())
+extension String {
+    var isKorean: Bool {
+        self.first?.isKorean ?? false
     }
     
-    class ModelData: ObservableObject {
-        @Published var lists: [TKTextReplacement] = [
-            TKTextReplacement(wordDictionary: ["아아": "아이스 아메리카노", "플라플": "플랫 화이트"]),
-            TKTextReplacement(wordDictionary: ["감사": "감사합니다", "안녕": "안녕하세요"])
-        ]
+    var isEnglish: Bool {
+        self.first?.isEnglish ?? false
     }
 }
-#endif
+
+extension Character {
+    var isKorean: Bool {
+        guard let scalar = unicodeScalars.first else { return false }
+        return scalar.value >= 0xAC00 && scalar.value <= 0xD7A3
+    }
+    
+    var isEnglish: Bool {
+        return isLetter && isASCII
+    }
+}

@@ -9,36 +9,27 @@ import Foundation
 import SwiftUI
 
 extension String {
-    // 한글 첫 자음과 영문 대문자에 대한 헤더 반환
     var headerKey: String {
         guard let firstChar = self.first else { return "#" }
-        
-        // 한글 첫 자음 또는 영문 대문자 체크
-        return firstChar.headerKey
+
+        switch firstChar {
+        case let c where c.isKorean:
+            return c.koreanFirstConsonant ?? "#"
+        case let c where c.isEnglish:
+            return String(c).uppercased()
+        default:
+            return "#"
+        }
     }
 }
 
 extension Character {
-    // 한글 첫 자음과 영문 대문자에 대한 헤더 반환
-    var headerKey: String {
-        if let koreanHeader = self.koreanFirstConsonant {
-            return koreanHeader
-        } else if self.isLetter && self.isUppercase {
-            return String(self)
-        }
-        return "#"
-    }
-    
     // 한글 첫 자음 추출 (쌍자음 포함)
     var koreanFirstConsonant: String? {
         let hangulStart: UInt32 = 0xAC00 // '가'
-        
-        // TODO: 쌍자음 제외한 배열로 수정ㅠㅠ
         let initialConsonants = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"]
-        
-        guard let scalarValue = UnicodeScalar(String(self))?.value else { return nil }
 
-        // 한글 범위 내에 있는지 확인
+        guard let scalarValue = UnicodeScalar(String(self))?.value else { return nil }
         if scalarValue >= hangulStart, scalarValue <= 0xD7A3 {
             let index = Int((scalarValue - hangulStart) / 588)
             return initialConsonants[min(index, initialConsonants.count - 1)]

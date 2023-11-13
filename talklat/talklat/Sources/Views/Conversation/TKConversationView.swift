@@ -87,6 +87,7 @@ struct TKConversationView: View {
                             )
                     }
                     .padding(.top, 24)
+                    
                     if focusState {
                         customToolbar
                     }
@@ -395,19 +396,23 @@ extension TKConversationView {
                 
                 // TextReplacement Button
                 if let key = replacementKeyForCurrentText(),
-                   let replacement = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key] {
+                   let replacements = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key],
+                   let firstReplacement = replacements.first { // 첫 번째 요소를 사용
+
                     Button(action: {
                         let currentText = store.bindingQuestionText().wrappedValue
                         let newText = currentText
-                            .replacingOccurrences(of: "\(key)", with: replacement, options: [.caseInsensitive], range: nil)
+                            .replacingOccurrences(of: "\(key)", with: firstReplacement, options: [.caseInsensitive], range: nil)
                         store.bindingQuestionText().wrappedValue = newText
                     }) {
-                        Text(replacement)
-                            .foregroundColor(.gray600)
+                        Text(firstReplacement) // 첫 번째 요소를 표시
+                            .foregroundColor(Color.gray600)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .cornerRadius(22)
-                            .overlay(RoundedRectangle(cornerRadius: 20))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.gray600)
+                            }
                             .background(Color.gray300)
                     }
                 }

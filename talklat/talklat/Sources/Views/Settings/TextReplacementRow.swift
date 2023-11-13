@@ -43,11 +43,3 @@ struct TextReplacementRow: View {
         .cornerRadius(15)
     }
 }
-
-struct TextReplacementRow_Previews: PreviewProvider {
-    @State static var selectedList: TKTextReplacement?
-    
-    static var previews: some View {
-        TextReplacementRow(key: "Sample Key", value: "Sample Value", list: TKTextReplacement(wordDictionary: ["아이스":"아메리카노"]), selectedList: $selectedList)
-    }
-}
