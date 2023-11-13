@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct talklatApp: App {
@@ -45,6 +46,7 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
+//        .modelContainer(for: [TKConversation.self, TKContent.self])
     }
 }
 
