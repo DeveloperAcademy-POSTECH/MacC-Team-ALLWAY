@@ -350,6 +350,6 @@ extension TKConversationView {
 
 struct TKConversationView_Previews: PreviewProvider {
     static var previews: some View {
-        ScrollContainer(store: .init(conversationState: .init(conversationStatus: .writing)))
+        ScrollContainer()
     }
 }

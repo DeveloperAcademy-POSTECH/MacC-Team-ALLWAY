@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// ViewState 타입 구조체, ``reduce(_:into:)`` 구현을 요구
 /// store 역할을 수행할 class 타입에서 채택
-protocol TKReducer: ObservableObject, AnyObject {
+protocol TKReducer<ViewState>: AnyObject, ObservableObject {
     associatedtype ViewState
     
     func callAsFunction<Value: Equatable>
@@ -20,6 +20,16 @@ protocol TKReducer: ObservableObject, AnyObject {
     func reduce<Value: Equatable>
     (_ path: WritableKeyPath<ViewState, Value>,
      into newValue: Value)
+}
+
+extension TKReducer where Self.ViewState: TKAnimatable {
+    func triggerAnimation(_ flag: Bool) {
+        self.reduce(\.animationFlag, into: flag)
+    }
+}
+
+protocol TKAnimatable {
+    var animationFlag: Bool { get set }
 }
 
 // MARK: - USAGE EXAMPLE

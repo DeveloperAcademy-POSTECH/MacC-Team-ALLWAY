@@ -159,12 +159,7 @@ struct TKRecordingView: View {
 struct TKRecordingView_Previews: PreviewProvider {
     static var previews: some View {
         TKRecordingView(
-            appViewStore: AppViewStore.makePreviewStore { instance in
-                instance.communicationStatusSetter(.recording)
-                instance.questionTextSetter("""
-                아아
-                """)
-            }
+            appViewStore: AppViewStore()
         )
     }
 }

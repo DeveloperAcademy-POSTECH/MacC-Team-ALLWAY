@@ -14,14 +14,20 @@
 		57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
 		7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */; };
+		7E4A6CD92AFB2C100014DDB8 /* TKMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */; };
+		7E4A6CDB2AFB2C350014DDB8 /* TKMainViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */; };
+		7E4A6CDD2AFB7F7C0014DDB8 /* TKOrbitCircles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */; };
+		7E4A6CDF2AFBAB980014DDB8 /* TKDraggableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */; };
+		7E4A6CE12AFBABC90014DDB8 /* TKRecentConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */; };
+		7E6494CA2AFCD08100FB478C /* TKBreathingCircles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */; };
 		7E8445DA2ADFB4FC00CFB8BC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */; };
 		7E8445DE2ADFBBD900CFB8BC /* TKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */; };
-		7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKConversationView.swift */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
 		7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
 		7EA9D34D2AFA19BE00A0EE99 /* TKReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */; };
+		7EC836702B01F2DD00F20ADF /* TKConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8906402ACEA31500C9947A /* TKConversationView.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */; };
@@ -79,6 +85,12 @@
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewStore.swift; sourceTree = "<group>"; };
+		7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainView.swift; sourceTree = "<group>"; };
+		7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainViewStore.swift; sourceTree = "<group>"; };
+		7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOrbitCircles.swift; sourceTree = "<group>"; };
+		7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableList.swift; sourceTree = "<group>"; };
+		7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecentConversationListView.swift; sourceTree = "<group>"; };
+		7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKBreathingCircles.swift; sourceTree = "<group>"; };
 		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
@@ -156,6 +168,16 @@
 				CE0CBF272B0122F70048C784 /* ChatMessage.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		7E4A6CD72AFB2C030014DDB8 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */,
+				7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */,
+				7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		7E8D17B82ACE8AEC00E904E5 = {
@@ -239,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */,
+				7E4A6CD72AFB2C030014DDB8 /* Main */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
 				7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */,
@@ -249,7 +272,6 @@
 				EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */,
 				7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */,
 				57806D702ADC5D19003A7B19 /* TestHistoryView.swift */,
-				7EE71BAA2AF0A6D6001C0A28 /* TKGuidingView.swift */,
 				CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */,
 				CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */,
 				EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */,
@@ -282,6 +304,7 @@
 				7EF7378B2AD3C87700FCBA21 /* AppViewStore.swift */,
 				7E427EE02AE9559D0028E4F4 /* ConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
+				7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
 			);
 			path = Stores;
@@ -302,6 +325,8 @@
 				7EF737962AD43EE000FCBA21 /* TKTextField.swift */,
 				7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */,
 				575677E02ADA6F13002E01BE /* TLTextField.swift */,
+				7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */,
+				7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -471,9 +496,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EC836702B01F2DD00F20ADF /* TKConversationView.swift in Sources */,
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
-				EFD229A92AEB98DF00DA034D /* ScrollContainerTopView.swift in Sources */,
-				EFD229B12AEB994900DA034D /* FullScreenCoverBottomView.swift in Sources */,
+				7E6494CA2AFCD08100FB478C /* TKBreathingCircles.swift in Sources */,
 				CE2744032AFBE0D3006C2645 /* HistoryItemLocationEditView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				CE2744012AFBE08C006C2645 /* HistoryInfoItemView.swift in Sources */,
@@ -481,13 +506,16 @@
 				CE0CBF212B0118A70048C784 /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
 				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
+				7E4A6CD92AFB2C100014DDB8 /* TKMainView.swift in Sources */,
+				7E4A6CDF2AFBAB980014DDB8 /* TKDraggableList.swift in Sources */,
+				7EF737912AD3DCF900FCBA21 /* TKRecordingView.swift in Sources */,
 				575677DF2AD6BE47002E01BE /* SignalExtractor.swift in Sources */,
 				7EE71BAF2AF0F28E001C0A28 /* TKTransitionTestView.swift in Sources */,
 				CEF43C482ADA97FF00DE02A9 /* HapticManager.swift in Sources */,
 				EF90C5212AE0FE9E00A95BD7 /* SwipeGuideMessage.swift in Sources */,
-				7E8906412ACEA31500C9947A /* TKConversationView.swift in Sources */,
 				7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */,
 				CE0CBF152B01157A0048C784 /* SectionHeaderView.swift in Sources */,
+				7E4A6CE12AFBABC90014DDB8 /* TKRecentConversationListView.swift in Sources */,
 				7EF7378C2AD3C87700FCBA21 /* AppViewStore.swift in Sources */,
 				7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */,
 				CE0CBF282B0122F70048C784 /* ChatMessage.swift in Sources */,
@@ -503,6 +531,7 @@
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
 				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
+				7E4A6CDD2AFB7F7C0014DDB8 /* TKOrbitCircles.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
 				7EE087E82ADD4FAE00E07720 /* TKHistoryView.swift in Sources */,
@@ -511,6 +540,7 @@
 				EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */,
 				7E427EE12AE9559D0028E4F4 /* ConversationViewStore.swift in Sources */,
 				EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */,
+				7E4A6CDB2AFB2C350014DDB8 /* TKMainViewStore.swift in Sources */,
 				7EA8A78B2AD502D600AFD687 /* GyroScopeStore.swift in Sources */,
 				CE0CBF232B0119030048C784 /* CustomHistoryView.swift in Sources */,
 				CE0CBF262B011EF70048C784 /* Date+Formatter.swift in Sources */,

@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ScrollContainer: View {
     @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
-    @ObservedObject var store: ConversationViewStore
+    @StateObject private var store: ConversationViewStore = ConversationViewStore(
+        conversationState: ConversationViewStore.ConversationState(
+            conversationStatus: .writing
+        )
+    )
     
     var body: some View {
         Group {
@@ -131,7 +135,7 @@ extension ScrollContainer {
 }
 
 #Preview {
-    ScrollContainer(store: .init(conversationState: .init(conversationStatus: .writing)))
+    ScrollContainer()
 }
 
 
