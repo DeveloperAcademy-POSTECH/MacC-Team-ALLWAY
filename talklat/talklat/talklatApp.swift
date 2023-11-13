@@ -10,12 +10,8 @@ import SwiftUI
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: ""
-    )
-    
     @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
+    @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     private let appRootManager = AppRootManager()
     
@@ -32,7 +28,9 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    TKConversationView(store: store)
+                    NavigationStack {
+                        TKMainView()
+                    }
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted

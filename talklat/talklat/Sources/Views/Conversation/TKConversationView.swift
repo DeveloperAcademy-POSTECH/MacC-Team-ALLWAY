@@ -86,8 +86,6 @@ struct TKConversationView: View {
     TKConversationView(store: .init())
 }
 
-
-
 // MARK: BACKUP
 //var body: some View {
 //    OffsetObservingScrollView(offset: $offset) {
@@ -138,3 +136,116 @@ struct TKConversationView: View {
 //    // .onChange(of: gyroScopeStore.faced) { _ in }
 //    // .onAppear { gyroScopeStore.detectDeviceMotion() }
 //    }
+//
+//// MARK: - Components
+//// TODO: Component Container..?
+//extension TKConversationView {
+//    private func chevronButtonBuilder() -> some View {
+//        VStack {
+//            Text("위로 스와이프해서 내용을 더 확인하세요.")
+//                .font(.caption2)
+//                .bold()
+//                .opacity(store(\.hasChevronButtonTapped) ? 1.0 : 0.0)
+//                .overlay {
+//                    Button {
+//                        store.onChevronButtonTapped()
+//                    } label: {
+//                        Image(systemName: "chevron.compact.up")
+//                            .resizable()
+//                            .frame(width: 32, height: 10)
+//                            .padding()
+//                    }
+//                    .offset(
+//                        y: store(\.hasChevronButtonTapped)
+//                        ? 20
+//                        : 0
+//                    )
+//                }
+//        }
+//        .foregroundColor(.accentColor)
+//        .animation(
+//            .easeInOut(duration: 0.5),
+//            value: store(\.hasChevronButtonTapped)
+//        )
+//        .opacity(store(\.isTopViewShown)
+//                 ? 0.0
+//                 : 1.0
+//        )
+//        .frame(maxWidth: .infinity)
+//        .padding(.bottom, 10)
+//    }
+//    
+//    private func characterLimitViewBuilder() -> some View {
+//        Text("\(store(\.questionText).count)/\(store.questionTextLimit)")
+//            .font(.system(size: 12, weight: .regular))
+//            .monospacedDigit()
+//            .foregroundColor(
+//                hasQuestionTextReachedMaximumCount
+//                ? .red
+//                : .gray
+//            )
+//    }
+//    
+//    private var hasQuestionTextReachedMaximumCount: Bool {
+//        store(\.questionText).count == store.questionTextLimit
+//    }
+//}
+//
+//// MARK: Recording Component Container
+//extension TKConversationView {
+//    private func scrollViewTopCurtainBuilder() -> LinearGradient {
+//        LinearGradient(
+//            colors: [
+//                .accentColor,
+//                .clear,
+//            ],
+//            startPoint: .top,
+//            endPoint: .bottom
+//        )
+//    }
+//    
+//    // Recording 뷰 버튼
+//    private func stopRecordButtonBuilder() -> some View {
+//        Button {
+//            withAnimation {
+//                store.onStopRecordingButtonTapped()
+//            }
+//            
+//        } label: {
+//            Circle()
+//                .frame(width: 64, height: 64)
+//                .foregroundColor(
+//                    store(\.answeredText).isEmpty
+//                    ? .accentColor
+//                    : .gray100.opacity(0.8)
+//                )
+//        }
+//        .overlay(alignment: .top) {
+//            if store(\.answeredText).isEmpty {
+//                RoundedRectangle(cornerRadius: 12, style: .continuous)
+//                    .overlay {
+//                        Text("듣고 있어요")
+//                            .foregroundColor(.white)
+//                            .bold()
+//                    }
+//                    .background(alignment: .bottom) {
+//                        Rectangle()
+//                            .frame(width: 20, height: 20)
+//                            .rotationEffect(.degrees(45))
+//                            .offset(y: 5)
+//                    }
+//                    .frame(width: 150, height: 50)
+//                    .offset(y: -75)
+//                    .foregroundColor(.accentColor)
+//            }
+//        }
+//    }
+//}
+//
+//
+//struct TKConversationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ScrollContainer()
+//    }
+//}
+

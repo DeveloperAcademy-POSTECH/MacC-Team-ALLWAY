@@ -5,8 +5,9 @@
 //  Created by 신정연 on 2023/10/05.
 //
 
-import Foundation
+import Accelerate
 import AVFoundation
+import Foundation
 import Speech
 import SwiftUI
 
@@ -33,10 +34,13 @@ final class SpeechRecognizer: ObservableObject {
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
+    private var audioBuffers: [AVAudioPCMBuffer] = []
+    private let signalExtractor = SignalExtractor()
     
     // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
         recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
+//        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
         guard recognizer != nil else {
             transcribeFailed(RecognizerError.nilRecognizer)
             return
@@ -72,13 +76,13 @@ final class SpeechRecognizer: ObservableObject {
     
     // text 전환을 시작합니다.
     private func beginTranscribe() {
-        guard let recognizer, recognizer.isAvailable else {
+        guard let recognizer = recognizer, recognizer.isAvailable else {
             self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
             return
         }
         
         do {
-            let (audioEngine, request) = try Self.prepareEngine()
+            let (audioEngine, request) = try prepareEngine()
             self.audioEngine = audioEngine
             self.request = request
             self.task = recognizer.recognitionTask(with: request) { [weak self] result, error in
@@ -93,6 +97,7 @@ final class SpeechRecognizer: ObservableObject {
             self.transcribeFailed(error)
         }
     }
+
     
     private func stopAndResetTranscribe() {
         task?.cancel()
@@ -102,10 +107,11 @@ final class SpeechRecognizer: ObservableObject {
         task = nil
     }
     
-    private static func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
+    private func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
         let audioEngine = AVAudioEngine()
         
         let request = SFSpeechAudioBufferRecognitionRequest()
+        request.addsPunctuation = true
         request.shouldReportPartialResults = true
         
         let audioSession = AVAudioSession.sharedInstance()
@@ -127,8 +133,12 @@ final class SpeechRecognizer: ObservableObject {
             onBus: 0,
             bufferSize: 2048,
             format: recordingFormat
-        ) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+        ) { [weak self] (
+            buffer: AVAudioPCMBuffer,
+            when: AVAudioTime
+        ) in
             request.append(buffer)
+            self?.audioBuffers.append(buffer)
         }
         audioEngine.prepare()
         try audioEngine.start()
@@ -136,10 +146,26 @@ final class SpeechRecognizer: ObservableObject {
         return (audioEngine, request)
     }
     
+    public func processAudioDate() {
+        for buffer in audioBuffers {
+            // MARK: 노이즈 제거 안할 때
+            // self.request?.append(buffer)
+            // MARK: 노이즈 제거할 때
+            let processedData = signalExtractor.process(buffer: buffer)
+            // 노이즈가 제거된 오디오 데이터를 SFSpeechAudioBufferRecognitionRequest 객체에 추가
+            if let processedDataBuffer = processedData.toBuffer() {
+                self.request?.append(processedDataBuffer)
+            } else {
+            // print("Error: Failed to convert processed data to buffer")
+            }
+        }
+        audioBuffers.removeAll()
+    }
+    
     private func recognitionHandler(
-        audioEngine: AVAudioEngine,
-        result: SFSpeechRecognitionResult?,
-        error: Error?
+         audioEngine: AVAudioEngine,
+         result: SFSpeechRecognitionResult?,
+         error: Error?
     ) {
         let receivedFinalResult = result?.isFinal ?? false
         let receivedError = error != nil
@@ -149,11 +175,20 @@ final class SpeechRecognizer: ObservableObject {
             audioEngine.inputNode.removeTap(onBus: 0)
         }
         
-        if let result {
-            transcribe(result.bestTranscription.formattedString)
+        if let result = result {
+            let recognizedText = result.bestTranscription.formattedString
+            
+            // MARK: 음성인식의 인식률을 계산하는 부분입니다.
+            // let originalText = "이제 2023년이 되어버렸어. 시간 참 빠르다. 아이스 아메리카노 주세요. 크림말고 로션 주세요."
+            // let accuracy = calculateRecognitionAccuracy(originalText: originalText, recognizedText: recognizedText)
+            // print("인식률: \(accuracy)%")
+            
+            transcribe(recognizedText)
+        } else if let error = error {
+            // 에러 처리
         }
     }
-    
+
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
             transcript = message
@@ -171,6 +206,48 @@ final class SpeechRecognizer: ObservableObject {
 //        Task { @MainActor _ in
 //            transcript = "<< \(errorMessage) >>"
 //        }
+    }
+    
+    // 음성 인식 정확도를 측정하는 함수1
+    private func levenshteinDistanceBetween(_ a: String, and b: String) -> Int {
+        if a.count == 0 {
+            return b.count
+        }
+        
+        if b.count == 0 {
+            return a.count
+        }
+        
+        var matrix: [[Int]] = Array(repeating: Array(repeating: 0, count: b.count + 1), count: a.count + 1)
+        
+        for i in 1...a.count {
+            matrix[i][0] = i
+        }
+        
+        for j in 1...b.count {
+            matrix[0][j] = j
+        }
+        
+        for i in 1...a.count {
+            for j in 1...b.count {
+                if Array(a)[i-1] == Array(b)[j-1] {
+                    matrix[i][j] = matrix[i-1][j-1]
+                } else {
+                    matrix[i][j] = min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1
+                }
+            }
+        }
+        
+        return matrix[a.count][b.count]
+    }
+    
+    // 음성 인식 정확도를 측정하는 함수2
+    private func calculateRecognitionAccuracy(originalText: String, recognizedText: String) -> Double {
+        let distance = levenshteinDistanceBetween(originalText, and: recognizedText)
+        let maxLength = max(originalText.count, recognizedText.count)
+        
+        let accuracy = ((Double(maxLength) - Double(distance)) / Double(maxLength)) * 100.0
+        return accuracy
     }
 }
 
@@ -191,5 +268,19 @@ extension AVAudioSession {
                 continuation.resume(returning: authorized)
             }
         }
+    }
+}
+
+// 노이즈 제거할 때, 라이브 오디오 데이터 -> 버퍼 변환
+extension Array where Element == Float {
+    func toBuffer() -> AVAudioPCMBuffer? {
+        // TODO: Sample rate와 channel에 맞게 조정 필요
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(self.count)) else { return nil }
+        buffer.frameLength = AVAudioFrameCount(self.count)
+        for i in 0..<self.count {
+            buffer.floatChannelData?.pointee[i] = self[i]
+        }
+        return buffer
     }
 }

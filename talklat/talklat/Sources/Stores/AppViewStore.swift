@@ -13,8 +13,8 @@ final class AppViewStore: ObservableObject {
         case writing
     }
     
-    @Published private(set) var communicationStatus: CommunicationStatus
-    @Published private(set) var questionText: String
+    @Published private(set) var communicationStatus: CommunicationStatus = .writing
+    @Published private(set) var questionText: String = ""
     @Published private(set) var answeredText: String?
     @Published private(set) var currentAuthStatus: AuthStatus = .splash
     @Published private(set) var hasGuidingMessageShown: Bool = false
@@ -22,15 +22,6 @@ final class AppViewStore: ObservableObject {
     @Published public var recognitionCount: Int = 0
     
     public let questionTextLimit: Int = 160
-    
-    // MARK: INIT
-    init(
-        communicationStatus: CommunicationStatus,
-        questionText: String
-    ) {
-        self.communicationStatus = communicationStatus
-        self.questionText = questionText
-    }
     
     // MARK: HELPERS
     public func enterSpeechRecognizeButtonTapped() {
@@ -120,19 +111,5 @@ extension AppViewStore {
         withAnimation {
             currentAuthStatus = status
         }
-    }
-}
-
-// MARK: MAKE INSTANCES
-extension AppViewStore {
-    static func makePreviewStore(
-        condition: @escaping (AppViewStore) -> Void
-    ) -> AppViewStore {
-        let appViewStore = AppViewStore(
-            communicationStatus: .writing,
-            questionText: ""
-        )
-        condition(appViewStore)
-        return appViewStore
     }
 }
