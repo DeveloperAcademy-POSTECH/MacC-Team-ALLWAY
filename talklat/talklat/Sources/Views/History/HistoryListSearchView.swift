@@ -14,9 +14,9 @@ private enum searchStatus {
 }
 
 struct HistoryListSearchView: View {
-    var sampleConversations: [TKConversation]
+    var sampleConversations: [TKConversationSample]
     
-    @State var matchingContents: [TKConversation.TKContent] = []
+    @State var matchingContents: [TKConversationSample.TKContent] = []
     @State private var searchStatus: searchStatus = .inactive
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
@@ -89,7 +89,7 @@ struct HistoryListSearchView: View {
 
 // MARK: - (Matching) Location Unit
 struct SearchResultSection: View {
-    @Binding var matchingContents: [TKConversation.TKContent]
+    @Binding var matchingContents: [TKConversationSample.TKContent]
     @Binding var searchText: String
     
     var body: some View {
@@ -124,7 +124,7 @@ struct SearchResultSection: View {
 
 // MARK: - (Matching) Conversation Item Unit
 struct SearchResultItem: View {
-    var matchingContent: TKConversation.TKContent
+    var matchingContent: TKConversationSample.TKContent
     
     @State var highlightIndex: String.Index = String.Index(utf16Offset: 0, in: "")
     @Binding var searchText: String

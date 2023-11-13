@@ -60,7 +60,7 @@ public enum TKTransitionObjects {
     case INTERLUDE
 }
 
-//
+// HistoryItem이 없어지고 enum이 public이 될 것
 public enum MessageType: String {
     case question = "question"
     case answer = "answer"
@@ -89,6 +89,7 @@ enum MapAnnotationType {
 
 public let initialLatitude: Double = 37.554577
 public let initialLongitude: Double = 126.970828
+
 
 public enum VisibleStatus {
     case visible
