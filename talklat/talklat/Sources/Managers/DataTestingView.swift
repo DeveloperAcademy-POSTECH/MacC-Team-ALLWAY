@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct CreateConversationView: View {
-    var dataStore: SwiftDataStore = SwiftDataStore()
+    var dataStore: TKSwiftDataStore = TKSwiftDataStore()
     
     // TKConversation
     @State private var title: String = "Talklat"
@@ -85,7 +85,7 @@ struct CreateConversationView: View {
 }
 
 struct ConversationListView: View {
-    var dataManager: SwiftDataStore
+    var dataManager: TKSwiftDataStore
     
     var body: some View {
         VStack {
@@ -119,7 +119,7 @@ struct ConversationListView: View {
 }
 
 struct ItemCell: View {
-    var dataManager: SwiftDataStore
+    var dataManager: TKSwiftDataStore
     var conversation: TKConversation
     // var location: TKLocation
     

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @Observable
-final class SwiftDataStore {
+final class TKSwiftDataStore {
     @ObservationIgnored
     private let dataManager: TKDataManager
     
@@ -49,7 +49,7 @@ final class SwiftDataStore {
 }
 
 // MARK: - Additional Methods
-extension SwiftDataStore {
+extension TKSwiftDataStore {
     // 
 }
 
