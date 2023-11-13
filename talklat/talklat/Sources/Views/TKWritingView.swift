@@ -122,11 +122,7 @@ struct TKWritingView: View {
 struct TKWritingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            TKWritingView(appViewStore: AppViewStore.makePreviewStore {
-                instance in
-                instance.answeredTextSetter("testtesttesttesttesttesttest")
-                instance.historyItems.append(.init(id: .init(), text: "A long string of text that goes on an A long string of text A long string of text that goes on an A long string of text that goes on an A long string of text that goes on an ", type: .answer))
-            })
+            TKWritingView(appViewStore: AppViewStore())
         }
     }
 }
