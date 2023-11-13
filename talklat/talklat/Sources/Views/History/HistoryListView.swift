@@ -284,6 +284,7 @@ struct LocationList: View {
 
 struct CellItem: View {
     var conversation: TKConversationSample
+    
     @State internal var isRemoving: Bool = false
     @Binding internal var selectedConversationID: String
     @Binding internal var isEditing: Bool

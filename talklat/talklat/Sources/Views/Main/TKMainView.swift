@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TKMainView: View {
     @StateObject private var store = TKMainViewStore()
+    @StateObject private var conversationView = TKConversationViewStore()
     
     var body: some View {
         ZStack {
@@ -53,9 +54,7 @@ struct TKMainView: View {
         .fullScreenCover(
             isPresented: store.bindingConversationFullScreenCover()
         ) {
-            Text("?")
-//            ScrollContainer()
-//            TKConversationView(store: store)
+            TKConversationView(store: conversationView)
         }
         .toolbarBackground(
             Color.accentColor,
