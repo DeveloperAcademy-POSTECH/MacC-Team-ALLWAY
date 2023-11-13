@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct TKHistoryView: View {
-    @Environment(\.colorScheme)
-    var colorScheme
-    
-    @ObservedObject var store: ConversationViewStore
+    @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var store: TKConversationViewStore
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -59,17 +57,13 @@ struct TKHistoryView: View {
         }
         .ignoresSafeArea()
         .onChange(of: store(\.historyScrollOffset)) { offset in
-            print("---> history offset: ", offset)
-            
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + 0.3
             ) {
                 if offset.y > 870,
                    offset.y < 920,
-                   store.isChevronButtonDisplayable {
-                    withAnimation(.spring(dampingFraction: 0.7)) {
-                        store.onScrollOffsetChanged(false)
-                    }
+                   store.isAnswerCardDisplayable {
+                    store.onScrollOffsetChanged(false)
                 }
             }
         }
