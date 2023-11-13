@@ -96,51 +96,78 @@ struct HistoryListView: View {
         ]
     }
     
-    @State private var searchText: String = ""
     @State private var isHistoryEmpty: Bool = false
     @State private var selectedConversationID: String = ""
     @State private var isEditing: Bool = false
     @State private var isDialogShowing: Bool = false
+
+    @FocusState internal var isSearchFocused: Bool
+    @State internal var isSearching: Bool = false
+    @State internal var searchText: String = ""
     
     var body: some View {
-        ScrollView {
-            if isHistoryEmpty {
-                emptyViewBuilder()
-            } else {
-                ForEach(0..<4) { _ in // TODO: get all identical locations
-                    LocationList(
-                        samples: sampleConversations,
-                        selectedConversationID: $selectedConversationID,
-                        isEditing: $isEditing,
-                        isDialogShowing: $isDialogShowing
-                    )
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 24)
-            }
-        }
-        .searchable(text: $searchText)
-        .navigationTitle("히스토리")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                // Edit Button
-                Button {
-                    withAnimation(
-                        .spring(
-                            dampingFraction: 0.7,
-                            blendDuration: 0.3
+        VStack {
+            // Search Bar
+            SearchBarView(
+                isSearching: $isSearching,
+                searchText: $searchText
+            )
+            .focused($isSearchFocused)
+            
+            Spacer()
+            
+            // MARK: - History List
+            if !isSearching {
+                ScrollView {
+                    if isHistoryEmpty {
+                        TKUnavailableViewBuilder(
+                            icon: "bubble.left.and.bubble.right.fill",
+                            description: "아직 대화 기록이 없어요"
                         )
-                    ) {
-                        isEditing.toggle()
+                        // emptyViewBuilder()
+                    } else {
+                        ForEach(0..<4) { _ in // TODO: all [TKLocation]
+                            LocationList(
+                                samples: sampleConversations,
+                                selectedConversationID: $selectedConversationID,
+                                isEditing: $isEditing,
+                                isDialogShowing: $isDialogShowing
+                            )
+                        }
+                        .padding(.top, 24)
                     }
-                } label: {
-                    Text("편집")
-                        .foregroundColor(.accentColor)
-                        .fontWeight(.medium)
                 }
+                .scrollIndicators(.hidden)
+                .navigationTitle("히스토리")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        // Edit Button
+                        Button {
+                            withAnimation(
+                                .spring(
+                                    dampingFraction: 0.7,
+                                    blendDuration: 0.3
+                                )
+                            ) {
+                                isEditing.toggle()
+                            }
+                        } label: {
+                            Text("편집")
+                                .foregroundColor(.accentColor)
+                                .fontWeight(.medium)
+                        }
+                    }
+                }
+            } else {
+                // MARK: - History Search
+                HistoryListSearchView(
+                    isSearching: $isSearching,
+                    searchText: $searchText
+                )
             }
         }
+        .padding(.horizontal, 20)
         .overlay {
             if isDialogShowing {
                 Color.black.opacity(0.3)
@@ -150,6 +177,25 @@ struct HistoryListView: View {
                     isDialogShowing: $isDialogShowing,
                     isEditing: $isEditing
                 )
+            }
+        }
+        .onChange(of: isSearchFocused) { _, _ in
+            withAnimation(
+                .spring(
+                    dampingFraction: 0.8,
+                    blendDuration: 0.7
+                )
+            ) {
+                if $isSearchFocused.wrappedValue {
+                    isSearching = true
+                } else {
+                    isSearching = false
+                }
+            }
+        }
+        .onChange(of: isSearching) { _, _ in
+            if !isSearching {
+                isSearchFocused = false
             }
         }
     }
@@ -219,7 +265,7 @@ struct LocationList: View {
             
             // Each List Cell
             if !isCollapsed {
-                ForEach(samples, id: \.self) { conversation in
+                ForEach(samples, id: \.self) { conversation in // TODO: each TKLocation의 TKConversation
                     CellItem(
                         conversation: conversation,
                         selectedConversationID: $selectedConversationID,
@@ -276,10 +322,10 @@ struct CellItem: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title) // TODO: title
+                    Text(conversation.title) // TODO: TKConversation.title
                         .font(.system(size: 17, weight: .medium))
                     Text(
-                        conversation.createdAt.formatted( // TODO: createdAt
+                        conversation.createdAt.formatted( // TODO: TKConversation.createdAt
                             date: .abbreviated,
                             time: .omitted
                         )
@@ -349,7 +395,7 @@ struct CustomDialog: View {
                 Text("대화 삭제")
                     .foregroundColor(.gray900)
                     .font(.system(size: 17, weight: .bold))
-                Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: conversation.title
+                Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: TKConversation.title
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray600)
                     .font(.system(size: 15, weight: .medium))
@@ -391,21 +437,6 @@ struct CustomDialog: View {
     func removeConversation(_ id: String) {
         // TODO: Delete하는 로직 (String -> PersistentIdentifier를 이용해 객체를 특정)
         
-    }
-}
-
-// MARK: - Empty View
-@ViewBuilder
-func emptyViewBuilder() -> some View {
-    VStack(spacing: 15) {
-        Image(systemName: "bubble.left.and.bubble.right.fill")
-            .resizable()
-            .frame(width: 117, height: 97)
-            .foregroundColor(.gray200)
-        
-        Text("아직 대화 기록이 없어요")
-            .font(.system(size: 17, weight: .medium))
-            .foregroundColor(.gray300)
     }
 }
 
