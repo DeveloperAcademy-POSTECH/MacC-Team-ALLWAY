@@ -94,9 +94,6 @@ struct TKScrollView: View {
                         }
                     }
                 }
-                .frame(
-                    maxHeight: UIScreen.main.bounds.height * 0.55
-                )
                 .padding(.top, 16)
                 .overlay(alignment: align) {
                     curtain()
