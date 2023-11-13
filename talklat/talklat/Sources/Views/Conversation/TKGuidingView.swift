@@ -10,6 +10,7 @@ import SwiftUI
 struct TKGuidingView: View {
     @ObservedObject var store: TKConversationViewStore
     @State private var circleTrim: CGFloat = 0.0
+    @State private var flag: Bool = false
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     let guide: String =
@@ -48,8 +49,40 @@ struct TKGuidingView: View {
                 .bold()
             
             Spacer()
-            
+        }
+        .padding(.horizontal, 24)
+        .overlay(alignment: .bottom) {
             HStack {
+                ForEach(0..<4) { idx in
+                    if idx % 2 == 0 {
+                        Circle()
+                            .foregroundStyle(
+                                flag
+                                ? Color.white
+                                : Color.OR5
+                            )
+                            .frame(width: 20, height: 20)
+                            .animation(
+                                .smooth.delay(TimeInterval(idx)),
+                                value: flag
+                            )
+                        
+                    } else {
+                        Capsule()
+                            .frame(width: 40, height: 20)
+                            .padding(.horizontal, 20)
+                            .foregroundStyle(
+                                flag
+                                ? Color.white
+                                : Color.OR5
+                            )
+                            .animation(
+                                .smooth.delay(TimeInterval(idx)),
+                                value: flag
+                            )
+                    }
+                }
+                
                 Spacer()
                 
                 Circle()
@@ -59,13 +92,17 @@ struct TKGuidingView: View {
                     .rotationEffect(.degrees(-90))
                     .animation(.default, value: circleTrim)
             }
+            .onAppear {
+                flag.toggle()
+            }
+            .padding(.horizontal, 48)
+            .padding(.bottom, 24)
         }
-        .foregroundColor(.white)
-        .padding(.horizontal, 24)
+        .foregroundStyle(.white)
         .background { Color.OR5.ignoresSafeArea() }
         .onReceive(guideTimer) { _ in
             if circleTrim <= 1.0 {
-                circleTrim += 0.02
+                circleTrim += 0.025
             } else if circleTrim >= 1.0 {
                 guideTimer.upstream.connect().cancel()
                 store.onGuideTimeEnded()

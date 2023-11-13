@@ -59,7 +59,12 @@ struct TKConversationView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .sheet(isPresented: store.bindingSaveConversationViewFlag()) {
+        .sheet(
+            isPresented: store.bindingSaveConversationViewFlag(),
+            onDismiss: {
+                store.onDismissSavingViewButtonTapped()
+            }
+        ) {
             TKSavingView(store: store)
         }
         .onChange(of: store(\.conversationStatus)) { _, newStatus in
