@@ -38,21 +38,23 @@ final class TKMainViewStore {
         reduce(\.isBottomSheetMaxed, into: flag)
     }
     
-    public func onUpdatingDragOffset(_ gestureOffset: CGFloat) {
-        Task { @MainActor in
-            reduce(\.offset, into: gestureOffset + self(\.lastOffset))
+    public func onUpdatingDragOffset(_ height: CGFloat) {
+        withAnimation(.spring()) {
+            self.reduce(\.offset, into: height)
         }
     }
     
-    public func onDragEnded(_ maxHeight: CGFloat) {
+    public func onDragEnded(_ height: CGFloat) {
         withAnimation(.spring()) {
-            if -self(\.offset) > maxHeight / 2 {
-                reduce(\.offset, into: -maxHeight)
-            } else {
-                reduce(\.offset, into: 0)
+            if self(\.offset) < -150 {
+                self.reduce(\.lastOffset, into: -(height))
+                
+            } else if self(\.lastOffset) != 0, self(\.offset) > 10 {
+                self.reduce(\.lastOffset, into: .zero)
             }
+            
+            self.reduce(\.offset, into: 0)
         }
-        reduce(\.lastOffset, into: self(\.offset))
     }
 }
 
