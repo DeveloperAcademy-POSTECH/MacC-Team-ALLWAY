@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct TKGuidingView: View {
-    @ObservedObject var store: ConversationViewStore
+    @ObservedObject var store: TKConversationViewStore
     @State private var circleTrim: CGFloat = 0.0
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     let guide: String =
     """
-    이 앱은 당신이 말하는 것을
-    제가 들을 수 있도록 도와줄 거예요.
-    
-    이 화면이 꺼지면, 제 질문을 읽고
-    크고 또박또박 말씀해주시기를
-    부탁드릴게요.
+    해당 화면이 종료되면
+    음성인식이 시작됩니다.
+    제 글을 읽고 또박또박 말씀해 주세요.
     """
     
     var body: some View {
@@ -28,7 +25,7 @@ struct TKGuidingView: View {
                 store.onGuideCancelButtonTapped()
             } label: {
                 Text("취소")
-                    .font(.title2)
+                    .font(.headline)
                     .bold()
             }
             
@@ -47,12 +44,14 @@ struct TKGuidingView: View {
                 .padding(.bottom, 40)
             
             Text(guide)
-                .font(.title3)
+                .font(.title2)
                 .bold()
             
             Spacer()
             
             HStack {
+                Spacer()
+                
                 Circle()
                     .trim(from: 0, to: circleTrim)
                     .stroke(style: StrokeStyle(lineWidth: 7, lineCap: .round))
@@ -60,22 +59,16 @@ struct TKGuidingView: View {
                     .rotationEffect(.degrees(-90))
                     .animation(.default, value: circleTrim)
             }
-            .frame(
-                maxWidth: .infinity,
-                alignment: .center
-            )
         }
         .foregroundColor(.white)
         .padding(.horizontal, 24)
-        .background { Color.accentColor.ignoresSafeArea() }
+        .background { Color.OR5.ignoresSafeArea() }
         .onReceive(guideTimer) { _ in
-            if circleTrim <= 1.1 {
-                circleTrim += 0.04
-            } else if circleTrim >= 1.1 {
+            if circleTrim <= 1.0 {
+                circleTrim += 0.02
+            } else if circleTrim >= 1.0 {
                 guideTimer.upstream.connect().cancel()
-                withAnimation {
-                    store.onGuideTimeEnded()
-                }
+                store.onGuideTimeEnded()
             }
         }
     }
@@ -83,6 +76,6 @@ struct TKGuidingView: View {
 
 struct TKGuidingView_Preview: PreviewProvider {
     static var previews: some View {
-        TKGuidingView(store: .init(conversationState: .init(conversationStatus: .guiding)))
+        TKGuidingView(store: .init())
     }
 }
