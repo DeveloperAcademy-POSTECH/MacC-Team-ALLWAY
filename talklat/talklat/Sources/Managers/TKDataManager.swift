@@ -22,10 +22,14 @@ struct TKDataManager {
 
     @MainActor
     private init() {
-        self.modelContainer = try! ModelContainer(
-            for: TKConversation.self, TKTextReplacement.self
-        )
-        self.modelContext = modelContainer.mainContext
+        do {
+            self.modelContainer = try ModelContainer(
+                for: TKConversation.self, TKTextReplacement.self
+            )
+            self.modelContext = modelContainer.mainContext
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 }
 
