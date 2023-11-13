@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct TKTextReplacementAddView: View {
-    @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) var context
     @EnvironmentObject var settingStore: SettingViewStore
     @Environment(\.presentationMode) var presentationMode
     var isInputValid: Bool {
@@ -18,8 +18,6 @@ struct TKTextReplacementAddView: View {
     @FocusState var focusState: Bool
     @State private var phrase: String = ""
     @State private var replacement: String = ""
-    
-    var textReplacementManager = TKTextReplacementManager()
     
     var body: some View {
         NavigationView {

@@ -20,12 +20,14 @@ struct TKTextReplacementEditView: View {
     
     @State private var phrase: String
     @State private var replacement: String
-
-    init(phrase: String, replacement: String, isPresented: Binding<Bool>) {
+    
+    var textReplacementManager: TKTextReplacementManager
+    
+    init(phrase: String, replacement: String, isPresented: Binding<Bool>, textReplacementManager: TKTextReplacementManager) {
         _phrase = State(initialValue: phrase)
         _replacement = State(initialValue: replacement)
         _isPresented = isPresented
-        print("phrase: \(phrase), key: \(replacement)")
+        self.textReplacementManager = textReplacementManager
     }
 
     var body: some View {
@@ -36,7 +38,7 @@ struct TKTextReplacementEditView: View {
                     .padding(.top, 36)
                 
                 Spacer()
-
+                
                 Button(action: {
                     self.isDialogShowing = true
                 }) {
@@ -52,6 +54,7 @@ struct TKTextReplacementEditView: View {
                 .padding(.vertical, 8)
             }
             .padding()
+            .padding(.top, 8)
             .navigationTitle("편집")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button(action: {
@@ -74,12 +77,12 @@ struct TKTextReplacementEditView: View {
                 isPresented = false
                 presentationMode.wrappedValue.dismiss()
             })
-
+            
         }
         .background(
             Group {
                 if isDialogShowing {
-                    Color.black.opacity(0.5).ignoresSafeArea() // 반투명 배경
+                    Color.black.opacity(0.5).ignoresSafeArea()
                 }
             }
         )
@@ -94,14 +97,14 @@ struct TKTextReplacementEditView: View {
             }
         )
     }
-
+    
     private func deleteTKTextReplacement() {
         if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-            context.delete(existingItem)
+            textReplacementManager.deleteTextReplacement(textReplacement: existingItem)
         }
         isPresented = false
     }
-
+    
     private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
         let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
         return fetchedItems.first
@@ -111,7 +114,7 @@ struct TKTextReplacementEditView: View {
 struct CustomDialog: View {
     @Binding internal var isDialogShowing: Bool
     
-    var onDelete: () -> Void // 새로운 클로저 추가
+    var onDelete: () -> Void
     
     var body: some View {
         GroupBox {
@@ -142,7 +145,7 @@ struct CustomDialog: View {
                     }
                     
                     Button {
-                        onDelete() // 삭제 메소드 호출
+                        onDelete()
                         isDialogShowing = false
                     } label: {
                         Text("네, 삭제할래요")
@@ -160,12 +163,5 @@ struct CustomDialog: View {
         .frame(height: 240)
         .frame(maxWidth: .infinity)
         
-    }
-}
-
-struct TKTextReplacementEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        @State var isPresented = true
-        TKTextReplacementEditView(phrase: "아아", replacement: "아이스 아메리카노 한 잔 주시겠어요?", isPresented: $isPresented)
     }
 }

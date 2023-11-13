@@ -18,6 +18,8 @@ struct TKTextReplacementListView: View {
     
     @ObservedObject var settingStore = SettingViewStore(settingState: .init())
     
+    var textReplacementManager = TKTextReplacementManager()
+    
     var groupedLists: [String: [TKTextReplacement]] {
         Dictionary(grouping: lists) { entry in
             entry.wordDictionary.keys.first?.headerKey ?? "#"
@@ -94,7 +96,8 @@ struct TKTextReplacementListView: View {
                     TKTextReplacementEditView(
                         phrase: selectedPhrase,
                         replacement: selectedReplacement,
-                        isPresented: settingStore.bindingToShowTextReplacementEditView()
+                        isPresented: settingStore.bindingToShowTextReplacementEditView(),
+                        textReplacementManager: textReplacementManager
                     )
                 }
             })
@@ -129,7 +132,6 @@ struct TKTextReplacementListView: View {
     func listSection(_ groupKey: String) -> some View {
         ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
             ForEach(list.wordDictionary.sorted { $0.key < $1.key }, id: \.key) { key, values in
-                // 첫 번째 값만 사용
                 if let firstValue = values.first {
                     TextReplacementRow(key: key, value: firstValue, list: list, selectedList: $selectedList)
                         .padding(.horizontal, 16)
