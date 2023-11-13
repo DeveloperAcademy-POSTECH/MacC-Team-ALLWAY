@@ -53,7 +53,9 @@ struct TKMainView: View {
         .fullScreenCover(
             isPresented: store.bindingConversationFullScreenCover()
         ) {
-            ScrollContainer()
+            Text("?")
+//            ScrollContainer()
+//            TKConversationView(store: store)
         }
         .toolbarBackground(
             Color.accentColor,

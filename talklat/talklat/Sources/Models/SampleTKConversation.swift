@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct TKConversation: Identifiable, Equatable, Hashable {
+struct TKConversationSample: Identifiable, Equatable, Hashable {
     let id: String /// 유니크함 지정
     var content: [TKContent]
     var location: TKLocation? // 위치정보를 켜지 않은경우 nil

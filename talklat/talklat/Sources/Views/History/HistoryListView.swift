@@ -15,26 +15,26 @@ struct HistoryListView: View {
     @State internal var isSearching: Bool = false
     @State internal var searchText: String = ""
     
-    private var sampleConversations: [TKConversation] {
+    private var sampleConversations: [TKConversationSample] {
         [
             // TKConversation 1
-            TKConversation(
+            TKConversationSample(
                 id: UUID().uuidString,
                 content: [
-                    TKConversation.TKContent(
+                    TKConversationSample.TKContent(
                         id: UUID().uuidString,
                         text: "안녕하세요 이거 혹시 새 제품 있나요?",
                         status: "question",
                         createdAt: Date.now
                     ),
-                    TKConversation.TKContent(
+                    TKConversationSample.TKContent(
                         id: UUID().uuidString,
                         text: "계속 찾고 있었는데 안보여요",
                         status: "question",
                         createdAt: Date.now
                     )
                 ],
-                location: TKConversation.TKLocation(
+                location: TKConversationSample.TKLocation(
                     id: UUID().uuidString,
                     latitude: 0.0,
                     longitude: 0.0,
@@ -46,23 +46,23 @@ struct HistoryListView: View {
             ),
             
             // TKConversation 2
-            TKConversation(
+            TKConversationSample(
                 id: UUID().uuidString,
                 content: [
-                    TKConversation.TKContent(
+                    TKConversationSample.TKContent(
                         id: UUID().uuidString,
                         text: "안녕하세요 혹시 라네즈 쿠션 리필을 따로 판매하시나요?",
                         status: "question",
                         createdAt: Date.now
                     ),
-                    TKConversation.TKContent(
+                    TKConversationSample.TKContent(
                         id: UUID().uuidString,
                         text: "어 잠시만요",
                         status: "answer",
                         createdAt:  Date.now
                     )
                 ],
-                location: TKConversation.TKLocation(
+                location: TKConversationSample.TKLocation(
                     id: UUID().uuidString,
                     latitude: 3242.0,
                     longitude: 34.0,
@@ -74,17 +74,17 @@ struct HistoryListView: View {
             ),
             
             // TKConversation 3
-            TKConversation(
+            TKConversationSample(
                 id: UUID().uuidString,
                 content: [
-                    TKConversation.TKContent(
+                    TKConversationSample.TKContent(
                         id: UUID().uuidString,
                         text: "안녕하세요 오늘 5시 예약한 00인데요, 제가 귀가 안좋아서, 말씀하실 때 핸드폰에 대고 말씀해주시면 텍스트로 읽어보겠습니다.",
                         status: "question",
                         createdAt:  Date.now
                     )
                 ],
-                location: TKConversation.TKLocation(
+                location: TKConversationSample.TKLocation(
                     id: UUID().uuidString,
                     latitude: 3242.0,
                     longitude: 34.0,
@@ -204,7 +204,7 @@ struct HistoryListView: View {
 
 // MARK: - Location Based List Items
 struct LocationList: View {
-    internal var samples: [TKConversation]
+    internal var samples: [TKConversationSample]
     @State internal var isCollapsed: Bool = false
     @Binding internal var selectedConversationID: String
     @Binding internal var isEditing: Bool
@@ -283,7 +283,7 @@ struct LocationList: View {
 }
 
 struct CellItem: View {
-    var conversation: TKConversation
+    var conversation: TKConversationSample
     @State internal var isRemoving: Bool = false
     @Binding internal var selectedConversationID: String
     @Binding internal var isEditing: Bool
