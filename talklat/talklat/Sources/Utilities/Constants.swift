@@ -60,6 +60,12 @@ public enum TKTransitionObjects {
     case INTERLUDE
 }
 
+//
+public enum MessageType: String {
+    case question = "question"
+    case answer = "answer"
+}
+
 public enum LocationCallType {
     case track
     case get

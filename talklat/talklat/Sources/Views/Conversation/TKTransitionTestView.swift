@@ -12,27 +12,39 @@ struct TKTransitionTestView: View {
         case one, two, three
     }
     @State private var status: Status = .one
+    @State private var flag: Bool = false
+    
+    @Namespace var NAMETEST
     
     var body: some View {
-        switch status {
-        case .one:
-            Text("?")
-                .transition(.asymmetric(insertion: .opacity, removal: .slide))
-                .animation(.easeInOut, value: status)
-                .task {
-                    try? await Task.sleep(for: .seconds(1.2))
-                    withAnimation {
-                        status = .two
-                    }
-                }
+        VStack {
             
-        case .two:
-            NavigationStack {
-                Text("2")
+            Button {
+                withAnimation {
+                    flag.toggle()
+                }
+            } label: {
+                Text("Toggle")
             }
             
-        case .three:
-            Text("4")
+            if flag {
+                Text("Hi")
+                    .matchedGeometryEffect(id: "ID", in: NAMETEST)
+            } else {
+                TKTransitionTestView2()
+            }
+        }
+        .publishNamespace(NAMETEST)
+    }
+}
+
+struct TKTransitionTestView2: View {
+    @Environment(\.namespace) var NAMETEST
+    
+    var body: some View {
+        VStack {
+            Text("??")
+                .matchedGeometryEffect(id: "ID", in: NAMETEST)
         }
     }
 }

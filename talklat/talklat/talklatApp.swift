@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
     @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     private let appRootManager = AppRootManager()
@@ -44,6 +46,7 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
+//        .modelContainer(for: [TKConversation.self, TKContent.self])
     }
 }
 

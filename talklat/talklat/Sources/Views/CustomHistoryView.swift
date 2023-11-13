@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CustomHistoryView: View {
-    let conversationViewStore: ConversationViewStore
+    let conversationViewStore: TKConversationViewStore
     @State private var showWebSheet: Bool = false
     @State var webURL: URL?
     
@@ -21,8 +21,7 @@ struct CustomHistoryView: View {
             VStack {
                 CustomHistoryViewControllerRepresentable()
                 Button {
-                    conversationViewStore.reduce(\.conversationStatus, into: .writing)
-                    conversationViewStore.reduce(\.isTopViewShown, into: false)
+                    //MARK: Swipe down action
                 } label: {
                     VStack {
                         Text("작성화면으로 돌아가기")
@@ -35,10 +34,8 @@ struct CustomHistoryView: View {
             .padding()
         }
         .onReceive(NotificationCenter.default.publisher(for: swipeDetectNotification)) { _ in
-            // swipe down action
-            withAnimation {
-                swipeDownAction()
-            }
+            //MARK: swipe down action
+            
         }
         .onReceive(NotificationCenter.default.publisher(for: webViewNotification, object: nil)) { data in // web view sheet action
             
@@ -63,6 +60,6 @@ struct CustomHistoryView: View {
     }
 }
 
-#Preview {
-    CustomHistoryView(conversationViewStore: ConversationViewStore(conversationState: .init(conversationStatus: .writing)))
-}
+//#Preview {
+//    CustomHistoryView(conversationViewStore: TKConversationViewStore(conversationState: .init(conversationStatus: .writing)))
+//}

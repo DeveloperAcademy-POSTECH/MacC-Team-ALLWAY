@@ -97,13 +97,5 @@ class CustomTableViewController: UITableViewController {
             NotificationCenter.default.post(name: swipeDetectedNotification, object: nil)
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    @objc func floatingButtonTapped() {
-        tableView.scrollToBottom(animated: false)
-    }
 }
 
