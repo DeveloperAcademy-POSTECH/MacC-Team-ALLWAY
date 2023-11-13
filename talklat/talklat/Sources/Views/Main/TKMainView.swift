@@ -10,6 +10,7 @@ import SwiftUI
 struct TKMainView: View {
     @StateObject private var store = TKMainViewStore()
     @StateObject private var conversationView = TKConversationViewStore()
+    @EnvironmentObject private var locationStore: LocationStore
     
     var body: some View {
         ZStack {
@@ -19,10 +20,17 @@ struct TKMainView: View {
                 
                 VStack(spacing: 10) {
                     HStack(spacing: 2) {
-                        Image(systemName: "location.fill")
+                        switch locationStore(\.authorizationStatus) {
+                        case .authorizedAlways, .authorizedWhenInUse:
+                            Image(systemName: "location.fill")
+                            
+                        default:
+                            Image(systemName: "location.slash.fill")
+                        }
                         
-                        Text("현재 위치")
+                        Text("\(locationStore(\.currentShortPlaceMark))")
                     }
+                    .foregroundStyle(Color.white)
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
@@ -87,6 +95,9 @@ struct TKMainView: View {
             }
         }
         .background { Color.accentColor.ignoresSafeArea(edges: .top) }
+        .onAppear {
+            locationStore.fetchCurrentCityName()
+        }
     }
     
     private func startConversationButtonBuilder() -> some View {

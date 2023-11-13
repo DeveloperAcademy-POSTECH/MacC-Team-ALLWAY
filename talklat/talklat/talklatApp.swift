@@ -13,6 +13,7 @@ struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
     @StateObject private var appViewStore: AppViewStore = AppViewStore()
+    @StateObject var locationStore: LocationStore = LocationStore()
     
     private let appRootManager = AppRootManager()
     
@@ -39,6 +40,7 @@ struct talklatApp: App {
                     AuthorizationRequestView(currentAuthStatus: appViewStore.currentAuthStatus)
                 }
             }
+            .environmentObject(locationStore)
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
