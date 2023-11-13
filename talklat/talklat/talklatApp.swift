@@ -12,6 +12,7 @@ import SwiftData
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appViewStore: AppViewStore = AppViewStore()
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
     
     private let appRootManager = AppRootManager()
     
