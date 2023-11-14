@@ -11,12 +11,8 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
-    @StateObject private var appViewStore: AppViewStore = AppViewStore()
-    
-    @StateObject var settingStore = SettingViewStore(settingState: .init())
-    
-    private let appRootManager = AppRootManager()
+    @StateObject private var settingStore = SettingViewStore(settingState: .init())
+    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     private var container: ModelContainer
     
     init() {
@@ -35,28 +31,21 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch appViewStore.currentAuthStatus {
+                switch store(\.authStatus) {
                 case .splash:
                     Temp_SplashView()
                         .task {
                             try? await Task.sleep(for: .seconds(1.5))
-                            let status = await appRootManager.switchAuthStatus()
-                            appViewStore.voiceRecordingAuthSetter(status)
+                            let status = await SpeechAuthManager.switchAuthStatus()
+                            store.onVoiceAuthorizationObtained(status)
                         }
-                    
-                case .authCompleted:
+
+                default:
                     NavigationStack {
-                         TKMainView()
+                        TKMainView(store: store)
                     }
-                    
-                case .speechRecognitionAuthIncompleted
-                    ,.microphoneAuthIncompleted
-                    ,.authIncompleted:
-                    AuthorizationRequestView(currentAuthStatus: appViewStore.currentAuthStatus)
+                    .transition(.opacity.animation(.easeInOut))
                 }
-            }
-            .onAppear {
-                appViewStore.voiceRecordingAuthSetter(.splash)
             }
             .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle

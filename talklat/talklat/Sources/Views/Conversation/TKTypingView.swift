@@ -50,6 +50,7 @@ struct TKTypingView: View {
                     maxHeight: 250,
                     alignment: .top
                 )
+                .padding(.bottom, 12)
                 .background {
                     Color.OR5
                         .matchedGeometryEffect(

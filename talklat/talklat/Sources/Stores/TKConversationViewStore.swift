@@ -14,7 +14,9 @@ final class TKConversationViewStore {
         case writing
     }
     
-    struct ConversationState: Equatable {
+    struct ConversationState: Equatable, TKAnimatable {
+        var animationFlag: Bool = false
+        
         var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
@@ -24,6 +26,7 @@ final class TKConversationViewStore {
         var historyItems: [HistoryItem] = []
         var historyItem: HistoryItem?
         var blockButtonDoubleTap: Bool = false
+        var isNewConversationSaved: Bool = false
         
         // scroll container related - TODO: ScrollStore 분리?
         var historyScrollViewHeight: CGFloat = 0
@@ -76,6 +79,21 @@ final class TKConversationViewStore {
         )
     }
     
+    public func bindingNewConversationToast() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isNewConversationSaved) },
+            set: { self.reduce(\.isNewConversationSaved, into: $0) }
+        )
+    }
+}
+
+extension TKConversationViewStore {
+    public func onSaveNewConversationButtonTapped() {
+        withAnimation {
+            reduce(\.isNewConversationSaved, into: true)
+        }
+    }
+
     public func onBackToWritingChevronTapped() {
         withAnimation {
             switchConverstaionStatus()
@@ -100,7 +118,7 @@ final class TKConversationViewStore {
         )
     }
     
-    public func onDismissConversationButtonTapped() {
+    public func onDismissSavingViewButtonTapped() {
         reduce(
             \.hasSavingViewDisplayed,
              into: false
