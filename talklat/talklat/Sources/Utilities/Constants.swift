@@ -28,11 +28,14 @@ public enum Constants {
     텍스트로 변환됩니다.
     """
     
+    static let SectionIndexTitles = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"]
+    
     static let START_CONVERSATION_MESSAGE: String =
     """
     새 대화
     시작하기
     """
+    
 }
 
 public enum AuthStatus: String {

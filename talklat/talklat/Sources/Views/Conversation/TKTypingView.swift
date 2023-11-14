@@ -12,9 +12,12 @@ struct TKTypingView: View {
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     
+    @State private var textFieldText: String = ""
+    
     // TextReplacement
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
+    @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
     
     let namespaceID: Namespace.ID
@@ -89,20 +92,10 @@ struct TKTypingView: View {
                 .frame(maxWidth: .infinity)
                 .focused($focusState)
                 .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
-                // MARK: TextReplacement 키보드 위 툴바
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        if let key = replacementKeyForCurrentText(), !key.isEmpty,
-                           let value = manager.findValueForKeyInLists(key: key, lists: lists) {
-                            Button {
-                                store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
-                            } label: {
-                                Text(value)
-                            }
-                        }
-                    }
-                }
+                
             }
+            
+            customToolbar()
             
             Spacer()
             
@@ -230,11 +223,62 @@ struct TKTypingView: View {
         }
         .padding(.trailing, 24)
     }
+    private func customToolbar() -> some View {
+        HStack {
+            // MARK: Eraser button
+            Button(action: {
+                store.bindingQuestionText().wrappedValue = ""
+            }) {
+                Image(systemName: "eraser.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(focusState ? Color.gray500 : Color.gray300)
+                    .padding(10)
+                    .background(focusState ? Color.gray300 : Color.gray200)
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel(Text("Clear text"))
+            
+            if focusState {
+                // MARK: TextReplacement Button
+                if let key = replacementKeyForCurrentText(),
+                   let replacements = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key],
+                   let firstReplacement = replacements.first { // 첫 번째 요소를 사용
+                    
+                    Button {
+                        let currentText = store.bindingQuestionText().wrappedValue
+                        let newText = currentText
+                            .replacingOccurrences(of: "\(key)", with: firstReplacement, options: [.caseInsensitive], range: nil)
+                        store.bindingQuestionText().wrappedValue = newText
+                    } label: {
+                        Text(firstReplacement)
+                            .foregroundColor(Color.gray600)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.gray300)
+                            }
+                            .background(Color.gray300)
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.leading, 12)
+                }
+            }
+            
+            Spacer()
+        }
+        .background(focusState ? Color.gray200 : Color.clear)
+        .cornerRadius(32)
+        .padding(.horizontal, 16)
+        .transition(.move(edge: .bottom))
+        .animation(.default, value: focusState)
+    }
 }
 
+// MARK: 텍스트 대치 검사
 extension TKTypingView {
+    // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
     func replacementKeyForCurrentText() -> String? {
-        // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
         guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
             return nil
         }
