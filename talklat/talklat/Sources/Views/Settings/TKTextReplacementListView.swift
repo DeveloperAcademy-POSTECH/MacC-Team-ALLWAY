@@ -140,7 +140,7 @@ struct TKTextReplacementListView: View {
                 if let firstValue = values.first {
                     // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
                     let displayValue = firstValue.count > 40 ? String(firstValue.prefix(17)) + "..." : firstValue
-                    TextReplacementRow(key: key, value: displayValue, list: list, selectedList: $selectedList)
+                    TextReplacementRow(selectedList: $selectedList, key: key, value: displayValue, list: list)
                         .padding(.horizontal, 16)
                         .cornerRadius(16)
                         .simultaneousGesture(TapGesture().onEnded {

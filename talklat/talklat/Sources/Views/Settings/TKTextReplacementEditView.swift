@@ -89,7 +89,7 @@ struct TKTextReplacementEditView: View {
         .overlay(
             Group {
                 if isDialogShowing {
-                    CustomDialog(
+                    TextReplacementCustomDialog(
                         isDialogShowing: $isDialogShowing,
                         onDelete: deleteTKTextReplacement
                     )
@@ -112,7 +112,7 @@ struct TKTextReplacementEditView: View {
     }
 }
 
-struct CustomDialog: View {
+struct TextReplacementCustomDialog: View {
     @Binding internal var isDialogShowing: Bool
     
     var onDelete: () -> Void

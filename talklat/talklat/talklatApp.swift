@@ -11,22 +11,14 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: ""
-    )
-    
-    @StateObject private var store: ConversationViewStore = ConversationViewStore(
-        conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing
-        )
-    )
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
+    @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     @StateObject var settingStore = SettingViewStore(settingState: .init())
     
     private let appRootManager = AppRootManager()
     private var container: ModelContainer
-
+    
     init() {
         do {
             container = try ModelContainer(
@@ -53,7 +45,9 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    ScrollContainer(store: store)
+                    NavigationStack {
+                         TKMainView()
+                    }
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -64,12 +58,13 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
-            .onChange(of: scenePhase) { _ in
+            .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
         .modelContainer(container)
         .environmentObject(settingStore)
+
     }
 }
 

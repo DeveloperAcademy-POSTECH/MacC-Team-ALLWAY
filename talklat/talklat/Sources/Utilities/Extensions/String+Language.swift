@@ -14,9 +14,9 @@ extension String {
 
 
         switch firstChar {
-        case let c where c.isKorean:
+        case let c where c.isCharacterKorean:
             return c.koreanFirstConsonant ?? "#"
-        case let c where c.isEnglish:
+        case let c where c.isCharacterEnglish:
             return String(c).uppercased()
         default:
             return "#"

@@ -37,7 +37,7 @@ class TKTextReplacementManager {
         return replacements.first(where: { $0.wordDictionary.keys.contains(inputText) })?.wordDictionary[inputText]
     }
 
-    
+    // TODO: UI작업과 같이 할 것
     public func updateTextReplacement(
         phrase: TKTextReplacement,
         replacement: TKTextReplacement
@@ -48,5 +48,11 @@ class TKTextReplacementManager {
     public func deleteTextReplacement(textReplacement: TKTextReplacement) {
         context.delete(textReplacement)
     }
+    
+    // MARK: 리스트에서 특정 키에 해당하는 값을 찾는 메서드
+//    func findValueForKeyInLists(key: String, lists: [TKTextReplacement]) -> String? {
+//        return lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key]
+//    }
+
 }
 
