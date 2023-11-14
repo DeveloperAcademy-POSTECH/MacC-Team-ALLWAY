@@ -68,14 +68,13 @@ struct CreateConversationView: View {
             // 임시 자동생성
             let location = TKLocation(
                 latitude: 0.2,
-                longitude: 3.0,
-                blockName: "00동"
+                longitude: 3.1,
+                blockName: "상도동"
             )
             
             let conversation = TKConversation(
                 title: title,
                 createdAt: Date(),
-                updatedAt: Date(),
                 content: content,
                 location: location
             )
