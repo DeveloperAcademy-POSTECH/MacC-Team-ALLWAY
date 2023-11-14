@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct TKToast: View {
-    @Binding var flag: Bool
+    @Binding var isPresented: Bool
     let text: String = "Location"
     
     var body: some View {
-        if flag {
+        if isPresented {
             HStack(spacing: 12) {
                 Image(systemName: "checkmark.circle.fill")
                     .symbolRenderingMode(.palette)
@@ -56,7 +56,7 @@ struct TKToast: View {
             .task {
                 try? await Task.sleep(for: .seconds(2.0))
                 withAnimation {
-                    flag.toggle()
+                    isPresented.toggle()
                 }
             }
         }
@@ -64,5 +64,5 @@ struct TKToast: View {
 }
 
 #Preview {
-    TKToast(flag: .constant(false))
+    TKToast(isPresented: .constant(false))
 }
