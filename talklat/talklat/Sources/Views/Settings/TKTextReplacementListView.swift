@@ -144,7 +144,6 @@ struct TKTextReplacementListView: View {
                         .padding(.horizontal, 16)
                         .cornerRadius(16)
                         .simultaneousGesture(TapGesture().onEnded {
-                            print("Tap gesture on Button\n")
                             settingStore.selectTextReplacement(phrase: key, replacement: firstValue)
                         })
                 }

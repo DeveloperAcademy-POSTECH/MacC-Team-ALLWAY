@@ -56,8 +56,4 @@ final class SettingViewStore: ObservableObject {
     func showTextReplacementAddView() {
         viewState.showingTextReplacementAddView = true
     }
-    
-    func closeTextReplacementAddView() {
-        viewState.showingTextReplacementAddView = false
-    }
 }

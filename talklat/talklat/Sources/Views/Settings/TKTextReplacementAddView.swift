@@ -25,11 +25,9 @@ struct TKTextReplacementAddView: View {
             VStack(spacing: 10) {
                 
                 SettingTRTextField (
-                    title: "단축 문구",
+                    text: $phrase, focusState: _focusState, title: "단축 문구",
                     placeholder: "아아",
-                    limit: 20,
-                    text: $phrase,
-                    focusState: _focusState
+                    limit: 20
                 )
                 .onChange(of: phrase) { newValue in
                     if newValue.hasPrefix(" ") {
@@ -38,10 +36,9 @@ struct TKTextReplacementAddView: View {
                 }
                 
                 SettingTRTextField (
-                    title: "변환 문구",
+                    text: $replacement, title: "변환 문구",
                     placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                    limit: 160,
-                    text: $replacement
+                    limit: 160
                 )
                 .padding(.top, 36)
                 .onChange(of: replacement) { newValue in

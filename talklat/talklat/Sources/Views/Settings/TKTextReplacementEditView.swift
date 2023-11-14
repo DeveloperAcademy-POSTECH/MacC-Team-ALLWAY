@@ -5,8 +5,8 @@
 //  Created by 신정연 on 11/12/23.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct TKTextReplacementEditView: View {
     @Environment(\.modelContext) private var context
@@ -32,8 +32,8 @@ struct TKTextReplacementEditView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                SettingTRTextField(title: "단축 문구", placeholder: "아아", limit: 20, text: $phrase, focusState: _focusState)
-                SettingTRTextField(title: "변환 문구", placeholder: "아이스 아메리카노 한 잔 주시겠어요?", limit: 160, text: $replacement)
+                SettingTRTextField(text: $phrase, focusState: _focusState, title: "단축 문구", placeholder: "아아", limit: 20)
+                SettingTRTextField(text: $replacement, title: "변환 문구", placeholder: "아이스 아메리카노 한 잔 주시겠어요?", limit: 160)
                     .padding(.top, 36)
                 
                 Spacer()

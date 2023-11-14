@@ -47,16 +47,12 @@ struct TKConversationView: View {
                         ) {
                             HStack {
                                 Button {
-                                    //MARK: Test용
-                                    navigateToSettings = true
-                                    //                                    store.onEraseAllButtonTapped()
+                                    store.onEraseAllButtonTapped()
                                 } label: {
                                     Text("🛞")
                                 }
                                 .padding(.bottom, 5)
-                                .fullScreenCover(isPresented: $navigateToSettings) {
-                                    TKTextReplacementListView()
-                                }
+                                
                                 Spacer()
                                 
                                 Link(destination: URL(string: "https://open.kakao.com/o/gRBZZUPf")!) {
@@ -265,12 +261,12 @@ struct TKConversationView: View {
                    let replacements = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key],
                    let firstReplacement = replacements.first { // 첫 번째 요소를 사용
                     
-                    Button(action: {
+                    Button {
                         let currentText = store.bindingQuestionText().wrappedValue
                         let newText = currentText
                             .replacingOccurrences(of: "\(key)", with: firstReplacement, options: [.caseInsensitive], range: nil)
                         store.bindingQuestionText().wrappedValue = newText
-                    }) {
+                    } label: {
                         Text(firstReplacement)
                             .foregroundColor(Color.gray600)
                             .padding(.horizontal, 8)
