@@ -39,7 +39,7 @@ struct TextReplacementRow: View {
                     .padding(.leading, 16)
             }
         }
-        .background(Color.gray100)
+        .background(Color.GR1)
         .cornerRadius(15)
     }
 }

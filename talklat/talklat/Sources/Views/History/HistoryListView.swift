@@ -150,7 +150,7 @@ struct LocationList: View {
             HStack {
                 Image(systemName: "location.fill")
                 Text(location.blockName)
-                    .foregroundColor(.gray800)
+                    .foregroundColor(.GR8)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
@@ -273,7 +273,7 @@ struct CellItem: View {
                             time: .omitted
                         )
                     )
-                    .foregroundColor(.gray400)
+                    .foregroundColor(.GR4)
                     .font(.system(size: 15, weight: .medium))
                 }
                 
@@ -281,7 +281,7 @@ struct CellItem: View {
                 
                 Image(systemName: "chevron.right")
                     .opacity(isEditing ? 0 : 1)
-                    .foregroundColor(.gray400)
+                    .foregroundColor(.GR4)
                     .font(
                         .system(
                             size: 17,
@@ -292,7 +292,7 @@ struct CellItem: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color.gray100)
+            .background(Color.GR1)
             .cornerRadius(22)
             .onTapGesture {
                 if isRemoving {
@@ -351,12 +351,12 @@ struct CustomDialog: View {
                     .font(.system(size: 20))
                 
                 Text("대화 삭제")
-                    .foregroundColor(.gray900)
+                    .foregroundColor(.GR9)
                     .font(.system(size: 17, weight: .bold))
                 
                 Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: TKConversation.title
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.gray600)
+                    .foregroundColor(.GR6)
                     .font(.system(size: 15, weight: .medium))
                 
                 HStack {
@@ -366,10 +366,10 @@ struct CustomDialog: View {
                         
                     } label: {
                         Text("아니요, 취소할래요")
-                            .foregroundColor(.gray600)
+                            .foregroundColor(.GR6)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
-                            .background(Color.gray200)
+                            .background(Color.GR2)
                             .cornerRadius(16)
                     }
                     

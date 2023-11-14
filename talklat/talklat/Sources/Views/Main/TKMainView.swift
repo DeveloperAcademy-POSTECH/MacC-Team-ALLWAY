@@ -27,7 +27,7 @@ struct TKMainView: View {
                             .font(.headline)
                             .bold()
                     }
-                    .foregroundStyle(Color.gray400)
+                    .foregroundStyle(Color.GR4)
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
@@ -77,23 +77,23 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    Text("ALL HISTORY VIEW HERE")
+                    HistoryListView()
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
-                        .foregroundStyle(Color.gray300)
+                        .foregroundStyle(Color.GR3)
                 }
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    Text("SETTING VIEW HERE")
+                    Text("Setting View Here")
                 } label: {
                     Image(systemName: "gearshape.fill")
-                        .foregroundStyle(Color.gray300)
+                        .foregroundStyle(Color.GR3)
                 }
             }
         }
-        .background { Color.gray100.ignoresSafeArea(edges: .top) }
+        .background { Color.GR1.ignoresSafeArea(edges: .top) }
         .overlay {
             TKAlert(
                 style: .mic,

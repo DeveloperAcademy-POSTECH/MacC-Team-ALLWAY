@@ -85,7 +85,6 @@ struct TKConversationView: View {
                 break
             }
         }
-        .edgesIgnoringSafeArea(.all)
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
         // .onAppear { gyroScopeStore.detectDeviceMotion() }
@@ -286,7 +285,7 @@ extension TKConversationView {
                 .foregroundColor(
                     store(\.answeredText).isEmpty
                     ? .accentColor
-                    : .gray100.opacity(0.8)
+                    : .GR1.opacity(0.8)
                 )
         }
         .overlay(alignment: .top) {

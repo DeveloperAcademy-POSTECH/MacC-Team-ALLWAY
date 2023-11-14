@@ -125,12 +125,12 @@ struct TextReplacementCustomDialog: View {
                     .font(.system(size: 20))
                 
                 Text("텍스트 대치 삭제")
-                    .foregroundColor(.gray900)
+                    .foregroundColor(.GR9)
                     .font(.system(size: 17, weight: .bold))
                 
                 Text("현재 텍스트 대치가 삭제됩니다.")
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.gray600)
+                    .foregroundColor(.GR6)
                     .font(.system(size: 15, weight: .medium))
                 
                 HStack {
@@ -138,10 +138,10 @@ struct TextReplacementCustomDialog: View {
                         isDialogShowing = false
                     } label: {
                         Text("아니요, 취소할래요")
-                            .foregroundColor(.gray600)
+                            .foregroundColor(.GR6)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
-                            .background(Color.gray200)
+                            .background(Color.GR2)
                             .cornerRadius(16)
                     }
                     

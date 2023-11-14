@@ -29,7 +29,7 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
                 iconView.alpha = 1
                 
             case .outGoing:
-                bubbleBackgroundView.backgroundColor = UIColor(Color.gray100)
+                bubbleBackgroundView.backgroundColor = UIColor(Color.GR1)
                 textView.textColor = .black
                 leadingConstraint.isActive = false
                 trailingConstraint.isActive = true

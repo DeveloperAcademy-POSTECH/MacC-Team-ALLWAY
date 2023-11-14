@@ -42,11 +42,11 @@ struct TKAlert<ActionButtonLabel: View>: View {
                     
                     Text(title)
                         .font(.headline)
-                        .foregroundStyle(Color.gray900)
+                        .foregroundStyle(Color.GR9)
                     
                     Text(description)
                         .font(.subheadline)
-                        .foregroundStyle(Color.gray600)
+                        .foregroundStyle(Color.GR6)
                         .multilineTextAlignment(.center)
                         .frame(maxHeight: .infinity, alignment: .center)
                     
@@ -59,11 +59,11 @@ struct TKAlert<ActionButtonLabel: View>: View {
                             Text(dismissText)
                                 .font(.subheadline)
                                 .bold()
-                                .foregroundStyle(Color.gray600)
+                                .foregroundStyle(Color.GR6)
                                 .frame(width: 140, height: 56)
                                 .background {
                                     RoundedRectangle(cornerRadius: 22)
-                                        .fill(Color.gray200)
+                                        .fill(Color.GR2)
                                 }
                         }
                         

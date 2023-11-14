@@ -46,7 +46,7 @@ struct TKSavingView: View {
                 .font(.headline)
                 .padding(.leading, 32)
                 .padding(.bottom, 8)
-                .foregroundStyle(Color.gray500)
+                .foregroundStyle(Color.GR5)
             
             HStack {
                 TextField("", text: .constant("토크랫(5)"))
@@ -67,7 +67,7 @@ struct TKSavingView: View {
             }
             .background {
                 Capsule()
-                    .fill(Color.gray100)
+                    .fill(Color.GR1)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
@@ -75,7 +75,7 @@ struct TKSavingView: View {
             Text("10/20")
                 .font(.footnote)
                 .padding(.leading, 32)
-                .foregroundStyle(Color.gray400)
+                .foregroundStyle(Color.GR4)
             
         }
         .frame(maxHeight: .infinity, alignment: .top)
@@ -84,7 +84,7 @@ struct TKSavingView: View {
             Capsule()
                 .frame(width: 36, height: 5)
                 .padding(.top, 8)
-                .foregroundStyle(Color.gray300)
+                .foregroundStyle(Color.GR3)
         }
         .presentationDetents([.medium])
     }
