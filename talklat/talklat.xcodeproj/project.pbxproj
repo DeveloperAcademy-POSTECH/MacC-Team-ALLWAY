@@ -21,6 +21,8 @@
 		5769BFE02AFE142F0036CF3D /* String+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BFDF2AFE142F0036CF3D /* String+Language.swift */; };
 		57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TestHistoryView.swift */; };
 		57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
+		5790C7322B03E54B00E0821F /* TKTextReplacementSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790C7312B03E54B00E0821F /* TKTextReplacementSearchView.swift */; };
+		5790C7342B03FD0B00E0821F /* SettingTRSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790C7332B03FD0B00E0821F /* SettingTRSearchBar.swift */; };
 		57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
 		7E427EE12AE9559D0028E4F4 /* TKConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */; };
 		7E4A6CD92AFB2C100014DDB8 /* TKMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */; };
@@ -245,6 +247,8 @@
 		5769BFDF2AFE142F0036CF3D /* String+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Language.swift"; sourceTree = "<group>"; };
 		57806D702ADC5D19003A7B19 /* TestHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHistoryView.swift; sourceTree = "<group>"; };
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
+		5790C7312B03E54B00E0821F /* TKTextReplacementSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementSearchView.swift; sourceTree = "<group>"; };
+		5790C7332B03FD0B00E0821F /* SettingTRSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTRSearchBar.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTKSettingView.swift; sourceTree = "<group>"; };
 		7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 				57464F472AFE4F2500A5F0B0 /* TextReplacementRow.swift */,
 				572304FA2B00A9BC0098FFF5 /* TKTextReplacementEditView.swift */,
 				572304FC2B00AAE70098FFF5 /* SettingTRTextField.swift */,
+				5790C7312B03E54B00E0821F /* TKTextReplacementSearchView.swift */,
+				5790C7332B03FD0B00E0821F /* SettingTRSearchBar.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -790,6 +796,7 @@
 				7E6641612B03C91F00CDC6AB /* TKSavingView.swift in Sources */,
 				7E6641622B03C91F00CDC6AB /* TKTransitionTestView.swift in Sources */,
 				7E6641632B03C91F00CDC6AB /* TKTextField.swift in Sources */,
+				5790C7342B03FD0B00E0821F /* SettingTRSearchBar.swift in Sources */,
 				7E6641642B03C91F00CDC6AB /* TKColor.swift in Sources */,
 				7E6641652B03C91F00CDC6AB /* TLTextField.swift in Sources */,
 				7E6641662B03C91F00CDC6AB /* TKOrbitCircles.swift in Sources */,
@@ -865,6 +872,7 @@
 				7E6641142B038A5B00CDC6AB /* TKOrbitCircles.swift in Sources */,
 				7E6641152B038A5B00CDC6AB /* TKBreathingCircles.swift in Sources */,
 				7E6641162B038A5B00CDC6AB /* TKScrollView.swift in Sources */,
+				5790C7322B03E54B00E0821F /* TKTextReplacementSearchView.swift in Sources */,
 				7E6641172B038A5B00CDC6AB /* AWTextField.swift in Sources */,
 				7E6641182B038A5B00CDC6AB /* TKAlert.swift in Sources */,
 				7E6641192B038A5B00CDC6AB /* TKToast.swift in Sources */,

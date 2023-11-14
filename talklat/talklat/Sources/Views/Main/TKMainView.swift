@@ -86,7 +86,7 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    Text("Setting View Here")
+                    TKTextReplacementListView()
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .foregroundStyle(Color.GR3)

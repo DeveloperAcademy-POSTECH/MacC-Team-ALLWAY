@@ -15,9 +15,9 @@ struct TextReplacementRow: View {
     var list: TKTextReplacement
     
     var body: some View {
-        Button(action: {
+        Button {
             selectedList = list
-        }) {
+        } label: {
             VStack(spacing: 0) {
                 Text(key)
                     .font(.system(size: 17, weight: .bold))
@@ -41,5 +41,18 @@ struct TextReplacementRow: View {
         }
         .background(Color.GR1)
         .cornerRadius(15)
+    }
+}
+
+struct TextReplacementRow_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        let sampleList = TKTextReplacement(wordDictionary: ["dkdk":["dkdkdkdk"]])
+        let sampleKey = "Sample Key"
+        let sampleValue = "Sample Value"
+
+        TextReplacementRow(selectedList: .constant(sampleList), key: sampleKey, value: sampleValue, list: sampleList)
+            .previewLayout(.sizeThatFits)
+            .padding()
     }
 }
