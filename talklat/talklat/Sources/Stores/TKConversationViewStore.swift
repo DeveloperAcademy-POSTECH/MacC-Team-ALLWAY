@@ -24,6 +24,7 @@ final class TKConversationViewStore {
         var historyItems: [HistoryItem] = []
         var historyItem: HistoryItem?
         var blockButtonDoubleTap: Bool = false
+        var isNewConversationSaved: Bool = false
         
         // scroll container related - TODO: ScrollStore 분리?
         var historyScrollViewHeight: CGFloat = 0
@@ -75,7 +76,16 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
-    
+
+}
+
+extension TKConversationViewStore {
+    public func onSaveNewConversationButtonTapped() {
+        withAnimation {
+            reduce(\.isNewConversationSaved, into: true)
+        }
+    }
+
     public func onBackToWritingChevronTapped() {
         withAnimation {
             switchConverstaionStatus()
