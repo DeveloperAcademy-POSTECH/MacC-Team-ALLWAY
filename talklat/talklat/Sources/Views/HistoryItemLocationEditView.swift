@@ -164,34 +164,11 @@ struct HistoryItemLocationEditView: View {
             }
             
             VStack(spacing: 0) {
-                Image("TalklatLogo")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 30)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(6)
-                    .background(Color.OR5)
-                    .cornerRadius(36)
-                
-                Image(systemName: "triangle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.OR5)
-                    .frame(width: 10, height: 10)
-                    .rotationEffect(Angle(degrees: 180))
-                    .offset(y: -3)
+                Image("TKMappAnnotation")
             }
             .modifier(CustomMapPinModifier(isFlipped: $isFlipped, mapAnnotationType: type))
         }
         .padding(.bottom, 85)
-        .background {
-            Capsule(style: .continuous)
-                .fill(.black)
-                .frame(width: 20, height: 15)
-                .offset(y: 3)
-        }
     }
     
     private func moveToUserLocation() {
