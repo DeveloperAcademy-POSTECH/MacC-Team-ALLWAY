@@ -10,10 +10,11 @@ import SwiftData
 
 @Model
 class TKTextReplacement {
-    var replacementDict: [String: String]
-    // var createdAt: Date // 들어갈지 안들어갈지는 추후에 결정
+    var wordDictionary: [String: String] = [:]
     
-    init(replacementDict: [String : String]) {
-        self.replacementDict = replacementDict
+    init(
+        wordDictionary: [String : String]
+    ) {
+        self.wordDictionary = wordDictionary
     }
 }

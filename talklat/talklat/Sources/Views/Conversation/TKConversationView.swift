@@ -6,13 +6,17 @@
 //
 
 import Combine
+import SwiftData
 import SwiftUI
 
 struct TKConversationView: View {
     @ObservedObject var store: TKConversationViewStore
     @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
+    
     @Namespace var TKTransitionNamespace
+    
+    let manager = TKTextReplacementManager()
     
     // MARK: Body
     var body: some View {
@@ -136,7 +140,6 @@ struct TKConversationView: View {
 //    // .onChange(of: gyroScopeStore.faced) { _ in }
 //    // .onAppear { gyroScopeStore.detectDeviceMotion() }
 //    }
-
 //
 //// MARK: - Components
 //// TODO: Component Container..?
@@ -249,3 +252,4 @@ struct TKConversationView: View {
 //        ScrollContainer()
 //    }
 //}
+

@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TKTypingView: View {
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
+    
+    // TextReplacement
+    @Environment(\.modelContext) private var context
+    @Query private var lists: [TKTextReplacement]
+    let manager = TKTextReplacementManager()
+    
     let namespaceID: Namespace.ID
     
     var body: some View {
@@ -82,6 +89,19 @@ struct TKTypingView: View {
                 .frame(maxWidth: .infinity)
                 .focused($focusState)
                 .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+                // MARK: TextReplacement 키보드 위 툴바
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if let key = replacementKeyForCurrentText(), !key.isEmpty,
+                           let value = manager.findValueForKeyInLists(key: key, lists: lists) {
+                            Button {
+                                store.bindingQuestionText().wrappedValue = store.bindingQuestionText().wrappedValue.replacingOccurrences(of: key, with: value)
+                            } label: {
+                                Text(value)
+                            }
+                        }
+                    }
+                }
             }
             
             Spacer()
@@ -209,6 +229,21 @@ struct TKTypingView: View {
             .disabled(store(\.blockButtonDoubleTap))
         }
         .padding(.trailing, 24)
+    }
+}
+
+extension TKTypingView {
+    func replacementKeyForCurrentText() -> String? {
+        // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
+        guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
+            return nil
+        }
+        
+        let sortedKeys = lists.flatMap { list in
+            list.wordDictionary.keys
+        }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        
+        return sortedKeys.first { $0.lowercased() == lastWord }
     }
 }
 
