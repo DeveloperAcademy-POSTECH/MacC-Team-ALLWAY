@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CustomHistoryView: View {
     let conversationViewStore: TKConversationViewStore
+    let conversation: TKConversation
     @State private var showWebSheet: Bool = false
     @State private var webURL: URL?
     
@@ -19,7 +20,7 @@ struct CustomHistoryView: View {
     var body: some View {
         VStack {
             VStack {
-                CustomHistoryViewControllerRepresentable()
+                CustomHistoryViewControllerRepresentable(conversation: conversation)
                 Button {
                     //MARK: Swipe down action
                 } label: {

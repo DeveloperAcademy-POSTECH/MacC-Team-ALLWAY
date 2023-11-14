@@ -31,7 +31,8 @@ struct TKRecentConversationListView: View {
                 #warning("CONVERSATION LIST COUNT")
                 ForEach(0..<10) { _ in
                     NavigationLink {
-                        #warning("Navigate To HISTORY DETAIL")
+                        CustomHistoryView(conversationViewStore: TKConversationViewStore(),
+                                          conversation: TKConversation(title: "title", createdAt: Date.now))
                         Text("?")
                     } label: {
                         VStack(alignment: .leading) {

@@ -16,19 +16,18 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
-    var chatMessage: ChatMessage! {
+    var chatMessage: TKContent! {
         didSet {
             textView.text = chatMessage.text
             
-            switch chatMessage.textType {
-            case .inComming:
+            // MARK: enum 원시타입 안들어가서 if-else문으로 수정
+            if chatMessage.status == "answer" {
                 bubbleBackgroundView.backgroundColor = UIColor(Color.accentColor)
                 textView.textColor = .white
                 leadingConstraint.isActive = true
                 trailingConstraint.isActive = false
                 iconView.alpha = 1
-                
-            case .outGoing:
+            } else {
                 bubbleBackgroundView.backgroundColor = UIColor(Color.gray100)
                 textView.textColor = .black
                 leadingConstraint.isActive = false
