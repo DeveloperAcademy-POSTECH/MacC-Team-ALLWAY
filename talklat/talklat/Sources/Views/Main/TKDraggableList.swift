@@ -15,18 +15,20 @@ struct TKDraggableList: View {
     var body: some View {
         ZStack {
             // MARK: - BOTTOM SHEET BACKGROUND
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color.white)
             
-            VStack {
+            VStack(spacing: 0) {
                 Capsule()
-                    .fill(Color.gray700)
-                    .frame(width: 36, height: 4)
-                    .padding(.vertical)
+                    .fill(Color.gray300)
+                    .frame(width: 36, height: 5)
+                    .padding(.top, 6)
+                    .padding(.bottom, 20)
                 
                 // MARK: - RECENT CONVERSATION LIST
                 TKRecentConversationListView()
                     .scrollDisabled(!store(\.isBottomSheetMaxed))
+                    .scrollIndicators(.hidden)
             }
             .onChange(of: store(\.lastOffset)) { _, _ in
                 store.onBottomSheetMaxed(firstOffset)
@@ -53,5 +55,8 @@ struct TKDraggableList: View {
 }
 
 #Preview {
-    TKDraggableList(store: .init())
+    ZStack {
+        Color.yellow
+        TKDraggableList(store: .init())
+    }
 }

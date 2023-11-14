@@ -53,36 +53,6 @@ struct TKGuidingView: View {
         .padding(.horizontal, 24)
         .overlay(alignment: .bottom) {
             HStack {
-                ForEach(0..<4) { idx in
-                    if idx % 2 == 0 {
-                        Circle()
-                            .foregroundStyle(
-                                flag
-                                ? Color.white
-                                : Color.OR5
-                            )
-                            .frame(width: 20, height: 20)
-                            .animation(
-                                .smooth.delay(TimeInterval(idx)),
-                                value: flag
-                            )
-                        
-                    } else {
-                        Capsule()
-                            .frame(width: 40, height: 20)
-                            .padding(.horizontal, 20)
-                            .foregroundStyle(
-                                flag
-                                ? Color.white
-                                : Color.OR5
-                            )
-                            .animation(
-                                .smooth.delay(TimeInterval(idx)),
-                                value: flag
-                            )
-                    }
-                }
-                
                 Spacer()
                 
                 Circle()
