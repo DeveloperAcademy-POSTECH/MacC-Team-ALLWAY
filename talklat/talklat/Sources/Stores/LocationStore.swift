@@ -17,7 +17,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         var currentPlaceMark: CLPlacemark? = nil
         
         var selectedPlaceMark: CLPlacemark? = nil
-        var locationThumbnail: UIImage? = nil
+        var mapThumbnail: Data? = nil
         
         var authorizationStatus: CLAuthorizationStatus?
         
@@ -70,12 +70,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
     
-    // 사용자의 좌표는 nil일 수 있다.
-    struct UserCoordinate: Equatable {
-        var latitude: Double
-        var longitude: Double
-        var blockName: String
-    }
+    
     
     // 왜 이게 private 처리를 할 수 없을까? -> 아하 call as function을 한다음에 쓰는곳마다 keypath를 이용해서 불러와줘야하는구나
     @Published private var locationState: LocationState = LocationState()
@@ -130,7 +125,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             withAnimation {
                 self.locationState[keyPath: state] = newValue
             }
-        case \.authorizationStatus, \.locationThumbnail, \.currentPlaceMark, \.selectedPlaceMark:
+        case \.authorizationStatus, \.mapThumbnail, \.currentPlaceMark, \.selectedPlaceMark:
             self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
         default:
             break
@@ -266,7 +261,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     @MainActor
     func updateLocationThumbnail(_ image: UIImage?) {
         guard let image = image else { return }
-        self.updateState(\.locationThumbnail, with: image)
+        self.updateState(\.mapThumbnail, with: image.pngData())
     }
     
     func detectAuthorization() -> Bool {
@@ -283,4 +278,12 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
 public enum LocationFetchType {
     case current
     case selected
+}
+
+
+// 사용자의 좌표는 nil일 수 있다.
+public struct UserCoordinate: Equatable {
+    var latitude: Double
+    var longitude: Double
+    var blockName: String
 }

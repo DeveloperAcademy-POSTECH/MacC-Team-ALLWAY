@@ -18,23 +18,30 @@ struct HistoryInfoItemView: View {
     @State private var text: String = "토크랫(5)"
     @State private var textLimitMessage: String = ""
     @State private var isChanged: Bool = false
-    @State var coordinateRegion: MKCoordinateRegion
+    @State var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: initialLatitude,
+            longitude: initialLongitude
+        ),
+        latitudinalMeters: 500,
+        longitudinalMeters: 500
+    )
     @FocusState var isTextfieldFocused: Bool
+    
+    let sampleImageData: Data = UIImage(named: "TalklatLogo")!.pngData().unsafelyUnwrapped
     
     //MARK: 추후 전역 SwiftDataStore가 생기면 그걸 끌어오기
     var dataStore: TKSwiftDataStore = TKSwiftDataStore()
     // 그냥 Bindable로 받아와서 처리해주면 되지 않을까?
-    @Bindable var conversation: TKConversation = TKConversation(title: "title", createdAt: Date.now, updatedAt: Date.now, content: [])
+    var conversation: TKConversation
     
-    
+    // 저장사항이 생긴지 아닌지를 판단하는 computed property
     private var hasChanges: Bool {
         guard conversation.title == text else { return true }
         guard conversation.location?.latitude == coordinateRegion.center.latitude, conversation.location?.longitude == coordinateRegion.center.longitude else { return true }
+        guard conversation.location?.mapThumbnail == locationStore(\.mapThumbnail) else { return true }
         return false
     }
-    
-    
-    
     
     var body: some View {
         NavigationView {
@@ -64,7 +71,26 @@ struct HistoryInfoItemView: View {
                         coordinateRegion: $coordinateRegion
                     )
                 }
-                
+                .onAppear {
+                    //MARK: 지금 변수가 너무 꼬여있는것 같음. 추후 리팩토링 해야함
+                    // conversation의 location 정보가 있으면 초기 세팅
+                    if let location = conversation.location {
+                        coordinateRegion = MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(
+                                latitude: location.latitude,
+                                longitude: location.longitude
+                            ),
+                            latitudinalMeters: 500,
+                            longitudinalMeters: 500)
+                        
+//                        locationStore.updateLocationThumbnail(location.mapThumbnail ?? UIImage(named: "TalklatLogo")!)
+                        locationStore.updateLocationThumbnail(
+                            UIImage(
+                                data: conversation.location?.mapThumbnail ?? sampleImageData
+                            ))
+                        locationStore.fetchCityName(coordinateRegion, of: .selected)
+                    }
+                }
                 .navigationTitle("정보")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
@@ -185,7 +211,7 @@ struct HistoryInfoItemView: View {
                 .padding(.leading, 10)
                 .foregroundStyle(Color.gray500)
             
-            switch locationStore(\.locationThumbnail) {
+            switch conversation.location?.mapThumbnail {
             case nil:
                 Button {
                     isTextfieldFocused = false
@@ -204,7 +230,9 @@ struct HistoryInfoItemView: View {
                 .padding(.vertical)
                 
             default:
-                Image(uiImage: locationStore(\.locationThumbnail) ?? UIImage(named: "TalklatLogo")!)
+                Image(uiImage: UIImage(
+                    data: locationStore(\.mapThumbnail) ?? sampleImageData
+                )!)
                     .clipShape(RoundedRectangle(cornerRadius: 22))
                     .clipped()
                     .aspectRatio(
@@ -242,23 +270,25 @@ struct HistoryInfoItemView: View {
     
     private func updateHistoryInfo() {
         isTextfieldFocused = false
+
         
-        let newLocation = TKLocation(
-            latitude: coordinateRegion.center.latitude,
-            longitude: coordinateRegion.center.longitude,
-            blockName: locationStore(\.selectedShortPlaceMark)
-        )
+        
         
         conversation.title = text
         if conversation.location == nil {
             // modelContext에서 새로 데이터 생성
-            dataStore.appendItem(newLocation)
+            conversation.location = TKLocation(
+                latitude: coordinateRegion.center.latitude,
+                longitude: coordinateRegion.center.longitude,
+                blockName: locationStore(\.selectedShortPlaceMark),
+                mapThumbnail: locationStore(\.mapThumbnail)
+            )
+        } else {
+            conversation.location?.latitude =  coordinateRegion.center.latitude
+            conversation.location?.longitude = coordinateRegion.center.longitude
+            conversation.location?.blockName = locationStore(\.selectedShortPlaceMark)
+            conversation.location?.mapThumbnail = locationStore(\.mapThumbnail)
         }
-        conversation.location = newLocation
-        newLocation.conversation = conversation
     }
 }
 
-//#Preview {
-//    HistoryInfoItemView(coordinateRegion: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), latitudinalMeters: 500, longitudinalMeters: 500), conversation: TKConversation(title: "Title", createdAt: Date.now, updatedAt: Date.now, content: []))
-//}
