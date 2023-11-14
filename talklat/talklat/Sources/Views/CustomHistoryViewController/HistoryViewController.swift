@@ -58,8 +58,6 @@ class HistoryViewController: UIViewController {
     }
     
     
-    
-    
     // 화면을 켰을 시 스크롤 최하단
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -95,7 +93,7 @@ class HistoryViewController: UIViewController {
     }
     
     private func sortMessages(_ conversation: TKConversation) -> [[TKContent]] {
-        guard let content = conversation.content else { return [[TKContent]]() }
+        let content = conversation.content
         // 우선 dictionary에 created: [Content] 형식으로 저장
         var contentDict = [Date: [TKContent]]()
         content.forEach { item in
@@ -125,7 +123,9 @@ class HistoryViewController: UIViewController {
 
 extension UITableView {
     func scrollToBottom(animated: Bool) {
+        
         let sectionCount = numberOfSections - 1
+        guard sectionCount >= 0 else { return }
         let rowCount = numberOfRows(inSection: sectionCount) - 1
         self.scrollToRow(at: IndexPath(row: rowCount, section: sectionCount), at: .bottom, animated: animated)
     }
