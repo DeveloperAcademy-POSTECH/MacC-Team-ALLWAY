@@ -188,6 +188,30 @@ final class SpeechRecognizer: ObservableObject {
             // 에러 처리
         }
     }
+    
+    public func addPunctuation(_ transcript: String) -> String {
+        var modifiedTranscript = transcript
+        var searchStartIndex = modifiedTranscript.startIndex
+        
+        for pattern in conversationPatterns.questionPatterns {
+            var searchStartIndex = modifiedTranscript.startIndex
+            
+            while let range = modifiedTranscript.range(
+                of: pattern,
+                options: [],
+                range: searchStartIndex..<modifiedTranscript.endIndex
+            ) {
+                if range.upperBound == modifiedTranscript.endIndex || modifiedTranscript[range.upperBound] != "?" {
+                    modifiedTranscript.insert("?", at: range.upperBound)
+                } else if range.upperBound == modifiedTranscript.endIndex || modifiedTranscript[range.upperBound] != "." {
+                    modifiedTranscript.insert(".", at: range.upperBound)
+                }
+                searchStartIndex = modifiedTranscript.index(after: range.upperBound)
+            }
+        }
+        
+        return modifiedTranscript
+    }
 
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in

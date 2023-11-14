@@ -60,6 +60,11 @@ public enum TKTransitionObjects {
     case INTERLUDE
 }
 
+public enum conversationPatterns {
+    static let questionPatterns: [String] = ["나요", "가요", "까요", "입니까"]
+    static let explanationPatterns: [String] = ["입니다", "합니다"]
+}
+
 // HistoryItem이 없어지고 enum이 public이 될 것
 public enum MessageType: String {
     case question = "question"
@@ -89,4 +94,3 @@ enum MapAnnotationType {
 
 public let initialLatitude: Double = 37.554577
 public let initialLongitude: Double = 126.970828
-
