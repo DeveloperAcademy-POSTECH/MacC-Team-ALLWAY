@@ -9,6 +9,7 @@ import SwiftUI
 
 enum TLTextFieldStyle {
     case normal(textLimit: Int)
+    case typing(textLimit: Int)
 }
 
 struct TLTextField<Button: View>: View {
@@ -37,6 +38,10 @@ struct TLTextField<Button: View>: View {
                 leadingButtonSection
                 inputFieldSection(textLimit: textLimit)
             }
+        case let .typing(textLimit):
+            VStack {
+                inputFieldSection(textLimit: textLimit)
+            }
         }
     }
     
@@ -47,7 +52,7 @@ struct TLTextField<Button: View>: View {
             
             Spacer()
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, 32)
     }
     
     private func inputFieldSection(textLimit: Int) -> some View {

@@ -8,304 +8,288 @@
 import SwiftUI
 
 struct ScrollContainer: View {
-    @Environment(\.dismiss) private var dismiss
-    @ObservedObject var appViewStore: AppViewStore
+    @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
+    @ObservedObject var store: TKConversationViewStore
     
     var body: some View {
-        GeometryReader { geo in /// TKIntroView가 디바이스 height를 차지하도록 사용
-            ScrollViewReader { proxy in /// 스크롤 위치 이동시 proxy 사용
-                OffsetObservingScrollView(
-                    offset: $appViewStore.containerScrollOffset) {
-                        VStack {
-                            TKHistoryView(appViewStore: appViewStore)
+        Group {
+            if store(\.conversationStatus) == .guiding {
+                TKGuidingView(store: store)
+                    .transition(.opacity)
+                    .frame(maxHeight: .infinity)
+                
+            } else {
+                GeometryReader { _ in
+                    VStack(spacing: 0) {
+                        // View 1
+                        if store(\.conversationStatus) == .writing {
+                            TKHistoryView(store: store)
                                 .frame(
-                                    height: geo.size.height + geo.safeAreaInsets.magnitude
+                                    maxHeight: store(\.isTopViewShown)
+                                    ? .infinity // 임시방편
+                                    : 0
                                 )
-                                .id("TKHistoryView")
-                            
-//                            TKCommunicationView(appViewStore: appViewStore)
-//                                .padding(.top, -10) /// View 사이의 디폴트 공백 제거
-//                                .frame(
-//                                    height: geo.size.height + geo.safeAreaInsets.magnitude
-//                                )
-//                                .frame(maxWidth: .infinity)
-//                                .background(Color.white)
-//                                .id("TKIntroView")
-                        }
-                        .onAppear {
-                            appViewStore.onIntroViewAppear(proxy)
-                            appViewStore.deviceHeight = geo.size.height
-                        }
-                        .onChange(of: appViewStore.containerScrollOffset) { offset in
-                            if appViewStore.isHistoryViewShown { // TKHistoryView
-                                // print("offset: ", offset)
-                                
-                                // 화면 전환이 끝났는지 파악
-                                if offset.y == -0.0 {
-                                    appViewStore.hasHistoryTransitionEnded = true
-                                }
-                                // print("hasContainerScrollEnded: ", appViewStore.hasHistoryTransitionEnded)
-                            
-                                if appViewStore.hasHistoryTransitionEnded {
-                                    if offset.y > 0 {
-                                        appViewStore.scrollAvailabilitySetter(
-                                            isDisabled: true
-                                        )
-                                        appViewStore.scrollDestinationSetter(
-                                            scrollReader: proxy,
-                                            destination: "TKHistoryView"
-                                        )
-                                        
-                                        DispatchQueue.main.asyncAfter(
-                                            deadline: .now() + 0.3
-                                        ) {
-                                            appViewStore.scrollAvailabilitySetter(
-                                                isDisabled: false
-                                            )
-                                            // print("!!!!!!다시측정시작!!!!!!")
-                                        }
-                                    }
-                                }
-                            } else { // TKHistoryView
-                                if offset.y < appViewStore.deviceHeight {
-                                    appViewStore.scrollAvailabilitySetter(
-                                        isDisabled: true
-                                    )
-                                    appViewStore.scrollDestinationSetter(
-                                        scrollReader: proxy,
-                                        destination: "TKIntroView"
-                                    )
-                                    
-                                    DispatchQueue.main.asyncAfter(
-                                        deadline: .now() + 0.3
-                                    ) {
-                                        appViewStore.scrollAvailabilitySetter(
-                                            isDisabled: false
-                                        )
-                                        // print("!!!!!!다시측정시작!!!!!!")
-                                    }
-                                } 
-                            }
-                        }
-                        .onChange(of: appViewStore.historyScrollOffset) { _ in
-                            if appViewStore.isHistoryViewShown {
-                                appViewStore.scrollAvailabilitySetter(isDisabled: false)
-                                // print("!!!!!풀림!!!!!!!")
-                                // print("historyView scroll offset: ", appViewStore.historyScrollOffset)
-                            }
-                        }
-                    }
-                    .scrollDisabled(appViewStore.isScrollDisabled)
-                    // MARK: - 상단 스와이프 영역
-                    .overlay {
-                        if appViewStore.communicationStatus == .writing,
-                            appViewStore.historyItems.count != 0
-                        {
-                            VStack {
-                                ZStack {
-                                    Rectangle()
-                                        .fill(.red)
-                                        .opacity(0.5)
-                                    
-                                    VStack {
-                                        ZStack(alignment: .top) {
-                                            Text("위로 스와이프해서 내용을 더 확인하세요")
-                                                .font(.system(size: 11))
-                                                .foregroundColor(Color(.systemGray2))
-                                                .opacity(
-                                                    appViewStore.isMessageTapped
-                                                    ? 1.0
-                                                    : 0.0
-                                                )
-                                                .padding(.top, 10)
+                                .overlay(alignment: .bottom) {
+                                    HStack {
+                                        Button {
+                                            store.onScrollOffsetChanged(false)
                                             
-                                            swipeGuideMessage(type: .swipeToTop)
-                                                .offset(
-                                                    y: appViewStore.isMessageTapped
-                                                    ? 30
-                                                    : 0
-                                                )
-                                                .onTapGesture {
-                                                    withAnimation(
-                                                        Animation.spring(
-                                                            response: 0.24,
-                                                            dampingFraction: 0.5,
-                                                            blendDuration: 0.8
-                                                        )
-                                                        .speed(0.5)
-                                                    ) {
-                                                        appViewStore.swipeGuideMessageTapped()
-                                                    }
-                                                }
+                                        } label: {
+                                            Image(systemName: "chevron.compact.down")
+                                                .resizable()
+                                                .frame(width: 32, height: 10)
+                                                .foregroundColor(.gray500)
                                         }
-                                    }
-                                    .frame(height: 50)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                
-                                Spacer()
-                                    .frame(maxHeight: .infinity)
-                            }
-                            .safeAreaInset(
-                                edge: .top,
-                                content: {
-                                    Rectangle()
-                                        .fill(.white)
-                                    // TODO: - deviceTopSafeAreaInset 값으로 변경
-                                        .frame(height: 50)
-                                }
-                            )
-                            .ignoresSafeArea()
-                            .gesture(
-                                DragGesture()
-                                    .onChanged { gesture in
-                                        appViewStore.scrollAvailabilitySetter(
-                                            isDisabled: false
+                                        .opacity(
+                                            store(\.isTopViewShown)
+                                            ? 1.0
+                                            : 0.0
                                         )
                                     }
-                                    .onEnded { gesture in
-                                        withAnimation {
-                                            hideKeyboard()
-                                            appViewStore.historyViewSetter(true)
-                                            appViewStore.scrollDestinationSetter(
-                                                scrollReader: proxy,
-                                                destination: "TKHistoryView"
-                                            )
-                                        }
-                                    }
-                            )
-                            
+                                    .frame(maxWidth: .infinity)
+                                }
                         }
                         
-                    }
-                    // MARK: - 하단 스와이프 영역
-                    .overlay {
-                        if appViewStore.isHistoryViewShown == true {
-                            VStack {
-                                Spacer()
-                                    .frame(maxHeight: .infinity)
-                                
-                                Rectangle()
-                                    .fill(.blue)
-                                    .opacity(0.5)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 100)
-                            }
-                            // .ignoresSafeArea()
-                            .gesture(
-                                DragGesture(minimumDistance: 1)
-                                    .onChanged { gesture in
-                                        appViewStore.scrollAvailabilitySetter(
-                                            isDisabled: true
-                                        )
-                                        appViewStore.swipeGuideMessageDragged(gesture)
-                                    }
-                                    .onEnded { gesture in
-                                        withAnimation {
-                                            appViewStore.scrollDestinationSetter(
-                                                scrollReader: proxy,
-                                                destination: "TKIntroView"
-                                            )
-                                            
-                                            appViewStore.historyViewSetter(false)
-                                        }
-                                    }
-                            )
-                        }
-                    }
-            }
-            .scrollIndicators(.hidden)
-            /*
-             .onChange(of: appViewStore.containerScrollOffset) { _ in
-                 print(">>> containerScrollOffset: ", appViewStore.containerScrollOffset)
-                 print("---------------------------")
-             }
-             */
-        }
-        .ignoresSafeArea()
-    }
-}
-
-
-// MARK: - Offset Observing ScrollView
-/// 뷰 내부에서 현재 콘텐츠 오프셋을 읽을 수 있는 커스텀 스크롤 뷰
-struct OffsetObservingScrollView<Content: View>: View {
-    @Binding private(set) var offset: CGPoint
-    @ViewBuilder private(set) var content: () -> Content
-    
-    var body: some View {
-        ScrollView {
-            PositionObservingView(
-                /// 하위 뷰에서 받아온 좌표 값을 스크롤 오프셋 값으로 변환
-                position: Binding(
-                    get: { offset },
-                    set: { newOffset in
-                        offset = CGPoint(
-                            x: -newOffset.x,
-                            y: -newOffset.y
+                        // View 2
+                        TKConversationView(
+                            store: store
+//                            ,speechRecognizeManager: speechRecognizeManager
+                        )
+                        .frame(
+                            height: store(\.isTopViewShown) && store(\.conversationStatus) == .writing
+                            ? 0
+                            : store(\.deviceHeight) + store(\.bottomInset) // 임시방편
+                        )
+                        .ignoresSafeArea(
+                            .keyboard,
+                            edges: .bottom
                         )
                     }
-                ),
-                content: content,
-                coordinateSpace: .named("coordinate")
-            )
-        }
-        .coordinateSpace(name: "coordinate")
-    }
-}
-
-// MARK: - Coordinate Position Observing View
-/// 주어진 좌표계 내에서 자신의 위치를 읽고 관찰할 수 있는 하위 뷰
-struct PositionObservingView<Content: View>: View {
-    @Binding var position: CGPoint
-    @ViewBuilder var content: () -> Content
-    
-    var coordinateSpace: CoordinateSpace
-    
-    var body: some View {
-        content()
-            .background(
-                GeometryReader { geometry in
-                    /// .preference() : PreferenceKey에 값 넣기
-                    Color.clear.preference(
-                        key: PreferenceKey.self,
-                        value: geometry
-                            .frame(in: coordinateSpace)
-                            .origin
-                    )
+                    .onChange(of: store(\.isTopViewShown)) { _, shown in
+                        if shown {
+                            hideKeyboard()
+                        }
+                    }
                 }
-            )
-        /// .onPreferenceChange() : PreferenceKey에서 값 가져오기
-            .onPreferenceChange(PreferenceKey.self) { position in
-                self.position = position
+                .background {
+                    GeometryReader { geo in
+                        Rectangle()
+                            .fill(Color.clear)
+                            .onAppear {
+                                if let insets = UIApplication.shared.windows.first?.safeAreaInsets {
+                                    store.onScrollContainerAppear(
+                                        geo: geo,
+                                        insets: insets
+                                    )
+                                }
+                            }
+                    }
+                }
+                .background(alignment: .top) {
+                    if store(\.conversationStatus) == .writing,
+                       !store(\.isHistoryViewShownWithTransition) {
+                        Color.OR5
+                            .frame(height: 200)
+                            .ignoresSafeArea()
+                            .transition(
+                                .asymmetric(
+                                    insertion: .move(edge: .top),
+                                    removal: .identity
+                                )
+                            )
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    if store(\.conversationStatus) == .recording,
+                       !store(\.answeredText).isEmpty {
+                        bottomListeningButtonBuilder()
+                            .background { Color.OR6.ignoresSafeArea(edges: .bottom) }
+                    }
+                }
             }
+            
+            if !store(\.isTopViewShown),
+               store(\.conversationStatus) == .writing {
+                startRecordingButtonBuilder()
+            }
+        }
+        .onChange(of: store(\.conversationStatus)) { _, newStatus in
+            switch newStatus {
+            case .writing:
+                speechRecognizeManager.stopAndResetTranscribing()
+                break
+                
+            case .guiding:
+                break
+                
+            case .recording:
+                speechRecognizeManager.startTranscribing()
+                break
+            }
+        }
     }
     
-    // MARK: - PreferenceKey
-    /// 좌표 위치 값을 비동기로 뷰에 전달 + 해당 값을 position 바인딩에 할당하게 해줌
-    struct PreferenceKey: SwiftUI.PreferenceKey {
-        static var defaultValue: CGPoint { .zero }
-        static func reduce(
-            value: inout CGPoint,
-            nextValue: () -> CGPoint
-        ) {
-            /// 구현 생략 가능
+    private func bottomListeningButtonBuilder() -> some View {
+        HStack(spacing: 24) {
+            Spacer()
+            
+            if store(\.answeredText) == "" {
+                Text("듣고 있어요")
+                    .font(.headline)
+                    .fontWeight(.black)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .frame(minWidth: 110, minHeight: 50)
+                    .background {
+                        ZStack(alignment: .trailing) {
+                            RoundedRectangle(
+                                cornerRadius: 22,
+                                style: .continuous
+                            )
+                            
+                            Rectangle()
+                                .frame(width: 20, height: 20)
+                                .rotationEffect(.degrees(45))
+                                .offset(x: 3)
+                        }
+                        .compositingGroup()
+                        .foregroundStyle(Color.OR5)
+                    }
+            }
+            
+            Button {
+                store.onStopRecordingButtonTapped()
+                
+            } label: {
+                Circle()
+                    .frame(width: 64, height: 64)
+                    .foregroundStyle(
+                        store(\.answeredText).isEmpty
+                        ? Color.OR5
+                        : Color.white
+                    )
+                    .overlay {
+                        Image(systemName: "chevron.right")
+                            .opacity(
+                                store(\.answeredText).isEmpty
+                                ? 0.0
+                                : 1.0
+                            )
+                            .foregroundStyle(Color.OR6)
+                            .scaleEffect(1.4)
+                            .fontWeight(.bold)
+                    }
+            }
+        }
+        .padding(.trailing, 24)
+    }
+    
+    private func scrollIndicateChevronBuilder() -> some View {
+        VStack {
+            HStack {
+                ZStack {
+                    Group {
+                        Button {
+                            store.onChevronButtonTapped()
+                        } label: {
+                            Image(systemName: "chevron.compact.up")
+                                .resizable()
+                                .frame(width: 32, height: 10)
+                                .padding()
+                                .foregroundStyle(Color.white)
+                        }
+                        .offset(
+                            y: store(\.hasChevronButtonTapped)
+                            ? 20
+                            : 0
+                        )
+                        
+                        Text("위로 스와이프해서 내용을 더 확인하세요.")
+                            .font(.caption2)
+                            .bold()
+                            .foregroundStyle(Color.white)
+                            .opacity(
+                                store(\.hasChevronButtonTapped)
+                                ? 1.0
+                                : 0.0
+                            )
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            store.onSaveConversationButtonTapped()
+                        } label: {
+                            Text("종료")
+                                .font(.headline)
+                                .padding(.horizontal, 6)
+                                .foregroundStyle(
+                                    store(\.answeredText).isEmpty
+                                    ? Color.gray700
+                                    : Color.OR5
+                                )
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.capsule)
+                        .tint(
+                            store(\.answeredText).isEmpty
+                            ? Color.gray200
+                            : Color.white
+                        )
+                    }
+                    .padding(.trailing, 24)
+                }
+            }
+        }
+        .animation(
+            .easeInOut(duration: 0.5),
+            value: store(\.hasChevronButtonTapped)
+        )
+        .opacity(
+            store(\.isTopViewShown)
+            ? 0.0
+            : 1.0
+        )
+    }
+}
+
+// MARK: - Button Components
+extension ScrollContainer {
+    // 전체 지우기 버튼
+    private func eraseAllButtonBuilder() -> some View {
+        Button {
+            store.onEraseAllButtonTapped()
+        } label: {
+            Text("전체 지우기")
+                .foregroundColor(
+                    store(\.questionText).isEmpty
+                    ? .gray.opacity(0.5)
+                    : .gray
+                )
+        }
+    }
+    
+    // Writing 뷰 버튼
+    private func startRecordingButtonBuilder() -> some View {
+        Button {
+            self.hideKeyboard()
+            store.onStartRecordingButtonTapped()
+            
+        } label: {
+            Text("음성 인식 전환")
+                .bold()
+                .foregroundColor(.white)
+                .padding(.horizontal, 25)
+                .padding(.vertical, 20)
+                .background {
+                    Capsule()
+                        .foregroundColor(.accentColor)
+                }
         }
     }
 }
 
-
-
-
-struct ScrollContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            ScrollContainer(appViewStore: .makePreviewStore(condition: { store in
-                store.historyItems.append(.init(id: .init(), text: "대답1", type: .answer))
-                store.historyItems.append(.init(id: .init(), text: "질문1", type: .question))
-                store.historyItems.append(.init(id: .init(), text: "일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구일이삼사오육칠팔구1", type: .answer))
-            }))
-        }
-    }
+#Preview {
+    ScrollContainer(store: .init())
 }

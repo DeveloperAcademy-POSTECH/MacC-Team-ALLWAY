@@ -6,35 +6,36 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct talklatApp: App {
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: "",
-        currentAuthStatus: .authIncompleted
-    )
-    @State private var animateFlagA: Bool = false
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
+    @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     private let appRootManager = AppRootManager()
+    
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
+    }
     
     var body: some Scene {
         WindowGroup {
             Group {
                 switch appViewStore.currentAuthStatus {
                 case .splash:
-                    Temp_SplashView(animateFlag: $animateFlagA)
+                    Temp_SplashView()
                         .task {
-                            animateFlagA = true
                             try? await Task.sleep(for: .seconds(1.5))
-                            
                             let status = await appRootManager.switchAuthStatus()
-                            // TODO: Transition
                             appViewStore.voiceRecordingAuthSetter(status)
                         }
                     
                 case .authCompleted:
-                    TKCommunicationView()
+                    NavigationStack {
+                         TKMainView()
+                    }
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -45,12 +46,15 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
+            .onChange(of: scenePhase) { _, _ in
+                Color.colorScheme = UITraitCollection.current.userInterfaceStyle
+            }
         }
     }
 }
 
 struct Temp_SplashView: View {
-    @Binding var animateFlag: Bool
+    @State private var animateFlag: Bool = false
     
     var body: some View {
         Image("TalklatLogo")
@@ -61,5 +65,8 @@ struct Temp_SplashView: View {
                 value: animateFlag
             )
             .frame(width: 280, height: 100)
+            .onAppear {
+                animateFlag.toggle()
+            }
     }
 }
