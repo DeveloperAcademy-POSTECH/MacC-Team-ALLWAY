@@ -272,6 +272,36 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             return false
         }
     }
+    
+    func calculateDistance(_ location: TKLocation?) -> Int? {
+        guard let coordinate = locationState.currentUserCoordinate else { return nil }
+        guard let location = location else { return nil }
+        
+        let lat1 = coordinate.latitude
+        let lon1 = coordinate.longitude
+        let lat2 = location.latitude
+        let lon2 = location.longitude
+        
+        let earthRadius = 6371 * 1000 // m단위
+        let dLat = (lat1 - lat2).toRadians()
+        let dLon = (lon1 - lon2)
+        
+        let a =
+        sin(dLat/2)
+        * sin(dLat/2)
+        + cos(lat1.toRadians()) 
+        * cos(lat2.toRadians())
+        * sin(dLon/2)
+        * sin(dLon/2)
+        
+        let c = 2 * atan2(
+            sqrt(a),
+            sqrt(1-a)
+        )
+        
+        let distanceInMeters = Double(earthRadius) * c
+        return Int(distanceInMeters)
+    }
 }
 
 
