@@ -76,7 +76,13 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
-
+    
+    public func bindingNewConversationToast() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isNewConversationSaved) },
+            set: { self.reduce(\.isNewConversationSaved, into: $0) }
+        )
+    }
 }
 
 extension TKConversationViewStore {
