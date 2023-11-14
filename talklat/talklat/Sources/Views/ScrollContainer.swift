@@ -210,7 +210,7 @@ struct ScrollContainer: View {
                                 .padding(.horizontal, 6)
                                 .foregroundStyle(
                                     store(\.answeredText).isEmpty
-                                    ? Color.gray700
+                                    ? Color.GR7
                                     : Color.OR5
                                 )
                         }
@@ -218,7 +218,7 @@ struct ScrollContainer: View {
                         .buttonBorderShape(.capsule)
                         .tint(
                             store(\.answeredText).isEmpty
-                            ? Color.gray200
+                            ? Color.GR2
                             : Color.white
                         )
                     }

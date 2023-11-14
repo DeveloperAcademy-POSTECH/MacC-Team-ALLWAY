@@ -286,7 +286,7 @@ extension TKConversationView {
                 .foregroundColor(
                     store(\.answeredText).isEmpty
                     ? .accentColor
-                    : .gray100.opacity(0.8)
+                    : .GR1.opacity(0.8)
                 )
         }
         .overlay(alignment: .top) {

@@ -20,7 +20,7 @@ struct SettingTRTextField: View {
         VStack(spacing: 10) {
             HStack {
                 Text(title)
-                    .foregroundStyle(Color.gray500)
+                    .foregroundStyle(Color.GR5)
                     .font(.system(size: 15))
                     .fontWeight(.semibold)
                     .padding(.horizontal, 16)
@@ -40,7 +40,7 @@ struct SettingTRTextField: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 11)
-            .background(Color.gray100)
+            .background(Color.GR1)
             .cornerRadius(16)
             .background(alignment: .topLeading) {
                 characterLimitViewBuilder(currentCount: text.count, limit: limit)
@@ -55,6 +55,6 @@ struct SettingTRTextField: View {
         return Text("\(displayCount)/\(limit)")
             .font(.system(size: 13, weight: .medium))
             .monospacedDigit()
-            .foregroundColor(currentCount == limit ? .accentColor : .gray400)
+            .foregroundColor(currentCount == limit ? .accentColor : .GR4)
     }
 }

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TKMainView: View {
-    @StateObject private var store = TKMainViewStore()
-    @StateObject private var conversationView = TKConversationViewStore()
+    @Environment(\.scenePhase) private var scenePhase
+    @ObservedObject var store: TKMainViewStore
+    @StateObject private var conversationViewStore = TKConversationViewStore()
     
     var body: some View {
         ZStack {
@@ -25,7 +26,7 @@ struct TKMainView: View {
                             .font(.headline)
                             .bold()
                     }
-                    .foregroundStyle(Color.gray400)
+                    .foregroundStyle(Color.GR4)
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
@@ -62,10 +63,8 @@ struct TKMainView: View {
             // MARK: BottomSheet
             TKDraggableList(store: store)
         }
-        .fullScreenCover(
-            isPresented: store.bindingConversationFullScreenCover()
-        ) {
-            TKConversationView(store: conversationView)
+        .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
+            TKConversationView(store: conversationViewStore)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -77,28 +76,57 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    Text("ALL HISTORY VIEW HERE")
+                    HistoryListView()
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
-                        .foregroundStyle(Color.gray300)
+                        .foregroundStyle(Color.GR3)
                 }
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    Text("SETTING VIEW HERE")
+                    Text("Setting View Here")
                 } label: {
                     Image(systemName: "gearshape.fill")
-                        .foregroundStyle(Color.gray300)
+                        .foregroundStyle(Color.GR3)
                 }
             }
         }
-        .background { Color.gray100.ignoresSafeArea(edges: .top) }
+        .background { Color.GR1.ignoresSafeArea(edges: .top) }
+        .overlay {
+            TKAlert(
+                style: .mic,
+                isPresented: store.bindingSpeechAuthAlert()
+            ) {
+                store.onGoSettingScreenButtonTapped()
+                
+            } actionButtonLabel: {
+                HStack(spacing: 8) {
+                    Text("설정으로 이동")
+                    
+                    Image(systemName: "arrow.up.right.square.fill")
+                }
+            }
+            .onChange(of: scenePhase) { _, _ in
+                Task { @MainActor in
+                    let authResult = await SpeechAuthManager.switchAuthStatus()
+                    store.onChangeOfSpeechAuth(authResult)
+                }
+            }
+        }
+        .overlay(alignment: .top) {
+            TKToast(isPresented: conversationViewStore.bindingNewConversationToast())
+        }
     }
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            store.onStartConversationButtonTapped()
+            if store(\.authStatus) != .authCompleted {
+                store.onStartConversationButtonTappedWithoutAuth()
+            } else {
+                store.onStartConversationButtonTapped()
+            }
+            
         } label: {
             ZStack {
                 Circle()
@@ -126,6 +154,6 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView()
+        TKMainView(store: TKMainViewStore())
     }
 }

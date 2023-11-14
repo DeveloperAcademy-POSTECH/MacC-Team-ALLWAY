@@ -35,7 +35,7 @@ struct TKToast: View {
                         Text("에 대화가 저장되었어요.")
                     }
                     .font(.caption2)
-                    .foregroundStyle(Color.gray400)
+                    .foregroundStyle(Color.GR4)
                 }
             }
             .padding(.horizontal, 16)
@@ -46,7 +46,7 @@ struct TKToast: View {
             )
             .background {
                 RoundedRectangle(cornerRadius: 16)
-                    .foregroundStyle(Color.gray700)
+                    .foregroundStyle(Color.GR7)
                     .padding(.horizontal, 16)
             }
             .transition(

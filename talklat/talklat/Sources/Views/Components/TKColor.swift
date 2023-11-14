@@ -15,16 +15,31 @@ extension Color {
     }
     
     static var OR6: Color {
-        get {  Color(hex: "#F75927") }
+        get { Color(hex: "#F75927") }
+    }
+    
+    static var RED: Color {
+        get {
+            switch colorScheme {
+            case .light:
+                return Color(hex: "#F75927")
+            case .dark:
+                return Color(hex: "#FF0D2A")
+            case .unspecified:
+                return .red
+            @unknown default:
+                return .red
+            }
+        }
     }
 
-    static var gray100: Color {
+    static var GR1: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#F7F7FA")
+                return Color(hex: "#F2F2F7")
             case .dark:
-                return Color(hex: "#1C1D27")
+                return Color(hex: "#1A1A24")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -33,13 +48,13 @@ extension Color {
         }
     }
     
-    static var gray200: Color {
+    static var GR2: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#EBEBF3")
+                return Color(hex: "#E5E5EB")
             case .dark:
-                return Color(hex: "#323340")
+                return Color(hex: "#272732")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -48,13 +63,13 @@ extension Color {
         }
     }
     
-    static var gray300: Color {
+    static var GR3: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#D6D6E1")
+                return Color(hex: "#C0C0C8")
             case .dark:
-                return Color(hex: "#4B4E5B")
+                return Color(hex: "#3F3F49")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -63,13 +78,13 @@ extension Color {
         }
     }
     
-    static var gray400: Color {
+    static var GR4: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#B1B2BE")
+                return Color(hex: "#9A9AA4")
             case .dark:
-                return Color(hex: "#676A77")
+                return Color(hex: "#575761")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -78,17 +93,17 @@ extension Color {
         }
     }
     
-    static var gray500: Color {
-        get { Color(hex: "#868896") }
+    static var GR5: Color {
+        get { Color(hex: "#75757F") }
     }
     
-    static var gray600: Color {
+    static var GR6: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#676A77")
+                return Color(hex: "#575761")
             case .dark:
-                return Color(hex: "#B1B2BE")
+                return Color(hex: "#9A9AA4")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -97,13 +112,13 @@ extension Color {
         }
     }
     
-    static var gray700: Color {
+    static var GR7: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#4B4E5B")
+                return Color(hex: "#3F3F49")
             case .dark:
-                return Color(hex: "#D6D6E1")
+                return Color(hex: "#C0C0C8")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -112,13 +127,13 @@ extension Color {
         }
     }
     
-    static var gray800: Color {
+    static var GR8: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#393B49")
+                return Color(hex: "#272732")
             case .dark:
-                return Color(hex: "#EBEBF3")
+                return Color(hex: "#E5E5EB")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -127,13 +142,13 @@ extension Color {
         }
     }
     
-    static var gray900: Color {
+    static var GR9: Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#222331")
+                return Color(hex: "#1A1A24")
             case .dark:
-                return Color(hex: "#F7F7FA")
+                return Color(hex: "#F2F2F7")
             case .unspecified:
                 return Color.gray
             @unknown default:
@@ -146,23 +161,23 @@ extension Color {
 struct ColorTestView: PreviewProvider {
     static var previews: some View {
         VStack {
-            Color.gray100
+            Color.GR1
                 .overlay { Text("Color Gray 100") }
-            Color.gray200
+            Color.GR2
                 .overlay { Text("Color Gray 200") }
-            Color.gray300
+            Color.GR3
                 .overlay { Text("Color Gray 300") }
-            Color.gray400
+            Color.GR4
                 .overlay { Text("Color Gray 400") }
-            Color.gray500
+            Color.GR5
                 .overlay { Text("Color Gray 500") }
-            Color.gray600
+            Color.GR6
                 .overlay { Text("Color Gray 600") }
-            Color.gray700
+            Color.GR7
                 .overlay { Text("Color Gray 700") }
-            Color.gray800
+            Color.GR8
                 .overlay { Text("Color Gray 800") }
-            Color.gray900
+            Color.GR9
                 .overlay { Text("Color Gray 900") }
         }
         .ignoresSafeArea(edges: .bottom)

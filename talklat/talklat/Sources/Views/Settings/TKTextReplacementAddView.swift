@@ -67,7 +67,7 @@ struct TKTextReplacementAddView: View {
                     Text("완료")
                 }
                 .disabled(!isInputValid)
-                .foregroundColor(isInputValid ? .accentColor : .gray400)
+                .foregroundColor(isInputValid ? .accentColor : .GR4)
             )
         }
     }

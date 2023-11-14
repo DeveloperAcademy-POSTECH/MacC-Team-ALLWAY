@@ -142,7 +142,7 @@ struct HistoryInfoItemView: View {
             Text("위치")
                 .font(.headline)
                 .padding(.leading, 10)
-                .foregroundStyle(Color.gray500)
+                .foregroundStyle(Color.GR5)
             
             switch locationStore(\.locationThumbnail) {
             case nil:

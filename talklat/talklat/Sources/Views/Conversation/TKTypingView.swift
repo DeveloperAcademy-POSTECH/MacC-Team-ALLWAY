@@ -209,7 +209,7 @@ struct TKTypingView: View {
                     .padding(.horizontal, 6)
                     .foregroundStyle(
                         store(\.answeredText).isEmpty
-                        ? Color.gray700
+                        ? Color.GR7
                         : Color.OR5
                     )
             }
@@ -217,7 +217,7 @@ struct TKTypingView: View {
             .buttonBorderShape(.capsule)
             .tint(
                 store(\.answeredText).isEmpty
-                ? Color.gray200
+                ? Color.GR2
                 : Color.white
             )
             .disabled(store(\.blockButtonDoubleTap))
@@ -232,9 +232,9 @@ struct TKTypingView: View {
             }) {
                 Image(systemName: "eraser.fill")
                     .font(.system(size: 22))
-                    .foregroundColor(focusState ? Color.gray500 : Color.gray300)
+                    .foregroundColor(focusState ? Color.GR5 : Color.GR3)
                     .padding(10)
-                    .background(focusState ? Color.gray300 : Color.gray200)
+                    .background(focusState ? Color.GR3 : Color.GR2)
                     .clipShape(Circle())
             }
             .accessibilityLabel(Text("Clear text"))
@@ -252,14 +252,14 @@ struct TKTypingView: View {
                         store.bindingQuestionText().wrappedValue = newText
                     } label: {
                         Text(firstReplacement)
-                            .foregroundColor(Color.gray600)
+                            .foregroundColor(Color.GR6)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                             .overlay {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.gray300)
+                                    .fill(Color.GR3)
                             }
-                            .background(Color.gray300)
+                            .background(Color.GR3)
                     }
                     .padding(.vertical, 10)
                     .padding(.leading, 12)
@@ -268,7 +268,7 @@ struct TKTypingView: View {
             
             Spacer()
         }
-        .background(focusState ? Color.gray200 : Color.clear)
+        .background(focusState ? Color.GR2 : Color.clear)
         .cornerRadius(32)
         .padding(.horizontal, 16)
         .transition(.move(edge: .bottom))
