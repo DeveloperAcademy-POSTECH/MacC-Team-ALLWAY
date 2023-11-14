@@ -17,6 +17,10 @@ struct talklatApp: App {
     
     private let appRootManager = AppRootManager()
     
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
+    }
+    
     var body: some Scene {
         WindowGroup {
             Group {
@@ -31,7 +35,7 @@ struct talklatApp: App {
                     
                 case .authCompleted:
                     NavigationStack {
-                        TKMainView()
+                         TKMainView()
                     }
                     
                 case .speechRecognitionAuthIncompleted
@@ -48,7 +52,6 @@ struct talklatApp: App {
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
-//        .modelContainer(for: [TKConversation.self, TKContent.self])
     }
 }
 

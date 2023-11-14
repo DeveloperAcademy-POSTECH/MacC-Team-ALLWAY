@@ -6,6 +6,7 @@
 //
 
 import SwiftData
+import SwiftUI
 
 /*
  Context는 ModelContainer 안에 포함되어 있고, ModelContainer를 View 계층으로 흘려보내면 View 이외의 곳에서는 쓸 수가 없다.
@@ -66,3 +67,40 @@ extension TKDataManager {
         }
     }
 }
+
+extension TKDataManager {
+    // HistoryListView에서 쓰이는 specific fetch
+    internal func getLocationMatchingConversations(
+        location: TKLocation
+    ) -> [TKConversation] {
+        do {
+            let locationIndicator = location.blockName
+            let predicate = #Predicate<TKConversation> { conversation in
+                conversation.location?.blockName == locationIndicator
+            }
+            let descriptor = FetchDescriptor<TKConversation>(predicate: predicate)
+            
+            return try modelContext.fetch(descriptor)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    // HistoryListSearchView에서 쓰이는 specific fetch
+    internal func getContentMatchingLocations(
+        content: TKContent
+    ) -> [TKLocation] {
+        do {
+            let contentIndicator = content.conversation?.persistentModelID
+            let predicate = #Predicate<TKLocation> { location in
+                location.conversation?.persistentModelID == contentIndicator
+            }
+            let descriptor = FetchDescriptor<TKLocation>(predicate: predicate)
+            
+            return try modelContext.fetch(descriptor)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+}
+

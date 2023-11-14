@@ -75,7 +75,6 @@ struct CreateConversationView: View {
             let conversation = TKConversation(
                 title: title,
                 createdAt: Date(),
-                updatedAt: Date(),
                 content: content,
                 location: location
             )
