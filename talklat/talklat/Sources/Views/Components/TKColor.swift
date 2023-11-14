@@ -18,6 +18,51 @@ extension Color {
         get { Color(hex: "#F75927") }
     }
     
+    static var BaseBGWhite: Color {
+        get {
+            switch colorScheme {
+            case .light:
+                return Color.white
+            case .dark:
+                return Color(hex: "#000000")
+            case .unspecified:
+                return .white
+            @unknown default:
+                return .white
+            }
+        }
+    }
+    
+    static var SheetBGWhite: Color {
+        get {
+            switch colorScheme {
+            case .light:
+                return Color.white
+            case .dark:
+                return Color(hex: "#272732")
+            case .unspecified:
+                return .white
+            @unknown default:
+                return .white
+            }
+        }
+    }
+    
+    static var AlertBGWhite: Color {
+        get {
+            switch colorScheme {
+            case .light:
+                return Color.white
+            case .dark:
+                return Color(hex: "#3F3F49")
+            case .unspecified:
+                return .white
+            @unknown default:
+                return .white
+            }
+        }
+    }
+    
     static var RED: Color {
         get {
             switch colorScheme {
