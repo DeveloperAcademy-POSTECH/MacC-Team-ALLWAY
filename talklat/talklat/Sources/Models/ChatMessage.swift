@@ -9,6 +9,6 @@ import Foundation
 
 public struct ChatMessage {
     let text: String
-    let textType: TextType
+    let textType: ChatTextType
     let date: String
 }

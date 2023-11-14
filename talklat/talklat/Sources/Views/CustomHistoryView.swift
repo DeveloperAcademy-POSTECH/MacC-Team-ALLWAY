@@ -11,7 +11,7 @@ import SwiftUI
 struct CustomHistoryView: View {
     let conversationViewStore: TKConversationViewStore
     @State private var showWebSheet: Bool = false
-    @State var webURL: URL?
+    @State private var webURL: URL?
     
     let swipeDetectNotification = Notification.Name("swipeDetected")
     let webViewNotification = Notification.Name("webViewNotification")

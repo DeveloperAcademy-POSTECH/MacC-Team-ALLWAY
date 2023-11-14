@@ -90,13 +90,7 @@ enum MapAnnotationType {
 public let initialLatitude: Double = 37.554577
 public let initialLongitude: Double = 126.970828
 
-
-public enum VisibleStatus {
-    case visible
-    case hidden
-}
-
-public enum TextType {
+public enum ChatTextType {
     case inComming
     case outGoing
 }
