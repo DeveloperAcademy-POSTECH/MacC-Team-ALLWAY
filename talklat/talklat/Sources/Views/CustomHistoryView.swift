@@ -27,7 +27,8 @@ struct CustomHistoryView: View {
                         Text("작성화면으로 돌아가기")
                             .font(.footnote)
                         Image(systemName: "chevron.down")
-                            .resizable()    .frame(width: 32, height: 10)
+                            .resizable()
+                            .frame(width: 32, height: 10)
                     }
                 }
             }
