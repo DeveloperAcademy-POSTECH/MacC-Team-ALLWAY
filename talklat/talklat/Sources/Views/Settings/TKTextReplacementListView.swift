@@ -115,16 +115,16 @@ struct TKTextReplacementListView: View {
             let firstCharKey2 = key2.first
 
             // 한글을 가장 앞에 배치
-            if firstCharKey1?.isKorean == true && firstCharKey2?.isKorean == false {
+            if firstCharKey1?.isCharacterKorean == true && firstCharKey2?.isCharacterKorean == false {
                 return false
-            } else if firstCharKey1?.isKorean == false && firstCharKey2?.isKorean == true {
+            } else if firstCharKey1?.isCharacterKorean == false && firstCharKey2?.isCharacterKorean == true {
                 return true
             }
 
             // 영어를 그 다음으로 배치
-            if firstCharKey1?.isEnglish == true && firstCharKey2?.isEnglish == false {
+            if firstCharKey1?.isCharacterEnglish == true && firstCharKey2?.isCharacterEnglish == false {
                 return false
-            } else if firstCharKey1?.isEnglish == false && firstCharKey2?.isEnglish == true {
+            } else if firstCharKey1?.isCharacterEnglish == false && firstCharKey2?.isCharacterEnglish == true {
                 return true
             }
 
@@ -154,22 +154,22 @@ struct TKTextReplacementListView: View {
 
 // MARK: 리스트 정렬 용
 extension String {
-    var isKorean: Bool {
-        self.first?.isKorean ?? false
+    var isKoreanSection: Bool {
+        self.first?.isCharacterKorean ?? false
     }
     
-    var isEnglish: Bool {
-        self.first?.isEnglish ?? false
+    var isEnglishSection: Bool {
+        self.first?.isCharacterEnglish ?? false
     }
 }
 
 extension Character {
-    var isKorean: Bool {
+    var isCharacterKorean: Bool {
         guard let scalar = unicodeScalars.first else { return false }
         return scalar.value >= 0xAC00 && scalar.value <= 0xD7A3
     }
     
-    var isEnglish: Bool {
+    var isCharacterEnglish: Bool {
         return isLetter && isASCII
     }
 }

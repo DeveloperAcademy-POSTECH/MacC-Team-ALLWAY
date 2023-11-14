@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TextReplacementRow: View {
+    @Binding var selectedList: TKTextReplacement?
+    
     var key: String
     var value: String
     var list: TKTextReplacement
-    @Binding var selectedList: TKTextReplacement?
     
     var body: some View {
         Button(action: {
