@@ -137,7 +137,7 @@ struct TKCommunicationView: View {
                     ScrollView {
                         Text(displayedAnswerText)
                             .onChange(of: store(\.answeredText)) { newValue in
-                                displayedAnswerText = store.addPunctuation(newValue)
+                                displayedAnswerText = speechRecognizeManager.addPunctuation(newValue)
                                 store.updateAnswerText(with: store(\.answeredText))
                             }
                             .font(.title2)

@@ -105,28 +105,6 @@ final class CommunicationViewStore: ObservableObject {
         return transcript.components(separatedBy: " ").last?.count ?? 0
     }
     
-    public func addPunctuation(_ transcript: String) -> String {
-        let questionPatterns = ["나요", "가요", "까요", "입니까"]
-        let explanationPatterns = ["입니다", "합니다"]
-        var modifiedTranscript = transcript
-        var searchStartIndex = modifiedTranscript.startIndex
-        
-        for pattern in questionPatterns {
-            var searchStartIndex = modifiedTranscript.startIndex
-            
-            while let range = modifiedTranscript.range(of: pattern, options: [], range: searchStartIndex..<modifiedTranscript.endIndex) {
-                if range.upperBound == modifiedTranscript.endIndex || modifiedTranscript[range.upperBound] != "?" {
-                    modifiedTranscript.insert("?", at: range.upperBound)
-                } else if range.upperBound == modifiedTranscript.endIndex || modifiedTranscript[range.upperBound] != "." {
-                    modifiedTranscript.insert(".", at: range.upperBound)
-                }
-                searchStartIndex = modifiedTranscript.index(after: range.upperBound)
-            }
-        }
-        
-        return modifiedTranscript
-    }
-    
     public func updateAnswerText(with transcript: String) {
         self.updateState(\.answeredText, with: transcript)
     }

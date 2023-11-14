@@ -53,3 +53,9 @@ public enum TKTransitionObjects {
     case ANSWER
     case INTERLUDE
 }
+
+public enum conversationPatterns {
+    static let questionPatterns: [String] = ["나요", "가요", "까요", "입니까"]
+    static let explanationPatterns: [String] = ["입니다", "합니다"]
+}
+
