@@ -18,16 +18,13 @@ struct TKConversationView: View {
     @State var offset: CGPoint = .zero
     
     // MARK: text replacement 관련 변수
+    // TODO: TypingView로 이동해야 합니다.
     @State private var textFieldText: String = ""
     
-    // TextReplacement
     @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
-    
-    //MARK: Test용
-    @State private var navigateToSettings = false
     
     @ObservedObject var store: ConversationViewStore
     @ObservedObject var speechRecognizeManager: SpeechRecognizer
@@ -42,12 +39,6 @@ struct TKConversationView: View {
                             .opacity(
                                 store.isChevronButtonDisplayable ? 1.0 : 0.0
                             )
-                        
-                        //MARK: 설정으로 가기 위한 Test용
-                        NavigationLink(destination: TKTextReplacementListView(), isActive: $navigateToSettings) {
-                            EmptyView()
-                        }
-                        .hidden()
                         
                         TLTextField(
                             style: .normal(textLimit: store.questionTextLimit),
