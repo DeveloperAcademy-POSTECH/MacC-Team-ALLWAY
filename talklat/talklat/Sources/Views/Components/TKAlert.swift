@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TKAlert<ActionButtonLabel: View>: View {
-    @Binding var bindFlag: Bool
+    @Binding var bindingPresentedFlag: Bool
 
     let alertStyle: AlertStyle
     let confirmButtonAction: () -> Void
@@ -22,14 +22,14 @@ struct TKAlert<ActionButtonLabel: View>: View {
         @ViewBuilder actionButtonLabel: @escaping () -> ActionButtonLabel
     ) {
         self.alertStyle = alertStyle
-        self._bindFlag = isPresented
+        self._bindingPresentedFlag = isPresented
         self.confirmButtonAction = confirmButtonAction
         self.actionButtonLabel = actionButtonLabel
     }
     
     // MARK: BODY
     var body: some View {
-        if bindFlag {
+        if bindingPresentedFlag {
             ZStack {
                 VStack(
                     alignment: .center,
@@ -53,7 +53,7 @@ struct TKAlert<ActionButtonLabel: View>: View {
                     HStack(spacing: 9) {
                         Button {
                             withAnimation {
-                                bindFlag = false
+                                bindingPresentedFlag = false
                             }
                         } label: {
                             Text(dismissText)
@@ -95,7 +95,7 @@ struct TKAlert<ActionButtonLabel: View>: View {
                     .transition(.opacity)
                     .onTapGesture {
                         withAnimation {
-                            bindFlag = false
+                            bindingPresentedFlag = false
                         }
                     }
             }
