@@ -37,11 +37,12 @@ struct TKRecentConversationListView: View {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("메가커피")
-                                    .foregroundStyle(Color.primary)
+                                    .foregroundStyle(Color.gray800)
                                     .bold()
                                 
                                 Text("20m")
                                     .font(.footnote)
+                                    .foregroundStyle(Color.OR6)
                             }
                             
                             HStack {
@@ -64,7 +65,7 @@ struct TKRecentConversationListView: View {
                         .padding(.horizontal, 32)
                         .padding(.vertical, 16)
                         .background {
-                            RoundedRectangle(cornerRadius: 12)
+                            RoundedRectangle(cornerRadius: 16)
                                 .fill(Color.gray100)
                                 .padding(.horizontal, 16)
                         }

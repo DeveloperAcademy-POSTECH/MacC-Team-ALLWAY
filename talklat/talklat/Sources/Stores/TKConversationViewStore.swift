@@ -14,7 +14,9 @@ final class TKConversationViewStore {
         case writing
     }
     
-    struct ConversationState: Equatable {
+    struct ConversationState: Equatable, TKAnimatable {
+        var animationFlag: Bool = false
+        
         var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
@@ -116,7 +118,7 @@ extension TKConversationViewStore {
         )
     }
     
-    public func onDismissConversationButtonTapped() {
+    public func onDismissSavingViewButtonTapped() {
         reduce(
             \.hasSavingViewDisplayed,
              into: false

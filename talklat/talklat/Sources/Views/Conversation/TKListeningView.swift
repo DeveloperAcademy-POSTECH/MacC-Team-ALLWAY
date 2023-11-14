@@ -85,17 +85,24 @@ struct TKListeningView: View {
             }
             
             if !store(\.answeredText).isEmpty {
-                TKScrollView(
-                    style: .answer(
-                        answer: store(\.answeredText),
-                        curtainAlignment: .top
-                    ), curtain: {
-                        LinearGradient(
-                            colors: [.OR5, .clear],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    }
+                VStack {
+                    TKScrollView(
+                        style: .answer(
+                            answer: store(\.answeredText),
+                            curtainAlignment: .top
+                        ), curtain: {
+                            LinearGradient(
+                                colors: [.OR5, .clear],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        }
+                    )
+                    .frame(maxHeight: 300)
+                }
+                .frame(
+                    maxHeight: UIScreen.main.bounds.height * 0.55,
+                    alignment: .top
                 )
                 .background {
                     Color.OR5
@@ -117,6 +124,8 @@ struct TKListeningView: View {
         .overlay(alignment: .bottom) {
             if store(\.conversationStatus) == .recording {
                 bottomListeningButtonBuilder()
+                    .padding(.trailing, 48)
+                    .padding(.bottom, 24)
                     .transition(
                         .asymmetric(
                             insertion: .opacity.animation(.easeInOut),
@@ -161,35 +170,52 @@ struct TKListeningView: View {
                 }
                 
             } label: {
-                Circle()
-                    .frame(width: 64, height: 64)
-                    .foregroundStyle(
-                        store(\.answeredText).isEmpty
-                        ? Color.OR5
-                        : Color.white
-                    )
-                    .overlay {
-                        Image(systemName: "chevron.right")
-                            .opacity(
-                                store(\.answeredText).isEmpty
-                                ? 0.0
-                                : 1.0
-                            )
-                            .foregroundStyle(Color.OR6)
-                            .scaleEffect(1.4)
-                            .fontWeight(.bold)
-                    }
+                TKOrbitCircles(
+                    store: store,
+                    circleRenderInfos: [
+                        CircleRenderInfo(x: -10, y: -4),
+                        CircleRenderInfo(x: 0, y: 10),
+                        CircleRenderInfo(x: 7, y: -4),
+                    ],
+                    circleColor: store(\.answeredText).isEmpty
+                    ? Color.OR5
+                    : Color.white
+                )
+                .frame(height: 64)
+                .overlay {
+                    Circle()
+                        .foregroundStyle(
+                            store(\.answeredText).isEmpty
+                            ? Color.OR5
+                            : Color.white
+                        )
+                        .overlay {
+                            Image(systemName: "chevron.right")
+                                .opacity(
+                                    store(\.answeredText).isEmpty
+                                    ? 0.0
+                                    : 1.0
+                                )
+                                .foregroundStyle(Color.OR6)
+                                .scaleEffect(1.4)
+                                .fontWeight(.bold)
+                        }
+                }
             }
             .disabled(store(\.blockButtonDoubleTap))
         }
-        .padding(.trailing, 24)
     }
 }
 
-struct TKListeningView_Preview: PreviewProvider {
-    static var previews: some View {
-        TKConversationView(
-            store: .init()
-        )
+#Preview {
+    @Namespace var namespace
+    @ObservedObject var store = TKConversationViewStore()
+    
+    return TKListeningView(
+        store: store, namespaceID: namespace
+    )
+    .frame(maxHeight: .infinity)
+    .onAppear {
+        store.reduce(\.conversationStatus, into: .recording)
     }
 }

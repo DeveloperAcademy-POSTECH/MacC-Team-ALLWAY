@@ -22,26 +22,37 @@ struct TKMainView: View {
                         Image(systemName: "location.fill")
                         
                         Text("현재 위치")
+                            .font(.headline)
+                            .bold()
                     }
+                    .foregroundStyle(Color.gray400)
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
                         .bold()
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color.OR5)
                 }
-                .padding(.bottom, 32)
+                .padding(.bottom, 50)
 
-                TKOrbitCircles(store: store)
-                    .frame(maxHeight: 250)
-                    .overlay {
-                        Circle()
-                            .fill(Color.white)
-                            .opacity(0.5)
-                            .frame(width: 200, height: 200)
-                    }
-                    .overlay {
-                        startConversationButtonBuilder()
-                    }
+                TKOrbitCircles(
+                    store: store,
+                    circleRenderInfos: [
+                        CircleRenderInfo(x: -25, y: -15),
+                        CircleRenderInfo(x: 0, y: 27),
+                        CircleRenderInfo(x: 25, y: -15),
+                    ],
+                    circleColor: Color.OR6
+                )
+                .frame(maxHeight: 200)
+                .overlay {
+                    Circle()
+                        .fill(Color.OR6)
+                        .opacity(0.5)
+                        .frame(width: 200, height: 200)
+                }
+                .overlay {
+                    startConversationButtonBuilder()
+                }
             }
             .frame(
                 maxHeight: .infinity,
@@ -56,16 +67,21 @@ struct TKMainView: View {
         ) {
             TKConversationView(store: conversationView)
         }
-        .toolbarBackground(
-            Color.accentColor,
-            for: .navigationBar
-        )
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("TALKLAT")
                     .font(.title)
                     .bold()
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.OR5)
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    Text("ALL HISTORY VIEW HERE")
+                } label: {
+                    Image(systemName: "list.bullet.rectangle.fill")
+                        .foregroundStyle(Color.gray300)
+                }
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -73,20 +89,11 @@ struct TKMainView: View {
                     Text("SETTING VIEW HERE")
                 } label: {
                     Image(systemName: "gearshape.fill")
-                        .foregroundStyle(Color.white)
-                }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    Text("ALL HISTORY VIEW HERE")
-                } label: {
-                    Image(systemName: "list.dash")
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color.gray300)
                 }
             }
         }
-        .background { Color.accentColor.ignoresSafeArea(edges: .top) }
+        .background { Color.gray100.ignoresSafeArea(edges: .top) }
     }
     
     private func startConversationButtonBuilder() -> some View {
@@ -95,24 +102,23 @@ struct TKMainView: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(Color.white)
+                    .fill(Color.OR6)
                     .opacity(0.3)
-                    .frame(width: 160, height: 160)
+                    .frame(width: 120, height: 120)
                 
                 Circle()
-                    .fill(Color.white)
-                    .frame(width: 150, height: 150)
+                    .fill(Color.OR6)
+                    .frame(width: 100, height: 100)
                 
-                Image(systemName: "bubble.middle.bottom.fill")
-                    .resizable()
-                    .frame(width: 84, height: 77)
+                Image("TKBubble_Main")
+                    .foregroundStyle(Color.white)
+                    .padding(.top, 12)
                 
                 Image(systemName: "plus")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .bold()
-                    .foregroundStyle(Color.white)
-                    .padding(.bottom, 12)
+                    .foregroundStyle(Color.OR6)
             }
         }
     }

@@ -7,23 +7,15 @@
 
 import SwiftUI
 
+struct CircleRenderInfo: Hashable {
+    let x: CGFloat
+    let y: CGFloat
+}
+
 struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnimatable {
     @ObservedObject var store: TKStore
-    
-    struct CircleRenderInfo: Hashable {
-//        let radiusDiff: CGFloat
-        let x: CGFloat
-        let y: CGFloat
-        var bool: Bool {
-            return true
-        }
-    }
-    
-    private let circleRenderInfos: [CircleRenderInfo] = [
-        CircleRenderInfo(/*radiusDiff: 54, */x: -25, y: -15),
-        CircleRenderInfo(/*radiusDiff: 54, */x: 0, y: 27),
-        CircleRenderInfo(/*radiusDiff: 54, */x: 25, y: -15),
-    ]
+    let circleRenderInfos: [CircleRenderInfo]
+    let circleColor: Color
     
     var body: some View {
         GeometryReader { proxy in
@@ -41,7 +33,7 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
                             x: offset.x,
                             y: offset.y
                         )
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(circleColor)
                         .opacity(0.3)
                 }
                 .frame(
@@ -49,16 +41,13 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
                     height: proxy.size.height
                 )
                 .rotationEffect(
-                    store(\.animationFlag) ? .degrees(180) : .zero
-                )
-                .scaleEffect(
-                    store(\.animationFlag) ? 1.0 : 0.85
+                    store(\.animationFlag) ? .degrees(180) : .degrees(-180)
                 )
                 .animation(
                     Animation
                         .easeInOut
-                        .speed(0.05)
-                        .repeatForever(autoreverses: true),
+                        .speed(0.02)
+                        .repeatForever(autoreverses: false),
                     value: store(\.animationFlag)
                 )
             }
@@ -67,13 +56,24 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
         .task {
             store.triggerAnimation(true)
         }
+        .onDisappear {
+            store.reduce(\.animationFlag, into: false)
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        TKOrbitCircles(store: TKMainViewStore())
+        TKOrbitCircles(
+            store: TKMainViewStore(),
+            circleRenderInfos: [
+                CircleRenderInfo(x: -25, y: -15),
+                CircleRenderInfo(x: 0, y: 27),
+                CircleRenderInfo(x: 25, y: -15),
+            ],
+            circleColor: .red
+        )
             .frame(width: 200, height: 200)
-            .background { Color.red }
+            .background { Color.white}
     }
 }
