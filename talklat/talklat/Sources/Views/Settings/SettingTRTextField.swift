@@ -42,11 +42,12 @@ struct SettingTRTextField: View {
             .padding(.vertical, 11)
             .background(Color.gray100)
             .cornerRadius(16)
-            .background(alignment: .topLeading) {
+            
+            HStack {
                 characterLimitViewBuilder(currentCount: text.count, limit: limit)
-                    .padding(.top, 50)
                     .padding(.leading, 16)
                     .animation(.easeInOut(duration: 0.5), value: focusState)
+                Spacer()
             }
         }
     }

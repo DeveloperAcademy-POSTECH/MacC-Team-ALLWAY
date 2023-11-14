@@ -33,10 +33,11 @@ struct TKTextReplacementListView: View {
                         if sortedGroupKeys.isEmpty {
                             // MARK: 텅 뷰
                             Spacer()
-                            Image(systemName: "bubble.left.and.bubble.right")
-                                .font(.system(size: 30))
+                            Image(systemName: "bubble.left.and.text.bubble.right.fill")
+                                .font(.system(size: 85))
                                 .foregroundColor(.gray300)
                                 .padding(.bottom, 30)
+                                .padding(.top, 200)
                             Text("아직 설정한 텍스트 대치가 없어요")
                                 .foregroundStyle(Color.gray300)
                                 .font(.system(size: 17, weight: .medium))
@@ -104,6 +105,7 @@ struct TKTextReplacementListView: View {
                 }
             })
         }
+        .navigationBarBackButtonHidden(true)
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
@@ -139,7 +141,7 @@ struct TKTextReplacementListView: View {
             ForEach(list.wordDictionary.sorted { $0.key < $1.key }, id: \.key) { key, values in
                 if let firstValue = values.first {
                     // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
-                    let displayValue = firstValue.count > 40 ? String(firstValue.prefix(17)) + "..." : firstValue
+                    let displayValue = firstValue.count > 30 ? String(firstValue.prefix(29)) + "..." : firstValue
                     TextReplacementRow(selectedList: $selectedList, key: key, value: displayValue, list: list)
                         .padding(.horizontal, 16)
                         .cornerRadius(16)
