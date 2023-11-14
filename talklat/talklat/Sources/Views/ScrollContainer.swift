@@ -30,23 +30,7 @@ struct ScrollContainer: View {
                                     : 0
                                 )
                                 .overlay(alignment: .bottom) {
-                                    HStack {
-                                        Button {
-                                            store.onScrollOffsetChanged(false)
-                                            
-                                        } label: {
-                                            Image(systemName: "chevron.compact.down")
-                                                .resizable()
-                                                .frame(width: 32, height: 10)
-                                                .foregroundColor(.gray500)
-                                        }
-                                        .opacity(
-                                            store(\.isTopViewShown)
-                                            ? 1.0
-                                            : 0.0
-                                        )
-                                    }
-                                    .frame(maxWidth: .infinity)
+                                    CustomHistoryView(conversationViewStore: store)
                                 }
                         }
                         
