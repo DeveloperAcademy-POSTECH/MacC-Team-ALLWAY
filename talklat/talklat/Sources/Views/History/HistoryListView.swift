@@ -9,93 +9,21 @@ import SwiftUI
 import SwiftData
 
 struct HistoryListView: View {
-    @State private var selectedConversationID: String = ""
+    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
+    @State private var selectedConversation: TKConversation = TKConversation(
+        title: "",
+        createdAt: Date.now,
+        content: [TKContent(
+            text: "",
+            status: "answer",
+            createdAt: Date.now
+        )]
+    )
     @State private var isEditing: Bool = false
     @State private var isDialogShowing: Bool = false
     @State internal var isSearching: Bool = false
     @State internal var searchText: String = ""
-    
-    private var sampleConversations: [TKConversationSample] {
-        [
-            // TKConversation 1
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 이거 혹시 새 제품 있나요?",
-                        status: "question",
-                        createdAt: Date.now
-                    ),
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "계속 찾고 있었는데 안보여요",
-                        status: "question",
-                        createdAt: Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 0.0,
-                    longitude: 0.0,
-                    blockName: "포항시 효자동"
-                ),
-                title: "메모 1",
-                createdAt: Date.now,
-                updatedAt: Date.now
-            ),
-            
-            // TKConversation 2
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 혹시 라네즈 쿠션 리필을 따로 판매하시나요?",
-                        status: "question",
-                        createdAt: Date.now
-                    ),
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "어 잠시만요",
-                        status: "answer",
-                        createdAt:  Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 3242.0,
-                    longitude: 34.0,
-                    blockName: "세종시 모모동"
-                ),
-                title: "대잠 올리브영",
-                createdAt: Date.now,
-                updatedAt: Date.now
-            ),
-            
-            // TKConversation 3
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 오늘 5시 예약한 00인데요, 제가 귀가 안좋아서, 말씀하실 때 핸드폰에 대고 말씀해주시면 텍스트로 읽어보겠습니다.",
-                        status: "question",
-                        createdAt:  Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 3242.0,
-                    longitude: 34.0,
-                    blockName: "세종시 모모동"
-                ),
-                title: "세종 철학관",
-                createdAt:  Date.now,
-                updatedAt:  Date.now
-            )
-        ]
-    }
     
     // not in store
     @FocusState internal var isSearchFocused: Bool
@@ -116,16 +44,21 @@ struct HistoryListView: View {
             if !isSearching {
                 ScrollView {
                     // Unavailable View
-                    if sampleConversations.isEmpty {
+                    if dataStore.conversations.isEmpty {
                         TKUnavailableViewBuilder(
                             icon: "bubble.left.and.bubble.right.fill",
                             description: "아직 대화 기록이 없어요"
                         )
                     } else {
-                        ForEach(0 ..< 4) { _ in // TODO: all [TKLocation]
+                        ForEach(
+                            dataStore.filterDuplicatedBlockNames(
+                                locations: dataStore.locations
+                            )
+                        ) { location in
                             LocationList(
-                                samples: sampleConversations,
-                                selectedConversationID: $selectedConversationID,
+                                dataStore: dataStore,
+                                location: location,
+                                selectedConversation: $selectedConversation,
                                 isEditing: $isEditing,
                                 isDialogShowing: $isDialogShowing
                             )
@@ -162,7 +95,7 @@ struct HistoryListView: View {
             } else {
                 // MARK: - History Search
                 HistoryListSearchView(
-                    sampleConversations: sampleConversations,
+                    dataStore: dataStore,
                     isSearching: $isSearching,
                     searchText: $searchText
                 )
@@ -174,7 +107,8 @@ struct HistoryListView: View {
                 Color.black.opacity(0.5)
                     .ignoresSafeArea()
                 CustomDialog(
-                    selectedConversationID: $selectedConversationID,
+                    dataStore: dataStore,
+                    selectedConversation: $selectedConversation,
                     isDialogShowing: $isDialogShowing,
                     isEditing: $isEditing
                 )
@@ -204,9 +138,10 @@ struct HistoryListView: View {
 
 // MARK: - Location Based List Items
 struct LocationList: View {
-    internal var samples: [TKConversationSample]
+    var dataStore: TKSwiftDataStore
+    internal var location: TKLocation
     @State internal var isCollapsed: Bool = false
-    @Binding internal var selectedConversationID: String
+    @Binding internal var selectedConversation: TKConversation
     @Binding internal var isEditing: Bool
     @Binding internal var isDialogShowing: Bool
     
@@ -214,7 +149,7 @@ struct LocationList: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "location.fill")
-                Text("서울특별시 송파동") // TODO: location.blockName
+                Text(location.blockName)
                     .foregroundColor(.gray800)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
@@ -223,6 +158,7 @@ struct LocationList: View {
                 
                 // Collapse Button
                 Button {
+                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -263,10 +199,13 @@ struct LocationList: View {
             
             // Each List Cell
             if !isCollapsed {
-                ForEach(samples, id: \.self) { conversation in // TODO: each TKLocation의 TKConversation
+                ForEach(
+                    dataStore.getLocationBasedConversations(location: location),
+                    id: \.self
+                ) { conversation in // TODO: each TKLocation의 TKConversation
                     CellItem(
                         conversation: conversation,
-                        selectedConversationID: $selectedConversationID,
+                        selectedConversation: $selectedConversation,
                         isEditing: $isEditing,
                         isDialogShowing: $isDialogShowing
                     )
@@ -283,10 +222,10 @@ struct LocationList: View {
 }
 
 struct CellItem: View {
-    var conversation: TKConversationSample
+    var conversation: TKConversation
     
     @State internal var isRemoving: Bool = false
-    @Binding internal var selectedConversationID: String
+    @Binding internal var selectedConversation: TKConversation
     @Binding internal var isEditing: Bool
     @Binding internal var isDialogShowing: Bool
     
@@ -326,10 +265,10 @@ struct CellItem: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title) // TODO: TKConversation.title
+                    Text(conversation.title)
                         .font(.system(size: 17, weight: .medium))
                     Text(
-                        conversation.createdAt.formatted( // TODO: TKConversation.createdAt
+                        conversation.createdAt.formatted( // TODO: format
                             date: .abbreviated,
                             time: .omitted
                         )
@@ -372,6 +311,7 @@ struct CellItem: View {
             if isRemoving && isEditing {
                 Button {
                     withAnimation {
+                        selectedConversation = conversation
                         isDialogShowing = true
                     }
                 } label: {
@@ -397,7 +337,9 @@ struct CellItem: View {
 // TODO: 히스토리뷰 스토어 생성 후 TKDialogBuilder로 분리
 /// enum case .destruction (빨간색), .cancel (주황색) 필요
 struct CustomDialog: View {
-    @Binding internal var selectedConversationID: String
+    var dataStore: TKSwiftDataStore
+    
+    @Binding internal var selectedConversation: TKConversation
     @Binding internal var isDialogShowing: Bool
     @Binding internal var isEditing: Bool
     
@@ -433,7 +375,7 @@ struct CustomDialog: View {
                     
                     Button {
                         // Delete
-                        removeConversation(selectedConversationID)
+                        dataStore.removeItem(selectedConversation)
                         isDialogShowing = false
                         isEditing = false
                     } label: {

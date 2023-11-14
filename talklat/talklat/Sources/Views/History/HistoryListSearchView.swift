@@ -14,9 +14,13 @@ private enum searchStatus {
 }
 
 struct HistoryListSearchView: View {
-    var sampleConversations: [TKConversationSample]
+    var dataStore: TKSwiftDataStore
     
-    @State var matchingContents: [TKConversationSample.TKContent] = []
+    @State var matchingContents: [TKContent] = [TKContent(
+        text: "",
+        status: "answer",
+        createdAt: Date.now
+    )]
     @State private var searchStatus: searchStatus = .inactive
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
@@ -30,8 +34,11 @@ struct HistoryListSearchView: View {
             case .resultFound:
                 ScrollView {
                     // TODO: matching [TKContent]의 matching [TKConversation.location]
-                    ForEach(0 ..< 1) { _ in
+                    ForEach(
+                        dataStore.getContentBasedLocations(contents: matchingContents)
+                    ) { location in
                         SearchResultSection(
+                            location: location,
                             matchingContents: $matchingContents,
                             searchText: $searchText
                         )
@@ -64,13 +71,13 @@ struct HistoryListSearchView: View {
             
             // Search Filter
             matchingContents = []
-            sampleConversations.forEach { conversation in
-                let matchingContent = conversation.content.filter({ content in
-                    content.text.contains(searchText)
-                })
-                
-                matchingContents.append(contentsOf: matchingContent)
-            }
+            
+            let matchingContent = dataStore.contents.filter({ content in
+                content.text.contains(searchText)
+            })
+            
+            matchingContents.append(contentsOf: matchingContent)
+            
         }
         .onChange(of: matchingContents) { _, _ in
             // TODO: if else matching TKContent 존재
@@ -89,7 +96,9 @@ struct HistoryListSearchView: View {
 
 // MARK: - (Matching) Location Unit
 struct SearchResultSection: View {
-    @Binding var matchingContents: [TKConversationSample.TKContent]
+    var location: TKLocation
+    
+    @Binding var matchingContents: [TKContent]
     @Binding var searchText: String
     
     var body: some View {
@@ -98,20 +107,20 @@ struct SearchResultSection: View {
             HStack {
                 Image(systemName: "location.fill")
                 
-                Text("서울특별시 송파동") // TODO: location.blockName
+                Text(location.blockName)
                     .foregroundColor(.gray800)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
-                Text("\(matchingContents.count)개 발견됨") // TODO: matching [TKContent].count
+                Text("\(matchingContents.count)개 발견됨")
                     .foregroundColor(.gray500)
                     .font(.system(size: 15, weight: .medium))
             }
             
             // Contents
-            ForEach(matchingContents, id: \.self) { content in // TODO: matching [TKContent]
+            ForEach(matchingContents, id: \.self) { content in
                 SearchResultItem(
                     matchingContent: content,
                     searchText: $searchText
@@ -124,7 +133,7 @@ struct SearchResultSection: View {
 
 // MARK: - (Matching) Conversation Item Unit
 struct SearchResultItem: View {
-    var matchingContent: TKConversationSample.TKContent
+    var matchingContent: TKContent
     
     @State var highlightIndex: String.Index = String.Index(utf16Offset: 0, in: "")
     @Binding var searchText: String
@@ -133,7 +142,7 @@ struct SearchResultItem: View {
         // Cell Contents
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                Text("Title") // TODO: title
+                Text(matchingContent.conversation?.title ?? "Talklat Title")
                     .font(.system(size: 17, weight: .medium))
                
                 // 검색 키워드와 일치하는 한 개의 TKContent.text
@@ -161,7 +170,7 @@ struct SearchResultItem: View {
                 }
                 
                 Text(
-                    matchingContent.createdAt.formatted( // TODO: createdAt
+                    matchingContent.createdAt.formatted( // TODO: format
                         date: .abbreviated,
                         time: .omitted
                    )

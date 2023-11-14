@@ -8,7 +8,6 @@ import Foundation
 import SwiftData
 
 @Model
-
 final class TKConversation {
     var title: String
     var createdAt: Date
@@ -23,12 +22,12 @@ final class TKConversation {
     init(
         title: String,
         createdAt: Date,
-        updatedAt: Date,
-        content: [TKContent],
+        content: [TKContent]? = nil,
         location: TKLocation? = nil
     ) {
         self.title = title
         self.createdAt = createdAt
         self.content = content
+        self.location = location
     }
 }
