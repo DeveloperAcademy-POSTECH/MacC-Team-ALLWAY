@@ -85,7 +85,6 @@ struct TKConversationView: View {
                 break
             }
         }
-        .edgesIgnoringSafeArea(.all)
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
         // .onAppear { gyroScopeStore.detectDeviceMotion() }
