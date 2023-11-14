@@ -32,6 +32,7 @@ struct TKSavingView: View {
                 
                 Button {
                     #warning("Create TKConverstion + TKLocation")
+                    store.onSaveNewConversationButtonTapped()
                 } label: {
                     Text("저장")
                 }

@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TKMainView: View {
-    @StateObject private var store = TKMainViewStore()
-    @StateObject private var conversationView = TKConversationViewStore()
+    @Environment(\.scenePhase) private var scenePhase
+    @ObservedObject var store: TKMainViewStore
+    @StateObject private var conversationViewStore = TKConversationViewStore()
+    @State private var flag: Bool = false
     
     var body: some View {
         ZStack {
@@ -62,10 +64,8 @@ struct TKMainView: View {
             // MARK: BottomSheet
             TKDraggableList(store: store)
         }
-        .fullScreenCover(
-            isPresented: store.bindingConversationFullScreenCover()
-        ) {
-            TKConversationView(store: conversationView)
+        .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
+            TKConversationView(store: conversationViewStore)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -94,11 +94,44 @@ struct TKMainView: View {
             }
         }
         .background { Color.gray100.ignoresSafeArea(edges: .top) }
+        .overlay {
+            TKAlert(
+                style: .mic,
+                isPresented: store.bindingSpeechAuthAlert()
+            ) {
+                store.onGoSettingScreenButtonTapped()
+                
+            } actionButtonLabel: {
+                HStack(spacing: 8) {
+                    Text("설정으로 이동")
+                    
+                    Image(systemName: "arrow.up.right.square.fill")
+                }
+            }
+            .onChange(of: scenePhase) { _, _ in
+                Task { @MainActor in
+                    let authResult = await SpeechAuthManager.switchAuthStatus()
+                    store.onChangeOfSpeechAuth(authResult)
+                }
+            }
+        }
+        .overlay(alignment: .top) {
+            TKToast(isPresented: conversationViewStore.bindingNewConversationToast())
+        }
+        .task {
+            try? await Task.sleep(for: .seconds(3))
+            conversationViewStore.onSaveNewConversationButtonTapped()
+        }
     }
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            store.onStartConversationButtonTapped()
+            if store(\.authStatus) != .authCompleted {
+                store.onStartConversationButtonTappedWithoutAuth()
+            } else {
+                store.onStartConversationButtonTapped()
+            }
+            
         } label: {
             ZStack {
                 Circle()
@@ -126,6 +159,6 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView()
+        TKMainView(store: TKMainViewStore())
     }
 }
