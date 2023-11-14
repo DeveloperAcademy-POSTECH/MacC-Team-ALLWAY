@@ -16,8 +16,6 @@ private enum searchStatus {
 struct HistoryListSearchView: View {
     var dataStore: TKSwiftDataStore
     
-    var sampleConversations: [TKConversationSample]
-    
     @State var matchingContents: [TKContent] = [TKContent(
         text: "",
         status: "answer",

@@ -25,88 +25,6 @@ struct HistoryListView: View {
     @State internal var isSearching: Bool = false
     @State internal var searchText: String = ""
     
-    private var sampleConversations: [TKConversationSample] {
-        [
-            // TKConversation 1
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 이거 혹시 새 제품 있나요?",
-                        status: "question",
-                        createdAt: Date.now
-                    ),
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "계속 찾고 있었는데 안보여요",
-                        status: "question",
-                        createdAt: Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 0.0,
-                    longitude: 0.0,
-                    blockName: "포항시 효자동"
-                ),
-                title: "메모 1",
-                createdAt: Date.now,
-                updatedAt: Date.now
-            ),
-            
-            // TKConversation 2
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 혹시 라네즈 쿠션 리필을 따로 판매하시나요?",
-                        status: "question",
-                        createdAt: Date.now
-                    ),
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "어 잠시만요",
-                        status: "answer",
-                        createdAt:  Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 3242.0,
-                    longitude: 34.0,
-                    blockName: "세종시 모모동"
-                ),
-                title: "대잠 올리브영",
-                createdAt: Date.now,
-                updatedAt: Date.now
-            ),
-            
-            // TKConversation 3
-            TKConversationSample(
-                id: UUID().uuidString,
-                content: [
-                    TKConversationSample.TKContent(
-                        id: UUID().uuidString,
-                        text: "안녕하세요 오늘 5시 예약한 00인데요, 제가 귀가 안좋아서, 말씀하실 때 핸드폰에 대고 말씀해주시면 텍스트로 읽어보겠습니다.",
-                        status: "question",
-                        createdAt:  Date.now
-                    )
-                ],
-                location: TKConversationSample.TKLocation(
-                    id: UUID().uuidString,
-                    latitude: 3242.0,
-                    longitude: 34.0,
-                    blockName: "세종시 모모동"
-                ),
-                title: "세종 철학관",
-                createdAt:  Date.now,
-                updatedAt:  Date.now
-            )
-        ]
-    }
-    
     // not in store
     @FocusState internal var isSearchFocused: Bool
    
@@ -178,7 +96,6 @@ struct HistoryListView: View {
                 // MARK: - History Search
                 HistoryListSearchView(
                     dataStore: dataStore,
-                    sampleConversations: sampleConversations,
                     isSearching: $isSearching,
                     searchText: $searchText
                 )
