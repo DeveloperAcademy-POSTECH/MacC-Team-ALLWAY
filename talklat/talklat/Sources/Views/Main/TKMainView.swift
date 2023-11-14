@@ -22,7 +22,10 @@ struct TKMainView: View {
                         Image(systemName: "location.fill")
                         
                         Text("현재 위치")
+                            .font(.headline)
+                            .bold()
                     }
+                    .foregroundStyle(Color.gray400)
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
