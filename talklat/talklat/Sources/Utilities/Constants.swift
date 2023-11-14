@@ -27,6 +27,12 @@ public enum Constants {
     말씀하신 내용은 음성인식되어서
     텍스트로 변환됩니다.
     """
+    
+    static let START_CONVERSATION_MESSAGE: String =
+    """
+    새 대화
+    시작하기
+    """
 }
 
 public enum AuthStatus: String {
@@ -54,8 +60,37 @@ public enum TKTransitionObjects {
     case INTERLUDE
 }
 
+public enum conversationPatterns {
+    static let questionPatterns: [String] = ["나요", "가요", "까요", "입니까"]
+    static let explanationPatterns: [String] = ["입니다", "합니다"]
+}
+
 // HistoryItem이 없어지고 enum이 public이 될 것
 public enum MessageType: String {
     case question = "question"
     case answer = "answer"
 }
+
+public enum LocationCallType {
+    case track
+    case get
+}
+
+public enum LocationAuthorizationStatus {
+    case notAuthorized
+    case noCoordinate
+    case authorized
+}
+
+public enum BlockNameType {
+    case fullName
+    case shortName
+}
+
+enum MapAnnotationType {
+    case fixed
+    case movable
+}
+
+public let initialLatitude: Double = 37.554577
+public let initialLongitude: Double = 126.970828

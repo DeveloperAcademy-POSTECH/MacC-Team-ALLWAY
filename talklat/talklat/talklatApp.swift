@@ -11,30 +11,12 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appViewStore: AppViewStore = AppViewStore(
-        communicationStatus: .writing,
-        questionText: ""
-    )
-    
-    @StateObject private var store: ConversationViewStore = ConversationViewStore(
-        conversationState: ConversationViewStore.ConversationState(
-            conversationStatus: .writing
-        )
-    )
+    @StateObject private var store: TKConversationViewStore = TKConversationViewStore()
+    @StateObject private var appViewStore: AppViewStore = AppViewStore()
     
     private let appRootManager = AppRootManager()
-    private var container: ModelContainer
-
+    
     init() {
-        do {
-            container = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
-            )
-        } catch {
-            fatalError("Failed to configure SwiftData container.")
-        }
-        
-        // DB 파일이 저장된 경로
         print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
     
@@ -51,7 +33,9 @@ struct talklatApp: App {
                         }
                     
                 case .authCompleted:
-                    ScrollContainer(store: store)
+                    NavigationStack {
+                         TKMainView()
+                    }
                     
                 case .speechRecognitionAuthIncompleted
                     ,.microphoneAuthIncompleted
@@ -62,11 +46,10 @@ struct talklatApp: App {
             .onAppear {
                 appViewStore.voiceRecordingAuthSetter(.splash)
             }
-            .onChange(of: scenePhase) { _ in
+            .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
         }
-        .modelContainer(container)
     }
 }
 
