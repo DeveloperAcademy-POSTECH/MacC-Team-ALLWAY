@@ -100,6 +100,21 @@ extension TKConversationViewStore {
         }
     }
     
+    public func onTextReplaceButtonTapped(
+        with firstReplacement: String,
+        key: String
+    ) {
+        let newText = self(\.questionText)
+            .replacingOccurrences(
+                of: "\(key)",
+                with: firstReplacement,
+                options: [.caseInsensitive],
+                range: nil
+            )
+        
+        reduce(\.questionText, into: newText)
+    }
+    
     public func blockButtonDoubleTap(completion: () -> Void) {
         defer {
             Task { @MainActor in
