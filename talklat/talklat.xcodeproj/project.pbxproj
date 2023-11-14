@@ -10,13 +10,14 @@
 		572304FB2B00A9BC0098FFF5 /* TKTextReplacementEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FA2B00A9BC0098FFF5 /* TKTextReplacementEditView.swift */; };
 		572304FD2B00AAE70098FFF5 /* SettingTRTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FC2B00AAE70098FFF5 /* SettingTRTextField.swift */; };
 		572304FF2B00AF350098FFF5 /* SettingViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FE2B00AF350098FFF5 /* SettingViewStore.swift */; };
+		572A82042B03300B00753516 /* Character+Consonant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572A82032B03300B00753516 /* Character+Consonant.swift */; };
 		57464F462AFE4AE800A5F0B0 /* SectionIndexTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57464F452AFE4AE800A5F0B0 /* SectionIndexTitles.swift */; };
 		57464F482AFE4F2500A5F0B0 /* TextReplacementRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57464F472AFE4F2500A5F0B0 /* TextReplacementRow.swift */; };
 		575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677E02ADA6F13002E01BE /* TLTextField.swift */; };
 		5769BF9D2AFB5B900036CF3D /* TKTextReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */; };
 		5769BFDC2AFE05690036CF3D /* TKTextReplacementListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BFDB2AFE05690036CF3D /* TKTextReplacementListView.swift */; };
 		5769BFDE2AFE05A70036CF3D /* TKTextReplacementAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BFDD2AFE05A70036CF3D /* TKTextReplacementAddView.swift */; };
-		5769BFE02AFE142F0036CF3D /* String+Consonant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BFDF2AFE142F0036CF3D /* String+Consonant.swift */; };
+		5769BFE02AFE142F0036CF3D /* String+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BFDF2AFE142F0036CF3D /* String+Language.swift */; };
 		57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D702ADC5D19003A7B19 /* TestHistoryView.swift */; };
 		57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7378E2AD3DCE500FCBA21 /* TKWritingView.swift */; };
 		57806D802AE28ED3003A7B19 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
@@ -74,13 +75,14 @@
 		572304FA2B00A9BC0098FFF5 /* TKTextReplacementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementEditView.swift; sourceTree = "<group>"; };
 		572304FC2B00AAE70098FFF5 /* SettingTRTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTRTextField.swift; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* SettingViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewStore.swift; sourceTree = "<group>"; };
+		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
 		57464F452AFE4AE800A5F0B0 /* SectionIndexTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionIndexTitles.swift; sourceTree = "<group>"; };
 		57464F472AFE4F2500A5F0B0 /* TextReplacementRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementRow.swift; sourceTree = "<group>"; };
 		575677E02ADA6F13002E01BE /* TLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTextField.swift; sourceTree = "<group>"; };
 		5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementManager.swift; sourceTree = "<group>"; };
 		5769BFDB2AFE05690036CF3D /* TKTextReplacementListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementListView.swift; sourceTree = "<group>"; };
 		5769BFDD2AFE05A70036CF3D /* TKTextReplacementAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementAddView.swift; sourceTree = "<group>"; };
-		5769BFDF2AFE142F0036CF3D /* String+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Consonant.swift"; sourceTree = "<group>"; };
+		5769BFDF2AFE142F0036CF3D /* String+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Language.swift"; sourceTree = "<group>"; };
 		57806D702ADC5D19003A7B19 /* TestHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHistoryView.swift; sourceTree = "<group>"; };
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
@@ -310,7 +312,8 @@
 				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
 				7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */,
 				7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */,
-				5769BFDF2AFE142F0036CF3D /* String+Consonant.swift */,
+				5769BFDF2AFE142F0036CF3D /* String+Language.swift */,
+				572A82032B03300B00753516 /* Character+Consonant.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -456,7 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5769BFE02AFE142F0036CF3D /* String+Consonant.swift in Sources */,
+				5769BFE02AFE142F0036CF3D /* String+Language.swift in Sources */,
 				57806D722ADEB8FD003A7B19 /* TKWritingView.swift in Sources */,
 				7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */,
 				572304FB2B00A9BC0098FFF5 /* TKTextReplacementEditView.swift in Sources */,
@@ -487,6 +490,7 @@
 				5769BFDC2AFE05690036CF3D /* TKTextReplacementListView.swift in Sources */,
 				EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */,
 				572304FF2B00AF350098FFF5 /* SettingViewStore.swift in Sources */,
+				572A82042B03300B00753516 /* Character+Consonant.swift in Sources */,
 				57E76EB72ACEC91A00D79553 /* StaffSpeechView.swift in Sources */,
 				57806D712ADC5D19003A7B19 /* TestHistoryView.swift in Sources */,
 				EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */,
@@ -661,8 +665,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "음성인식 기능을 제공하기 위해 마이크 권한이 필요합니다.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "청인의 말을 텍스트로 받아적기 위해 음성인식 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -697,8 +701,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "음성인식 기능을 제공하기 위해 마이크 권한이 필요합니다.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "청인의 말을 텍스트로 받아적기 위해 음성인식 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

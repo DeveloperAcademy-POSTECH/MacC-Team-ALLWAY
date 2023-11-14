@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: 텍스트 대치 리스트의 목차 부분
 struct SectionIndexTitles: View {
     @State private var selectedIndex: Int?
     @State private var feedbackGenerator = UISelectionFeedbackGenerator()

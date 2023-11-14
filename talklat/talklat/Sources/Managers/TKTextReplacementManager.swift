@@ -14,26 +14,29 @@ class TKTextReplacementManager {
     
     var replacements: [TKTextReplacement] = []
     
-    func addTextReplacement(phrase: String, replacement: String) {
-        if let existingReplacement = replacements.first(where: { $0.wordDictionary.keys.contains(phrase) }) {
-            existingReplacement.wordDictionary[phrase]?.append(replacement)
-            try? context.save()
-        } else {
-            let newReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-            replacements.append(newReplacement)
-            context.insert(newReplacement)
-            try? context.save()
-        }
+    // MARK: 기본 Create
+    public func createTextReplacement(textReplacement: TKTextReplacement) {
+        context.insert(textReplacement)
+        try? context.save()
     }
+    
+    // MARK: 텍대 데이터 구조 변형 시 Create
+//    func addTextReplacement(phrase: String, replacement: String) {
+//        if let existingReplacement = replacements.first(where: { $0.wordDictionary.keys.contains(phrase) }) {
+//            existingReplacement.wordDictionary[phrase]?.append(replacement)
+//            try? context.save()
+//        } else {
+//            let newReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
+//            replacements.append(newReplacement)
+//            context.insert(newReplacement)
+//            try? context.save()
+//        }
+//    }
 
     public func findReplacement(for inputText: String) -> [String]? {
         return replacements.first(where: { $0.wordDictionary.keys.contains(inputText) })?.wordDictionary[inputText]
     }
 
-    public func createTextReplacement(textReplacement: TKTextReplacement) {
-        context.insert(textReplacement)
-        // 필요하다면 여기에서 context.save()를 호출하여 변경 사항을 저장할 수 있습니다.
-    }
     
     public func updateTextReplacement(
         phrase: TKTextReplacement,

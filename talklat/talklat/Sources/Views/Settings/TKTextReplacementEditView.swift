@@ -17,7 +17,6 @@ struct TKTextReplacementEditView: View {
     @FocusState var focusState: Bool
     @Binding var isPresented: Bool
     @State private var isDialogShowing: Bool = false
-    
     @State private var phrase: String
     @State private var replacement: String
     
@@ -42,7 +41,7 @@ struct TKTextReplacementEditView: View {
                 Button(action: {
                     self.isDialogShowing = true
                 }) {
-                    Text("텍스트 대체 삭제")
+                    Text("텍스트 대치 삭제")
                         .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.white)
                         .padding()
@@ -57,27 +56,28 @@ struct TKTextReplacementEditView: View {
             .padding(.top, 8)
             .navigationTitle("편집")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(leading: Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 17))
-                    Text("목록")
-                        .font(.headline)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 17))
+                            Text("목록")
+                                .font(.headline)
+                        }
+                    }
                 }
-            })
-            .navigationBarItems(trailing: Button("저장") {
-                if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-                    existingItem.wordDictionary[phrase] = [replacement]
-                } else {
-                    let newItem = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-                    context.insert(newItem)
+                
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button("저장") {
+                        try? context.save()
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
-                isPresented = false
-                presentationMode.wrappedValue.dismiss()
-            })
-            
+            }
         }
         .background(
             Group {
@@ -100,14 +100,15 @@ struct TKTextReplacementEditView: View {
     
     private func deleteTKTextReplacement() {
         if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-            textReplacementManager.deleteTextReplacement(textReplacement: existingItem)
+            context.delete(existingItem)
         }
+            
         isPresented = false
     }
     
     private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
         let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
-        return fetchedItems.first
+        return fetchedItems.last
     }
 }
 
@@ -162,6 +163,5 @@ struct CustomDialog: View {
         .cornerRadius(22)
         .frame(height: 240)
         .frame(maxWidth: .infinity)
-        
     }
 }

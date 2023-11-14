@@ -36,7 +36,6 @@ struct TextReplacementRow: View {
                     .lineSpacing(15 * 1.35 - 15)
                     .padding(.vertical, 10)
                     .padding(.leading, 16)
-                
             }
         }
         .background(Color.gray100)

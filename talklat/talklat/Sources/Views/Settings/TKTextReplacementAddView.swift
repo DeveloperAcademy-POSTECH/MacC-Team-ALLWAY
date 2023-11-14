@@ -10,14 +10,15 @@ import SwiftUI
 
 struct TKTextReplacementAddView: View {
     @Environment(\.modelContext) var context
-    @EnvironmentObject var settingStore: SettingViewStore
     @Environment(\.presentationMode) var presentationMode
-    var isInputValid: Bool {
-        !phrase.isEmpty && !replacement.isEmpty
-    }
+    
     @FocusState var focusState: Bool
     @State private var phrase: String = ""
     @State private var replacement: String = ""
+    
+    var isInputValid: Bool {
+        !phrase.isEmpty && !replacement.isEmpty
+    }
     
     var body: some View {
         NavigationView {
@@ -30,6 +31,12 @@ struct TKTextReplacementAddView: View {
                     text: $phrase,
                     focusState: _focusState
                 )
+                .onChange(of: phrase) { newValue in
+                    if newValue.hasPrefix(" ") {
+                        phrase = String(newValue.dropFirst())
+                    }
+                }
+                
                 SettingTRTextField (
                     title: "변환 문구",
                     placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
@@ -37,6 +44,11 @@ struct TKTextReplacementAddView: View {
                     text: $replacement
                 )
                 .padding(.top, 36)
+                .onChange(of: replacement) { newValue in
+                    if newValue.hasPrefix(" ") {
+                        replacement = String(newValue.dropFirst())
+                    }
+                }
                 
                 Spacer()
             }
@@ -49,9 +61,7 @@ struct TKTextReplacementAddView: View {
                 },
                 trailing: Button(action: {
                     if isInputValid {
-                        // TKTextReplacement 객체를 적절한 인자로 생성합니다.
                         let newReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-                        // context에 새 객체를 추가하고 저장합니다.
                         context.insert(newReplacement)
                         try? context.save()
                         presentationMode.wrappedValue.dismiss()

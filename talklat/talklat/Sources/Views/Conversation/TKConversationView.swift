@@ -90,6 +90,8 @@ struct TKConversationView: View {
                     
                     Spacer()
                     
+                    // TODO: 머지 후 ScrollContainer 없앤 이후의 코드로 적용
+                    // focusState일 때에는 키보드 위에 위치하게 해야 함
                     customToolbar()
                     
                 } else if store(\.conversationStatus) == .recording {
@@ -253,7 +255,7 @@ struct TKConversationView: View {
     
     private func customToolbar() -> some View {
         HStack {
-            // Eraser button
+            // MARK: Eraser button
             Button(action: {
                 store.bindingQuestionText().wrappedValue = ""
             }) {
@@ -267,7 +269,7 @@ struct TKConversationView: View {
             .accessibilityLabel(Text("Clear text"))
             
             if focusState {
-                // TextReplacement Button
+                // MARK: TextReplacement Button
                 if let key = replacementKeyForCurrentText(),
                    let replacements = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key],
                    let firstReplacement = replacements.first { // 첫 번째 요소를 사용
@@ -278,7 +280,7 @@ struct TKConversationView: View {
                             .replacingOccurrences(of: "\(key)", with: firstReplacement, options: [.caseInsensitive], range: nil)
                         store.bindingQuestionText().wrappedValue = newText
                     }) {
-                        Text(firstReplacement) // 첫 번째 요소를 표시
+                        Text(firstReplacement)
                             .foregroundColor(Color.gray600)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
@@ -295,7 +297,6 @@ struct TKConversationView: View {
             
             Spacer()
         }
-        //        .padding()
         .background(focusState ? Color.gray200 : Color.clear)
         .cornerRadius(32)
         .padding(.horizontal, 16)
@@ -303,8 +304,6 @@ struct TKConversationView: View {
         .animation(.default, value: focusState)
     }
 }
-
-
 
 // MARK: - Components
 // TODO: Component Container..?
@@ -413,11 +412,10 @@ extension TKConversationView {
     }
 }
 
-// MARK: 텍스트 대치
+// MARK: 텍스트 대치 검사
 extension TKConversationView {
-    
+    // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
     func replacementKeyForCurrentText() -> String? {
-        // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
         guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
             return nil
         }

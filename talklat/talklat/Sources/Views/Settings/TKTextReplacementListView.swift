@@ -10,13 +10,11 @@ import SwiftUI
 
 struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.modelContext) private var context
+    @ObservedObject var settingStore = SettingViewStore(settingState: .init())
+    
     @Query private var lists: [TKTextReplacement]
     
     @State private var selectedList: TKTextReplacement? = nil
-    @State private var showingAddView = false
-    
-    @ObservedObject var settingStore = SettingViewStore(settingState: .init())
     
     var textReplacementManager = TKTextReplacementManager()
     
@@ -33,16 +31,19 @@ struct TKTextReplacementListView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
                         if sortedGroupKeys.isEmpty {
+                            // MARK: 텅 뷰
                             Spacer()
-                            Image(systemName: "ellipsis.message")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
+                            Image(systemName: "bubble.left.and.bubble.right")
+                                .font(.system(size: 30))
+                                .foregroundColor(.gray300)
+                                .padding(.bottom, 30)
                             Text("아직 설정한 텍스트 대치가 없어요")
+                                .foregroundStyle(Color.gray300)
+                                .font(.system(size: 17, weight: .medium))
                             Spacer()
                         } else {
                             ForEach(sortedGroupKeys, id: \.self) { groupKey in
-                                // Header
+                                // MARK: 리스트의 Header
                                 Section(header: Text(groupKey)
                                     .id(groupKey)
                                     .font(.subheadline)
@@ -62,6 +63,7 @@ struct TKTextReplacementListView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .overlay {
+                    // MARK: 목차
                     if(!sortedGroupKeys.isEmpty) {
                         SectionIndexTitles(proxy: proxy)
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -105,6 +107,8 @@ struct TKTextReplacementListView: View {
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
+    // MARK: 리스트 정렬
+    // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..
     var sortedGroupKeys: [String] {
         return groupedLists.keys.sorted { key1, key2 in
             let firstCharKey1 = key1.first
@@ -112,28 +116,31 @@ struct TKTextReplacementListView: View {
 
             // 한글을 가장 앞에 배치
             if firstCharKey1?.isKorean == true && firstCharKey2?.isKorean == false {
-                return false  // key1이 한글일 때 앞에 오도록
+                return false
             } else if firstCharKey1?.isKorean == false && firstCharKey2?.isKorean == true {
-                return true  // key2가 한글일 때 뒤에 오도록
+                return true
             }
 
             // 영어를 그 다음으로 배치
             if firstCharKey1?.isEnglish == true && firstCharKey2?.isEnglish == false {
-                return false  // key1이 영어일 때 앞에 오도록
+                return false
             } else if firstCharKey1?.isEnglish == false && firstCharKey2?.isEnglish == true {
-                return true  // key2가 영어일 때 뒤에 오도록
+                return true
             }
 
-            // 그 외 문자들은 자연스러운 문자열 순서에 따라 배치
+            // 그 외 문자들
             return key1 < key2
         }
     }
 
+    // MARK: List 항목들 Header - list 항목
     func listSection(_ groupKey: String) -> some View {
         ForEach(groupedLists[groupKey] ?? [], id: \.self) { list in
             ForEach(list.wordDictionary.sorted { $0.key < $1.key }, id: \.key) { key, values in
                 if let firstValue = values.first {
-                    TextReplacementRow(key: key, value: firstValue, list: list, selectedList: $selectedList)
+                    // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
+                    let displayValue = firstValue.count > 40 ? String(firstValue.prefix(17)) + "..." : firstValue
+                    TextReplacementRow(key: key, value: displayValue, list: list, selectedList: $selectedList)
                         .padding(.horizontal, 16)
                         .cornerRadius(16)
                         .simultaneousGesture(TapGesture().onEnded {
@@ -144,9 +151,9 @@ struct TKTextReplacementListView: View {
             }
         }
     }
-
 }
 
+// MARK: 리스트 정렬 용
 extension String {
     var isKorean: Bool {
         self.first?.isKorean ?? false

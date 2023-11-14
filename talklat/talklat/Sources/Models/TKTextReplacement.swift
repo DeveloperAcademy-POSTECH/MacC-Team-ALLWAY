@@ -18,5 +18,3 @@ class TKTextReplacement {
         self.wordDictionary = wordDictionary
     }
 }
-
-// 같은 key면 append하기
