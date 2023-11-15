@@ -70,8 +70,30 @@ extension TKSwiftDataStore {
         let uniqueLocations = groupedLocations.compactMap { $0.value.first }
         return uniqueLocations
     }
+    
+    public func getRecentConversation() -> TKConversation? {
+        refreshData()
+        return conversations.sorted { $0.createdAt > $1.createdAt }.first
+    }
 }
 
+// MARK: TextReplacement Related
+extension TKSwiftDataStore {
+    
+    // MARK: 기본 Create
+    public func createTextReplacement(phrase: String, replacement: String) {
+        let newTextReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
+        dataManager.appendItem(newTextReplacement)
+        refreshData()
+    }
 
-
-
+    public func updateTextReplacement(
+        oldTextReplacement: TKTextReplacement,
+        newPhrase: String,
+        newReplacement: String
+    ) {
+        oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
+        dataManager.appendItem(oldTextReplacement)
+        refreshData()
+    }
+}

@@ -6,9 +6,3 @@
 //
 
 import Foundation
-
-public struct ChatMessage {
-    let text: String
-    let textType: ChatTextType
-    let date: String
-}

@@ -16,11 +16,11 @@ struct TKDraggableList: View {
         ZStack {
             // MARK: - BOTTOM SHEET BACKGROUND
             RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(Color.SheetBGWhite)
             
             VStack(spacing: 0) {
                 Capsule()
-                    .fill(Color.gray300)
+                    .fill(Color.GR3)
                     .frame(width: 36, height: 5)
                     .padding(.top, 6)
                     .padding(.bottom, 20)

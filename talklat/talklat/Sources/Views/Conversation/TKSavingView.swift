@@ -5,12 +5,15 @@
 //  Created by Celan on 11/11/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
+    @EnvironmentObject var locationStore: LocationStore
     @ObservedObject var store: TKConversationViewStore
     @Environment(\.dismiss) private var dismiss
+    let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         VStack(
@@ -20,6 +23,7 @@ struct TKSavingView: View {
             HStack {
                 Button {
                     store.onDismissSavingViewButtonTapped()
+                    
                 } label: {
                     Text("취소")
                 }
@@ -31,7 +35,8 @@ struct TKSavingView: View {
                 Spacer()
                 
                 Button {
-                    #warning("Create TKConverstion + TKLocation")
+                    let res = makeNewConversation()
+                    swiftDataStore.appendItem(res)
                     store.onSaveNewConversationButtonTapped()
                 } label: {
                     Text("저장")
@@ -46,10 +51,13 @@ struct TKSavingView: View {
                 .font(.headline)
                 .padding(.leading, 32)
                 .padding(.bottom, 8)
-                .foregroundStyle(Color.gray500)
+                .foregroundStyle(Color.GR5)
             
             HStack {
-                TextField("", text: .constant("토크랫(5)"))
+                TextField(
+                    "Conversation Title",
+                    text: store.bindingConversationTitle()
+                )
                     .font(.headline)
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
@@ -57,7 +65,7 @@ struct TKSavingView: View {
                 Spacer()
                 
                 Button {
-                    #warning("xmarkButton")
+                    store.onDeleteConversationTitleButtonTapped()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
@@ -67,26 +75,45 @@ struct TKSavingView: View {
             }
             .background {
                 Capsule()
-                    .fill(Color.gray100)
+                    .fill(Color.GR1)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
             
-            Text("10/20")
+            Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
                 .font(.footnote)
                 .padding(.leading, 32)
-                .foregroundStyle(Color.gray400)
+                .foregroundStyle(Color.GR4)
             
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
-        .overlay(alignment: .top) {
-            Capsule()
-                .frame(width: 36, height: 5)
-                .padding(.top, 8)
-                .foregroundStyle(Color.gray300)
+    }
+    
+    private func makeNewConversation() -> some PersistentModel {
+        store.onMakeNewConversationData()
+        
+        let newContents = store(\.historyItems).map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
         }
-        .presentationDetents([.medium])
+        
+        let newConversation = TKConversation(
+            title: store(\.conversationTitle),
+            createdAt: Date(),
+            content: newContents,
+            location: TKLocation(
+                latitude: locationStore(\.currentUserCoordinate?.latitude) ?? initialLatitude ,
+                longitude: locationStore(\.currentUserCoordinate?.longitude) ?? initialLongitude,
+                blockName: locationStore(\.currentShortPlaceMark),
+                mapThumbnail: nil
+            )
+        )
+        
+        return newConversation
     }
 }
 

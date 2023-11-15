@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TKRecentConversationListView: View {
+    let conversation = TKConversation(title: "Hi", createdAt: Date.now, content: [TKContent]())
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
@@ -18,7 +19,7 @@ struct TKRecentConversationListView: View {
                         .font(.title3)
                         .bold()
                 }
-                .foregroundStyle(Color.gray500)
+                .foregroundStyle(Color.GR5)
             }
             .frame(
                 maxWidth: .infinity,
@@ -31,13 +32,15 @@ struct TKRecentConversationListView: View {
                 #warning("CONVERSATION LIST COUNT")
                 ForEach(0..<10) { _ in
                     NavigationLink {
-                        #warning("Navigate To HISTORY DETAIL")
-                        Text("?")
+                        CustomHistoryView(
+                            historyViewType: .item, 
+                            conversation: conversation
+                        )
                     } label: {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("메가커피")
-                                    .foregroundStyle(Color.gray800)
+                                    .foregroundStyle(Color.GR8)
                                     .bold()
                                 
                                 Text("20m")
@@ -48,7 +51,7 @@ struct TKRecentConversationListView: View {
                             HStack {
                                 Text("2023.10.29(일)")
                                     .font(.footnote)
-                                    .foregroundStyle(Color.gray400)
+                                    .foregroundStyle(Color.GR4)
                                 
                                 Spacer()
                                 
@@ -58,7 +61,7 @@ struct TKRecentConversationListView: View {
                                     Image(systemName: "chevron.right")
                                 }
                                 .font(.footnote)
-                                .foregroundStyle(Color.gray700)
+                                .foregroundStyle(Color.GR7)
                             }
                             
                         }
@@ -66,7 +69,7 @@ struct TKRecentConversationListView: View {
                         .padding(.vertical, 16)
                         .background {
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.gray100)
+                                .fill(Color.GR1)
                                 .padding(.horizontal, 16)
                         }
                     }

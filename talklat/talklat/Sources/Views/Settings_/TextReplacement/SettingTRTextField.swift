@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데 Setting-안내문구 뷰에서도 사용됩니다.
+// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데, Setting-안내문구 뷰에서도 사용됩니다.
 struct SettingTRTextField: View {
     @Binding var text: String
     @FocusState var focusState: Bool
@@ -20,7 +20,7 @@ struct SettingTRTextField: View {
         VStack(spacing: 10) {
             HStack {
                 Text(title)
-                    .foregroundStyle(Color.gray500)
+                    .foregroundStyle(Color.GR5)
                     .font(.system(size: 15))
                     .fontWeight(.semibold)
                     .padding(.horizontal, 16)
@@ -40,14 +40,18 @@ struct SettingTRTextField: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 11)
-            .background(Color.gray100)
+            .background(Color.GR1)
             .cornerRadius(16)
-            .background(alignment: .topLeading) {
-                characterLimitViewBuilder(currentCount: text.count, limit: limit)
-                    .padding(.top, 50)
-                    .padding(.leading, 16)
-                    .animation(.easeInOut(duration: 0.5), value: focusState)
-            }
+            .safeAreaInset(edge: .bottom, content: {
+                HStack {
+                    characterLimitViewBuilder(currentCount: text.count, limit: limit)
+                        .animation(.easeInOut(duration: 0.5), value: focusState)
+                        .padding(.leading, 16)
+                        .padding(.top, 3)
+                    
+                    Spacer()
+                }
+            })
         }
     }
     private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {
@@ -55,6 +59,6 @@ struct SettingTRTextField: View {
         return Text("\(displayCount)/\(limit)")
             .font(.system(size: 13, weight: .medium))
             .monospacedDigit()
-            .foregroundColor(currentCount == limit ? .accentColor : .gray400)
+            .foregroundColor(currentCount == limit ? .accentColor : .GR4)
     }
 }

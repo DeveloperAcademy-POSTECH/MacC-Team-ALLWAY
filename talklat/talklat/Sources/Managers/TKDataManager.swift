@@ -17,6 +17,8 @@ import SwiftUI
 struct TKDataManager {
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
+    
+    var replacements: [TKTextReplacement] = []
 
     @MainActor /// mainContext를 접근해야 하기 때문에 (컴파일 에러 방지)
     static let shared = TKDataManager() /// 단일 ModelContainer 인스턴스 사용
@@ -103,4 +105,3 @@ extension TKDataManager {
         }
     }
 }
-

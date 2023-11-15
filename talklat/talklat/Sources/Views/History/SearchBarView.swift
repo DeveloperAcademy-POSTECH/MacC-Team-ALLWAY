@@ -21,7 +21,7 @@ struct SearchBarView: View {
                 placeholder: "검색"
             ) {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray400)
+                    .foregroundColor(.GR4)
             } trailingButton: {
                 if isSearching {
                     Button {
@@ -29,7 +29,7 @@ struct SearchBarView: View {
                         searchText = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray400)
+                            .foregroundColor(.GR4)
                     }
                 }
             }
