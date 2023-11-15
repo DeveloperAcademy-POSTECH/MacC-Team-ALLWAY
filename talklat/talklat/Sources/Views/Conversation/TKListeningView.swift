@@ -46,13 +46,13 @@ struct TKListeningView: View {
                 } label: {
                     Text("종료")
                         .font(.headline)
-                        .foregroundStyle(Color.gray700)
+                        .foregroundStyle(Color.GR7)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
                 }
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
-                .tint(Color.gray200)
+                .tint(Color.GR2)
                 .opacity(
                     store(\.answeredText).isEmpty
                     ? 0.0

@@ -18,7 +18,7 @@ struct HistoryListSearchView: View {
     
     @State var matchingContents: [TKContent] = [TKContent(
         text: "",
-        status: "answer",
+        type: .answer,
         createdAt: Date.now
     )]
     @State private var searchStatus: searchStatus = .inactive
@@ -108,14 +108,14 @@ struct SearchResultSection: View {
                 Image(systemName: "location.fill")
                 
                 Text(location.blockName)
-                    .foregroundColor(.gray800)
+                    .foregroundColor(.GR8)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
                 Text("\(matchingContents.count)개 발견됨")
-                    .foregroundColor(.gray500)
+                    .foregroundColor(.GR5)
                     .font(.system(size: 15, weight: .medium))
             }
             
@@ -151,7 +151,10 @@ struct SearchResultItem: View {
                 // 임시 ScrollView
                 ScrollView(.horizontal) {
                     HStack(spacing: 0) {
-                        ForEach(Array(matchingText.enumerated()), id: \.offset) { character in
+                        ForEach(
+                            Array(matchingText.enumerated()),
+                            id: \.offset
+                        ) { character in
                             var isHighlighted: Bool = false
                             if searchText.contains(character.element) {
                                 let _ = isHighlighted = true
@@ -175,7 +178,7 @@ struct SearchResultItem: View {
                         time: .omitted
                    )
                 )
-                .foregroundColor(.gray400)
+                .foregroundColor(.GR4)
                 .font(.system(size: 15, weight: .medium))
             }
             
@@ -183,7 +186,7 @@ struct SearchResultItem: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.gray100)
+        .background(Color.GR1)
         .cornerRadius(22)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")

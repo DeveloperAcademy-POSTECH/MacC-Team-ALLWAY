@@ -12,6 +12,8 @@ struct TKTextReplacementAddView: View {
     @Environment(\.modelContext) var context
     @Environment(\.presentationMode) var presentationMode
     
+    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
     @FocusState var focusState: Bool
     @State private var phrase: String = ""
     @State private var replacement: String = ""
@@ -23,9 +25,10 @@ struct TKTextReplacementAddView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                
                 SettingTRTextField (
-                    text: $phrase, focusState: _focusState, title: "단축 문구",
+                    text: $phrase,
+                    focusState: _focusState,
+                    title: "단축 문구",
                     placeholder: "아아",
                     limit: 20
                 )
@@ -58,16 +61,14 @@ struct TKTextReplacementAddView: View {
                 },
                 trailing: Button(action: {
                     if isInputValid {
-                        let newReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-                        context.insert(newReplacement)
-                        try? context.save()
+                        dataStore.createTextReplacement(phrase: phrase, replacement: replacement)
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {
                     Text("완료")
                 }
-                .disabled(!isInputValid)
-                .foregroundColor(isInputValid ? .accentColor : .gray400)
+                    .disabled(!isInputValid)
+                    .foregroundColor(isInputValid ? .accentColor : .GR4)
             )
         }
     }

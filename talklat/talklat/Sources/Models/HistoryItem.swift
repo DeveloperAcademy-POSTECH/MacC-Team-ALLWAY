@@ -15,4 +15,5 @@ struct HistoryItem: Identifiable, Equatable {
     var id: UUID
     let text: String
     let type: MessageType
+    let createdAt: Date
 }

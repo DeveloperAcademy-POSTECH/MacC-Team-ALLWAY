@@ -13,6 +13,7 @@ final class TKMainViewStore {
         var isConversationFullScreenCoverDisplayed: Bool = false
         var isBottomSheetMaxed: Bool = false
         var isSpeechAuthAlertPresented: Bool = false
+        var isTKToastPresented: Bool = false
         
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
@@ -28,11 +29,31 @@ final class TKMainViewStore {
         )
     }
     
+    public func bindingTKToast() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isTKToastPresented) },
+            set: { self.reduce(\.isTKToastPresented, into: $0) }
+        )
+    }
+    
     public func bindingSpeechAuthAlert() -> Binding<Bool> {
         Binding(
             get: { self(\.isSpeechAuthAlertPresented) },
             set: { self.reduce(\.isSpeechAuthAlertPresented, into: $0) }
         )
+    }
+    
+    public func onNewConversationHasSaved() {
+        self.reduce(
+            \.isConversationFullScreenCoverDisplayed,
+             into: false
+        )
+        withAnimation {
+            self.reduce(
+                \.isTKToastPresented,
+                 into: true
+            )
+        }
     }
     
     public func onChangeOfSpeechAuth(_ status: AuthStatus) {

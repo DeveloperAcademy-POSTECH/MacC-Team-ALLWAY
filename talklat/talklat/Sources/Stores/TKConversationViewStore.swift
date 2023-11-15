@@ -20,6 +20,8 @@ final class TKConversationViewStore {
         var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
+        var conversationTitle: String = "새로운 대화"
+        
         var hasGuidingMessageShown: Bool = false
         var hasSavingViewDisplayed: Bool = false
         var hasChevronButtonTapped: Bool = false
@@ -41,6 +43,8 @@ final class TKConversationViewStore {
     @Published private var viewState: ConversationState = ConversationState(conversationStatus: .writing)
     
     public let questionTextLimit: Int = 160
+    public let conversationTitleLimit: Int = 20
+    
     public var isAnswerCardDisplayable: Bool {
         !self(\.historyItems).isEmpty && self(\.conversationStatus) == .writing
     }
@@ -65,6 +69,25 @@ final class TKConversationViewStore {
         )
     }
     
+    public func bindingConversationTitle() -> Binding<String> {
+        Binding(
+            get: { self(\.conversationTitle) },
+            set: {
+                if $0.count > self.questionTextLimit {
+                    self.reduce(
+                        \.conversationTitle,
+                         into: String($0.prefix(self.conversationTitleLimit))
+                    )
+                } else {
+                    self.reduce(
+                        \.conversationTitle,
+                         into: $0
+                    )
+                }
+            }
+        )
+    }
+    
     public func bindingHistoryScrollOffset() -> Binding<CGPoint> {
         Binding(
             get: { self(\.historyScrollOffset) },
@@ -78,19 +101,44 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
-    
-    public func bindingNewConversationToast() -> Binding<Bool> {
-        Binding(
-            get: { self(\.isNewConversationSaved) },
-            set: { self.reduce(\.isNewConversationSaved, into: $0) }
-        )
-    }
 }
 
 extension TKConversationViewStore {
+    public func resetConversationState() {
+        self.reduce(\ViewState.self, into: ViewState(conversationStatus: .writing))
+    }
+    
+    public func onDeleteConversationTitleButtonTapped() {
+        self.reduce(\.conversationTitle, into: "")
+    }
+    
+    public func onMakeNewConversationData() {
+        if let last = self(\.historyItems).last,
+           last != self(\.historyItem) {
+            // 만약 배열의 마지막 항목이 새로 업데이트 된 history Item이 아니라면 새로 만들어서 어펜드
+            reduce(
+                \.historyItem,
+                 into: HistoryItem(
+                    id: .init(),
+                    text: self(\.conversationStatus) == .recording
+                    ? self(\.answeredText)
+                    : self(\.questionText),
+                    type: self(\.conversationStatus) == .recording
+                    ? .answer
+                    : .question
+                    ,
+                    createdAt: .init()
+                 )
+            )
+        }
+    }
+    
     public func onSaveNewConversationButtonTapped() {
         withAnimation {
-            reduce(\.isNewConversationSaved, into: true)
+            reduce(
+                \.isNewConversationSaved,
+                 into: true
+            )
         }
     }
 
@@ -98,6 +146,21 @@ extension TKConversationViewStore {
         withAnimation {
             switchConverstaionStatus()
         }
+    }
+    
+    public func onTextReplaceButtonTapped(
+        with firstReplacement: String,
+        key: String
+    ) {
+        let newText = self(\.questionText)
+            .replacingOccurrences(
+                of: "\(key)",
+                with: firstReplacement,
+                options: [.caseInsensitive],
+                range: nil
+            )
+        
+        reduce(\.questionText, into: newText)
     }
     
     public func blockButtonDoubleTap(completion: () -> Void) {
@@ -146,7 +209,14 @@ extension TKConversationViewStore {
         if !self(\.questionText).isEmpty {
             reduce(
                 \.historyItem,
-                 into: HistoryItem(id: .init(), text: self(\.questionText), type: .question)
+                 into: HistoryItem(
+                    id: .init(),
+                    text: self(
+                        \.questionText
+                    ),
+                    type: .question,
+                    createdAt: .init()
+                 )
             )
         }
         
@@ -163,7 +233,14 @@ extension TKConversationViewStore {
         if !self(\.answeredText).isEmpty {
             reduce(
                 \.historyItem,
-                 into: HistoryItem(id: .init(), text: self(\.answeredText), type: .answer)
+                 into: HistoryItem(
+                    id: .init(),
+                    text: self(
+                        \.answeredText
+                    ),
+                    type: .answer,
+                    createdAt: Date()
+                 )
             )
         }
         
@@ -242,12 +319,9 @@ extension TKConversationViewStore: TKReducer {
         switch path {
         case \.historyItem:
             self.viewState[keyPath: path] = newValue
-            if let newHistoryItem = self.viewState.historyItem {
+            if let newHistoryItem = self(\.historyItem) {
                 self.viewState.historyItems.append(newHistoryItem)
             }
-            
-        case \.historyItems:
-            break
             
         default:
             self.viewState[keyPath: path] = newValue

@@ -22,11 +22,11 @@ func TKUnavailableViewBuilder(
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 80)
-                .foregroundColor(.gray200)
+                .foregroundColor(.GR2)
             
             Text(description)
                 .font(.system(size: 17, weight: .medium))
-                .foregroundColor(.gray300)
+                .foregroundColor(.GR3)
         }
     }
 }

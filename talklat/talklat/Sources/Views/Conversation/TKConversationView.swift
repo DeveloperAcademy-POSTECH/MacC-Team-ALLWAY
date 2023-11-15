@@ -63,7 +63,7 @@ struct TKConversationView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .sheet(
+        .fullScreenCover(
             isPresented: store.bindingSaveConversationViewFlag(),
             onDismiss: {
                 store.onDismissSavingViewButtonTapped()
@@ -85,7 +85,14 @@ struct TKConversationView: View {
                 break
             }
         }
-        .edgesIgnoringSafeArea(.all)
+        .onChange(of: store(\.hasSavingViewDisplayed)) { oldValue, newValue in
+            if !oldValue, newValue {
+                speechRecognizeManager.stopAndResetTranscribing()
+                
+            } else if oldValue, !newValue {
+                speechRecognizeManager.startTranscribing()
+            }
+        }
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
         // .onAppear { gyroScopeStore.detectDeviceMotion() }
@@ -286,7 +293,7 @@ extension TKConversationView {
                 .foregroundColor(
                     store(\.answeredText).isEmpty
                     ? .accentColor
-                    : .gray100.opacity(0.8)
+                    : .GR1.opacity(0.8)
                 )
         }
         .overlay(alignment: .top) {

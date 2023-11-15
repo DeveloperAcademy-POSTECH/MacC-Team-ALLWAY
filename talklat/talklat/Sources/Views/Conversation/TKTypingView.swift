@@ -9,13 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct TKTypingView: View {
+    // TextReplacement
+    @Environment(\.modelContext) private var context
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     
-    @State private var textFieldText: String = ""
-    
-    // TextReplacement
-    @Environment(\.modelContext) private var context
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
@@ -95,13 +93,11 @@ struct TKTypingView: View {
                 .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
                 
             }
-            
-            customToolbar()
-            
+                        
             Spacer()
             
-            startRecordingButtonBuilder()
-                .padding(.bottom, 12)
+            customToolbar()
+                .padding(.bottom, 16)
         }
         .frame(maxWidth: .infinity)
     }
@@ -129,15 +125,25 @@ struct TKTypingView: View {
             }
             
         } label: {
-            Text("음성 인식 전환")
-                .bold()
-                .foregroundColor(.white)
-                .padding(.horizontal, 25)
-                .padding(.vertical, 20)
-        }
-        .background {
-            Capsule()
-                .foregroundStyle(Color.OR5)
+            TKOrbitCircles(
+                store: store,
+                circleRenderInfos: [
+                    CircleRenderInfo(x: -10, y: -4),
+                    CircleRenderInfo(x: 0, y: 10),
+                    CircleRenderInfo(x: 7, y: -4),
+                ],
+                circleColor: Color.OR5
+            )
+            .frame(height: 64)
+            .overlay {
+                Circle()
+                    .foregroundStyle(Color.OR5)
+                    .overlay {
+                        Text("TALK")
+                            .font(.headline)
+                            .foregroundStyle(Color.white)
+                    }
+            }
         }
         .disabled(store(\.blockButtonDoubleTap))
     }
@@ -209,7 +215,7 @@ struct TKTypingView: View {
                     .padding(.horizontal, 6)
                     .foregroundStyle(
                         store(\.answeredText).isEmpty
-                        ? Color.gray700
+                        ? Color.GR7
                         : Color.OR5
                     )
             }
@@ -217,62 +223,77 @@ struct TKTypingView: View {
             .buttonBorderShape(.capsule)
             .tint(
                 store(\.answeredText).isEmpty
-                ? Color.gray200
+                ? Color.GR2
                 : Color.white
             )
             .disabled(store(\.blockButtonDoubleTap))
         }
         .padding(.trailing, 24)
     }
+    
     private func customToolbar() -> some View {
-        HStack {
-            // MARK: Eraser button
-            Button(action: {
-                store.bindingQuestionText().wrappedValue = ""
-            }) {
-                Image(systemName: "eraser.fill")
-                    .font(.system(size: 22))
-                    .foregroundColor(focusState ? Color.gray500 : Color.gray300)
-                    .padding(10)
-                    .background(focusState ? Color.gray300 : Color.gray200)
-                    .clipShape(Circle())
-            }
-            .accessibilityLabel(Text("Clear text"))
-            
-            if focusState {
-                // MARK: TextReplacement Button
-                if let key = replacementKeyForCurrentText(),
-                   let replacements = lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key],
-                   let firstReplacement = replacements.first { // 첫 번째 요소를 사용
+        ZStack(alignment: .bottomLeading) {
+            HStack(spacing: 12) {
+                // MARK: Eraser button
+                Button {
+                    store.onEraseAllButtonTapped()
                     
-                    Button {
-                        let currentText = store.bindingQuestionText().wrappedValue
-                        let newText = currentText
-                            .replacingOccurrences(of: "\(key)", with: firstReplacement, options: [.caseInsensitive], range: nil)
-                        store.bindingQuestionText().wrappedValue = newText
-                    } label: {
-                        Text(firstReplacement)
-                            .foregroundColor(Color.gray600)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.gray300)
-                            }
-                            .background(Color.gray300)
+                } label: {
+                    Image(systemName: "eraser.fill")
+                        .font(.system(size: 22))
+                        .foregroundColor(focusState ? Color.white : Color.GR3)
+                        .padding(10)
+                        .background(focusState ? Color.GR4 : Color.GR2)
+                        .clipShape(Circle())
+                }
+                .accessibilityLabel(Text("Clear text"))
+                
+                if focusState {
+                    // MARK: TextReplacement Button
+                    if
+                        let key = replacementKeyForCurrentText(),
+                        let replacements = lists.first(where: {
+                            $0.wordDictionary[key] != nil
+                        })?.wordDictionary[key],
+                        let firstReplacement = replacements.first { // 첫 번째 요소를 사용
+                        
+                        Button {
+                            store.onTextReplaceButtonTapped(
+                                with: firstReplacement,
+                                key: key
+                            )
+                            
+                        } label: {
+                            Text(firstReplacement)
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 10)
+                                .lineLimit(1)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .fill(Color.GR4)
+                                }
+                        }
+                        .padding(.vertical, 4)
+                        .padding(.trailing, 4)
                     }
-                    .padding(.vertical, 10)
-                    .padding(.leading, 12)
                 }
             }
+            .background(focusState ? Color.GR2 : Color.clear)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .padding(.leading, 16)
+            .frame(
+                maxWidth: 275,
+                alignment: .leading
+            )
+            .transition(.move(edge: .bottom))
+            .animation(.default, value: focusState)
             
-            Spacer()
+            startRecordingButtonBuilder()
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, 16)
         }
-        .background(focusState ? Color.gray200 : Color.clear)
-        .cornerRadius(32)
-        .padding(.horizontal, 16)
-        .transition(.move(edge: .bottom))
-        .animation(.default, value: focusState)
     }
 }
 
@@ -280,13 +301,18 @@ struct TKTypingView: View {
 extension TKTypingView {
     // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
     func replacementKeyForCurrentText() -> String? {
-        guard let lastWord = store.bindingQuestionText().wrappedValue.split(separator: " ").last?.lowercased() else {
+        guard
+            let lastWord = store(\.questionText)
+                .split(separator: " ")
+                .last?
+                .lowercased() else {
             return nil
         }
         
-        let sortedKeys = lists.flatMap { list in
-            list.wordDictionary.keys
-        }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        let sortedKeys = lists
+            .flatMap { list in
+                list.wordDictionary.keys
+            }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         
         return sortedKeys.first { $0.lowercased() == lastWord }
     }
