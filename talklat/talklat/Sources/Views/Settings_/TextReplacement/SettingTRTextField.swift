@@ -40,7 +40,6 @@ struct SettingTRTextField: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 11)
             .background(Color.GR1)
             .cornerRadius(22)
             .safeAreaInset(edge: .bottom, content: {

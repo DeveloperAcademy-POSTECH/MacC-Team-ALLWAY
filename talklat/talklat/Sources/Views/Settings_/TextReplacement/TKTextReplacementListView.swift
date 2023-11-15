@@ -133,10 +133,12 @@ struct TKTextReplacementListView: View {
                 return true
             }
 
-            // 영어를 그 다음으로 배치
-            if firstCharKey1?.isCharacterEnglish == true && firstCharKey2?.isCharacterEnglish == false {
+            // 영어 알파벳 간의 정렬 처리
+            if firstCharKey1?.isCharacterEnglish == true && firstCharKey2?.isCharacterEnglish == true {
+                return key1 < key2 // 영어끼리는 사전식으로 정렬
+            } else if firstCharKey1?.isCharacterEnglish == true {
                 return false
-            } else if firstCharKey1?.isCharacterEnglish == false && firstCharKey2?.isCharacterEnglish == true {
+            } else if firstCharKey2?.isCharacterEnglish == true {
                 return true
             }
 
