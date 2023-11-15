@@ -32,7 +32,7 @@ struct SettingTRTextField: View {
                 text: $text,
                 axis: .vertical
             )
-            .padding(.vertical, 11)
+            .frame(height: 44)
             .onChange(of: text) { newValue in
                 if newValue.count > limit {
                     let lastCharIndex = text.index(text.startIndex, offsetBy: limit - 1)

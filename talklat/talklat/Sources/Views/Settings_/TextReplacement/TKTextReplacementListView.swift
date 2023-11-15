@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var settingStore = TextReplacementViewStore(viewState: .init())
+    @StateObject private var store = TextReplacementViewStore(viewState: .init())
     
     @Query private var lists: [TKTextReplacement]
     
@@ -33,12 +33,12 @@ struct TKTextReplacementListView: View {
     var body: some View {
         // TODO: SearchBar
         ScrollViewReader { proxy in
-            SettingTRSearchBar(store: settingStore)
+            SettingTRSearchBar(store: store)
             .padding(.horizontal, 16)
             
-            if settingStore(\.isSearching) {
+            if store.focusState {
                 TKTextReplacementSearchView(
-                    store: settingStore,
+                    store: store,
                     selectedList: $selectedList,
                     lists: lists
                 )
@@ -90,7 +90,7 @@ struct TKTextReplacementListView: View {
                 .frame(maxWidth: .infinity)
                 .overlay {
                     // MARK: 목차
-                    if(!sortedGroupKeys.isEmpty) {
+                    if(!sortedGroupKeys.isEmpty && !store.focusState) {
                         SectionIndexTitles(proxy: proxy)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
@@ -108,13 +108,13 @@ struct TKTextReplacementListView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    settingStore.showTextReplacementAddView()
+                    store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
-        .sheet(isPresented: settingStore.bindingToShowTextReplacementAddView()) {
+        .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView()
         }
         .background(Color.white)
@@ -157,9 +157,9 @@ struct TKTextReplacementListView: View {
             ) { key, values in
                 if let firstValue = values.first {
                     NavigationLink {
-                        TKTextReplacementEditView(store: settingStore)
+                        TKTextReplacementEditView(store: store)
                             .onAppear {
-                                settingStore.selectTextReplacement(
+                                store.selectTextReplacement(
                                     phrase: key,
                                     replacement: firstValue
                                 )
