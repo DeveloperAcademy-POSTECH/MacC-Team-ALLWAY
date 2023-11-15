@@ -65,6 +65,14 @@ struct TKMainView: View {
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
+                .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, newValue in
+                    if newValue {
+                        store.reduce(
+                            \.isConversationFullScreenCoverDisplayed,
+                             into: false
+                        )
+                    }
+                }
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

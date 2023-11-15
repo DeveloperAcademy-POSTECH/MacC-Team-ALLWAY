@@ -85,6 +85,14 @@ struct TKConversationView: View {
                 break
             }
         }
+        .onChange(of: store(\.hasSavingViewDisplayed)) { oldValue, newValue in
+            if !oldValue, newValue {
+                speechRecognizeManager.stopAndResetTranscribing()
+                
+            } else if oldValue, !newValue {
+                speechRecognizeManager.startTranscribing()
+            }
+        }
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
         // .onAppear { gyroScopeStore.detectDeviceMotion() }

@@ -151,7 +151,10 @@ struct SearchResultItem: View {
                 // 임시 ScrollView
                 ScrollView(.horizontal) {
                     HStack(spacing: 0) {
-                        ForEach(Array(matchingText.enumerated()), id: \.offset) { character in
+                        ForEach(
+                            Array(matchingText.enumerated()),
+                            id: \.offset
+                        ) { character in
                             var isHighlighted: Bool = false
                             if searchText.contains(character.element) {
                                 let _ = isHighlighted = true

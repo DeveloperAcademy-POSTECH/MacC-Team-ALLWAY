@@ -54,7 +54,7 @@ struct TKToast: View {
                 .combined(with: .opacity)
             )
             .task {
-                try? await Task.sleep(for: .seconds(2.0))
+                try? await Task.sleep(for: .seconds(3.0))
                 withAnimation {
                     isPresented.toggle()
                 }

@@ -469,6 +469,7 @@
 			children = (
 				7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */,
 				7E6641252B03C03F00CDC6AB /* TKConversationViewStore.swift */,
+				EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
 				572304FE2B00AF350098FFF5 /* SettingViewStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* LocationStore.swift */,
@@ -531,14 +532,13 @@
 		EF67C6492ACEB65400C1074E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */,
 				EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */,
 				575677DE2AD6BE47002E01BE /* SignalExtractor.swift */,
 				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
 				5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */,
 				CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */,
-				EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */,
-				EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */,
 				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
 			);
 			path = Managers;

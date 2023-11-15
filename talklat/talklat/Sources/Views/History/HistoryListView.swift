@@ -202,12 +202,18 @@ struct LocationList: View {
                     dataStore.getLocationBasedConversations(location: location),
                     id: \.self
                 ) { conversation in // TODO: each TKLocation의 TKConversation
-                    CellItem(
-                        conversation: conversation,
-                        selectedConversation: $selectedConversation,
-                        isEditing: $isEditing,
-                        isDialogShowing: $isDialogShowing
-                    )
+                    NavigationLink {
+                        #warning("CUSTOM HISTORY VIEW")
+                        
+                        
+                    } label: {
+                        CellItem(
+                            conversation: conversation,
+                            selectedConversation: $selectedConversation,
+                            isEditing: $isEditing,
+                            isDialogShowing: $isDialogShowing
+                        )
+                    }
                 }
                 .transition(
                     .asymmetric(
@@ -266,6 +272,8 @@ struct CellItem: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(conversation.title)
                         .font(.system(size: 17, weight: .medium))
+                        .foregroundStyle(Color.GR8)
+                    
                     Text(
                         conversation.createdAt.formatted( // TODO: format
                             date: .abbreviated,
