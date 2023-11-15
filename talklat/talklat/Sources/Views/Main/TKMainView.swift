@@ -32,7 +32,7 @@ struct TKMainView: View {
                         
                         Text("\(locationStore(\.currentShortPlaceMark))")
                     }
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.gray400)
 
                     
                     Text("새 대화 시작하기")
