@@ -12,6 +12,8 @@ struct TKTextReplacementAddView: View {
     @Environment(\.modelContext) var context
     @Environment(\.presentationMode) var presentationMode
     
+    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
     @FocusState var focusState: Bool
     @State private var phrase: String = ""
     @State private var replacement: String = ""
@@ -59,9 +61,7 @@ struct TKTextReplacementAddView: View {
                 },
                 trailing: Button(action: {
                     if isInputValid {
-                        let newReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-                        context.insert(newReplacement)
-                        try? context.save()
+                        dataStore.createTextReplacement(phrase: phrase, replacement: replacement)
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {

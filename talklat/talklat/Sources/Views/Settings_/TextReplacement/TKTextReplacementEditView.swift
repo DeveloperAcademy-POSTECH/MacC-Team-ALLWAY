@@ -11,40 +11,38 @@ import SwiftUI
 struct TKTextReplacementEditView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var store: TextReplacementViewStore
     
     @Query var textReplacements: [TKTextReplacement]
     
     @FocusState var focusState: Bool
-//    @Binding var isPresented: Bool
-    @State private var isDialogShowing: Bool = false
-    @State private var phrase: String
-    @State private var replacement: String
     
-    var textReplacementManager: TKTextReplacementManager
-    
-    init(
-        phrase: String,
-        replacement: String,
-//        isPresented: Binding<Bool>,
-        textReplacementManager: TKTextReplacementManager
-    ) {
-        _phrase = State(initialValue: phrase)
-        _replacement = State(initialValue: replacement)
-//        _isPresented = isPresented
-        self.textReplacementManager = textReplacementManager
-    }
+    let dataStore = TKSwiftDataStore()
 
     var body: some View {
         VStack(spacing: 10) {
-            SettingTRTextField(text: $phrase, focusState: _focusState, title: "단축 문구", placeholder: "아아", limit: 20)
-            SettingTRTextField(text: $replacement, title: "변환 문구", placeholder: "아이스 아메리카노 한 잔 주시겠어요?", limit: 160)
+            SettingTRTextField(
+                text: store.bindingPhraseTextField(),
+                focusState: _focusState,
+                title: "단축어",
+                placeholder: "아아",
+                limit: 20
+            )
+            
+            SettingTRTextField(
+                text: store.bindingReplacementTextField(),
+                title: "변환 문구",
+                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                limit: 160
+            )
                 .padding(.top, 36)
             
             Spacer()
             
-            Button(action: {
-                self.isDialogShowing = true
-            }) {
+            Button {
+                store.onShowDialogButtonTapped()
+                
+            } label: {
                 Text("텍스트 대치 삭제")
                     .font(.system(size: 17, weight: .bold))
                     .foregroundColor(.white)
@@ -70,16 +68,16 @@ struct TKTextReplacementEditView: View {
         }
         .background(
             Group {
-                if isDialogShowing {
+                if store(\.isDialogShowing) {
                     Color.black.opacity(0.5).ignoresSafeArea()
                 }
             }
         )
         .overlay(
             Group {
-                if isDialogShowing {
+                if store(\.isDialogShowing) {
                     TextReplacementCustomDialog(
-                        isDialogShowing: $isDialogShowing,
+                        isDialogShowing: store.bindingReplacementRemoveAlert(),
                         onDelete: deleteTKTextReplacement
                     )
                 }
@@ -87,17 +85,28 @@ struct TKTextReplacementEditView: View {
         )
     }
     
-    private func deleteTKTextReplacement() {
-        if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-            context.delete(existingItem)
+    private func updateTextReplacement() {
+        if let existingItem = fetchTKTextReplacement(forPhrase: store(\.selectedPhrase)) {
+            dataStore.updateTextReplacement(
+                oldTextReplacement: existingItem,
+                newPhrase: store(\.selectedPhrase),
+                newReplacement: store(\.selectedReplacement)
+            )
         }
-            
-        presentationMode.wrappedValue.dismiss()
     }
     
     private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
         let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
         return fetchedItems.last
+    }
+    
+    // 작동 안함
+    private func deleteTKTextReplacement() {
+        if let existingItem = fetchTKTextReplacement(forPhrase: store(\.selectedPhrase)) {
+            context.delete(existingItem)
+        }
+            
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

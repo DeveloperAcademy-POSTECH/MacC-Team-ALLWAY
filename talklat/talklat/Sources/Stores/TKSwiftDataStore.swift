@@ -77,6 +77,23 @@ extension TKSwiftDataStore {
     }
 }
 
+// MARK: TextReplacement Related
+extension TKSwiftDataStore {
+    
+    // MARK: 기본 Create
+    public func createTextReplacement(phrase: String, replacement: String) {
+        let newTextReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
+        dataManager.appendItem(newTextReplacement)
+        refreshData()
+    }
 
-
-
+    public func updateTextReplacement(
+        oldTextReplacement: TKTextReplacement,
+        newPhrase: String,
+        newReplacement: String
+    ) {
+        oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
+        dataManager.appendItem(oldTextReplacement)
+        refreshData()
+    }
+}

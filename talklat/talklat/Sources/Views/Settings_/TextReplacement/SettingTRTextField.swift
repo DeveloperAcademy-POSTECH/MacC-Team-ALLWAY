@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데 Setting-안내문구 뷰에서도 사용됩니다.
+// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데, Setting-안내문구 뷰에서도 사용됩니다.
 struct SettingTRTextField: View {
     @Binding var text: String
     @FocusState var focusState: Bool
@@ -52,12 +52,6 @@ struct SettingTRTextField: View {
                     Spacer()
                 }
             })
-            //            .background(alignment: .bottomTrailing) {
-            //                characterLimitViewBuilder(currentCount: text.count, limit: limit)
-            //                    .padding(.top, 50)
-            //                    .padding(.leading, 16)
-            //                    .animation(.easeInOut(duration: 0.5), value: focusState)
-            //            }
         }
     }
     private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {

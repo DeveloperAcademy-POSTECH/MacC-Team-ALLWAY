@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var settingStore = SettingViewStore(settingState: .init())
+    @StateObject private var settingStore = TextReplacementViewStore(viewState: .init())
     
     @Query private var lists: [TKTextReplacement]
     
@@ -51,7 +51,6 @@ struct TKTextReplacementListView: View {
                         id: \.self
                     ) { groupKey in
                         // MARK: 리스트의 Header
-                        
                         Section(
                             header:
                                 Text(groupKey)
@@ -64,14 +63,7 @@ struct TKTextReplacementListView: View {
                                 .lineSpacing(15 * 1.35 - 15)
                         ) {
                             NavigationLink {
-                                if let selectedPhrase = settingStore.viewState.selectedPhrase,
-                                   let selectedReplacement = settingStore.viewState.selectedReplacement {
-                                    TKTextReplacementEditView(
-                                        phrase: selectedPhrase,
-                                        replacement: selectedReplacement,
-                                        textReplacementManager: textReplacementManager
-                                    )
-                                }
+                                TKTextReplacementEditView(store: settingStore)
                                 
                             } label: {
                                 listSection(groupKey)
@@ -146,31 +138,31 @@ struct TKTextReplacementListView: View {
             ForEach(
                 list.wordDictionary.sorted { $0.key < $1.key },
                 id: \.key
-            ) {
-                key,
-                values in
+            ) { key, values in
                 if let firstValue = values.first {
-                    // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
-                    let displayValue = firstValue.count > 40
-                    ? String(firstValue.prefix(17)) + "..."
-                    : firstValue
-                    
-                    TextReplacementRow(
-                        key: key,
-                        value: displayValue
-                    )
-                    .padding(.horizontal, 16)
-                    .cornerRadius(16)
-                    .simultaneousGesture(
-                        TapGesture()
-                            .onEnded {
-                                selectedList = list
-                                
+                    NavigationLink {
+                        TKTextReplacementEditView(store: settingStore)
+                            .onAppear {
                                 settingStore.selectTextReplacement(
                                     phrase: key,
                                     replacement: firstValue
                                 )
-                            })
+                            }
+                        
+                    } label: {
+                        // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
+                        let displayValue = firstValue.count > 40
+                        ? String(firstValue.prefix(17)) + "..."
+                        : firstValue
+                        
+                        TextReplacementRow(
+                            key: key,
+                            value: displayValue
+                        )
+                        .padding(.horizontal, 16)
+                        .cornerRadius(16)
+                        
+                    }
                 }
             }
         }

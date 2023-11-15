@@ -11,7 +11,6 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var settingStore = SettingViewStore(settingState: .init())
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     private var container: ModelContainer
     
@@ -52,8 +51,6 @@ struct talklatApp: App {
             }
         }
         .modelContainer(container)
-        .environmentObject(settingStore)
-
     }
 }
 
