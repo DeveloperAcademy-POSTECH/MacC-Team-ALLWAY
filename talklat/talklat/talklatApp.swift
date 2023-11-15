@@ -30,7 +30,8 @@ struct talklatApp: App {
                     
                 case .authCompleted:
                     NavigationStack {
-                        TKMainView()
+                        // TKMainView()
+                        SettingsListView()
                     }
                     
                 case .speechRecognitionAuthIncompleted
