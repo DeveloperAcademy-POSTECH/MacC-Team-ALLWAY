@@ -8,39 +8,39 @@
 import SwiftUI
 
 struct SettingTRSearchBar: View {
-    @Binding var isSearching: Bool
-    @Binding var searchText: String
+    @ObservedObject var store: TextReplacementViewStore
 
     var body: some View {
         HStack {
             // 검색 텍스트 필드
             AWTextField(
                 style: .search,
-                text: $searchText,
+                text: store.bindingSearchText(),
                 placeholder: "검색"
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
-                if isSearching {
+                if store(\.isSearching) {
                     Button {
-                        searchText = ""
+                        store.onSearchTextRemoveButtonTapped()
+                        
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.GR4)
                     }
                 }
             }
-            .onChange(of: searchText) { newValue in
+            .onChange(of: store(\.searchText)) { _, newValue in
                 if !newValue.isEmpty {
-                    isSearching = true
+                    store.onSearchingText()
                 }
             }
 
-            if isSearching {
+            if store(\.isSearching) {
                 Button {
-                    isSearching = false
-                    searchText = ""
+                    store.onCancelSearch()
+                    
                 } label: {
                     Text("취소")
                 }

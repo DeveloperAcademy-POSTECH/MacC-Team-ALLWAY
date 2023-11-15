@@ -13,16 +13,16 @@ struct TKTextReplacementSearchView: View {
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
-    var searchText: String
+//    var searchText: String
     var lists: [TKTextReplacement]
     var textReplacementManager = TKTextReplacementManager()
 
     var filteredLists: [TKTextReplacement] {
-        if searchText.isEmpty {
+        if store(\.searchText).isEmpty {
             return []
         } else {
             return lists.filter { list in
-                let searchTextLowercased = searchText.lowercased()
+                let searchTextLowercased = store(\.searchText).lowercased()
                 let matchInKeys = list.wordDictionary.keys.contains { key in
                     key.lowercased().contains(searchTextLowercased)
                 }
@@ -34,13 +34,13 @@ struct TKTextReplacementSearchView: View {
         }
     }
 
-    func highlightSearchText(in text: String, search: String) -> Text {
-        guard !search.isEmpty, !text.isEmpty else { return Text(text) }
+    func highlightSearchText(in text: String) -> Text {
+        guard !store(\.searchText).isEmpty, !text.isEmpty else { return Text(text) }
 
         var highlightedText = Text("")
         var currentText = text
 
-        while let range = currentText.range(of: search, options: .caseInsensitive) {
+        while let range = currentText.range(of: store(\.searchText), options: .caseInsensitive) {
             let prefix = String(currentText[..<range.lowerBound])
             let match = String(currentText[range])
 
@@ -64,10 +64,18 @@ struct TKTextReplacementSearchView: View {
                     if let firstValue = values.first {
                         NavigationLink {
                             TKTextReplacementEditView(store: store)
-
+                                .onAppear {
+                                    selectedList = list
+                                    
+                                    store.selectTextReplacement(
+                                        phrase: key,
+                                        replacement: firstValue
+                                    )
+                                }
+                            
                         } label: {
                             VStack(spacing: 0) {
-                                highlightSearchText(in: key, search: searchText)
+                                highlightSearchText(in: key)
                                     .font(.system(size: 17, weight: .bold))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineSpacing(17 * 1.3 - 17)
@@ -76,8 +84,12 @@ struct TKTextReplacementSearchView: View {
                                 
                                 Divider()
                                     .padding(.leading, 16)
-
-                                highlightSearchText(in: firstValue.count > 30 ? String(firstValue.prefix(29)) + "..." : firstValue, search: searchText)
+                                
+                                highlightSearchText(
+                                    in: firstValue.count > 30
+                                    ? String(firstValue.prefix(29)) + "..."
+                                    : firstValue
+                                )
                                     .font(.system(size: 15, weight: .medium))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineSpacing(15 * 1.35 - 15)
@@ -86,17 +98,6 @@ struct TKTextReplacementSearchView: View {
                             }
                             .background(Color.GR1)
                             .cornerRadius(15)
-                            .simultaneousGesture(
-                                TapGesture()
-                                    .onEnded {
-                                        selectedList = list
-                                        
-                                        store.selectTextReplacement(
-                                            phrase: key,
-                                            replacement: firstValue
-                                        )
-                                    }
-                            )
                         }
                         .cornerRadius(16)
                     }

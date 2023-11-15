@@ -16,9 +16,12 @@ final class TextReplacementViewStore: TKReducer {
         var showingTextReplacementAddView: Bool = false
         
         var isDialogShowing: Bool = false
+        var isSearching: Bool = false
+        var searchText: String = ""
         
         var selectedPhrase: String = ""
         var selectedReplacement: String = ""
+        
     }
     
     @Published var viewState: ViewState = ViewState()
@@ -36,6 +39,30 @@ final class TextReplacementViewStore: TKReducer {
     
     func reduce<Value>(_ path: WritableKeyPath<ViewState, Value>, into newValue: Value) where Value : Equatable {
         self.viewState[keyPath: path] = newValue
+    }
+    
+    public func bindingSearchText() -> Binding<String> {
+        Binding(
+            get: { self(\.searchText) },
+            set: { self.reduce(\.searchText, into: $0) }
+        )
+    }
+    
+    public func onDismissRemoveAlert() {
+        self.reduce(\.isDialogShowing, into: false)
+    }
+    
+    public func onSearchTextRemoveButtonTapped() {
+        self.reduce(\.searchText, into: "")
+    }
+    
+    public func onSearchingText() {
+        self.reduce(\.isSearching, into: true)
+    }
+    
+    public func onCancelSearch() {
+        self.reduce(\.isSearching, into: false)
+        self.reduce(\.searchText, into: "")
     }
     
     public func onShowDialogButtonTapped() {

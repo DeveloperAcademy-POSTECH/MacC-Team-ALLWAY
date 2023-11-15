@@ -3,7 +3,7 @@
 //  talklat
 //
 //  Created by 신정연 on 11/10/23.
-//
+//  최신
 
 import SwiftData
 import SwiftUI
@@ -27,49 +27,56 @@ struct TKTextReplacementListView: View {
     var body: some View {
         // TODO: SearchBar
         ScrollViewReader { proxy in
-            if sortedGroupKeys.isEmpty {
-                // MARK: 텅 뷰
-                VStack {
-                    Image(systemName: "bubble.left.and.bubble.right")
-                        .font(.system(size: 30))
-                        .foregroundColor(.GR3)
-                        .padding(.bottom, 30)
-                    
-                    Text("아직 설정한 텍스트 대치가 없어요")
-                        .foregroundStyle(Color.GR3)
-                        .font(.system(size: 17, weight: .medium))
-                }
-                .frame(
-                    maxHeight: .infinity,
-                    alignment: .center
+            SettingTRSearchBar(store: settingStore)
+            .padding(.horizontal)
+            
+            if settingStore(\.isSearching) {
+                TKTextReplacementSearchView(
+                    store: settingStore,
+                    selectedList: $selectedList,
+                    lists: lists
                 )
-
+                .background(Color.white)
+                
             } else {
                 ScrollView(showsIndicators: false) {
-                    ForEach(
-                        sortedGroupKeys,
-                        id: \.self
-                    ) { groupKey in
-                        // MARK: 리스트의 Header
-                        Section(
-                            header:
-                                Text(groupKey)
-                                .id(groupKey)
-                                .font(.subheadline)
-                                .foregroundColor(.GR5)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 32)
-                                .padding(.top, 24)
-                                .lineSpacing(15 * 1.35 - 15)
-                        ) {
-                            NavigationLink {
-                                TKTextReplacementEditView(store: settingStore)
-                                
-                            } label: {
+                    if sortedGroupKeys.isEmpty {
+                        // MARK: 텅 뷰
+                        VStack {
+                            Image(systemName: "bubble.left.and.bubble.right")
+                                .font(.system(size: 30))
+                                .foregroundColor(.GR3)
+                                .padding(.bottom, 30)
+                            
+                            Text("아직 설정한 텍스트 대치가 없어요")
+                                .foregroundStyle(Color.GR3)
+                                .font(.system(size: 17, weight: .medium))
+                        }
+                        .frame(
+                            maxHeight: .infinity,
+                            alignment: .center
+                        )
+                        
+                    } else {
+                        ForEach(
+                            sortedGroupKeys,
+                            id: \.self
+                        ) { groupKey in
+                            // MARK: 리스트의 Header
+                            Section(
+                                header:
+                                    Text(groupKey)
+                                    .id(groupKey)
+                                    .font(.subheadline)
+                                    .foregroundColor(.GR5)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 32)
+                                    .padding(.top, 24)
+                                    .lineSpacing(15 * 1.35 - 15)
+                            ) {
                                 listSection(groupKey)
-                                    .background(Color.GR1)
+                                    .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
                                     .padding(.horizontal, 16)
-                                    .cornerRadius(15)
                             }
                         }
                     }

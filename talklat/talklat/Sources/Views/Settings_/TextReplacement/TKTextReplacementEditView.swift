@@ -61,28 +61,27 @@ struct TKTextReplacementEditView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("저장") {
-                    try? context.save()
+                    updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
         }
-        .background(
-            Group {
-                if store(\.isDialogShowing) {
-                    Color.black.opacity(0.5).ignoresSafeArea()
-                }
+        .background {
+            if store(\.isDialogShowing) {
+                Color.black.opacity(0.5).ignoresSafeArea()
             }
-        )
-        .overlay(
-            Group {
-                if store(\.isDialogShowing) {
-                    TextReplacementCustomDialog(
-                        isDialogShowing: store.bindingReplacementRemoveAlert(),
-                        onDelete: deleteTKTextReplacement
-                    )
-                }
+        }
+        .overlay {
+            TKAlert(
+                style: .removeTextReplacement,
+                isPresented: store.bindingReplacementRemoveAlert()
+            ) {
+                deleteTKTextReplacement()
+                
+            } actionButtonLabel: {
+                Text("네, 삭제할래요")
             }
-        )
+        }
     }
     
     private func updateTextReplacement() {
@@ -100,7 +99,6 @@ struct TKTextReplacementEditView: View {
         return fetchedItems.last
     }
     
-    // 작동 안함
     private func deleteTKTextReplacement() {
         if let existingItem = fetchTKTextReplacement(forPhrase: store(\.selectedPhrase)) {
             context.delete(existingItem)
@@ -134,6 +132,7 @@ struct TextReplacementCustomDialog: View {
                 HStack {
                     Button {
                         isDialogShowing = false
+                        
                     } label: {
                         Text("아니요, 취소할래요")
                             .foregroundColor(.GR6)
@@ -146,6 +145,7 @@ struct TextReplacementCustomDialog: View {
                     Button {
                         onDelete()
                         isDialogShowing = false
+                        
                     } label: {
                         Text("네, 삭제할래요")
                             .foregroundColor(.white)
