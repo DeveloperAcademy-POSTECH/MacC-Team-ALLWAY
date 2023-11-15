@@ -1,4 +1,4 @@
-![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/4574c4ba-59b3-46fc-8028-a7181b68f710)# TALKLAT(토크랫)
+# TALKLAT(토크랫)
 
 청각장애인과 청인 사이, 필담을 이용한 자연스러운 대화를 잇다 ‘토크랫’
 
@@ -48,22 +48,24 @@
 <tr>
 <td>
 메인 화면
-![Main](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/149a0b7b-8325-415d-accb-17613697288d)
+![Main](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/5d3454a2-b865-49d2-a77c-a765db0c595b)
 
 </td>
 <td>
 대화 화면
-![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/fe84b1bd-d99d-41aa-a56d-cdddad0f7a31)
+![type](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/3294f639-022b-4c9f-bc79-5609e217bfe9)
+
 
 </td>
 <td>
 위치 기반 대화 정보
-![location](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6c716b86-413b-4f6e-9faa-19cf9998abdb)
+![location](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/49c738a1-e037-4c3e-9187-09a2ed8490a1)
+
 
 </td>
 <td>
 히스토리
-![history](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/f81705cc-2893-46de-b54e-56c80054d29e)
+![history](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6a623dd8-a703-48d1-8c0b-8cebef6e1131)
 
 </td>
 </tr>
