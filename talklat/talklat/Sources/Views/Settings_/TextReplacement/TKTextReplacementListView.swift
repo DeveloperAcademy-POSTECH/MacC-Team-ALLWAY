@@ -177,9 +177,7 @@ struct TKTextReplacementListView: View {
                             key: key,
                             value: displayValue
                         )
-                        .padding(.horizontal, 16)
                         .cornerRadius(16)
-                        
                     }
                 }
             }

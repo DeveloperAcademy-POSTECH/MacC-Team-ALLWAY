@@ -18,7 +18,7 @@ struct TextReplacementRow: View {
                 .foregroundStyle(Color.black)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineSpacing(17 * 1.3 - 17)
-                .padding(.vertical, 10)
+                .padding(.vertical, 11)
                 .padding(.leading, 16)
             
             Divider()
@@ -26,11 +26,12 @@ struct TextReplacementRow: View {
             
             Text(value)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.GR5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineSpacing(15 * 1.35 - 15)
-                .padding(.vertical, 10)
+                .padding(.vertical, 11)
                 .padding(.leading, 16)
         }
+        .padding(.bottom, 8)
     }
 }
