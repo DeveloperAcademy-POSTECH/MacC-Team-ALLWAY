@@ -23,9 +23,10 @@ struct TKTextReplacementAddView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                
                 SettingTRTextField (
-                    text: $phrase, focusState: _focusState, title: "단축 문구",
+                    text: $phrase,
+                    focusState: _focusState,
+                    title: "단축 문구",
                     placeholder: "아아",
                     limit: 20
                 )
@@ -66,8 +67,8 @@ struct TKTextReplacementAddView: View {
                 }) {
                     Text("완료")
                 }
-                .disabled(!isInputValid)
-                .foregroundColor(isInputValid ? .accentColor : .GR4)
+                    .disabled(!isInputValid)
+                    .foregroundColor(isInputValid ? .accentColor : .GR4)
             )
         }
     }

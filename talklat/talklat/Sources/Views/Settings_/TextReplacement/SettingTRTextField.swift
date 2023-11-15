@@ -42,12 +42,22 @@ struct SettingTRTextField: View {
             .padding(.vertical, 11)
             .background(Color.GR1)
             .cornerRadius(16)
-            .background(alignment: .topLeading) {
-                characterLimitViewBuilder(currentCount: text.count, limit: limit)
-                    .padding(.top, 50)
-                    .padding(.leading, 16)
-                    .animation(.easeInOut(duration: 0.5), value: focusState)
-            }
+            .safeAreaInset(edge: .bottom, content: {
+                HStack {
+                    characterLimitViewBuilder(currentCount: text.count, limit: limit)
+                        .animation(.easeInOut(duration: 0.5), value: focusState)
+                        .padding(.leading, 16)
+                        .padding(.top, 3)
+                    
+                    Spacer()
+                }
+            })
+            //            .background(alignment: .bottomTrailing) {
+            //                characterLimitViewBuilder(currentCount: text.count, limit: limit)
+            //                    .padding(.top, 50)
+            //                    .padding(.leading, 16)
+            //                    .animation(.easeInOut(duration: 0.5), value: focusState)
+            //            }
         }
     }
     private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {

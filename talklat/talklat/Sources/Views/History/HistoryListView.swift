@@ -36,20 +36,19 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
-            // .disabled(isEditing ? true : false)
             
             Spacer()
             
             // MARK: - History List
             if !isSearching {
-                ScrollView {
-                    // Unavailable View
-                    if dataStore.conversations.isEmpty {
-                        TKUnavailableViewBuilder(
-                            icon: "bubble.left.and.bubble.right.fill",
-                            description: "아직 대화 기록이 없어요"
-                        )
-                    } else {
+                // Unavailable View
+                if dataStore.conversations.isEmpty {
+                    TKUnavailableViewBuilder(
+                        icon: "bubble.left.and.bubble.right.fill",
+                        description: "아직 대화 기록이 없어요"
+                    )
+                } else {
+                    ScrollView {
                         ForEach(
                             dataStore.filterDuplicatedBlockNames(
                                 locations: dataStore.locations
@@ -65,29 +64,29 @@ struct HistoryListView: View {
                         }
                         .padding(.top, 24)
                     }
-                }
-                .scrollIndicators(.hidden)
-                .navigationTitle("히스토리")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        // Edit Button
-                        ZStack {
-                            Button {
-                                withAnimation(
-                                    .spring(
-                                        dampingFraction: 0.7,
-                                        blendDuration: 0.4
-                                    )
-                                ) {
-                                    withAnimation {
-                                        isEditing.toggle()
+                    .scrollIndicators(.hidden)
+                    .navigationTitle("히스토리")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            // Edit Button
+                            ZStack {
+                                Button {
+                                    withAnimation(
+                                        .spring(
+                                            dampingFraction: 0.7,
+                                            blendDuration: 0.4
+                                        )
+                                    ) {
+                                        withAnimation {
+                                            isEditing.toggle()
+                                        }
                                     }
+                                } label: {
+                                    Text("편집")
+                                        .foregroundColor(.accentColor)
+                                        .fontWeight(.medium)
                                 }
-                            } label: {
-                                Text("편집")
-                                    .foregroundColor(.accentColor)
-                                    .fontWeight(.medium)
                             }
                         }
                     }
