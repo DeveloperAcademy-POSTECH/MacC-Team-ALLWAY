@@ -72,6 +72,40 @@ extension TKSwiftDataStore {
     }
 }
 
-
-
-
+// MARK: TextReplacement Related
+extension TKSwiftDataStore {
+    // MARK: 기본 Create
+    public func createTextReplacement(phrase: String, replacement: String) {
+        let newTextReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
+        dataManager.appendItem(newTextReplacement)
+        refreshData()
+    }
+    
+//    public func findReplacement(for inputText: String) -> [String]? {
+//        return replacements.first(where: { $0.wordDictionary.keys.contains(inputText) })?.wordDictionary[inputText]
+//    }
+//
+//    // TODO: UI작업과 같이 할 것
+//    public func updateTextReplacement(
+//        phrase: TKTextReplacement,
+//        replacement: TKTextReplacement
+//    ) {
+//        
+//    }
+//    
+//    public func deleteTextReplacement(textReplacement: TKTextReplacement) {
+//        modelContext.delete(textReplacement)
+//    }
+    
+    // MARK: 리스트에서 특정 키에 해당하는 값을 찾는 메서드
+//    func findValueForKeyInLists(key: String, lists: [TKTextReplacement]) -> String? {
+//        return lists.first(where: { $0.wordDictionary[key] != nil })?.wordDictionary[key]
+//    }
+    public func updateTextReplacement(oldTextReplacement: TKTextReplacement, newPhrase: String, newReplacement: String) {
+        
+        oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
+        
+        dataManager.appendItem(oldTextReplacement)
+        refreshData()
+    }
+}

@@ -22,6 +22,14 @@ struct TKTextReplacementEditView: View {
     
     var textReplacementManager: TKTextReplacementManager
     
+    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
+    private func updateTextReplacement() {
+        if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
+            dataStore.updateTextReplacement(oldTextReplacement: existingItem, newPhrase: phrase, newReplacement: replacement)
+        }
+    }
+    
     init(phrase: String, replacement: String, isPresented: Binding<Bool>, textReplacementManager: TKTextReplacementManager) {
         _phrase = State(initialValue: phrase)
         _replacement = State(initialValue: replacement)
@@ -73,7 +81,8 @@ struct TKTextReplacementEditView: View {
                 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button("저장") {
-                        try? context.save()
+//                        try? context.save()
+                        updateTextReplacement()
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
