@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TKRecentConversationListView: View {
+    let conversation = TKConversation(title: "Hi", createdAt: Date.now, content: [TKContent]())
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
@@ -31,8 +32,10 @@ struct TKRecentConversationListView: View {
                 #warning("CONVERSATION LIST COUNT")
                 ForEach(0..<10) { _ in
                     NavigationLink {
-                        #warning("Navigate To HISTORY DETAIL")
-                        Text("?")
+                        CustomHistoryView(
+                            historyViewType: .item, 
+                            conversation: conversation
+                        )
                     } label: {
                         VStack(alignment: .leading) {
                             HStack {

@@ -61,7 +61,7 @@ struct CreateConversationView: View {
         withAnimation {
             let content = [TKContent(
                 text: text,
-                status: status,
+                type: .answer,
                 createdAt: Date()
             )]
             

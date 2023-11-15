@@ -11,6 +11,10 @@ struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
+<<<<<<< HEAD
+=======
+    @State private var flag: Bool = false
+>>>>>>> Feat/#110-Connect-HistoryData
     
     var body: some View {
         ZStack {
@@ -65,6 +69,7 @@ struct TKMainView: View {
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
+<<<<<<< HEAD
                 .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, newValue in
                     if newValue {
                         store.reduce(
@@ -73,6 +78,8 @@ struct TKMainView: View {
                         )
                     }
                 }
+=======
+>>>>>>> Feat/#110-Connect-HistoryData
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

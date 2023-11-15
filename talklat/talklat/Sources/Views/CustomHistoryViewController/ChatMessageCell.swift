@@ -16,20 +16,21 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
-    var chatMessage: ChatMessage! {
+    var chatMessage: TKContent! {
         didSet {
             textView.text = chatMessage.text
             
-            switch chatMessage.textType {
-            case .inComming:
+            switch chatMessage.type {
+            case .answer:
                 bubbleBackgroundView.backgroundColor = UIColor(Color.accentColor)
                 textView.textColor = .white
                 leadingConstraint.isActive = true
                 trailingConstraint.isActive = false
                 iconView.alpha = 1
                 
-            case .outGoing:
+            case .question:
                 bubbleBackgroundView.backgroundColor = UIColor(Color.GR1)
+
                 textView.textColor = .black
                 leadingConstraint.isActive = false
                 trailingConstraint.isActive = true
@@ -42,7 +43,6 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
-        
         
         bubbleBackgroundView.layer.cornerRadius = 22
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false

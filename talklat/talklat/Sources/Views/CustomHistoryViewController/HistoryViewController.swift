@@ -15,11 +15,15 @@ class HistoryViewController: UIViewController {
     private var cancellableBag: Set<AnyCancellable> = Set<AnyCancellable>()
     private var cancellable: Cancellable?
     private var floatingButtonNotification: Notification.Name = Notification.Name("showFloatingButton")
+    var conversation: TKConversation!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customTableViewController = CustomTableViewController()
+        customTableViewController.conversation = conversation
+        customTableViewController.messages = sortMessages(conversation)
         customTableViewController.view.translatesAutoresizingMaskIntoConstraints = false
         self.addChild(customTableViewController)
         self.view.addSubview(customTableViewController.view)
@@ -52,8 +56,6 @@ class HistoryViewController: UIViewController {
             }
             .store(in: &cancellableBag) as? any Cancellable
     }
-    
-    
     
     
     // 화면을 켰을 시 스크롤 최하단
@@ -89,11 +91,41 @@ class HistoryViewController: UIViewController {
             }
         }
     }
+    
+    private func sortMessages(_ conversation: TKConversation) -> [[TKContent]] {
+        let content = conversation.content
+        // 우선 dictionary에 created: [Content] 형식으로 저장
+        var contentDict = [Date: [TKContent]]()
+        content.forEach { item in
+            if let _ = contentDict[item.createdAt] {
+                // 해당 Date에 해당하는 값이 있으면 넣어주고
+                contentDict[item.createdAt]!.append(item)
+            } else {
+                // 아니면 배열 생성
+                contentDict[item.createdAt] = [TKContent]()
+            }
+        }
+        
+        // key(Date)를 뽑아내고 오름차순으로 정렬
+        let dateKeys = contentDict.keys
+        let sortedDateKeys = dateKeys.sorted(by: { $0 < $1 })
+        
+        var sortedMessages = [[TKContent]]()
+        sortedDateKeys.forEach { key in
+            if let contentArray = contentDict[key] {
+                sortedMessages.append(contentArray)
+            }
+        }
+        
+        return sortedMessages
+    }
 }
 
 extension UITableView {
     func scrollToBottom(animated: Bool) {
+        
         let sectionCount = numberOfSections - 1
+        guard sectionCount >= 0 else { return }
         let rowCount = numberOfRows(inSection: sectionCount) - 1
         self.scrollToRow(at: IndexPath(row: rowCount, section: sectionCount), at: .bottom, animated: animated)
     }

@@ -28,55 +28,53 @@ struct HistoryInfoItemView: View {
     )
     
     var body: some View {
-        NavigationView {
-            VStack {
-                textFieldView
-                    .padding()
-                
-                mapThumbnailView
-                    .clipShape(RoundedRectangle(cornerRadius: 22))
-                    .clipped()
-                    .padding()
-                
-                
-                Spacer()
-            }
-            .background {
-                Color.white
-                    .onTapGesture {
-                        isTextfieldFocused = false
-                    }
-            }
-            .sheet(isPresented: $isShowingSheet) {
-                HistoryItemLocationEditView(locationStore: locationStore, isShowingSheet: $isShowingSheet, coordinateRegion: dummyLocation)
-            }
-            .navigationTitle("정보")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        isTextfieldFocused = false
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("대화")
-                        }
-                        .tint(Color.orange)
-                    }
+        VStack {
+            textFieldView
+                .padding()
+            
+            mapThumbnailView
+                .clipShape(RoundedRectangle(cornerRadius: 22))
+                .clipped()
+                .padding()
+            
+            
+            Spacer()
+        }
+        .background {
+            Color.white
+                .onTapGesture {
+                    isTextfieldFocused = false
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        //MARK: 저장 메서드
-                        isTextfieldFocused = false
-                    } label: {
-                        Text("저장")
+        }
+        .sheet(isPresented: $isShowingSheet) {
+            HistoryItemLocationEditView(locationStore: locationStore, isShowingSheet: $isShowingSheet, coordinateRegion: dummyLocation)
+        }
+        .navigationTitle("정보")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    isTextfieldFocused = false
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("대화")
                     }
-                    .tint(Color.orange)
-                    .disabled(text.isEmpty == true)
+                    .tint(Color.OR5)
                 }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    //MARK: 저장 메서드
+                    isTextfieldFocused = false
+                } label: {
+                    Text("저장")
+                }
+                .tint(Color.OR5)
+                .disabled(text.isEmpty == true)
             }
         }
     }

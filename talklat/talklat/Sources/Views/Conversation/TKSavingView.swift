@@ -37,7 +37,6 @@ struct TKSavingView: View {
                     let res = makeNewConversation()
                     swiftDataStore.appendItem(res)
                     store.onSaveNewConversationButtonTapped()
-                    
                 } label: {
                     Text("저장")
                 }
