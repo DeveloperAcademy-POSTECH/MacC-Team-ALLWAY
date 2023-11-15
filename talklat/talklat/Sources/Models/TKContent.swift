@@ -11,19 +11,27 @@ import SwiftData
 @Model
 final class TKContent {
     var text: String
-    var status: MessageType.RawValue
     var createdAt: Date
     var conversation: TKConversation?
+    private var status: MessageType.RawValue
+    
+    var type: MessageType {
+        get {
+            return MessageType(rawValue: self.status)!
+        }
+        
+        set {
+            self.status = newValue.rawValue
+        }
+    }
     
     init(
         text: String,
-        status: MessageType.RawValue,
+        type: MessageType,
         createdAt: Date
     ) {
         self.text = text
-        self.status = status
         self.createdAt = createdAt
+        self.status = type.rawValue
     }
 }
-
-

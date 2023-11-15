@@ -16,7 +16,7 @@ struct HistoryListView: View {
         createdAt: Date.now,
         content: [TKContent(
             text: "",
-            status: "answer",
+            type: .answer,
             createdAt: Date.now
         )]
     )

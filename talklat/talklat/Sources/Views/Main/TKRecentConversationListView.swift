@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TKRecentConversationListView: View {
     let conversation = TKConversation(title: "Hi", createdAt: Date.now, content: [TKContent]())
-    let content = [TKContent]()
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
@@ -78,9 +77,6 @@ struct TKRecentConversationListView: View {
                 }
                 .padding(.bottom, 32)
             }
-        }
-        .onAppear {
-            conversation.content = content
         }
     }
 }

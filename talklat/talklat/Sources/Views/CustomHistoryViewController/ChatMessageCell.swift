@@ -20,14 +20,14 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
         didSet {
             textView.text = chatMessage.text
             
-            // MARK: enum 원시타입 안들어가서 if-else문으로 수정
-            if chatMessage.status == "answer" {
+            switch chatMessage.type {
+            case .answer:
                 bubbleBackgroundView.backgroundColor = UIColor(Color.accentColor)
                 textView.textColor = .white
                 leadingConstraint.isActive = true
                 trailingConstraint.isActive = false
                 iconView.alpha = 1
-            } else {
+            case .question:
                 bubbleBackgroundView.backgroundColor = UIColor(Color.gray100)
                 textView.textColor = .black
                 leadingConstraint.isActive = false
@@ -41,7 +41,6 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
-        
         
         bubbleBackgroundView.layer.cornerRadius = 22
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false

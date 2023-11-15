@@ -18,7 +18,7 @@ struct HistoryListSearchView: View {
     
     @State var matchingContents: [TKContent] = [TKContent(
         text: "",
-        status: "answer",
+        type: .answer,
         createdAt: Date.now
     )]
     @State private var searchStatus: searchStatus = .inactive
