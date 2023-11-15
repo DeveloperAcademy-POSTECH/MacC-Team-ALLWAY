@@ -21,48 +21,69 @@ struct TKTextReplacementEditView: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            SettingTRTextField(
-                text: store.bindingPhraseTextField(),
-                focusState: _focusState,
-                title: "단축어",
-                placeholder: "아아",
-                limit: 20
-            )
-            
-            SettingTRTextField(
-                text: store.bindingReplacementTextField(),
-                title: "변환 문구",
-                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                limit: 160
-            )
+            VStack {
+                SettingTRTextField(
+                    text: store.bindingPhraseTextField(),
+                    focusState: _focusState,
+                    title: "단축어",
+                    placeholder: "아아",
+                    limit: 20
+                )
+                .focused($focusState)
+                
+                SettingTRTextField(
+                    text: store.bindingReplacementTextField(),
+                    title: "변환 문구",
+                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                    limit: 160
+                )
+                .focused($focusState)
                 .padding(.top, 36)
+            }
             
             Spacer()
             
-            Button {
-                store.onShowDialogButtonTapped()
-                
-            } label: {
-                Text("텍스트 대치 삭제")
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red)
-                    .cornerRadius(20)
+            if !focusState {
+                Button {
+                    store.onShowDialogButtonTapped()
+                } label: {
+                    Text("텍스트 대치 삭제")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red)
+                        .cornerRadius(20)
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 8)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
         }
         .padding()
         .padding(.top, 8)
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .navigationTitle("편집")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("저장") {
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
+                }
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("목록")
+                    }
+                    .bold()
+                    .tint(Color.OR5)
                 }
             }
         }
