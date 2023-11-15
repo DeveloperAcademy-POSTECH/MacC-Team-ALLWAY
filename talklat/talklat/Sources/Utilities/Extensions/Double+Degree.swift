@@ -11,4 +11,8 @@ extension Double {
     func toDegrees() -> Double {
         return 180 / Double.pi * self
     }
+    
+    func toRadians() -> Double {
+        return self * Double.pi / 180
+    }
 }

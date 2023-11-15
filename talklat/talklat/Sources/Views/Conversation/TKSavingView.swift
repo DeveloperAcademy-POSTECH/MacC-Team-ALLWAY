@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
+    @EnvironmentObject var locationStore: LocationStore
     @ObservedObject var store: TKConversationViewStore
     @Environment(\.dismiss) private var dismiss
     let swiftDataStore = TKSwiftDataStore()
@@ -87,13 +88,6 @@ struct TKSavingView: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
-        .overlay(alignment: .top) {
-            Capsule()
-                .frame(width: 36, height: 5)
-                .padding(.top, 8)
-                .foregroundStyle(Color.GR3)
-        }
-        .presentationDetents([.medium])
     }
     
     private func makeNewConversation() -> some PersistentModel {
@@ -107,15 +101,15 @@ struct TKSavingView: View {
             )
         }
         
-        #warning("LOCATION STORE")
         let newConversation = TKConversation(
             title: store(\.conversationTitle),
             createdAt: Date(),
             content: newContents,
             location: TKLocation(
-                latitude: 0.0,
-                longitude: 1.1,
-                blockName: "링딩동"
+                latitude: locationStore(\.currentUserCoordinate?.latitude) ?? initialLatitude ,
+                longitude: locationStore(\.currentUserCoordinate?.longitude) ?? initialLongitude,
+                blockName: locationStore(\.currentShortPlaceMark),
+                mapThumbnail: nil
             )
         )
         

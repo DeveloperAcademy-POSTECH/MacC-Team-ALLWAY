@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var locationStore: LocationStore
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -22,13 +23,18 @@ struct TKMainView: View {
                 
                 VStack(spacing: 10) {
                     HStack(spacing: 2) {
-                        Image(systemName: "location.fill")
+                        switch locationStore(\.authorizationStatus) {
+                        case .authorizedAlways, .authorizedWhenInUse:
+                            Image(systemName: "location.fill")
+                            
+                        default:
+                            Image(systemName: "location.slash.fill")
+                        }
                         
-                        Text("현재 위치")
-                            .font(.headline)
-                            .bold()
+                        Text("\(locationStore(\.currentShortPlaceMark))")
                     }
                     .foregroundStyle(Color.GR4)
+
                     
                     Text("새 대화 시작하기")
                         .font(.title2)
@@ -104,6 +110,9 @@ struct TKMainView: View {
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
+        .onAppear {
+            locationStore.fetchCurrentCityName()
+        }
         .overlay {
             TKAlert(
                 style: .mic,

@@ -24,11 +24,7 @@ struct SheetWebView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        guard let url = webURL else {
-            return
-        }
         
-        webView.load(URLRequest(url: url))
     }
     
 }

@@ -79,7 +79,8 @@ struct CustomHistoryView: View {
             if historyViewType == .item {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        HistoryInfoItemView()
+                        HistoryInfoItemView(conversation: conversation)
+                        
                     } label: {
                         Image(systemName: "info.circle.fill")
                     }

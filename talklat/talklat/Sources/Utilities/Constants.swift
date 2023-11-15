@@ -75,7 +75,7 @@ public enum MessageType: String {
 }
 
 public enum LocationCallType {
-    case track
+    case update
     case get
 }
 
