@@ -63,7 +63,12 @@ struct TKConversationView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .sheet(isPresented: store.bindingSaveConversationViewFlag()) {
+        .sheet(
+            isPresented: store.bindingSaveConversationViewFlag(),
+            onDismiss: {
+                store.onDismissSavingViewButtonTapped()
+            }
+        ) {
             TKSavingView(store: store)
         }
         .onChange(of: store(\.conversationStatus)) { _, newStatus in
@@ -80,11 +85,13 @@ struct TKConversationView: View {
                 break
             }
         }
+        .edgesIgnoringSafeArea(.all)
         // MARK: - Flip Gesture OnChange Has been Deprecated
         // .onChange(of: gyroScopeStore.faced) { _ in }
         // .onAppear { gyroScopeStore.detectDeviceMotion() }
     }
 }
+
 
 #Preview {
     TKConversationView(store: .init())
@@ -253,3 +260,53 @@ struct TKConversationView: View {
 //    }
 //}
 
+// MARK: Recording Component Container
+extension TKConversationView {
+    private func scrollViewTopCurtainBuilder() -> LinearGradient {
+        LinearGradient(
+            colors: [
+                .accentColor,
+                .clear,
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    // Recording 뷰 버튼
+    private func stopRecordButtonBuilder() -> some View {
+        Button {
+            withAnimation {
+                store.onStopRecordingButtonTapped()
+            }
+            
+        } label: {
+            Circle()
+                .frame(width: 64, height: 64)
+                .foregroundColor(
+                    store(\.answeredText).isEmpty
+                    ? .accentColor
+                    : .gray100.opacity(0.8)
+                )
+        }
+        .overlay(alignment: .top) {
+            if store(\.answeredText).isEmpty {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .overlay {
+                        Text("듣고 있어요")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .background(alignment: .bottom) {
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(y: 5)
+                    }
+                    .frame(width: 150, height: 50)
+                    .offset(y: -75)
+                    .foregroundColor(.accentColor)
+            }
+        }
+    }
+}

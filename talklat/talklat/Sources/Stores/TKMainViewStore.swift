@@ -12,8 +12,11 @@ final class TKMainViewStore {
         var animationFlag: Bool = false
         var isConversationFullScreenCoverDisplayed: Bool = false
         var isBottomSheetMaxed: Bool = false
+        var isSpeechAuthAlertPresented: Bool = false
+        
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
+        var authStatus: AuthStatus = .splash
     }
     
     @Published var viewState: ViewState = ViewState()
@@ -25,8 +28,40 @@ final class TKMainViewStore {
         )
     }
     
+    public func bindingSpeechAuthAlert() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isSpeechAuthAlertPresented) },
+            set: { self.reduce(\.isSpeechAuthAlertPresented, into: $0) }
+        )
+    }
+    
+    public func onChangeOfSpeechAuth(_ status: AuthStatus) {
+        switch status {
+        case .authCompleted:
+            self.reduce(\.authStatus, into: .authCompleted)
+            self.reduce(\.isSpeechAuthAlertPresented, into: false)
+            
+        default:
+            self.reduce(\.isSpeechAuthAlertPresented, into: true)
+        }
+    }
+    
     public func triggerAnimation(_ flag: Bool) {
         self.reduce(\.animationFlag, into: flag)
+    }
+    
+    public func onStartConversationButtonTappedWithoutAuth() {
+        withAnimation {
+            self.reduce(\.isSpeechAuthAlertPresented, into: true)
+        }
+    }
+    
+    public func onGoSettingScreenButtonTapped() {
+        if let url = URL(
+            string: UIApplication.openSettingsURLString
+        ) {
+            UIApplication.shared.open(url)
+        }
     }
     
     public func onStartConversationButtonTapped() {
@@ -38,21 +73,27 @@ final class TKMainViewStore {
         reduce(\.isBottomSheetMaxed, into: flag)
     }
     
-    public func onUpdatingDragOffset(_ gestureOffset: CGFloat) {
-        Task { @MainActor in
-            reduce(\.offset, into: gestureOffset + self(\.lastOffset))
+    public func onUpdatingDragOffset(_ height: CGFloat) {
+        withAnimation(.spring()) {
+            self.reduce(\.offset, into: height)
         }
     }
     
-    public func onDragEnded(_ maxHeight: CGFloat) {
+    public func onDragEnded(_ height: CGFloat) {
         withAnimation(.spring()) {
-            if -self(\.offset) > maxHeight / 2 {
-                reduce(\.offset, into: -maxHeight)
-            } else {
-                reduce(\.offset, into: 0)
+            if self(\.offset) < -150 {
+                self.reduce(\.lastOffset, into: -(height))
+                
+            } else if self(\.lastOffset) != 0, self(\.offset) > 10 {
+                self.reduce(\.lastOffset, into: .zero)
             }
+            
+            self.reduce(\.offset, into: 0)
         }
-        reduce(\.lastOffset, into: self(\.offset))
+    }
+    
+    public func onVoiceAuthorizationObtained(_ status: AuthStatus) {
+        reduce(\.authStatus,into: status)
     }
 }
 

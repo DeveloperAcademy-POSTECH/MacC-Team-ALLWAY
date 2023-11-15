@@ -19,7 +19,7 @@ struct TKSavingView: View {
         ) {
             HStack {
                 Button {
-                    store.onDismissConversationButtonTapped()
+                    store.onDismissSavingViewButtonTapped()
                 } label: {
                     Text("취소")
                 }
@@ -32,6 +32,7 @@ struct TKSavingView: View {
                 
                 Button {
                     #warning("Create TKConverstion + TKLocation")
+                    store.onSaveNewConversationButtonTapped()
                 } label: {
                     Text("저장")
                 }
