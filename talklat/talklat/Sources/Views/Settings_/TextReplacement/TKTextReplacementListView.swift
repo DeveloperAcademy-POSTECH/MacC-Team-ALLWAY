@@ -20,7 +20,13 @@ struct TKTextReplacementListView: View {
     
     var groupedLists: [String: [TKTextReplacement]] {
         Dictionary(grouping: lists) { entry in
-            entry.wordDictionary.keys.first?.headerKey ?? "#"
+            if let firstChar = entry.wordDictionary.keys.first?.first {
+                // 한글 첫 자음을 추출하여 그룹화 기준으로 사용
+                return firstChar.koreanFirstConsonant ?? "#"
+            } else {
+                // 첫 글자가 없는 경우 기본값으로 "#"
+                return "#"
+            }
         }
     }
     
