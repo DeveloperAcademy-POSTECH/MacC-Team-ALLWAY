@@ -32,6 +32,8 @@ class CustomTableViewController: UITableViewController {
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.canCancelContentTouches = false
         tableView.estimatedSectionHeaderHeight = 0 // section header로 잡힌 높이만큼 안내려가던 거였음
     }

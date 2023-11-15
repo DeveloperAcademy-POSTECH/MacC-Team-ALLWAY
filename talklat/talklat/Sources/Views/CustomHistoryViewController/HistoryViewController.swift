@@ -95,14 +95,14 @@ class HistoryViewController: UIViewController {
     
     private func sortMessages(_ conversation: TKConversation) -> [[TKContent]] {
         // 우선 dictionary에 created: [Content] 형식으로 저장
-        var contentDict = [Date: [TKContent]]()
+        var contentDict = [String: [TKContent]]()
         
         conversation.content.forEach { item in
-            if contentDict[item.createdAt] == nil {
+            if contentDict[item.createdAt.convertToDate()] == nil {
                 // 해당 Date에 해당하는 값이 없으면 배열을 만들어주고 넣어줌
-                contentDict[item.createdAt] = [TKContent]()
+                contentDict[item.createdAt.convertToDate()] = [TKContent]()
             }
-            contentDict[item.createdAt]!.append(item)
+            contentDict[item.createdAt.convertToDate()]!.append(item)
         }
         
         // key(Date)를 뽑아내고 오름차순으로 정렬
