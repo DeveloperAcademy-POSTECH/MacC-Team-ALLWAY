@@ -9,6 +9,8 @@ import SwiftUI
 import WebKit
 
 struct SettingsAppInfoView: View {
+    @State private var isLoading: Bool = true
+    
     enum AppInfoType: String, CaseIterable {
         case versionInfo =  "업데이트 내역"
         // case copyrightInfo = "저작권 및 이용약관"
@@ -67,12 +69,20 @@ struct SettingsAppInfoView: View {
             }
             .padding(.vertical, 60)
             
-            ForEach(AppInfoType.allCases, id: \.self) { info in
+            ForEach(
+                AppInfoType.allCases,
+                id: \.self
+            ) { info in
                 NavigationLink {
+                    // TODO: - .copyrightInfo 추가
                     switch info {
-                    case .versionInfo, .dataPolicyInfo: // TODO: - .copyrightInfo 추가
-                        AppInfoWebView(webURL: info.infoURL)
-                            .ignoresSafeArea(edges: .bottom)
+                        
+                    case .versionInfo, .dataPolicyInfo:
+                        AppInfoWebView(
+                            isLoading: $isLoading,
+                            webURL: info.infoURL
+                        )
+                        .ignoresSafeArea(edges: .bottom)
                     }
                 } label: {
                     TKListCell(label: info.rawValue) {
@@ -90,6 +100,8 @@ struct SettingsAppInfoView: View {
 }
 
 struct AppInfoWebView: UIViewRepresentable {
+    #warning("LOADING PROGRESSVIEW NEEDED")
+    @Binding var isLoading: Bool
     var webURL: URL?
     let webView: WKWebView = WKWebView()
     
