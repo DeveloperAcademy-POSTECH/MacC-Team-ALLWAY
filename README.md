@@ -1,4 +1,4 @@
-# TALKLAT(토크랫)
+![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/4574c4ba-59b3-46fc-8028-a7181b68f710)# TALKLAT(토크랫)
 
 청각장애인과 청인 사이, 필담을 이용한 자연스러운 대화를 잇다 ‘토크랫’
 
@@ -35,13 +35,18 @@
 
 # 🟠 목적 및 가치
 
-<aside>
 💡 ‘**TALKLAT(토크랫)**’ 의 가치
+
 - 일방향적 말하기가 아닌, 청인과 청각장애인의 **각자의 소통 방식을 존중**하는 대화를 제안합니다.
 - 청각장애인이 **일상에서 적극적으로** **다양한 선택지를 고민하고 선택**할 수 있도록 노력합니다.
 - **청인과 대면해 함께 대화하며 더불어 살아갈 수 있도록,** 이들 사이의 **원활한 소통**을 위해 노력합니다.
-</aside>
+
 
 # 앱 이미지
-
+| 메인 | 대화화면 | 위치 기반 대화 정보 | 히스토리 |
+| ![Main](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/149a0b7b-8325-415d-accb-17613697288d)
+ | ![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/fe84b1bd-d99d-41aa-a56d-cdddad0f7a31)
+ | ![location](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6c716b86-413b-4f6e-9faa-19cf9998abdb)
+ | ![history](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/f81705cc-2893-46de-b54e-56c80054d29e)
+ |
 
