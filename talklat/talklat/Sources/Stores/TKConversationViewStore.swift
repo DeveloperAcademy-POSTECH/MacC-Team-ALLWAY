@@ -101,16 +101,13 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
-    
-    public func bindingNewConversationToast() -> Binding<Bool> {
-        Binding(
-            get: { self(\.isNewConversationSaved) },
-            set: { self.reduce(\.isNewConversationSaved, into: $0) }
-        )
-    }
 }
 
 extension TKConversationViewStore {
+    public func resetConversationState() {
+        self.reduce(\ViewState.self, into: ViewState(conversationStatus: .writing))
+    }
+    
     public func onDeleteConversationTitleButtonTapped() {
         self.reduce(\.conversationTitle, into: "")
     }
@@ -325,9 +322,6 @@ extension TKConversationViewStore: TKReducer {
             if let newHistoryItem = self(\.historyItem) {
                 self.viewState.historyItems.append(newHistoryItem)
             }
-            
-        case \.historyItems:
-            break
             
         default:
             self.viewState[keyPath: path] = newValue

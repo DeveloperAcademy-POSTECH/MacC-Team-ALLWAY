@@ -55,21 +55,21 @@ struct CustomHistoryView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
+            
             case .item:
                 Button {
                     
                 } label: {
                     Text("이 위치에서 대화 시작하기")
-                        .foregroundStyle(Color.OR5)
+                        .foregroundStyle(Color.OR6)
                         .font(.headline)
                         .padding()
                 }
+                .frame(maxWidth: .infinity)
                 .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.gray100)
-                        .frame(maxWidth: .infinity)
+                    RoundedRectangle(cornerRadius: 22)
+                        .fill(Color.GR1)
                 }
-
             }
         }
         .padding()
@@ -107,5 +107,14 @@ struct CustomHistoryView: View {
 }
 
 #Preview {
-    CustomHistoryView(historyViewType: .item, conversation: TKConversation(title: "title", createdAt: Date.now, content: [TKContent]()))
+    CustomHistoryView(
+        historyViewType: .item,
+        conversation: TKConversation(
+            title: "title",
+            createdAt: Date.now,
+            content: [
+                TKContent(text: "bb", type: .answer, createdAt: .now),
+            ]
+        )
+    )
 }

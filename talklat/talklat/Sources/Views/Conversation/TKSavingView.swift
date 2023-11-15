@@ -102,7 +102,7 @@ struct TKSavingView: View {
         let newContents = store(\.historyItems).map {
             TKContent(
                 text: $0.text,
-                status: $0.type == .answer ? "answer" : "question",
+                type: $0.type == .answer ? .answer : .question,
                 createdAt: $0.createdAt
             )
         }

@@ -127,7 +127,16 @@ extension UITableView {
         let sectionCount = numberOfSections - 1
         guard sectionCount >= 0 else { return }
         let rowCount = numberOfRows(inSection: sectionCount) - 1
-        self.scrollToRow(at: IndexPath(row: rowCount, section: sectionCount), at: .bottom, animated: animated)
+        guard rowCount >= 0 else { return }
+        
+        self.scrollToRow(
+            at: IndexPath(
+                row: rowCount,
+                section: sectionCount
+            ),
+            at: .bottom,
+            animated: animated
+        )
     }
 }
 

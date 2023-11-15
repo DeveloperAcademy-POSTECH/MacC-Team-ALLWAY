@@ -100,6 +100,9 @@ struct HistoryListView: View {
                 )
             }
         }
+        .onAppear {
+            
+        }
         .padding(.horizontal, 20)
         .overlay {
             if isDialogShowing {
@@ -203,8 +206,10 @@ struct LocationList: View {
                     id: \.self
                 ) { conversation in // TODO: each TKLocation의 TKConversation
                     NavigationLink {
-                        #warning("CUSTOM HISTORY VIEW")
-                        
+                        CustomHistoryView(
+                            historyViewType: .item,
+                            conversation: conversation
+                        )
                         
                     } label: {
                         CellItem(
@@ -213,6 +218,7 @@ struct LocationList: View {
                             isEditing: $isEditing,
                             isDialogShowing: $isDialogShowing
                         )
+                        .disabled(!isEditing)
                     }
                 }
                 .transition(
@@ -302,7 +308,7 @@ struct CellItem: View {
             .background(Color.GR1)
             .cornerRadius(22)
             .onTapGesture {
-                if isRemoving {
+                if isRemoving && isEditing {
                     withAnimation(
                         .spring(
                             dampingFraction: 0.7,

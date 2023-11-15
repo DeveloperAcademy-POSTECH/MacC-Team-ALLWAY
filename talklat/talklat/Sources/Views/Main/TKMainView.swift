@@ -11,10 +11,8 @@ struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
-<<<<<<< HEAD
-=======
-    @State private var flag: Bool = false
->>>>>>> Feat/#110-Connect-HistoryData
+    @State private var recentConversation: TKConversation?
+    let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         ZStack {
@@ -69,17 +67,13 @@ struct TKMainView: View {
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
-<<<<<<< HEAD
-                .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, newValue in
-                    if newValue {
-                        store.reduce(
-                            \.isConversationFullScreenCoverDisplayed,
-                             into: false
-                        )
+                .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
+                    if isSaved {
+                        self.recentConversation = swiftDataStore.getRecentConversation()
+                        store.onNewConversationHasSaved()
+                        conversationViewStore.resetConversationState()
                     }
                 }
-=======
->>>>>>> Feat/#110-Connect-HistoryData
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -131,7 +125,15 @@ struct TKMainView: View {
             }
         }
         .overlay(alignment: .top) {
-            TKToast(isPresented: conversationViewStore.bindingNewConversationToast())
+            if let recent = recentConversation,
+               let location = recent.location
+            {
+                TKToast(
+                    isPresented: store.bindingTKToast(),
+                    title: recent.title,
+                    locationInfo: location.blockName
+                )
+            }
         }
     }
     

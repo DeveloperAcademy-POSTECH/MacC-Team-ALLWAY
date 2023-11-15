@@ -70,6 +70,11 @@ extension TKSwiftDataStore {
         let uniqueLocations = groupedLocations.compactMap { $0.value.first }
         return uniqueLocations
     }
+    
+    public func getRecentConversation() -> TKConversation? {
+        refreshData()
+        return conversations.sorted { $0.createdAt > $1.createdAt }.first
+    }
 }
 
 

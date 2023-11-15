@@ -100,9 +100,6 @@ struct TKTypingView: View {
                 .padding(.bottom, 16)
         }
         .frame(maxWidth: .infinity)
-        .onAppear {
-            focusState = true
-        }
     }
     
     private func characterLimitViewBuilder() -> some View {

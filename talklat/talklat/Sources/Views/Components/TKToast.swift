@@ -5,11 +5,13 @@
 //  Created by Celan on 11/14/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TKToast: View {
     @Binding var isPresented: Bool
-    let text: String = "Location"
+    let title: String
+    let locationInfo: String
     
     var body: some View {
         if isPresented {
@@ -23,14 +25,14 @@ struct TKToast: View {
                     .padding(.leading, 16)
                 
                 VStack(alignment: .leading) {
-                    Text("TITLE")
+                    Text(title)
                         .font(.headline)
                         .foregroundStyle(Color.white)
                     
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill")
                         
-                        Text("\(text)")
+                        Text("\(locationInfo)")
                         +
                         Text("에 대화가 저장되었어요.")
                     }
@@ -64,5 +66,9 @@ struct TKToast: View {
 }
 
 #Preview {
-    TKToast(isPresented: .constant(false))
+    TKToast(
+        isPresented: .constant(false),
+        title: "TITLE",
+        locationInfo: "LOCATION"
+    )
 }
