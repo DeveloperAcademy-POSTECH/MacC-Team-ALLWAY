@@ -43,10 +43,30 @@
 
 
 # 앱 이미지
-| 메인 | 대화화면 | 위치 기반 대화 정보 | 히스토리 |
-| ![Main](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/149a0b7b-8325-415d-accb-17613697288d)
- | ![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/fe84b1bd-d99d-41aa-a56d-cdddad0f7a31)
- | ![location](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6c716b86-413b-4f6e-9faa-19cf9998abdb)
- | ![history](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/f81705cc-2893-46de-b54e-56c80054d29e)
- |
+
+<table>
+<tr>
+<td>
+메인 화면
+![Main](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/149a0b7b-8325-415d-accb-17613697288d)
+
+</td>
+<td>
+대화 화면
+![TR](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/fe84b1bd-d99d-41aa-a56d-cdddad0f7a31)
+
+</td>
+<td>
+위치 기반 대화 정보
+![location](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6c716b86-413b-4f6e-9faa-19cf9998abdb)
+
+</td>
+<td>
+히스토리
+![history](https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/f81705cc-2893-46de-b54e-56c80054d29e)
+
+</td>
+</tr>
+</table>
+
 
