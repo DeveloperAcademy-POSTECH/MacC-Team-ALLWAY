@@ -24,12 +24,6 @@ struct TKTextReplacementEditView: View {
     
     private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
     
-    private func updateTextReplacement() {
-        if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
-            dataStore.updateTextReplacement(oldTextReplacement: existingItem, newPhrase: phrase, newReplacement: replacement)
-        }
-    }
-    
     init(phrase: String, replacement: String, isPresented: Binding<Bool>, textReplacementManager: TKTextReplacementManager) {
         _phrase = State(initialValue: phrase)
         _replacement = State(initialValue: replacement)
@@ -107,17 +101,23 @@ struct TKTextReplacementEditView: View {
         )
     }
     
+    private func updateTextReplacement() {
+        if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
+            dataStore.updateTextReplacement(oldTextReplacement: existingItem, newPhrase: phrase, newReplacement: replacement)
+        }
+    }
+    
+    private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
+        let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
+        return fetchedItems.last
+    }
+    
     private func deleteTKTextReplacement() {
         if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
             context.delete(existingItem)
         }
             
         isPresented = false
-    }
-    
-    private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
-        let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
-        return fetchedItems.last
     }
 }
 
