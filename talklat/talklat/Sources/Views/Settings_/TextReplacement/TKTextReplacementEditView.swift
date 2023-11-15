@@ -73,6 +73,8 @@ struct TKTextReplacementEditView: View {
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 }
+                .disabled(store.isSaveButtonDisabled)
+                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.accentColor)
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button {

@@ -21,13 +21,18 @@ final class TextReplacementViewStore: TKReducer {
         
         var selectedPhrase: String = ""
         var selectedReplacement: String = ""
-        
     }
     
     @Published var viewState: ViewState = ViewState()
     @Published var focusState: Bool = false
     
     var selectedTextReplacement: TKTextReplacement? = nil
+    var originalPhrase: String = ""
+    var originalReplacement: String = ""
+    
+    var isSaveButtonDisabled: Bool {
+        return originalPhrase == viewState.selectedPhrase && originalReplacement == viewState.selectedReplacement
+    }
     
     init(viewState: ViewState) {
         self.viewState = viewState
@@ -74,6 +79,8 @@ final class TextReplacementViewStore: TKReducer {
         self.reduce(\.selectedPhrase, into: phrase)
         self.reduce(\.selectedReplacement, into: replacement)
         self.reduce(\.showingTextReplacementEditView, into: true)
+        self.originalPhrase = phrase
+        self.originalReplacement = replacement
     }
     
     func cancelSearchAndHideKeyboard() {
