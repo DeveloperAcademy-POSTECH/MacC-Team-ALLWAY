@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import SwiftUI
 
 
 class HistoryViewController: UIViewController {
@@ -93,17 +94,15 @@ class HistoryViewController: UIViewController {
     }
     
     private func sortMessages(_ conversation: TKConversation) -> [[TKContent]] {
-        let content = conversation.content
         // 우선 dictionary에 created: [Content] 형식으로 저장
         var contentDict = [Date: [TKContent]]()
-        content.forEach { item in
-            if let _ = contentDict[item.createdAt] {
-                // 해당 Date에 해당하는 값이 있으면 넣어주고
-                contentDict[item.createdAt]!.append(item)
-            } else {
-                // 아니면 배열 생성
+        
+        conversation.content.forEach { item in
+            if contentDict[item.createdAt] == nil {
+                // 해당 Date에 해당하는 값이 없으면 배열을 만들어주고 넣어줌
                 contentDict[item.createdAt] = [TKContent]()
             }
+            contentDict[item.createdAt]!.append(item)
         }
         
         // key(Date)를 뽑아내고 오름차순으로 정렬
