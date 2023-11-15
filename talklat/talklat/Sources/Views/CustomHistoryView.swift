@@ -57,19 +57,21 @@ struct CustomHistoryView: View {
                 .frame(maxWidth: .infinity)
             
             case .item:
-                Button {
-                    
-                } label: {
-                    Text("이 위치에서 대화 시작하기")
-                        .foregroundStyle(Color.OR6)
-                        .font(.headline)
-                        .padding()
-                }
-                .frame(maxWidth: .infinity)
-                .background {
-                    RoundedRectangle(cornerRadius: 22)
-                        .fill(Color.GR1)
-                }
+                // TODO: ver 1.1
+                EmptyView()
+//                Button {
+//                    
+//                } label: {
+//                    Text("이 위치에서 대화 시작하기")
+//                        .foregroundStyle(Color.OR6)
+//                        .font(.headline)
+//                        .padding()
+//                }
+//                .frame(maxWidth: .infinity)
+//                .background {
+//                    RoundedRectangle(cornerRadius: 22)
+//                        .fill(Color.GR1)
+//                }
             }
         }
         .padding()
