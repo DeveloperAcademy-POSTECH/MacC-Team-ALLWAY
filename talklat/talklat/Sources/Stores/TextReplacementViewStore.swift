@@ -31,7 +31,8 @@ final class TextReplacementViewStore: TKReducer {
     var originalReplacement: String = ""
     
     var isSaveButtonDisabled: Bool {
-        return originalPhrase == viewState.selectedPhrase && originalReplacement == viewState.selectedReplacement
+        viewState.selectedPhrase.isEmpty || viewState.selectedReplacement.isEmpty ||
+        (originalPhrase == viewState.selectedPhrase && originalReplacement == viewState.selectedReplacement)
     }
     
     init(viewState: ViewState) {

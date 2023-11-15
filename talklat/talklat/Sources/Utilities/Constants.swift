@@ -30,6 +30,11 @@ public enum Constants {
     
     static let SectionIndexTitles = ["#", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
+    static let TEXTFIELD_MESSAGE: String =
+    """
+    한 글자 이상 입력해주세요
+    """
+    
     static let START_CONVERSATION_MESSAGE: String =
     """
     새 대화

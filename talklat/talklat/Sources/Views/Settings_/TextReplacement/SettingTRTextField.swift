@@ -54,11 +54,17 @@ struct SettingTRTextField: View {
             })
         }
     }
+    
     private func characterLimitViewBuilder(currentCount: Int, limit: Int) -> some View {
-        let displayCount = min(currentCount, limit)
-        return Text("\(displayCount)/\(limit)")
-            .font(.system(size: 13, weight: .medium))
-            .monospacedDigit()
-            .foregroundColor(currentCount == limit ? .accentColor : .GR4)
+        if currentCount == 0 {
+            return Text(Constants.TEXTFIELD_MESSAGE)
+                .foregroundColor(.red)
+                .font(.system(size: 13, weight: .medium))
+        } else {
+            let displayCount = min(currentCount, limit)
+            return Text("\(displayCount)/\(limit)")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(currentCount == limit ? .red : .GR4)
+        }
     }
 }
