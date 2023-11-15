@@ -43,6 +43,7 @@ struct SettingTRSearchBar: View {
             if focusState {
                 Button {
                     store.onCancelSearch()
+                    focusState = false
                 } label: {
                     Text("취소")
                         .font(.system(size: 17))

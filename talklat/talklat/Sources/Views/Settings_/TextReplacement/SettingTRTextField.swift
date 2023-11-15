@@ -32,6 +32,7 @@ struct SettingTRTextField: View {
                 text: $text,
                 axis: .vertical
             )
+            .padding(.vertical, 11)
             .onChange(of: text) { newValue in
                 if newValue.count > limit {
                     let lastCharIndex = text.index(text.startIndex, offsetBy: limit - 1)
@@ -41,7 +42,7 @@ struct SettingTRTextField: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 11)
             .background(Color.GR1)
-            .cornerRadius(16)
+            .cornerRadius(22)
             .safeAreaInset(edge: .bottom, content: {
                 HStack {
                     characterLimitViewBuilder(currentCount: text.count, limit: limit)
