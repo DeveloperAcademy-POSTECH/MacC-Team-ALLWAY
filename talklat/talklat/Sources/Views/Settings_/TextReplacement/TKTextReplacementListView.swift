@@ -34,7 +34,7 @@ struct TKTextReplacementListView: View {
         // TODO: SearchBar
         ScrollViewReader { proxy in
             SettingTRSearchBar(store: settingStore)
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
             
             if settingStore(\.isSearching) {
                 TKTextReplacementSearchView(
@@ -97,10 +97,13 @@ struct TKTextReplacementListView: View {
                 }
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("텍스트 대치")
-                    .bold()
+                    .font(.system(size: 17, weight: .bold))
             }
             
             ToolbarItem(placement: .topBarTrailing) {

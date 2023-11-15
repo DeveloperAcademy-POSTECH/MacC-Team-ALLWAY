@@ -13,7 +13,6 @@ struct TKTextReplacementSearchView: View {
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
-//    var searchText: String
     var lists: [TKTextReplacement]
     var textReplacementManager = TKTextReplacementManager()
 

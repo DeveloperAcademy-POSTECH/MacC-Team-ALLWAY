@@ -80,9 +80,10 @@ struct TKTextReplacementEditView: View {
                 } label: {
                     HStack {
                         Image(systemName: "chevron.left")
+                            .bold()
                         Text("목록")
+                            .font(.system(size: 17))
                     }
-                    .bold()
                     .tint(Color.OR5)
                 }
             }
