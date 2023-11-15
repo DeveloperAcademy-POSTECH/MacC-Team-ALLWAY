@@ -92,7 +92,7 @@ struct TKMainView: View {
                 }
             }
         }
-        .background { Color.GR1.ignoresSafeArea(edges: .top) }
+        .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
         .overlay {
             TKAlert(
                 style: .mic,
