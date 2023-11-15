@@ -107,9 +107,6 @@ struct TKTextReplacementSearchView: View {
             }
         })
         .background(Color.white)
-        .onAppear {
-            print("Filtered Lists: \(filteredLists)")
-        }
     }
 }
 
@@ -122,26 +119,5 @@ extension String {
             start = range.upperBound
         }
         return ranges
-    }
-}
-
-// 더미 데이터를 위한 TKTextReplacement 객체들을 생성합니다.
-let sampleTKTextReplacements = [
-    TKTextReplacement(wordDictionary: ["안녕": ["Hello", "Hi"]]),
-    TKTextReplacement(wordDictionary: ["사과": ["Apple"]]),
-    TKTextReplacement(wordDictionary: ["책": ["Book"]])
-]
-
-struct TKTextReplacementSearchView_Previews: PreviewProvider {
-    // 프리뷰를 위한 selectedList 상태 바인딩
-    @State static var selectedList: TKTextReplacement?
-
-    static var previews: some View {
-        // TKTextReplacementSearchView 인스턴스를 생성하고 필요한 데이터와 바인딩을 제공합니다.
-        TKTextReplacementSearchView(
-            selectedList: $selectedList,
-            searchText: "안녕",
-            lists: sampleTKTextReplacements
-        )
     }
 }

@@ -16,6 +16,7 @@ struct TKTextReplacementEditView: View {
     
     @FocusState var focusState: Bool
     @Binding var isPresented: Bool
+    
     @State private var isDialogShowing: Bool = false
     @State private var phrase: String
     @State private var replacement: String
@@ -34,9 +35,20 @@ struct TKTextReplacementEditView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                SettingTRTextField(text: $phrase, focusState: _focusState, title: "단축 문구", placeholder: "아아", limit: 20)
-                SettingTRTextField(text: $replacement, title: "변환 문구", placeholder: "아이스 아메리카노 한 잔 주시겠어요?", limit: 160)
-                    .padding(.top, 36)
+                SettingTRTextField(
+                    text: $phrase,
+                    focusState: _focusState,
+                    title: "단축 문구",
+                    placeholder: "아아",
+                    limit: 20
+                )
+                SettingTRTextField(
+                    text: $replacement,
+                    title: "변환 문구",
+                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                    limit: 160
+                )
+                .padding(.top, 36)
                 
                 Spacer()
                 
@@ -75,7 +87,6 @@ struct TKTextReplacementEditView: View {
                 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button("저장") {
-//                        try? context.save()
                         updateTextReplacement()
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -112,6 +123,7 @@ struct TKTextReplacementEditView: View {
         return fetchedItems.last
     }
     
+    // 작동 안함
     private func deleteTKTextReplacement() {
         if let existingItem = fetchTKTextReplacement(forPhrase: phrase) {
             context.delete(existingItem)

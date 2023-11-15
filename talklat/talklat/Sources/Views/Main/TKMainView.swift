@@ -77,7 +77,7 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    HistoryListView()
+                    Text("SETTING VIEW HERE")
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
                         .foregroundStyle(Color.GR3)
@@ -86,7 +86,7 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    TKTextReplacementListView()
+                    
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .foregroundStyle(Color.GR3)
