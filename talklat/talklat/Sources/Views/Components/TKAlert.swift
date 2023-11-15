@@ -86,7 +86,7 @@ struct TKAlert<ActionButtonLabel: View>: View {
                     
                 }
                 .frame(width: 330, height: frameHeight)
-                .background { Color.white }
+                .background { Color.AlertBGWhite }
                 .clipShape(RoundedRectangle(cornerRadius: 22))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
