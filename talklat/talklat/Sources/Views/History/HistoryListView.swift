@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct HistoryListView: View {
+    @Environment(\.dismiss) var dismiss
+    
     private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
     
     @State private var selectedConversation: TKConversation = TKConversation(
@@ -36,6 +38,9 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
+            .navigationBarBackButtonHidden(
+                isSearching ? true : false
+            )
             
             Spacer()
             
@@ -66,8 +71,22 @@ struct HistoryListView: View {
                     }
                     .scrollIndicators(.hidden)
                     .navigationTitle("히스토리")
+                    .navigationBarBackButtonHidden(true)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "chevron.left")
+                                    Text("홈")
+                                }
+                                .foregroundColor(Color.OR6)
+                                .fontWeight(.medium)
+                            }
+                        }
+                        
                         ToolbarItem(placement: .topBarTrailing) {
                             // Edit Button
                             ZStack {

@@ -38,7 +38,7 @@ struct talklatApp: App {
                             let status = await SpeechAuthManager.switchAuthStatus()
                             store.onVoiceAuthorizationObtained(status)
                         }
-
+                    
                 default:
                     NavigationStack {
                         TKMainView(store: store)

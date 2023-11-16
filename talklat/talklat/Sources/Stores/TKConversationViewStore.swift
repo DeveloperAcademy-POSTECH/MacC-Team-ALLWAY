@@ -203,7 +203,12 @@ extension TKConversationViewStore {
     
     public func onStartRecordingButtonTapped() {
         withAnimation {
-            switchConverstaionStatus()
+            if UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
+                switchConverstaionStatus()
+            } else {
+                reduce(\.hasGuidingMessageShown, into: true)
+                switchConverstaionStatus()
+            }
         }
         
         if !self(\.questionText).isEmpty {

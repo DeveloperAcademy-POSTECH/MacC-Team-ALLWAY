@@ -20,6 +20,10 @@ struct TKGuidingView: View {
     제 글을 읽고 또박또박 말씀해 주세요.
     """
     
+    var guidingMessage: String = UserDefaults.standard.string(
+        forKey: "guidingMessage"
+    ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
+    
     var body: some View {
         VStack(alignment: .leading) {
             Button {
@@ -33,7 +37,7 @@ struct TKGuidingView: View {
             Spacer()
                 .frame(maxHeight: 60)
             
-            Text("안녕하세요.\n저는 청각장애를\n가지고 있습니다.")
+            Text(guidingMessage)
                 .font(.largeTitle)
                 .bold()
                 .lineSpacing(10)
