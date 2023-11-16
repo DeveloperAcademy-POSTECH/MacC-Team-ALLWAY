@@ -42,7 +42,7 @@ struct TKTextReplacementListView: View {
                     selectedList: $selectedList,
                     lists: lists
                 )
-                .background(Color.white)
+                .background(Color.BaseBGWhite)
                 
             } else {
                 ScrollView(showsIndicators: false) {
@@ -117,7 +117,7 @@ struct TKTextReplacementListView: View {
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView()
         }
-        .background(Color.white)
+        .background(Color.BaseBGWhite)
     }
     // MARK: 리스트 정렬
     // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..

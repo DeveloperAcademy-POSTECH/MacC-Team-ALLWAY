@@ -50,10 +50,10 @@ struct TKTextReplacementEditView: View {
                     } label: {
                         Text("텍스트 대치 삭제")
                             .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.BaseBGWhite)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.red)
+                            .background(Color.RED)
                             .cornerRadius(20)
                     }
                     .padding(.horizontal, 16)
@@ -77,7 +77,7 @@ struct TKTextReplacementEditView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 .disabled(store.isSaveButtonDisabled)
-                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.accentColor)
+                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -96,7 +96,7 @@ struct TKTextReplacementEditView: View {
         .overlay {
             ZStack {
                 if store(\.isDialogShowing) {
-                    Color.black.opacity(0.5).ignoresSafeArea(.all)
+                    Color.GR9.opacity(0.5).ignoresSafeArea(.all)
                     TKAlert(
                         style: .removeTextReplacement,
                         isPresented: store.bindingReplacementRemoveAlert()
@@ -145,7 +145,7 @@ struct TextReplacementCustomDialog: View {
         GroupBox {
             VStack(spacing: 16) {
                 Image(systemName: "trash.fill")
-                    .foregroundColor(.red)
+                    .foregroundColor(.RED)
                     .font(.system(size: 20))
                 
                 Text("텍스트 대치 삭제")
@@ -176,16 +176,16 @@ struct TextReplacementCustomDialog: View {
                         
                     } label: {
                         Text("네, 삭제할래요")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BaseBGWhite)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
-                            .background(Color.red)
+                            .background(Color.RED)
                             .cornerRadius(16)
                     }
                 }
             }
         }
-        .background(Color.white)
+        .background(Color.BaseBGWhite)
         .cornerRadius(22)
         .frame(height: 240)
         .frame(maxWidth: .infinity)

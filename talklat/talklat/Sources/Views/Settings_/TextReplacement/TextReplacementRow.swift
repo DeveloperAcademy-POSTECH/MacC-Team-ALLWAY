@@ -15,7 +15,7 @@ struct TextReplacementRow: View {
         VStack(spacing: 0) {
             Text(key)
                 .font(.system(size: 17, weight: .bold))
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.GR9)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineSpacing(17 * 1.3 - 17)
                 .padding(.vertical, 11)
