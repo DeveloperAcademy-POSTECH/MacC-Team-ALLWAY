@@ -98,15 +98,6 @@ struct TKTextReplacementEditView: View {
             ZStack {
                 if store(\.isDialogShowing) {
                     Color.black.opacity(0.4).ignoresSafeArea(.all)
-                    //                    TKAlert(
-                    //                        style: .removeTextReplacement,
-                    //                        isPresented: store.bindingReplacementRemoveAlert()
-                    //                    ) {
-                    //                        deleteTKTextReplacement()
-                    //
-                    //                    } actionButtonLabel: {
-                    //                        Text("네, 삭제할래요")
-                    //                    }
                     TextReplacementCustomDialog(store: store, onDelete: { deleteTKTextReplacement() })
                 }
             }
@@ -177,7 +168,6 @@ struct TKTextReplacementEditView: View {
 struct TextReplacementCustomDialog: View {
     
     @ObservedObject var store: TextReplacementViewStore
-    //    @Binding internal var isDialogShowing: Bool
     
     var onDelete: () -> Void
     

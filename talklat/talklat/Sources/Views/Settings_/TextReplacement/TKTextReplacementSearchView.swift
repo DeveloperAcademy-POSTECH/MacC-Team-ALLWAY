@@ -106,7 +106,6 @@ struct TKTextReplacementSearchView: View {
             
             .listRowBackground(Color.GR1)
             .background(Color.BaseBGWhite)
-//            .edgesIgnoringSafeArea(.all)
         }
     }
 }
