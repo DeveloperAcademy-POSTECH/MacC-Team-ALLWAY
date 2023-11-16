@@ -72,10 +72,8 @@ struct SettingsAppInfoView: View {
                 NavigationLink {
                     switch info {
                     case .copyrightInfo, .versionInfo, .dataPolicyInfo:
-                        AppInfoWebView(
-                            webURL: info.infoURL
-                        )
-                        .ignoresSafeArea(edges: .bottom)
+                        LoadingWebView()
+                            .ignoresSafeArea(edges: .bottom)
                     }
                 } label: {
                     TKListCell(label: info.rawValue) {
@@ -92,37 +90,36 @@ struct SettingsAppInfoView: View {
     }
 }
 
-struct AppInfoWebView: UIViewRepresentable {
-    #warning("LOADING PROGRESSVIEW NEEDED")
-    var webURL: URL?
-    let webView: WKWebView = WKWebView()
-    
-    func makeUIView(context: Context) -> some UIView {
-        guard let url = webURL else {
-            webView.load(
-                URLRequest(
-                    url: URL(
-                        string: "https://google.com"
-                    )!
-                )
-            )
-            return webView
-        }
-        
-        webView.load(URLRequest(url: url))
-        
-        return webView
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        guard let url = webURL else {
-            return
-        }
-        
-        webView.load(URLRequest(url: url))
-    }
-    
-}
+//struct AppInfoWebView: UIViewRepresentable {
+//    #warning("LOADING PROGRESSVIEW NEEDED")
+//    var webURL: URL?
+//    let webView: WKWebView = WKWebView()
+//    
+//    func makeUIView(context: Context) -> some UIView {
+//        guard let url = webURL else {
+//            webView.load(
+//                URLRequest(
+//                    url: URL(
+//                        string: "https://google.com"
+//                    )!
+//                )
+//            )
+//            return webView
+//        }
+//        
+//        webView.load(URLRequest(url: url))
+//        
+//        return webView
+//    }
+//    
+//    func updateUIView(_ uiView: UIViewType, context: Context) {
+//        guard let url = webURL else {
+//            return
+//        }
+//        
+//        webView.load(URLRequest(url: url))
+//    }
+//}
 
 #Preview {
     NavigationStack {

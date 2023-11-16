@@ -113,10 +113,7 @@ struct SettingsListView: View {
                                      */
                                     
                                 case .dataPolicyInfo:
-                                    AppInfoWebView(
-                                        webURL: URL(string: "https://yenchoichoi.notion.site/TALKLAT-fbba4b6204ee4eb9a9681c4d75a673cb?pvs=4"
-                                        )
-                                    )
+                                    LoadingWebView()
                                     
                                 case .creators:
                                     EmptyView()

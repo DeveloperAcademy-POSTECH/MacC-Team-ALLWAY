@@ -23,7 +23,7 @@ struct SectionIndexTitles: View {
                 Text(Constants.SectionIndexTitles[index])
                     .font(.system(size: 11))
                     .fontWeight(.semibold)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(.OR6)
                     .cornerRadius(5)
                     .onTapGesture {
                         selectedIndex = index

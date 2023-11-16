@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데, Setting-안내문구 뷰에서도 사용됩니다.
 struct SettingTRTextField: View {
     @State private var isTextEmpty: Bool = false
     @Binding var text: String
@@ -33,6 +32,7 @@ struct SettingTRTextField: View {
                 text: $text,
                 axis: .vertical
             )
+            .frame(height: 44)
             .onChange(of: text) { newValue in
                 if newValue.count > limit {
                     let lastCharIndex = text.index(
@@ -46,9 +46,8 @@ struct SettingTRTextField: View {
                 handleEmptyText(text)
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 11)
             .background(Color.GR1)
-            .cornerRadius(16)
+            .cornerRadius(22)
             .safeAreaInset(edge: .bottom, content: {
                 HStack {
                     characterLimitViewBuilder(currentCount: text.count, limit: limit)

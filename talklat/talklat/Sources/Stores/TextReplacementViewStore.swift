@@ -17,16 +17,24 @@ final class TextReplacementViewStore: TKReducer {
         
         var isDialogShowing: Bool = false
         var isSearching: Bool = false
-        var searchText: String = ""
+        var searchText: String = "ㅎ"
         
         var selectedPhrase: String = ""
         var selectedReplacement: String = ""
         
+        var originalPhrase: String = ""
+        var originalReplacement: String = ""
     }
     
     @Published var viewState: ViewState = ViewState()
+    @Published var focusState: Bool = false
     
     var selectedTextReplacement: TKTextReplacement? = nil
+    
+    var isSaveButtonDisabled: Bool {
+        self(\.selectedPhrase).isEmpty || self(\.selectedReplacement).isEmpty ||
+        (self(\.originalPhrase) == self(\.selectedPhrase) && self(\.originalReplacement) == self(\.selectedReplacement))
+    }
     
     init(viewState: ViewState) {
         self.viewState = viewState
@@ -73,6 +81,14 @@ final class TextReplacementViewStore: TKReducer {
         self.reduce(\.selectedPhrase, into: phrase)
         self.reduce(\.selectedReplacement, into: replacement)
         self.reduce(\.showingTextReplacementEditView, into: true)
+        self.reduce(\.originalPhrase, into: phrase)
+        self.reduce(\.originalReplacement, into: replacement)
+    }
+    
+    func cancelSearchAndHideKeyboard() {
+        self.reduce(\.isSearching, into: false)
+        self.reduce(\.searchText, into: "")
+        self.focusState = false
     }
     
     func bindingPhraseTextField() -> Binding<String> {

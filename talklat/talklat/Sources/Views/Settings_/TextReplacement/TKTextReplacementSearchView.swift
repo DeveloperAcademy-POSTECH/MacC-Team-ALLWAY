@@ -13,7 +13,6 @@ struct TKTextReplacementSearchView: View {
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
-//    var searchText: String
     var lists: [TKTextReplacement]
     var textReplacementManager = TKTextReplacementManager()
 
@@ -45,7 +44,7 @@ struct TKTextReplacementSearchView: View {
             let match = String(currentText[range])
 
             highlightedText = highlightedText + Text(prefix)
-            highlightedText = highlightedText + Text(match).foregroundColor(.accentColor)
+            highlightedText = highlightedText + Text(match).foregroundColor(.OR6)
 
             currentText = String(currentText[range.upperBound...])
         }
@@ -55,59 +54,65 @@ struct TKTextReplacementSearchView: View {
     }
 
     var body: some View {
-        List(filteredLists, id: \.self) { list in
-            VStack(alignment: .leading) {
-                ForEach(
-                    list.wordDictionary.sorted { $0.key < $1.key },
-                    id: \.key
-                ) { key, values in
-                    if let firstValue = values.first {
-                        NavigationLink {
-                            TKTextReplacementEditView(store: store)
-                                .onAppear {
-                                    selectedList = list
-                                    
-                                    store.selectTextReplacement(
-                                        phrase: key,
-                                        replacement: firstValue
-                                    )
-                                }
-                            
-                        } label: {
-                            VStack(spacing: 0) {
-                                highlightSearchText(in: key)
-                                    .font(.system(size: 17, weight: .bold))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineSpacing(17 * 1.3 - 17)
-                                    .padding(.vertical, 10)
-                                    .padding(.leading, 16)
+        List(
+            filteredLists,
+            id: \.self
+        ) { list in
+            ForEach(
+                list.wordDictionary.sorted { $0.key < $1.key },
+                id: \.key
+            ) { key, values in
+                if let firstValue = values.first {
+                    NavigationLink {
+                        TKTextReplacementEditView(store: store)
+                            .onAppear {
+                                selectedList = list
                                 
-                                Divider()
-                                    .padding(.leading, 16)
-                                
-                                highlightSearchText(
-                                    in: firstValue.count > 30
-                                    ? String(firstValue.prefix(29)) + "..."
-                                    : firstValue
+                                store.selectTextReplacement(
+                                    phrase: key,
+                                    replacement: firstValue
                                 )
-                                    .font(.system(size: 15, weight: .medium))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineSpacing(15 * 1.35 - 15)
-                                    .padding(.vertical, 10)
-                                    .padding(.leading, 16)
                             }
-                            .background(Color.GR1)
-                            .cornerRadius(15)
+                        
+                    } label: {
+                        VStack(spacing: 0) {
+                            highlightSearchText(in: key)
+                                .font(.system(size: 17, weight: .bold))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineSpacing(17 * 1.3 - 17)
+                                .padding(.vertical, 10)
+                                .padding(.leading, 16)
+                            
+                            Divider()
+                                .padding(.leading, 16)
+                            
+                            highlightSearchText(
+                                in: firstValue.count > 30
+                                ? String(firstValue.prefix(29)) + "..."
+                                : firstValue
+                            )
+                            .font(.system(size: 15, weight: .medium))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .lineSpacing(15 * 1.35 - 15)
+                            .padding(.vertical, 10)
+                            .padding(.leading, 16)
                         }
-                        .cornerRadius(16)
+                        .background(Color.GR1)
+                        .cornerRadius(15)
                     }
+                    .cornerRadius(16)
                 }
             }
-            .background(Color.white)
-            .edgesIgnoringSafeArea(.all)
+            
+            .listRowBackground(Color.GR1)
+            .background(Color.BaseBGWhite)
+//            .edgesIgnoringSafeArea(.all)
         }
-        .background(Color.white)
     }
+}
+
+#Preview {
+    TKTextReplacementListView()
 }
 
 extension String {
