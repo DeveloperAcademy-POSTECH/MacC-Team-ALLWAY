@@ -9,7 +9,7 @@ import SwiftUI
 
 private enum SectionType: String, CaseIterable {
     case textReplacement = "텍스트 대치"
-    case guidingMessage = "안내 문구"
+//    case guidingMessage = "안내 문구"
     // case displayMode = "화면 모드"
     // case haptics = "진동"
     // case gesture = "제스처"
@@ -20,7 +20,8 @@ private enum SectionType: String, CaseIterable {
     
     var category: String {
         switch self {
-        case .textReplacement, .guidingMessage: return "대화"
+        case .textReplacement: return "대화"
+//        case .guidingMessage: return "대화"
         // case .displayMode: return "접근성"
         // case .haptics: return "일반"
         // case .gesture: return "실험실"
@@ -33,7 +34,7 @@ private enum SectionType: String, CaseIterable {
     var icon: String {
         switch self {
         case .textReplacement: return "bubble.left.and.text.bubble.right.fill"
-        case .guidingMessage: return "quote.opening"
+//        case .guidingMessage: return "quote.opening"
         // case .displayMode: return "sun.max.fill"
         // case .haptics: return "water.waves"
         // case .gesture: return "hands.and.sparkles.fill"
@@ -91,8 +92,8 @@ struct SettingsListView: View {
                                 case .textReplacement:
                                     TKTextReplacementListView()
                                
-                                case .guidingMessage:
-                                    SettingsGuidingView()
+//                                case .guidingMessage:
+//                                    SettingsGuidingView()
                                 
                                     /*
                                      case .displayMode:
@@ -185,7 +186,7 @@ func authNoticeBuilder(noticeItem: String) -> some View {
         
         Spacer()
     }
-    .foregroundColor(.white)
+    .foregroundColor(Color.BaseBGWhite)
     .frame(maxWidth: .infinity)
     .padding(20)
     .background(Color.OR5)

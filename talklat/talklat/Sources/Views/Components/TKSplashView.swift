@@ -45,7 +45,7 @@ struct TKSplashView: View {
             )
             .padding(.trailing, 18)
             
-            Image("TALKLAT_TYPO")
+            Image("Talklat_Typo")
                 .resizable()
                 .frame(width: 215, height: 36)
                 .aspectRatio(contentMode: .fit)

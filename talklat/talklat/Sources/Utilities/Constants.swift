@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 import SwiftUI
 
 public enum Constants {
@@ -140,3 +141,12 @@ public enum HistoryViewType {
     case preview
     case item
 }
+
+public var initialCoordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
+    center: CLLocationCoordinate2D(
+        latitude: initialLatitude,
+        longitude: initialLongitude
+    ),
+    latitudinalMeters: 500,
+    longitudinalMeters: 500
+)

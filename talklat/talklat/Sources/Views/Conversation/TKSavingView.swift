@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
-    @EnvironmentObject var locationStore: LocationStore
+    @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKConversationViewStore
     @Environment(\.dismiss) private var dismiss
     let swiftDataStore = TKSwiftDataStore()
@@ -60,7 +60,7 @@ struct TKSavingView: View {
                 HStack(spacing: 5) {
                     Image(systemName: "location.fill")
                     
-                    Text(locationStore(\.currentShortPlaceMark))
+                    Text(locationStore(\.mainPlaceName))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }
@@ -134,12 +134,10 @@ struct TKSavingView: View {
             createdAt: Date(),
             content: newContents,
             location: TKLocation(
-                latitude: locationStore(\.currentUserCoordinate?.latitude) ?? initialLatitude ,
-                longitude: locationStore(\.currentUserCoordinate?.longitude) ?? initialLongitude,
-                blockName: locationStore(\.currentShortPlaceMark),
-                mapThumbnail: nil
-            )
-        )
+                latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude ,
+                longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,
+                blockName: locationStore(\.mainPlaceName)
+        ))
         
         return newConversation
     }
@@ -151,6 +149,6 @@ struct TKSavingView: View {
             isPresented: .constant(true)
         ) {
             TKSavingView(store: .init())
-                .environmentObject(LocationStore())
+                .environmentObject(TKLocationStore())
         }
 }

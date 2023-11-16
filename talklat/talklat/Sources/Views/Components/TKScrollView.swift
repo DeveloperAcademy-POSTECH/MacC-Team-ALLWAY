@@ -66,7 +66,7 @@ struct TKScrollView: View {
                         .font(.title)
                         .bold()
                         .lineSpacing(14)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.white)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .topLeading
@@ -145,7 +145,7 @@ struct TKScrollView: View {
         style: .answer(answer: answer, curtainAlignment: .top), curtain: {
             LinearGradient(
                 colors: [
-                    .white
+                    .BaseBGWhite
                 ],
                 startPoint: .top,
                 endPoint: .bottom

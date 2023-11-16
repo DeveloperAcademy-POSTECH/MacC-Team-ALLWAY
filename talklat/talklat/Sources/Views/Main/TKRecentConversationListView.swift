@@ -14,8 +14,11 @@ struct TKRecentConversationListView: View {
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
                     Image(systemName: "bubble.left.and.bubble.right.fill")
+                        .foregroundColor(.GR5)
+                        .padding(.trailing, 7)
                     
-                    Text("내 근처 대화 목록")
+                    Text("내 주변 대화 목록")
+                        .foregroundStyle(Color.GR7)
                         .font(.title3)
                         .bold()
                 }
@@ -57,6 +60,7 @@ struct TKRecentConversationListView: View {
                                 
                                 Group {
                                     Text("대화하기")
+                                        .foregroundStyle(Color.GR7)
                                     
                                     Image(systemName: "chevron.right")
                                 }

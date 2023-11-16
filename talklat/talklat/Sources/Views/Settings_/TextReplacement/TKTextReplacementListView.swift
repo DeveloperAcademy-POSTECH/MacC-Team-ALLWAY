@@ -49,6 +49,7 @@ struct TKTextReplacementListView: View {
                     if sortedGroupKeys.isEmpty {
                         // MARK: 텅 뷰
                         VStack {
+                            Spacer()
                             Image(systemName: "bubble.left.and.bubble.right")
                                 .font(.system(size: 30))
                                 .foregroundColor(.GR3)
@@ -114,7 +115,7 @@ struct TKTextReplacementListView: View {
         .sheet(isPresented: settingStore.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView()
         }
-        .background(Color.white)
+//        .background(Color.white)
     }
     // MARK: 리스트 정렬
     // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..

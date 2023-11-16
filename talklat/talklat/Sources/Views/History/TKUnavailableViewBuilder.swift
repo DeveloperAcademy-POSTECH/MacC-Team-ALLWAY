@@ -14,7 +14,7 @@ func TKUnavailableViewBuilder(
     description: String
 ) -> some View {
     ZStack {
-        Color.clear
+        Color.BaseBGWhite
             .ignoresSafeArea()
         
         VStack(spacing: 15) {

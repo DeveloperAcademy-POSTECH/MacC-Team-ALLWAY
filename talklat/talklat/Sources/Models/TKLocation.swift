@@ -14,18 +14,15 @@ final class TKLocation {
     var latitude: Double
     var longitude: Double
     var blockName: String
-    var mapThumbnail: Data?
     var conversation: TKConversation?
     
     init(
         latitude: Double,
         longitude: Double,
-        blockName: String,
-        mapThumbnail: Data?
+        blockName: String
     ) {
         self.latitude = latitude
         self.longitude = longitude
         self.blockName = blockName
-        self.mapThumbnail = mapThumbnail
     }
 }

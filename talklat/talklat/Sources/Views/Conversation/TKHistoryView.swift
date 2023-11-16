@@ -13,15 +13,7 @@ struct TKHistoryView: View {
     
     var body: some View {
         ScrollViewReader { proxy in
-            Rectangle()
-                .fill(Color.clear)
-                .frame(height: 30)
-            
-            OffsetObservingScrollView(
-                offset: store.bindingHistoryScrollOffset()
-            ) {
-                // TODO: - ForEach의 data 아규먼트 수정
-                // TODO: - 각 Color 값을 디자인 시스템 값으로 추후 수정
+            ScrollView {
                 ForEach(
                     store(\.historyItems),
                     id: \.id
@@ -34,39 +26,46 @@ struct TKHistoryView: View {
                         answerTextBuilder(item)
                     }
                 }
-                .padding(.top, 10)
-                .background(
-                    GeometryReader { geometry in
-                        Color.clear.onAppear {
-                            store.onHistoryViewAppear(geo: geometry)
-                        }
-                    }
-                )
-            }
-            .onAppear {
-                proxy.scrollTo(
-                    "lastItem",
-                    anchor: .bottom
-                )
-            }
-            .navigationTitle(
-                store(\.isTopViewShown)
-                ? "히스토리"
-                : ""
-            )
-        }
-        .ignoresSafeArea()
-        .onChange(of: store(\.historyScrollOffset)) { offset in
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + 0.3
-            ) {
-                if offset.y > 870,
-                   offset.y < 920,
-                   store.isAnswerCardDisplayable {
-                    store.onScrollOffsetChanged(false)
+                .frame(maxHeight: .infinity)
+                .onAppear {
+                    proxy.scrollTo(
+                        "lastItem",
+                        anchor: .top
+                    )
                 }
+                
+                Divider()
+                    .id("lastItem")
+                    .hidden()
+                    .padding(.bottom, 16)
+            }
+            .scrollIndicators(.hidden)
+            .padding(.bottom, 16)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("대화 내용")
+        .safeAreaInset(edge: .bottom) {
+            if store(\.isTopViewShown) {
+                Button {
+                    store.onDismissPreviewChevronButtonTapped()
+                } label: {
+                    VStack(spacing: 8) {
+                        Text("작성 화면으로 돌아가기")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                        
+                        Image(systemName: "chevron.compact.down")
+                            .resizable()
+                            .frame(width: 32, height: 10)
+                            .bold()
+                        
+                    }
+                }
+            } else {
+                EmptyView()
             }
         }
+        .background { checkColorScheme() }
     }
     
     private func checkColorScheme() -> Color {
@@ -84,37 +83,36 @@ extension TKHistoryView {
             .font(.subheadline)
             .foregroundColor(Color.GR7)
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 10)
             .background {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.GR2)
+                RoundedRectangle(cornerRadius: 22)
+                    .fill(Color.GR1)
             }
             .frame(
                 maxWidth: .infinity,
                 alignment: .trailing
             )
-            .padding(.trailing, 24)
-            .padding(.leading, 68)
+            .padding(.trailing, 16)
+            .padding(.leading, 76)
             .padding(.top, 32)
     }
-    
     
     private func answerTextBuilder(_ item: HistoryItem) -> some View {
         VStack(alignment: .leading) {
             Image(systemName: "waveform.circle.fill")
                 .resizable()
                 .frame(width: 24, height: 24)
-                .foregroundColor(Color.GR7)
+                .foregroundColor(Color.OR5)
                 .padding(.leading, 4)
             
             Text(item.text)
                 .font(.headline)
-                .foregroundColor(Color.GR7)
+                .foregroundColor(Color.white)
                 .padding(.horizontal, 16)
-                .padding(.vertical, 8)
+                .padding(.vertical, 10)
                 .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(.white))
+                    RoundedRectangle(cornerRadius: 22)
+                        .fill(Color.OR5)
                 }
         }
         .frame(
@@ -122,6 +120,12 @@ extension TKHistoryView {
             alignment: .leading
         )
         .padding(.horizontal, 24)
-//        .id(store(\.historyScrollOffset).checkIfLastItem(item))
     }
 }
+
+#Preview {
+    NavigationStack {
+        TKHistoryView(store: .init())
+    }
+}
+

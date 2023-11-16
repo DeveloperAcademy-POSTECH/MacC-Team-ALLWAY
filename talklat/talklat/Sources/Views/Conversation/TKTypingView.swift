@@ -21,83 +21,104 @@ struct TKTypingView: View {
     let namespaceID: Namespace.ID
     
     var body: some View {
-        VStack(spacing: 0) {
-            if store.isAnswerCardDisplayable {
-                VStack(alignment: .leading) {
-                    conversationPreviewChevronBuilder()
-                    
-                    if let recentAnswer = store(\.historyItems).last(where: {
-                        $0.type == .answer
-                    }) {
-                        TKScrollView(
-                            style: .answerCard(
-                                text: recentAnswer.text,
-                                curtainAlignment: .bottom
-                            ), curtain: {
-                                LinearGradient(
-                                    colors: [],
-                                    startPoint: .bottom,
-                                    endPoint: .top
-                                )
-                            }
+        ZStack {
+            if store(\.isTopViewShown) {
+                NavigationStack {
+                    TKHistoryView(store: store)
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: store(\.isTopViewShown)
+                            ? .infinity
+                            : 0
                         )
-                    }
                 }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: 250,
-                    alignment: .top
+                .transition(
+                    .asymmetric(
+                        insertion: .move(edge: .top).animation(.easeInOut(duration: 1.0)),
+                        removal: .move(edge: .top).animation(.easeInOut(duration: 1.0))
+                    )
                 )
-                .padding(.bottom, 12)
-                .background {
-                    Color.OR5
-                        .matchedGeometryEffect(
-                            id: "ORANGE_BACKGROUND",
-                            in: namespaceID
-                        )
-                        .ignoresSafeArea(edges: .top)
-                }
                 
             } else {
-                endConversationButtonBuilder()
-            }
-            
-            Spacer()
-                .frame(maxHeight: 32)
-            
-            characterLimitViewBuilder()
-                .opacity(focusState ? 1.0 : 0.0)
-                .animation(
-                    .easeInOut(duration: 0.5),
-                    value: focusState
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading
-                )
-                .padding(.leading, 24)
-                .padding(.bottom, 6)
-            
-            if store(\.conversationStatus) == .writing {
-                TLTextField(
-                    style: .typing(
-                        textLimit: store.questionTextLimit
-                    ),
-                    text: store.bindingQuestionText(),
-                    placeholder: Constants.TEXTFIELD_PLACEHOLDER
-                ) {
-                    EmptyView()
-                }
-                .frame(maxWidth: .infinity)
-                .focused($focusState)
-                .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
-                
-            }
+                VStack(spacing: 0) {
+                    if store.isAnswerCardDisplayable {
+                        VStack(alignment: .leading) {
+                            conversationPreviewChevronBuilder()
+                            
+                            if let recentAnswer = store(\.historyItems).last(where: {
+                                $0.type == .answer
+                            }) {
+                                TKScrollView(
+                                    style: .answerCard(
+                                        text: recentAnswer.text,
+                                        curtainAlignment: .bottom
+                                    ), curtain: {
+                                        LinearGradient(
+                                            colors: [],
+                                            startPoint: .bottom,
+                                            endPoint: .top
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: 250,
+                            alignment: .top
+                        )
+                        .padding(.bottom, 12)
+                        .background {
+                            Color.OR5
+                                .matchedGeometryEffect(
+                                    id: "ORANGE_BACKGROUND",
+                                    in: namespaceID
+                                )
+                                .ignoresSafeArea(edges: .top)
+                        }
                         
-            Spacer()
-            
-            customToolbar()
-                .padding(.bottom, 16)
+                    } else {
+                        endConversationButtonBuilder()
+                    }
+                    
+                    Spacer()
+                        .frame(maxHeight: 32)
+                    
+                    characterLimitViewBuilder()
+                        .opacity(focusState ? 1.0 : 0.0)
+                        .animation(
+                            .easeInOut(duration: 0.5),
+                            value: focusState
+                        )
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                        .padding(.leading, 24)
+                        .padding(.bottom, 6)
+                    
+                    if store(\.conversationStatus) == .writing {
+                        TLTextField(
+                            style: .typing(
+                                textLimit: store.questionTextLimit
+                            ),
+                            text: store.bindingQuestionText(),
+                            placeholder: Constants.TEXTFIELD_PLACEHOLDER
+                        ) {
+                            EmptyView()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .focused($focusState)
+                        .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    customToolbar()
+                        .padding(.bottom, 16)
+                }
+            }
         }
         .frame(maxWidth: .infinity)
     }
@@ -154,38 +175,18 @@ struct TKTypingView: View {
                 ZStack {
                     Group {
                         Button {
-                            store.onChevronButtonTapped()
+                            store.onShowPreviewChevronButtonTapped()
                             
                         } label: {
                             Image(systemName: "chevron.compact.up")
                                 .resizable()
                                 .frame(width: 32, height: 10)
                                 .padding()
-                                .foregroundStyle(Color.white)
+                                .foregroundStyle(Color.BaseBGWhite)
                         }
-                        .offset(
-                            y: store(\.hasChevronButtonTapped)
-                            ? 16
-                            : 0
-                        )
-                        
-                        Text("위로 스와이프해서 내용을 더 확인하세요.")
-                            .font(.caption2)
-                            .bold()
-                            .foregroundStyle(Color.white)
-                            .opacity(
-                                store(\.hasChevronButtonTapped)
-                                ? 1.0
-                                : 0.0
-                            )
                         
                         endConversationButtonBuilder()
                     }
-                    .opacity(
-                        store.isAnswerCardDisplayable
-                        ? 1.0
-                        : 0.0
-                    )
                 }
             }
         }
@@ -233,7 +234,7 @@ struct TKTypingView: View {
                 } label: {
                     Image(systemName: "eraser.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(focusState ? Color.white : Color.GR3)
+                        .foregroundColor(focusState ? Color.BaseBGWhite : Color.GR3)
                         .padding(10)
                         .background(focusState ? Color.GR4 : Color.GR2)
                         .clipShape(Circle())
@@ -258,7 +259,7 @@ struct TKTypingView: View {
                         } label: {
                             Text(firstReplacement)
                                 .font(.subheadline)
-                                .foregroundColor(Color.white)
+                                .foregroundColor(Color.BaseBGWhite)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)
                                 .lineLimit(1)
