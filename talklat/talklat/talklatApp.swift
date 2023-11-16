@@ -12,7 +12,6 @@ import SwiftData
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
-    //    @StateObject var locationStore: LocationStore = LocationStore()
     private var container: ModelContainer
     
     init() {
@@ -47,7 +46,6 @@ struct talklatApp: App {
                     .transition(.opacity.animation(.easeInOut))
                 }
             }
-            //            .environmentObject(locationStore)
             .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }

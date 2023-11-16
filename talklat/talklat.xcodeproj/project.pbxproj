@@ -672,9 +672,7 @@
 		EF7BB3202B0396DA00F8FEC9 /* Settings_ */ = {
 			isa = PBXGroup;
 			children = (
-				5769BFDA2AFE055A0036CF3D /* TextReplacement */,
 				7EC585282B05B97600EDB171 /* TextReplacement */,
-				EF7BB3342B03D63700F8FEC9 /* UIViewControllerRepresentable */,
 				EFF347432B020DD900D2D1FB /* SettingsListView.swift */,
 				EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */,
 				EF7BB3282B03B78300F8FEC9 /* SettingsHapticView.swift */,
@@ -1396,7 +1394,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -1434,7 +1432,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";

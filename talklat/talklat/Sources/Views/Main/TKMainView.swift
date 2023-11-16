@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var locationStore: LocationStore
     @ObservedObject var store: TKMainViewStore
+    @StateObject private var locationStore: LocationStore = LocationStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
     let swiftDataStore = TKSwiftDataStore()
@@ -23,15 +23,17 @@ struct TKMainView: View {
                 
                 VStack(spacing: 10) {
                     HStack(spacing: 2) {
-                        switch locationStore(\.authorizationStatus) {
-                        case .authorizedAlways, .authorizedWhenInUse:
-                            Image(systemName: "location.fill")
+                        if let status = locationStore(\.authorizationStatus) {
+                            switch status {
+                            case .authorizedAlways, .authorizedWhenInUse:
+                                Image(systemName: "location.fill")
+                                
+                            default:
+                                Image(systemName: "location.slash.fill")
+                            }
                             
-                        default:
-                            Image(systemName: "location.slash.fill")
+                            Text("\(locationStore(\.currentShortPlaceMark))")
                         }
-                        
-                        Text("\(locationStore(\.currentShortPlaceMark))")
                     }
                     .foregroundStyle(Color.GR4)
 
@@ -145,6 +147,7 @@ struct TKMainView: View {
                 )
             }
         }
+        .environmentObject(locationStore)
     }
     
     private func startConversationButtonBuilder() -> some View {
