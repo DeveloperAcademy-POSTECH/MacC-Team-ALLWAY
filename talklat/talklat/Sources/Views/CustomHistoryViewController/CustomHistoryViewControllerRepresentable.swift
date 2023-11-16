@@ -9,8 +9,10 @@ import Foundation
 import SwiftUI
 
 struct CustomHistoryViewControllerRepresentable: UIViewControllerRepresentable {
+    var conversation: TKConversation
     func makeUIViewController(context: Context) -> some UIViewController {
         let historyViewController = HistoryViewController()
+        historyViewController.conversation = conversation
         return historyViewController
     }
     

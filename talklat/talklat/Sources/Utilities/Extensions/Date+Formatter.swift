@@ -10,7 +10,7 @@ import Foundation
 extension Date {
     public func convertToDate() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd(E)"
+        dateFormatter.dateFormat = "yyyy.MM.dd (E)"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         let convertedDate = dateFormatter.string(from: self)
         return convertedDate

@@ -6,19 +6,19 @@
 //
 
 import MapKit
+import SwiftData
 import SwiftUI
 
 struct HistoryInfoItemView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject private var locationStore: LocationStore = LocationStore()
-    @State var isShowingSheet: Bool = false
+    @EnvironmentObject private var locationStore: LocationStore
+    
+    @State private var isShowingSheet: Bool = false
+    @State private var isShowingAlert: Bool = false
     @State private var text: String = "토크랫(5)"
     @State private var textLimitMessage: String = ""
     @State private var isChanged: Bool = false
-    @FocusState var isTextfieldFocused: Bool
-    
-    //MARK: 이거 나중에 SwiftData에서 불러온 값으로 변경
-    let dummyLocation: MKCoordinateRegion = MKCoordinateRegion(
+    @State private var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: initialLatitude,
             longitude: initialLongitude
@@ -26,64 +26,90 @@ struct HistoryInfoItemView: View {
         latitudinalMeters: 500,
         longitudinalMeters: 500
     )
+    @FocusState var isTextfieldFocused: Bool
+    
+    let sampleImageData: Data = UIImage(named: "TalklatLogo")!.pngData().unsafelyUnwrapped
+    
+    //MARK: 추후 전역 SwiftDataStore가 생기면 그걸 끌어오기
+    var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    // 그냥 Bindable로 받아와서 처리해주면 되지 않을까?
+    var conversation: TKConversation
+    
+    // 저장사항이 생긴지 아닌지를 판단하는 computed property
+    private var hasChanges: Bool {
+        guard conversation.title == text else { return true }
+        guard conversation.location?.latitude == coordinateRegion.center.latitude, conversation.location?.longitude == coordinateRegion.center.longitude else { return true }
+        guard conversation.location?.mapThumbnail == locationStore(\.mapThumbnail) else { return true }
+        return false
+    }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                textFieldView
-                    .padding()
-                
-                mapThumbnailView
-                    .clipShape(RoundedRectangle(cornerRadius: 22))
-                    .clipped()
-                    .padding()
-                
-                
-                Spacer()
-            }
-            .background {
-                Color.white
-                    .onTapGesture {
-                        isTextfieldFocused = false
-                    }
-            }
-            .sheet(isPresented: $isShowingSheet) {
-                HistoryItemLocationEditView(locationStore: locationStore, isShowingSheet: $isShowingSheet, coordinateRegion: dummyLocation)
-            }
-            .navigationTitle("정보")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        isTextfieldFocused = false
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("대화")
-                        }
-                        .tint(Color.orange)
-                    }
+        VStack {
+            textFieldView
+                .padding()
+            
+            mapThumbnailView
+                .clipShape(RoundedRectangle(cornerRadius: 22))
+                .clipped()
+                .padding()
+            
+            
+            Spacer()
+        }
+        .background {
+            Color.white
+                .onTapGesture {
+                    isTextfieldFocused = false
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        //MARK: 저장 메서드
-                        isTextfieldFocused = false
-                    } label: {
-                        Text("저장")
+        }
+        .sheet(isPresented: $isShowingSheet) {
+            HistoryItemLocationEditView(
+                locationStore: locationStore,
+                isShowingSheet: $isShowingSheet,
+                coordinateRegion: $coordinateRegion
+            )
+        }
+        .navigationTitle("정보")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    isTextfieldFocused = false
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("대화")
                     }
-                    .tint(Color.orange)
-                    .disabled(text.isEmpty == true)
+                    .tint(Color.OR5)
                 }
             }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    //MARK: 저장 메서드
+                    isTextfieldFocused = false
+                } label: {
+                    Text("저장")
+                }
+                .tint(Color.OR5)
+                .disabled(text.isEmpty == true)
+            }
+        }
+        .onAppear {
+            text = conversation.title
+            guard
+                let latitude = conversation.location?.latitude,
+                let longitude = conversation.location?.longitude else { return }
+            coordinateRegion.center.latitude = latitude
+            coordinateRegion.center.longitude = longitude
         }
     }
     
     private var textFieldView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("제목")
+            Text(conversation.title)
                 .padding(.leading, 10)
                 .foregroundStyle(Color.gray)
             
@@ -113,6 +139,7 @@ struct HistoryInfoItemView: View {
                         Spacer()
                         Button {
                             text = ""
+                            
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(Color(uiColor: UIColor.systemGray3))
@@ -142,13 +169,14 @@ struct HistoryInfoItemView: View {
             Text("위치")
                 .font(.headline)
                 .padding(.leading, 10)
-                .foregroundStyle(Color.gray500)
+                .foregroundStyle(Color.GR5)
             
-            switch locationStore(\.locationThumbnail) {
+            switch conversation.location?.mapThumbnail {
             case nil:
                 Button {
                     isTextfieldFocused = false
                     isShowingSheet = true
+                    
                 } label: {
                     Text("위치 정보 추가")
                         .padding()
@@ -159,11 +187,13 @@ struct HistoryInfoItemView: View {
                             
                         }
                 }
-                .tint(Color.orange)
+                .tint(Color.OR5)
                 .padding(.vertical)
                 
             default:
-                Image(uiImage: locationStore(\.locationThumbnail) ?? UIImage(named: "TalklatLogo")!)
+                Image(uiImage: UIImage(
+                    data: locationStore(\.mapThumbnail) ?? sampleImageData
+                )!)
                     .clipShape(RoundedRectangle(cornerRadius: 22))
                     .clipped()
                     .aspectRatio(
@@ -175,7 +205,7 @@ struct HistoryInfoItemView: View {
                             Spacer()
                             
                             HStack {
-                                Text(locationStore(\.shortBlockName))
+                                Text(locationStore(\.selectedShortPlaceMark))
                                 
                                 Spacer()
                                 
@@ -185,7 +215,7 @@ struct HistoryInfoItemView: View {
                                     isShowingSheet = true
                                 } label: {
                                     Text("조정")
-                                        .tint(.orange)
+                                        .tint(Color.OR5)
                                 }
                             }
                             .padding()
@@ -198,8 +228,24 @@ struct HistoryInfoItemView: View {
             }
         }
     }
+    
+    private func updateHistoryInfo() {
+        isTextfieldFocused = false
+        conversation.title = text
+        if conversation.location == nil {
+            // modelContext에서 새로 데이터 생성
+            conversation.location = TKLocation(
+                latitude: coordinateRegion.center.latitude,
+                longitude: coordinateRegion.center.longitude,
+                blockName: locationStore(\.selectedShortPlaceMark),
+                mapThumbnail: locationStore(\.mapThumbnail)
+            )
+        } else {
+            conversation.location?.latitude =  coordinateRegion.center.latitude
+            conversation.location?.longitude = coordinateRegion.center.longitude
+            conversation.location?.blockName = locationStore(\.selectedShortPlaceMark)
+            conversation.location?.mapThumbnail = locationStore(\.mapThumbnail)
+        }
+    }
 }
 
-#Preview {
-    HistoryInfoItemView()
-}

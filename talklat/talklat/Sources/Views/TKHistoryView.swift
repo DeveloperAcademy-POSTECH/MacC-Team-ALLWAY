@@ -82,12 +82,12 @@ extension TKHistoryView {
     private func questionTextBuilder(_ item: HistoryItem) -> some View {
         Text(item.text)
             .font(.subheadline)
-            .foregroundColor(.gray700)
+            .foregroundColor(Color.GR7)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.gray200)
+                    .fill(Color.GR2)
             }
             .frame(
                 maxWidth: .infinity,
@@ -104,12 +104,12 @@ extension TKHistoryView {
             Image(systemName: "waveform.circle.fill")
                 .resizable()
                 .frame(width: 24, height: 24)
-                .foregroundColor(Color.gray700)
+                .foregroundColor(Color.GR7)
                 .padding(.leading, 4)
             
             Text(item.text)
                 .font(.headline)
-                .foregroundColor(.gray700)
+                .foregroundColor(Color.GR7)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background {

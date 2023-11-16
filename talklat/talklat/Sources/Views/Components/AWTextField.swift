@@ -60,7 +60,7 @@ struct AWTextField<LabelIcon: View, TrailingButton: View>: View {
                 .padding(7)
                 .background {
                     RoundedRectangle(cornerRadius: 22)
-                        .foregroundColor(.gray100)
+                        .foregroundColor(.GR1)
                 }
             }
         }

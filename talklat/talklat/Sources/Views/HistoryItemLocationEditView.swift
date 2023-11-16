@@ -11,54 +11,62 @@ import SwiftUI
 struct HistoryItemLocationEditView: View {
     @ObservedObject var locationStore: LocationStore
     @Binding var isShowingSheet: Bool
-    @State var coordinateRegion: MKCoordinateRegion
+    @Binding var coordinateRegion: MKCoordinateRegion
     @State private var snapShotter: MKMapSnapshotter?
     @State private var annotationItems: [CustomAnnotationInfo] = [CustomAnnotationInfo]()
     @State private var isFlipped: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading) {
-            mapHeaderView
-            
-            Map(coordinateRegion: $coordinateRegion, showsUserLocation: true, annotationItems: annotationItems) { item in
-                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
-                    CustomMapAnnotation(.fixed)
+        NavigationView {
+            VStack(alignment: .leading) {
+                Map(coordinateRegion: $coordinateRegion, showsUserLocation: true, annotationItems: annotationItems) { item in
+                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
+                        CustomMapAnnotation(.fixed)
+                    }
+                }
+                .overlay {
+                    currentLocationButton
+                }
+                .overlay {
+                    CustomMapAnnotation(.movable)
+                }
+                
+                mapFooterView
+            }
+            .frame(maxHeight: .infinity)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("위치 정보 편집")
+                        .font(.headline)
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isShowingSheet = false
+                    } label: {
+                        Text("닫기")
+                    }
+                    .tint(Color.OR5)
                 }
             }
-            .overlay {
-                currentLocationButton
+            .onAppear {
+                locationStore.fetchCityName(coordinateRegion, of: .selected)
+                //MARK: 저장된 로케이션이 있다면 넣어주는 로직
             }
-            .overlay {
-                CustomMapAnnotation(.movable)
-            }
-            
-            mapFooterView
-        }
-        .onAppear {
-            locationStore.fetchCityName(coordinateRegion)
-            //MARK: 저장된 로케이션이 있다면 넣어주는 로직
-            
         }
     }
     
     private var mapHeaderView: some View {
         HStack {
-            Spacer()
-            
-            Spacer()
-            
             Text("위치 정보 편집")
                 .font(.headline)
             
-            Spacer()
-            
             Button {
-                //                takeSnapShot()
                 isShowingSheet = false
             } label: {
                 Text("닫기")
             }
-            .tint(Color.orange)
+            .tint(Color.OR5)
         }
         .padding()
     }
@@ -74,7 +82,7 @@ struct HistoryItemLocationEditView: View {
                 case .authorizedAlways, .authorizedWhenInUse:
                     Button {
                         moveToUserLocation()
-                        locationStore.fetchCityName(coordinateRegion)
+                        locationStore.fetchCityName(coordinateRegion, of: .current)
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
                             .fill(.white)
@@ -84,7 +92,7 @@ struct HistoryItemLocationEditView: View {
                                     Image(systemName: "location.fill")
                                     Text("현위치")
                                 }
-                                .foregroundStyle(Color.orange)
+                                .foregroundStyle(Color.OR5)
                             }
                         
                     }
@@ -109,16 +117,15 @@ struct HistoryItemLocationEditView: View {
     
     private var mapFooterView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(locationStore(\.fullBlockName))
+            Text(locationStore(\.selectedFullPlaceMark))
                 .font(.title3)
                 .fontWeight(.bold)
                 .padding(.bottom, 10)
             
             Button {
                 Task {
-                    locationStore.fetchCityName(coordinateRegion)
+                    locationStore.fetchCityName(coordinateRegion, of: .selected)
                     plantFlag(coordinateRegion)
-                    //                takeSnapShot()
                     await generateSnapShot()
                     withAnimation {
                         isFlipped.toggle()
@@ -136,7 +143,7 @@ struct HistoryItemLocationEditView: View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 22)
-                        .fill(.orange)
+                        .fill(Color.OR5)
                         .frame(height: 56)
                 }
             }
@@ -146,12 +153,12 @@ struct HistoryItemLocationEditView: View {
         .padding()
     }
     
-    private func CustomMapAnnotation(_ type: MapAnnotationType) -> some View {
+    public func CustomMapAnnotation(_ type: MapAnnotationType) -> some View {
         VStack(spacing: 0) {
             switch type {
             case .movable:
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(.orange)
+                    .fill(Color.OR5)
                     .frame(width: 191, height: 30)
                     .overlay {
                         Text("지도를 움직여 위치를 설정 하세요")
@@ -166,25 +173,7 @@ struct HistoryItemLocationEditView: View {
             }
             
             VStack(spacing: 0) {
-                Image("TALKLAT_TYPO")
-                    .resizable()
-                    .renderingMode(.template)
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 30)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(6)
-                    .background(.orange)
-                    .cornerRadius(36)
-                
-                Image(systemName: "triangle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.orange)
-                    .frame(width: 10, height: 10)
-                    .rotationEffect(Angle(degrees: 180))
-                    .offset(y: -3)
+                Image("TKMappAnnotation")
             }
             .modifier(CustomMapPinModifier(isFlipped: $isFlipped, mapAnnotationType: type))
         }
@@ -192,7 +181,9 @@ struct HistoryItemLocationEditView: View {
     }
     
     private func moveToUserLocation() {
-        guard let coordinateRegion = locationStore.trackUserCoordinate(type: .get) else { return }
+        guard let coordinateRegion = locationStore.trackUserCoordinate(type: .get) else {
+            return
+        }
         self.coordinateRegion = coordinateRegion
     }
     
@@ -201,14 +192,16 @@ struct HistoryItemLocationEditView: View {
             let _ = annotationItems.popLast()
         }
         
-        annotationItems.append(CustomAnnotationInfo(
-            name: "현재 위치",
-            description: "설명",
-            latitude: coordinate.center.latitude,
-            longitude: coordinate.center.longitude
-        ))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            annotationItems.append(CustomAnnotationInfo(
+                name: "현재 위치",
+                description: "설명",
+                latitude: coordinate.center.latitude,
+                longitude: coordinate.center.longitude
+            ))
+        }
         
-        locationStore.fetchCityName(coordinate)
+        locationStore.fetchCityName(coordinate, of: .selected)
     }
     
     private func configureSnapshotter() -> MKMapSnapshotter.Options {
@@ -289,11 +282,11 @@ private struct CustomMapPinModifier: ViewModifier {
 }
 
 #Preview {
-    HistoryItemLocationEditView(locationStore: LocationStore(), isShowingSheet: .constant(false), coordinateRegion: MKCoordinateRegion(
+    HistoryItemLocationEditView(locationStore: LocationStore(), isShowingSheet: .constant(false), coordinateRegion: .constant(MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: initialLatitude,
             longitude: initialLongitude
         ), latitudinalMeters: 500,
         longitudinalMeters: 500
-    ))
+    )))
 }

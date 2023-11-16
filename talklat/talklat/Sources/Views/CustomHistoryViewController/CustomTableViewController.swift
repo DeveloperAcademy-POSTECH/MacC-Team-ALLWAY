@@ -11,9 +11,10 @@ import UIKit
 
 class CustomTableViewController: UITableViewController {
     private let cellId: String = "Cell"
-    private let messages: [[ChatMessage]] = longMessages
     private let floatingButtonNotification: Notification.Name = Notification.Name("showFloatingButton")
     private let swipeDetectedNotification: Notification.Name = Notification.Name("swipeDetected")
+    var conversation: TKConversation!
+    var messages: [[TKContent]]!
     
     override func loadView() {
         super.loadView()
@@ -37,6 +38,7 @@ class CustomTableViewController: UITableViewController {
     
     // section 갯수 메서드
     override func numberOfSections(in tableView: UITableView) -> Int {
+//        guard let messages = messages  else { return 0 }
         return messages.count
     }
     
@@ -64,6 +66,7 @@ class CustomTableViewController: UITableViewController {
     
     // tableView가 몇개의 cell을 만들건지에 대한 메서드
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        guard let messages = messages else { return 0}
         return messages[section].count
     }
     
@@ -71,7 +74,6 @@ class CustomTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
         cell.chatMessage = messages[indexPath.section][indexPath.row]
-        
         cell.contentView.isHidden = true
         cell.contentView.alpha = 0
         return cell
@@ -98,4 +100,3 @@ class CustomTableViewController: UITableViewController {
         }
     }
 }
-

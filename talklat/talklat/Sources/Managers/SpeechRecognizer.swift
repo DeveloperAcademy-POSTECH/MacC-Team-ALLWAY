@@ -131,7 +131,7 @@ final class SpeechRecognizer: ObservableObject {
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(
             onBus: 0,
-            bufferSize: 2048,
+            bufferSize: 1024,
             format: recordingFormat
         ) { [weak self] (
             buffer: AVAudioPCMBuffer,
@@ -146,10 +146,10 @@ final class SpeechRecognizer: ObservableObject {
         return (audioEngine, request)
     }
     
-    public func processAudioDate() {
+    public func processAudioData() {
         for buffer in audioBuffers {
             // MARK: 노이즈 제거 안할 때
-            // self.request?.append(buffer)
+//             self.request?.append(buffer)
             // MARK: 노이즈 제거할 때
             let processedData = signalExtractor.process(buffer: buffer)
             // 노이즈가 제거된 오디오 데이터를 SFSpeechAudioBufferRecognitionRequest 객체에 추가
@@ -171,18 +171,13 @@ final class SpeechRecognizer: ObservableObject {
         let receivedError = error != nil
         
         if receivedFinalResult || receivedError {
+            audioBuffers = []
             audioEngine.stop()
             audioEngine.inputNode.removeTap(onBus: 0)
         }
         
         if let result = result {
             let recognizedText = result.bestTranscription.formattedString
-            
-            // MARK: 음성인식의 인식률을 계산하는 부분입니다.
-            // let originalText = "이제 2023년이 되어버렸어. 시간 참 빠르다. 아이스 아메리카노 주세요. 크림말고 로션 주세요."
-            // let accuracy = calculateRecognitionAccuracy(originalText: originalText, recognizedText: recognizedText)
-            // print("인식률: \(accuracy)%")
-            
             transcribe(recognizedText)
         } else if let error = error {
             // 에러 처리
@@ -215,7 +210,7 @@ final class SpeechRecognizer: ObservableObject {
 
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
-            transcript = message
+            transcript = addPunctuation(message)
         }
     }
     

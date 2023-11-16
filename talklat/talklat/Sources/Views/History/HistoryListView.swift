@@ -16,7 +16,7 @@ struct HistoryListView: View {
         createdAt: Date.now,
         content: [TKContent(
             text: "",
-            status: "answer",
+            type: .answer,
             createdAt: Date.now
         )]
     )
@@ -36,20 +36,19 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
-            // .disabled(isEditing ? true : false)
             
             Spacer()
             
             // MARK: - History List
             if !isSearching {
-                ScrollView {
-                    // Unavailable View
-                    if dataStore.conversations.isEmpty {
-                        TKUnavailableViewBuilder(
-                            icon: "bubble.left.and.bubble.right.fill",
-                            description: "아직 대화 기록이 없어요"
-                        )
-                    } else {
+                // Unavailable View
+                if dataStore.conversations.isEmpty {
+                    TKUnavailableViewBuilder(
+                        icon: "bubble.left.and.bubble.right.fill",
+                        description: "아직 대화 기록이 없어요"
+                    )
+                } else {
+                    ScrollView {
                         ForEach(
                             dataStore.filterDuplicatedBlockNames(
                                 locations: dataStore.locations
@@ -65,29 +64,29 @@ struct HistoryListView: View {
                         }
                         .padding(.top, 24)
                     }
-                }
-                .scrollIndicators(.hidden)
-                .navigationTitle("히스토리")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        // Edit Button
-                        ZStack {
-                            Button {
-                                withAnimation(
-                                    .spring(
-                                        dampingFraction: 0.7,
-                                        blendDuration: 0.4
-                                    )
-                                ) {
-                                    withAnimation {
-                                        isEditing.toggle()
+                    .scrollIndicators(.hidden)
+                    .navigationTitle("히스토리")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            // Edit Button
+                            ZStack {
+                                Button {
+                                    withAnimation(
+                                        .spring(
+                                            dampingFraction: 0.7,
+                                            blendDuration: 0.4
+                                        )
+                                    ) {
+                                        withAnimation {
+                                            isEditing.toggle()
+                                        }
                                     }
+                                } label: {
+                                    Text("편집")
+                                        .foregroundColor(.accentColor)
+                                        .fontWeight(.medium)
                                 }
-                            } label: {
-                                Text("편집")
-                                    .foregroundColor(.accentColor)
-                                    .fontWeight(.medium)
                             }
                         }
                     }
@@ -100,6 +99,9 @@ struct HistoryListView: View {
                     searchText: $searchText
                 )
             }
+        }
+        .onAppear {
+            
         }
         .padding(.horizontal, 20)
         .overlay {
@@ -150,7 +152,7 @@ struct LocationList: View {
             HStack {
                 Image(systemName: "location.fill")
                 Text(location.blockName)
-                    .foregroundColor(.gray800)
+                    .foregroundColor(.GR8)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
@@ -203,12 +205,21 @@ struct LocationList: View {
                     dataStore.getLocationBasedConversations(location: location),
                     id: \.self
                 ) { conversation in // TODO: each TKLocation의 TKConversation
-                    CellItem(
-                        conversation: conversation,
-                        selectedConversation: $selectedConversation,
-                        isEditing: $isEditing,
-                        isDialogShowing: $isDialogShowing
-                    )
+                    NavigationLink {
+                        CustomHistoryView(
+                            historyViewType: .item,
+                            conversation: conversation
+                        )
+                        
+                    } label: {
+                        CellItem(
+                            conversation: conversation,
+                            selectedConversation: $selectedConversation,
+                            isEditing: $isEditing,
+                            isDialogShowing: $isDialogShowing
+                        )
+                        .disabled(!isEditing)
+                    }
                 }
                 .transition(
                     .asymmetric(
@@ -267,13 +278,15 @@ struct CellItem: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(conversation.title)
                         .font(.system(size: 17, weight: .medium))
+                        .foregroundStyle(Color.GR8)
+                    
                     Text(
                         conversation.createdAt.formatted( // TODO: format
                             date: .abbreviated,
                             time: .omitted
                         )
                     )
-                    .foregroundColor(.gray400)
+                    .foregroundColor(.GR4)
                     .font(.system(size: 15, weight: .medium))
                 }
                 
@@ -281,7 +294,7 @@ struct CellItem: View {
                 
                 Image(systemName: "chevron.right")
                     .opacity(isEditing ? 0 : 1)
-                    .foregroundColor(.gray400)
+                    .foregroundColor(.GR4)
                     .font(
                         .system(
                             size: 17,
@@ -292,10 +305,10 @@ struct CellItem: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color.gray100)
+            .background(Color.GR1)
             .cornerRadius(22)
             .onTapGesture {
-                if isRemoving {
+                if isRemoving && isEditing {
                     withAnimation(
                         .spring(
                             dampingFraction: 0.7,
@@ -351,12 +364,12 @@ struct CustomDialog: View {
                     .font(.system(size: 20))
                 
                 Text("대화 삭제")
-                    .foregroundColor(.gray900)
+                    .foregroundColor(.GR9)
                     .font(.system(size: 17, weight: .bold))
                 
                 Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: TKConversation.title
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.gray600)
+                    .foregroundColor(.GR6)
                     .font(.system(size: 15, weight: .medium))
                 
                 HStack {
@@ -366,10 +379,10 @@ struct CustomDialog: View {
                         
                     } label: {
                         Text("아니요, 취소할래요")
-                            .foregroundColor(.gray600)
+                            .foregroundColor(.GR6)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
-                            .background(Color.gray200)
+                            .background(Color.GR2)
                             .cornerRadius(16)
                     }
                     

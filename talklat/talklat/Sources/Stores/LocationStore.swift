@@ -13,12 +13,16 @@ import SwiftUI
 class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
     struct LocationState {
-        var userCoordinate: UserCoordinate? = nil
-        var locationThumbnail: UIImage? = nil
-        var placeMark: CLPlacemark? = nil
+        var currentUserCoordinate: UserCoordinate? = nil
+        var currentPlaceMark: CLPlacemark? = nil
+        
+        var selectedPlaceMark: CLPlacemark? = nil
+        var mapThumbnail: Data? = nil
+        
         var authorizationStatus: CLAuthorizationStatus?
-        var fullBlockName: String {
-            guard let placeMark = placeMark else { return "위치 정보 없음" }
+        
+        var currentFullPlaceMark: String {
+            guard let placeMark = currentPlaceMark else { return "위치 정보 없음" }
             
             let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
             let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
@@ -29,22 +33,44 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             return "\(administrativeArea) \(subAdministrativeArea) \(locality) \(subLocality) \(name)"
         }
         
-        var shortBlockName: String {
-            guard let placeMark = placeMark else { return "위치 정보 없음"}
+        //MARK: 짧은 장소 이름 수정예정
+        var currentShortPlaceMark: String {
+            guard let placeMark = currentPlaceMark else { return "위치 정보 없음"}
             
+            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
             let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
             let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
             let name = (placeMark.name != nil) ? placeMark.name! : ""
             
-            return "\(subAdministrativeArea) \(locality) \(name)"
+            return "\(administrativeArea) \(name)"
+        }
+        
+        var selectedFullPlaceMark: String {
+            guard let placeMark = selectedPlaceMark else { return "위치 정보 없음" }
+            
+            let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
+            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+            let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
+            let subLocality = (placeMark.subLocality != nil) ? placeMark.subLocality! : ""
+            let name = (placeMark.name != nil) ? placeMark.name! : ""
+            
+            return "\(administrativeArea) \(subAdministrativeArea) \(locality) \(subLocality) \(name)"
+        }
+        
+        //MARK: 짧은 장소 이름 수정예정
+        var selectedShortPlaceMark: String {
+            guard let placeMark = selectedPlaceMark else { return "위치 정보 없음"}
+            
+            let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
+            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+            let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
+            let name = (placeMark.name != nil) ? placeMark.name! : ""
+            
+            return "\(administrativeArea) \(name)"
         }
     }
     
-    // 사용자의 좌표는 nil일 수 있다.
-    struct UserCoordinate: Equatable {
-        var latitude: Double
-        var longitude: Double
-    }
+    
     
     // 왜 이게 private 처리를 할 수 없을까? -> 아하 call as function을 한다음에 쓰는곳마다 keypath를 이용해서 불러와줘야하는구나
     @Published private var locationState: LocationState = LocationState()
@@ -55,7 +81,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     override init() {
         super.init()
-        
+
         self.configureLocationManager()
         
         switch self.locationManager.authorizationStatus {
@@ -67,7 +93,8 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         
         self.updateState(\.authorizationStatus, with: self.locationManager.authorizationStatus)
         
-        self.locationState = LocationState(userCoordinate: initialUserTracking())
+        // 초기 사용자 위치 & 주소 가져오기
+        self.initialUserTracking()
     }
     
     private func configureLocationManager() {
@@ -94,11 +121,11 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         with newValue: Value
     ) {
         switch state {
-        case \.userCoordinate:
+        case \.currentUserCoordinate:
             withAnimation {
                 self.locationState[keyPath: state] = newValue
             }
-        case \.authorizationStatus, \.locationThumbnail, \.placeMark:
+        case \.authorizationStatus, \.mapThumbnail, \.currentPlaceMark, \.selectedPlaceMark:
             self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
         default:
             break
@@ -114,13 +141,22 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         
         let userCoordinate = UserCoordinate(
             latitude: userLocation.latitude,
-            longitude: userLocation.longitude
+            longitude: userLocation.longitude,
+            blockName: "위치 정보 없음"
         )
         
-        updateState(\.userCoordinate, with: userCoordinate)
+        updateState(\.currentUserCoordinate, with: userCoordinate)
+        fetchCityName(
+            MKCoordinateRegion(
+                center: userLocation,
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
+            ),
+            of: .current
+        )
         
         switch type {
-        case .track:
+        case .update:
             return nil
         case .get:
             let userMKRegion = MKCoordinateRegion(
@@ -136,7 +172,7 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     // 동네 이름을 가져와서 뿌려주기
-    func fetchCityName(_ coordinateRegion: MKCoordinateRegion) {
+    func fetchCityName(_ coordinateRegion: MKCoordinateRegion, of type: LocationFetchType) {
         let location = CLLocation(
             latitude: coordinateRegion.center.latitude,
             longitude: coordinateRegion.center.longitude
@@ -158,7 +194,12 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
                 //MARK: placemark 자체를 저장하고 추후 computed property로 처리
                 for placemark in placemarks {
                     DispatchQueue.main.async { // UI update
-                        self?.updateState(\.placeMark, with: placemark)
+                        switch type {
+                        case .current:
+                            self?.updateState(\.currentPlaceMark, with: placemark)
+                        case .selected:
+                            self?.updateState(\.selectedPlaceMark, with: placemark)
+                        }
                     }
                 }
             }
@@ -169,28 +210,58 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
         updateState(\.authorizationStatus, with: self.locationManager.authorizationStatus)
         
         switch self.locationState.authorizationStatus {
-        case .authorizedAlways:
-            break
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.initialUserTracking()
         default:
             locationManager.requestWhenInUseAuthorization()
         }
     }
     
-    private func initialUserTracking() -> UserCoordinate? {
+    private func initialUserTracking() {
         guard let coordinate = self.locationManager.location?.coordinate else { //MARK: 사용자 좌표를 구하지 못할 때 -> 일단은 서울역 좌표. 추후 논의를 통해 변경 예정
-            return nil
+            return
         }
         
-        return UserCoordinate(
-            latitude: coordinate.latitude,
-            longitude: coordinate.longitude
+        self.fetchCityName(
+            MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: coordinate.latitude,
+                longitude: coordinate.longitude
+            ),
+            latitudinalMeters: 500,
+            longitudinalMeters: 500
+        ),
+            of: .current
+        )
+        
+        self.updateState(\.currentUserCoordinate, 
+                          with: UserCoordinate(
+                            latitude: coordinate.latitude,
+                            longitude: coordinate.longitude,
+                            blockName: self.locationState.currentShortPlaceMark
+        ))
+    }
+    
+    func fetchCurrentCityName() {
+        guard let userCoordinate = self.locationManager.location?.coordinate else { return }
+        
+        fetchCityName(
+            MKCoordinateRegion(
+                center: CLLocationCoordinate2D(
+                    latitude: userCoordinate.latitude,
+                    longitude: userCoordinate.longitude
+                ),
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
+            ),
+            of: .current
         )
     }
     
     @MainActor
     func updateLocationThumbnail(_ image: UIImage?) {
         guard let image = image else { return }
-        self.updateState(\.locationThumbnail, with: image)
+        self.updateState(\.mapThumbnail, with: image.pngData())
     }
     
     func detectAuthorization() -> Bool {
@@ -201,5 +272,48 @@ class LocationStore: NSObject, CLLocationManagerDelegate, ObservableObject {
             return false
         }
     }
+    
+    func calculateDistance(_ location: TKLocation?) -> Int? {
+        guard let coordinate = locationState.currentUserCoordinate else { return nil }
+        guard let location = location else { return nil }
+        
+        let lat1 = coordinate.latitude
+        let lon1 = coordinate.longitude
+        let lat2 = location.latitude
+        let lon2 = location.longitude
+        
+        let earthRadius = 6371 * 1000 // m단위
+        let dLat = (lat1 - lat2).toRadians()
+        let dLon = (lon1 - lon2)
+        
+        let a =
+        sin(dLat/2)
+        * sin(dLat/2)
+        + cos(lat1.toRadians()) 
+        * cos(lat2.toRadians())
+        * sin(dLon/2)
+        * sin(dLon/2)
+        
+        let c = 2 * atan2(
+            sqrt(a),
+            sqrt(1-a)
+        )
+        
+        let distanceInMeters = Double(earthRadius) * c
+        return Int(distanceInMeters)
+    }
 }
 
+
+public enum LocationFetchType {
+    case current
+    case selected
+}
+
+
+// 사용자의 좌표는 nil일 수 있다.
+public struct UserCoordinate: Equatable {
+    var latitude: Double
+    var longitude: Double
+    var blockName: String
+}
