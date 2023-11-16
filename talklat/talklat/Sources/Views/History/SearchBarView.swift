@@ -41,6 +41,7 @@ struct SearchBarView: View {
                     searchText = ""
                 } label: {
                     Text("취소")
+                        .foregroundColor(.OR6)
                 }
             }
         }

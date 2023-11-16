@@ -14,7 +14,6 @@ struct talklatApp: App {
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject var locationStore: LocationStore = LocationStore()
     private var container: ModelContainer
-
     
     init() {
         do {
