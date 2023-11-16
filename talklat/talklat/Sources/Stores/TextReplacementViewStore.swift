@@ -1,5 +1,5 @@
 //
-//  SettingViewStore.swift
+//  TextReplacementViewStore.swift
 //  talklat
 //
 //  Created by 신정연 on 11/12/23.

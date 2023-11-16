@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct HistoryListView: View {
+    @Environment(\.dismiss) var dismiss
+    
     private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
     
     @State private var selectedConversation: TKConversation = TKConversation(
@@ -36,6 +38,9 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
+            .navigationBarBackButtonHidden(
+                isSearching ? true : false
+            )
             
             Spacer()
             
@@ -61,13 +66,28 @@ struct HistoryListView: View {
                                 isEditing: $isEditing,
                                 isDialogShowing: $isDialogShowing
                             )
+                            .padding(.bottom, 24)
                         }
                         .padding(.top, 24)
                     }
                     .scrollIndicators(.hidden)
                     .navigationTitle("히스토리")
+                    .navigationBarBackButtonHidden(true)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "chevron.left")
+                                    Text("홈")
+                                }
+                                .foregroundColor(Color.OR6)
+                                .fontWeight(.medium)
+                            }
+                        }
+                        
                         ToolbarItem(placement: .topBarTrailing) {
                             // Edit Button
                             ZStack {
@@ -204,7 +224,7 @@ struct LocationList: View {
                 ForEach(
                     dataStore.getLocationBasedConversations(location: location),
                     id: \.self
-                ) { conversation in // TODO: each TKLocation의 TKConversation
+                ) { conversation in
                     NavigationLink {
                         CustomHistoryView(
                             historyViewType: .item,
@@ -367,7 +387,7 @@ struct CustomDialog: View {
                     .foregroundColor(.GR9)
                     .font(.system(size: 17, weight: .bold))
                 
-                Text("..에서 저장된\n모든 데이터가 삭제됩니다.") // TODO: TKConversation.title
+                Text("\"\(selectedConversation.title)\"에서 저장된\n모든 데이터가 삭제됩니다.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.GR6)
                     .font(.system(size: 15, weight: .medium))
@@ -405,11 +425,6 @@ struct CustomDialog: View {
         .cornerRadius(22)
         .frame(height: 240)
         .frame(maxWidth: .infinity)
-    }
-    
-    func removeConversation(_ id: String) {
-        // TODO: Delete하는 로직 (String -> PersistentIdentifier를 이용해 객체를 특정)
-        
     }
 }
 
