@@ -17,7 +17,7 @@ final class TextReplacementViewStore: TKReducer {
         
         var isDialogShowing: Bool = false
         var isSearching: Bool = false
-        var searchText: String = "ㅎ"
+        var searchText: String = ""
         
         var selectedPhrase: String = ""
         var selectedReplacement: String = ""

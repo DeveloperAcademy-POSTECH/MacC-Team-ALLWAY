@@ -113,30 +113,54 @@ struct TKTextReplacementEditView: View {
     }
     
     private func updateTextReplacement() {
-        if let existingItem = fetchTKTextReplacement() {
-            dataStore.updateTextReplacement(
-                oldTextReplacement: existingItem,
-                newPhrase: store(\.selectedPhrase),
-                newReplacement: store(\.selectedReplacement)
-            )
+        let selectedPhrase = store(\.selectedPhrase)
+        let selectedReplacement = store(\.selectedReplacement)
+        
+        // 기존에 TKTextReplacement가 존재하는지 확인
+        let existingItem = fetchTKTextReplacement()
+
+        // 새로운 TKTextReplacement를 생성하고 저장
+        dataStore.createTextReplacement(phrase: selectedPhrase, replacement: selectedReplacement)
+
+        // 기존에 존재하는 데이터가 있으면, 새 데이터를 저장한 후에 삭제
+        if let existing = existingItem {
+            context.delete(existing)
         }
     }
-    
+
     private func fetchTKTextReplacement() -> TKTextReplacement? {
-    
-        
-        if let currentTKReplacement = textReplacements.filter { $0.wordDictionary.keys.contains(store(\.selectedPhrase)) }.last {
-            // 단축어는 바꾸지 않고(==오리지널), 변환 문구(==selected)만 바꾼 케이스
-            // replacement의 경우, originalReplacement != selectedReplacement
-            
-        }
-        
-        // 단축어만 바꾸고, 변환문구는 안 바꾼 케이스
         
         let selectedPhrase = store(\.selectedPhrase)
         let selectedReplacement = store(\.selectedReplacement)
         
+        // selectedPhrase가 새로운 경우
+        if !textReplacements.contains(where: { $0.wordDictionary.keys.contains(selectedPhrase) }) {
+            // 새로운 단축어, 변환 문구 모두 새로운 경우
+            if textReplacements.contains(where: { $0.wordDictionary.values.contains { $0.contains(selectedReplacement) } }) {
+                return textReplacements.first(where: { $0.wordDictionary.values.contains { $0.contains(selectedReplacement) } })
+            }
+
+            // 새로운 단축어, 기존 변환 문구 사용 경우
+            else if textReplacements.contains(where: { replacement in
+                replacement.wordDictionary.values.contains(where: { phrases in
+                    phrases.contains(selectedReplacement)
+                })
+            }) {
+                return textReplacements.first(where: { replacement in
+                    replacement.wordDictionary.values.contains(where: { phrases in
+                        phrases.contains(selectedReplacement)
+                    })
+                })
+            }
+
+        }
+        // 기존 단축어, 새로운 변환 문구 사용 경우
+        else {
+            return textReplacements.first(where: { $0.wordDictionary.keys.contains(selectedPhrase) })
+        }
+        
         let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(selectedPhrase) }
+        
         return fetchedItems.last
     }
     
