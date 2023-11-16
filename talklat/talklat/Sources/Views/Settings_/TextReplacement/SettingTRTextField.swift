@@ -50,7 +50,7 @@ struct SettingTRTextField: View {
             .cornerRadius(22)
             .safeAreaInset(edge: .bottom, content: {
                 HStack {
-                    characterLimitViewBuilder(currentCount: text.count, limit: limit)
+                    characterLimitViewBuilder(currentCount: text.count, limit: limit, isTextEmpty: false)
                         .animation(.easeInOut(duration: 0.5), value: focusState)
                         .padding(.leading, 16)
                         .padding(.top, 3)
@@ -63,24 +63,26 @@ struct SettingTRTextField: View {
     
     private func characterLimitViewBuilder(
         currentCount: Int,
-        limit: Int
+        limit: Int,
+        isTextEmpty: Bool
     ) -> some View {
-        let displayCount = min(currentCount, limit)
-        return Text("\(displayCount)/\(limit)")
-            .font(.system(size: 13, weight: .medium))
-            .monospacedDigit()
-            .foregroundColor(
-                currentCount == limit
-                ? .GR7
-                : .GR4
-            )
-            .foregroundColor(
-                isTextEmpty
-                ? Color.RED
-                : Color.GR7
-            )
+        if isTextEmpty {
+            return Text("한 글자 이상 입력해 주세요")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(Color.RED)
+        } else {
+            let displayCount = min(currentCount, limit)
+            return Text("\(displayCount)/\(limit)")
+                .font(.system(size: 13, weight: .medium))
+                .monospacedDigit()
+                .foregroundColor(
+                    currentCount >= limit
+                    ? Color.GR7
+                    : Color.GR4
+                )
+        }
     }
-    
+
     private func handleEmptyText(_ text: String) {
         if text == "" {
             isTextEmpty = true

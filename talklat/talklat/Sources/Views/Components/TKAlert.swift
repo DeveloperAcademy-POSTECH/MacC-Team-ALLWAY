@@ -73,7 +73,7 @@ struct TKAlert<ActionButtonLabel: View>: View {
                             actionButtonLabel()
                                 .font(.subheadline)
                                 .bold()
-                                .foregroundStyle(Color.AlertBGWhite)
+                                .foregroundStyle(Color.white)
                                 .frame(width: 140, height: 56)
                                 .background {
                                     RoundedRectangle(cornerRadius: 22)
