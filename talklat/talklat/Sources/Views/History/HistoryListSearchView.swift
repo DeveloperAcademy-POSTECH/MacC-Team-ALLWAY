@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private enum searchStatus {
+private enum SearchStatus {
     case inactive
     case resultFound
     case resultNotFound
@@ -21,7 +21,7 @@ struct HistoryListSearchView: View {
         type: .answer,
         createdAt: Date.now
     )]
-    @State private var searchStatus: searchStatus = .inactive
+    @State private var searchStatus: SearchStatus = .inactive
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
     
@@ -33,9 +33,10 @@ struct HistoryListSearchView: View {
                 
             case .resultFound:
                 ScrollView {
-                    // TODO: matching [TKContent]의 matching [TKConversation.location]
                     ForEach(
-                        dataStore.getContentBasedLocations(contents: matchingContents)
+                        dataStore.getContentBasedLocations(
+                            contents: matchingContents
+                        )
                     ) { location in
                         SearchResultSection(
                             location: location,
@@ -80,7 +81,7 @@ struct HistoryListSearchView: View {
             
         }
         .onChange(of: matchingContents) { _, _ in
-            // TODO: if else matching TKContent 존재
+            // Search Status Switching
             if !matchingContents.isEmpty {
                 searchStatus = .resultFound
             } else {
@@ -121,10 +122,23 @@ struct SearchResultSection: View {
             
             // Contents
             ForEach(matchingContents, id: \.self) { content in
-                SearchResultItem(
-                    matchingContent: content,
-                    searchText: $searchText
-                )
+                NavigationLink {
+                    if let conversation = content.conversation {
+                        CustomHistoryView(
+                            historyViewType: .item,
+                            // TODO: Store 메서드에서 처리
+                            conversation: conversation
+                        )
+                    } else {
+                        Text("Conversation이 없어요!")
+                    }
+                    
+                } label: {
+                    SearchResultItem(
+                        matchingContent: content,
+                        searchText: $searchText
+                    )
+                }
             }
         }
         .padding(.top, 24)
@@ -142,11 +156,13 @@ struct SearchResultItem: View {
         // Cell Contents
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                Text(matchingContent.conversation?.title ?? "Talklat Title")
-                    .font(.system(size: 17, weight: .medium))
+                Text(matchingContent.conversation?.title ?? "TALKLAT TITLE")
+                    .font(.headline)
                
                 // 검색 키워드와 일치하는 한 개의 TKContent.text
-                let matchingText =  String(matchingContent.text[highlightIndex ..< matchingContent.text.endIndex])
+                let matchingText =  String(
+                    matchingContent.text[highlightIndex ..< matchingContent.text.endIndex]
+                )
                 
                 // 임시 ScrollView
                 ScrollView(.horizontal) {
