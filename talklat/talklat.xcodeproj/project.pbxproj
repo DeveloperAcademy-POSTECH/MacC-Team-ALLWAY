@@ -242,6 +242,7 @@
 		EFA9EDA22AF35CC40099AB56 /* TKGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */; };
 		EFA9EDA42AF3D6E60099AB56 /* ScrollOffsetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */; };
 		EFF347442B020DD900D2D1FB /* SettingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF347432B020DD900D2D1FB /* SettingsListView.swift */; };
+		EFFE7A6D2B05BC7000E17AA1 /* TKAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -365,6 +366,7 @@
 		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
 		EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetObserver.swift; sourceTree = "<group>"; };
 		EFF347432B020DD900D2D1FB /* SettingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListView.swift; sourceTree = "<group>"; };
+		EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -428,6 +430,8 @@
 		7E6641242B03BB3800CDC6AB /* DEPRECATED */ = {
 			isa = PBXGroup;
 			children = (
+				CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */,
+				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
 				EF7BB33B2B03E6DA00F8FEC9 /* SettingTRTextFieldToBeReplaced.swift */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
@@ -649,8 +653,7 @@
 				EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */,
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
 				5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */,
-				CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */,
-				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
+				EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				7E66414F2B03C91F00CDC6AB /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7E6641502B03C91F00CDC6AB /* SectionHeaderView.swift in Sources */,
 				7E6641512B03C91F00CDC6AB /* ChatMessageCell.swift in Sources */,
+				EFFE7A6D2B05BC7000E17AA1 /* TKAuthManager.swift in Sources */,
 				7E6641522B03C91F00CDC6AB /* CustomTableViewController.swift in Sources */,
 				7E6641532B03C91F00CDC6AB /* SheetWebView.swift in Sources */,
 				7E6641542B03C91F00CDC6AB /* HistoryViewController.swift in Sources */,
@@ -1398,7 +1402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -1436,7 +1440,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
