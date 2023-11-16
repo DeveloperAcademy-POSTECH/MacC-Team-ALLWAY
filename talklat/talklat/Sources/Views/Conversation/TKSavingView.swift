@@ -38,29 +38,46 @@ struct TKSavingView: View {
                     let res = makeNewConversation()
                     swiftDataStore.appendItem(res)
                     store.onSaveNewConversationButtonTapped()
+                    
                 } label: {
                     Text("저장")
                 }
+                .disabled(store(\.historyItems).isEmpty || store(\.conversationTitle).isEmpty)
             }
             .font(.headline)
             .bold()
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
             
-            Text("제목")
-                .font(.headline)
-                .padding(.leading, 32)
-                .padding(.bottom, 8)
-                .foregroundStyle(Color.GR5)
+            HStack {
+                Text("제목")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.GR5)
+                
+                Spacer()
+                
+                HStack(spacing: 5) {
+                    Image(systemName: "location.fill")
+                    
+                    Text(locationStore(\.currentShortPlaceMark))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                }
+                .foregroundStyle(Color.GR7)
+                
+            }
+            .padding(.horizontal, 32)
+            .padding(.bottom, 8)
             
             HStack {
                 TextField(
-                    "Conversation Title",
+                    "대화 제목을 지어주세요",
                     text: store.bindingConversationTitle()
                 )
-                    .font(.headline)
-                    .padding(.leading, 16)
-                    .padding(.vertical, 12)
+                .font(.headline)
+                .padding(.leading, 16)
+                .padding(.vertical, 12)
                 
                 Spacer()
                 
@@ -70,6 +87,7 @@ struct TKSavingView: View {
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
                         .frame(width: 20, height: 20)
+                        .foregroundStyle(Color.GR4)
                 }
                 .padding(.trailing, 16)
             }
@@ -80,12 +98,22 @@ struct TKSavingView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
             
-            Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
-                .font(.footnote)
-                .padding(.leading, 32)
-                .foregroundStyle(Color.GR4)
-            
+            if store(\.conversationTitle).isEmpty {
+                Text("한 글자 이상 입력해 주세요")
+                    .font(.footnote)
+                    .foregroundStyle(Color.RED)
+                    .padding(.leading, 32)
+                    .transition(.opacity.animation(.easeInOut))
+                
+            } else {
+                Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
+                    .font(.footnote)
+                    .padding(.leading, 32)
+                    .foregroundStyle(Color.GR4)
+                    .animation(.none, value: store(\.conversationTitle))
+            }
         }
+        .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
     }
@@ -123,5 +151,6 @@ struct TKSavingView: View {
             isPresented: .constant(true)
         ) {
             TKSavingView(store: .init())
+                .environmentObject(LocationStore())
         }
 }
