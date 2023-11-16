@@ -166,8 +166,9 @@ struct HistoryItemLocationEditView: View {
             }
             
             VStack(spacing: 0) {
-                Image("TalklatLogo")
+                Image("TALKLAT_TYPO")
                     .resizable()
+                    .renderingMode(.template)
                     .scaledToFit()
                     .clipShape(Circle())
                     .frame(width: 30)

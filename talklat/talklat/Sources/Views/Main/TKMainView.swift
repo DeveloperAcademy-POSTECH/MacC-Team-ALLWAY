@@ -69,9 +69,9 @@ struct TKMainView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Text("TALKLAT")
-                    .font(.title)
-                    .bold()
+                Image("TALKLAT_TYPO")
+                    .resizable()
+                    .frame(width: 115, height: 20)
                     .foregroundStyle(Color.OR5)
             }
             
@@ -143,8 +143,11 @@ struct TKMainView: View {
                     .fill(Color.OR6)
                     .frame(width: 100, height: 100)
                 
-                Image("TKBubble_Main")
+                Image("TALKLAT_BUBBLE_WHITE")
+                    .resizable()
+                    .renderingMode(.template)
                     .foregroundStyle(Color.white)
+                    .frame(width: 59, height: 70)
                     .padding(.top, 12)
                 
                 Image(systemName: "plus")

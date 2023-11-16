@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E0313812B04F8BB0090A704 /* TKSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0313802B04F8BB0090A704 /* TKSplashView.swift */; };
 		7E6641282B03C91F00CDC6AB /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7E6641292B03C91F00CDC6AB /* TKReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */; };
 		7E66412A2B03C91F00CDC6AB /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
@@ -28,7 +29,6 @@
 		7E66413A2B03C91F00CDC6AB /* TKConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */; };
 		7E66413B2B03C91F00CDC6AB /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
 		7E66413C2B03C91F00CDC6AB /* SettingViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FE2B00AF350098FFF5 /* SettingViewStore.swift */; };
-		7E66413D2B03C91F00CDC6AB /* TKConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E14D3782B01F46E00244549 /* TKConversationViewStore.swift */; };
 		7E66413E2B03C91F00CDC6AB /* TKMainViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */; };
 		7E66413F2B03C91F00CDC6AB /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79CAEA2AF0CEC20007713B /* LocationStore.swift */; };
 		7E6641402B03C91F00CDC6AB /* SpeechAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */; };
@@ -126,6 +126,7 @@
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTKSettingView.swift; sourceTree = "<group>"; };
+		7E0313802B04F8BB0090A704 /* TKSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSplashView.swift; sourceTree = "<group>"; };
 		7E14D3782B01F46E00244549 /* TKConversationViewStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
 		7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
 		7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainView.swift; sourceTree = "<group>"; };
@@ -340,11 +341,11 @@
 		7E8D17F02ACE8BA300E904E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7E4A6CD72AFB2C030014DDB8 /* Main */,
+				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				5769BFDA2AFE055A0036CF3D /* Settings */,
 				CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */,
-				7E4A6CD72AFB2C030014DDB8 /* Main */,
 				EF7938952AFB746D00402A4E /* History */,
-				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				7EF737952AD43E8300FCBA21 /* Components */,
 				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
 				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
@@ -417,6 +418,7 @@
 				EF1162AD2AFCBB6F000D0F5B /* AWTextField.swift */,
 				7E892E402B0350CF00788DCF /* TKAlert.swift */,
 				7E892E422B036A5900788DCF /* TKToast.swift */,
+				7E0313802B04F8BB0090A704 /* TKSplashView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -649,6 +651,7 @@
 				7E6641522B03C91F00CDC6AB /* CustomTableViewController.swift in Sources */,
 				7E6641532B03C91F00CDC6AB /* SheetWebView.swift in Sources */,
 				7E6641542B03C91F00CDC6AB /* HistoryViewController.swift in Sources */,
+				7E0313812B04F8BB0090A704 /* TKSplashView.swift in Sources */,
 				7E6641552B03C91F00CDC6AB /* TKMainView.swift in Sources */,
 				7E6641562B03C91F00CDC6AB /* TKDraggableList.swift in Sources */,
 				7E6641572B03C91F00CDC6AB /* TKRecentConversationListView.swift in Sources */,
