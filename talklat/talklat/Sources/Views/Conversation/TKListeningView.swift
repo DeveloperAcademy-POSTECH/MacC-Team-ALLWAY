@@ -144,7 +144,7 @@ struct TKListeningView: View {
                 Text("듣고 있어요")
                     .font(.headline)
                     .fontWeight(.black)
-                    .foregroundColor(.BaseBGWhite)
+                    .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .frame(minWidth: 110, minHeight: 50)
                     .background {
@@ -179,7 +179,7 @@ struct TKListeningView: View {
                     ],
                     circleColor: store(\.answeredText).isEmpty
                     ? Color.OR5
-                    : Color.BaseBGWhite
+                    : Color.white
                 )
                 .frame(height: 64)
                 .overlay {
@@ -187,7 +187,7 @@ struct TKListeningView: View {
                         .foregroundStyle(
                             store(\.answeredText).isEmpty
                             ? Color.OR5
-                            : Color.BaseBGWhite
+                            : Color.white
                         )
                         .overlay {
                             Image(systemName: "chevron.right")

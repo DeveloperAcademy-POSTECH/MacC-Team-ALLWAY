@@ -66,7 +66,7 @@ struct TKScrollView: View {
                         .font(.title)
                         .bold()
                         .lineSpacing(14)
-                        .foregroundStyle(Color.BaseBGWhite)
+                        .foregroundStyle(Color.white)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .topLeading
@@ -107,7 +107,7 @@ struct TKScrollView: View {
                 Text(answer)
                     .font(.title3)
                     .fontWeight(.heavy)
-                    .foregroundStyle(Color.BaseBGWhite)
+                    .foregroundStyle(Color.white)
                     .lineSpacing(8)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 24)

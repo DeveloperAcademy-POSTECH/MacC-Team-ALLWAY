@@ -141,7 +141,7 @@ struct TKTypingView: View {
                     .overlay {
                         Text("TALK")
                             .font(.headline)
-                            .foregroundStyle(Color.BaseBGWhite)
+                            .foregroundStyle(Color.white)
                     }
             }
         }

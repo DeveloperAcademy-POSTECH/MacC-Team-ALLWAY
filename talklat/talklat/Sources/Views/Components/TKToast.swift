@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct TKToast: View {
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var isPresented: Bool
     let title: String
     let locationInfo: String
@@ -19,7 +20,7 @@ struct TKToast: View {
                 Image(systemName: "checkmark.circle.fill")
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(
-                        Color.BaseBGWhite,
+                        Color.white,
                         Color.OR5
                     )
                     .padding(.leading, 16)
@@ -37,7 +38,7 @@ struct TKToast: View {
                         Text("에 대화가 저장되었어요.")
                     }
                     .font(.caption2)
-                    .foregroundStyle(Color.GR4)
+                    .foregroundStyle(colorScheme == .light ? Color.GR4 : Color.GR6)
                 }
             }
             .padding(.horizontal, 16)
@@ -48,7 +49,7 @@ struct TKToast: View {
             )
             .background {
                 RoundedRectangle(cornerRadius: 16)
-                    .foregroundStyle(Color.GR7)
+                    .foregroundStyle(colorScheme == .light ? Color.GR7 : Color.GR3)
                     .padding(.horizontal, 16)
             }
             .transition(
