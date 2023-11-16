@@ -13,7 +13,6 @@ struct TKTextReplacementSearchView: View {
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
-//    var searchText: String
     var lists: [TKTextReplacement]
     var textReplacementManager = TKTextReplacementManager()
 
@@ -45,7 +44,7 @@ struct TKTextReplacementSearchView: View {
             let match = String(currentText[range])
 
             highlightedText = highlightedText + Text(prefix)
-            highlightedText = highlightedText + Text(match).foregroundColor(.accentColor)
+            highlightedText = highlightedText + Text(match).foregroundColor(.OR6)
 
             currentText = String(currentText[range.upperBound...])
         }
@@ -103,10 +102,10 @@ struct TKTextReplacementSearchView: View {
                     }
                 }
             }
-            .background(Color.white)
+            .background(Color.BaseBGWhite)
             .edgesIgnoringSafeArea(.all)
         }
-        .background(Color.white)
+        .background(Color.BaseBGWhite)
     }
 }
 
