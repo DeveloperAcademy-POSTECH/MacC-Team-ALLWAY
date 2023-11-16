@@ -223,6 +223,8 @@
 		EF67C64B2ACEB67000C1074E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		EF67C6532AD13BF700C1074E /* SpeechAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */; };
 		EF67C6572AD1414300C1074E /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
+		EF75C6122B06184C00F83FFE /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75C6112B06184C00F83FFE /* LoadingWebView.swift */; };
+		EF75C6142B06191000F83FFE /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF75C6132B06191000F83FFE /* WebView.swift */; };
 		EF7938972AFB748100402A4E /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7938962AFB748100402A4E /* HistoryListView.swift */; };
 		EF79389B2AFB754200402A4E /* SampleTKConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF79389A2AFB754100402A4E /* SampleTKConversation.swift */; };
 		EF7BB3232B03970300F8FEC9 /* SettingsDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */; };
@@ -348,6 +350,8 @@
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAuthManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
+		EF75C6112B06184C00F83FFE /* LoadingWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
+		EF75C6132B06191000F83FFE /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
@@ -687,6 +691,8 @@
 				EF7BB33D2B03EC0A00F8FEC9 /* SettingsGuidingPreView.swift */,
 				EF7BB3352B03D68400F8FEC9 /* EmailView.swift */,
 				EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */,
+				EF75C6112B06184C00F83FFE /* LoadingWebView.swift */,
+				EF75C6132B06191000F83FFE /* WebView.swift */,
 			);
 			path = Settings_;
 			sourceTree = "<group>";
@@ -1103,6 +1109,7 @@
 				7E66416B2B03C91F00CDC6AB /* TKToast.swift in Sources */,
 				7E66416C2B03C91F00CDC6AB /* AuthorizationRequestView.swift in Sources */,
 				7E66416D2B03C91F00CDC6AB /* StaffSpeechView.swift in Sources */,
+				EF75C6122B06184C00F83FFE /* LoadingWebView.swift in Sources */,
 				7E66416E2B03C91F00CDC6AB /* ScrollContainer.swift in Sources */,
 				7E66416F2B03C91F00CDC6AB /* SwipeGuideMessage.swift in Sources */,
 				7E6641702B03C91F00CDC6AB /* TKHistoryView.swift in Sources */,
@@ -1141,6 +1148,7 @@
 				7E6640F92B038A5B00CDC6AB /* LocationDataManager.swift in Sources */,
 				7E6640FA2B038A5B00CDC6AB /* TKDataManager.swift in Sources */,
 				7E6640FB2B038A5B00CDC6AB /* TKSwiftDataStore.swift in Sources */,
+				EF75C6142B06191000F83FFE /* WebView.swift in Sources */,
 				7E6640FC2B038A5B00CDC6AB /* DataTestingView.swift in Sources */,
 				7E6640FD2B038A5B00CDC6AB /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7E6640FE2B038A5B00CDC6AB /* SectionHeaderView.swift in Sources */,
@@ -1401,9 +1409,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				DEVELOPMENT_TEAM = 34U36L8239;
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -1441,7 +1447,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
