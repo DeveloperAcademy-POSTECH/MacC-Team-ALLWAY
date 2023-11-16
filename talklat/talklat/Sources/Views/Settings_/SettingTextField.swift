@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데, Setting-안내문구 뷰에서도 사용됩니다.
-struct SettingTRTextField: View {
-    @State private var isTextEmpty: Bool = false
+// TODO: - SettingTRTextField와 합치기 (isTextEmpty 추가되는 스타일로 분리)
+struct SettingTextField: View {
+    @Binding var  isTextEmpty: Bool
     @Binding var text: String
     @FocusState var focusState: Bool
     
@@ -41,9 +41,6 @@ struct SettingTRTextField: View {
                     )
                     text = text.prefix(limit - 1) + String(text[lastCharIndex])
                 }
-                
-                // Handle empty guide message
-                handleEmptyText(text)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 11)
@@ -71,20 +68,9 @@ struct SettingTRTextField: View {
             .font(.system(size: 13, weight: .medium))
             .monospacedDigit()
             .foregroundColor(
-                currentCount == limit
-                ? .GR7
-                : .GR4
+                currentCount == limit || isTextEmpty
+                ? .RED
+                : .GR7
             )
-            .foregroundColor(
-                isTextEmpty
-                ? Color.RED
-                : Color.GR7
-            )
-    }
-    
-    private func handleEmptyText(_ text: String) {
-        if text == "" {
-            isTextEmpty = true
-        }
     }
 }

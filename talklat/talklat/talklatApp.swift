@@ -15,7 +15,6 @@ struct talklatApp: App {
     //    @StateObject var locationStore: LocationStore = LocationStore()
     private var container: ModelContainer
     
-    
     init() {
         do {
             container = try ModelContainer(

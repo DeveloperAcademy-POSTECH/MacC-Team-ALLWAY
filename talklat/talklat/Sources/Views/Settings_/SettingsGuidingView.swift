@@ -8,20 +8,17 @@
 import SwiftUI
 
 struct SettingsGuidingView: View {
-    @State private var isNotFirstEntered: Bool = UserDefaults.standard.bool(
-        forKey: "isFirstEntered"
-    )
+    @State private var isGuidingEnabled: Bool = true
     
-    @State private var isGuidingEnabled: Bool = UserDefaults.standard.bool(
-        forKey: "isGuidingEnabled"
-    )
-   
     var body: some View {
         VStack {
             TKListCell(label: "대화 시작 시 안내 문구 사용") {
                 } trailingUI: {
-                    Toggle("", isOn: $isGuidingEnabled)
-                        .frame(width: 70)
+                    Toggle(
+                        "",
+                        isOn: $isGuidingEnabled
+                    )
+                    .frame(width: 70)
                 }
             
             Text("안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요.")
@@ -32,12 +29,23 @@ struct SettingsGuidingView: View {
             
             NavigationLink {
                 SettingsGuidingEditView()
+                
             } label: {
                 TKListCell(label: "안내 문구 편집") {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
+                            .foregroundColor(
+                                isGuidingEnabled
+                                ? .OR6
+                                : .GR4
+                            )
                     }
             }
+            .disabled(
+                isGuidingEnabled
+                ? false
+                : true
+            )
             
             Spacer()
         }
@@ -46,28 +54,13 @@ struct SettingsGuidingView: View {
         .navigationTitle("안내 문구")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            // intital Entrance for UserDefaults
-            if !isNotFirstEntered {
-                isGuidingEnabled = true
-                
-                // Save isGuidingEnabled
-                UserDefaults.standard.set(
-                    self.isGuidingEnabled,
-                    forKey: "isGuidingEnabled"
-                )
-                
-                isNotFirstEntered = true
-                // Save isNotFirstEntered
-                UserDefaults.standard.set(
-                    self.isNotFirstEntered,
-                    forKey: "isNotFirstEntered"
-                )
-            }
+            isGuidingEnabled = UserDefaults.standard.bool(
+                forKey: "isGuidingEnabled"
+            )
         }
         .onChange(of: isGuidingEnabled) { _, _ in
-            // Save isGuidingEnabled
-            UserDefaults.standard.set(
-                self.isGuidingEnabled,
+            UserDefaults.standard.setValue(
+                isGuidingEnabled, 
                 forKey: "isGuidingEnabled"
             )
         }
@@ -79,3 +72,26 @@ struct SettingsGuidingView: View {
         SettingsGuidingView()
     }
 }
+
+//isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")
+//print("ONAPPEAR", isGuidingEnabled)
+//
+//// intital Entrance for UserDefaults
+//if !isNotFirstEntered {
+//    isGuidingEnabled = true
+//    
+//    isNotFirstEntered = true
+//    // Save isNotFirstEntered
+//    UserDefaults.standard.set(
+//        self.isNotFirstEntered,
+//        forKey: "isNotFirstEntered"
+//    )
+//}
+ 
+//
+//print(
+//    "Changed",
+//    UserDefaults.standard.bool(
+//        forKey: "isGuidingEnabled"
+//    )
+//)

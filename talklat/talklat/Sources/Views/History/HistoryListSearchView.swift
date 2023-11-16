@@ -165,8 +165,8 @@ struct SearchResultItem: View {
                             Text(String(character.element))
                                 .foregroundStyle(
                                     isHighlighted
-                                    ? Color.accentColor
-                                    : Color.black
+                                    ? Color.OR6
+                                    : Color.GR5
                                 )
                         }
                     }
