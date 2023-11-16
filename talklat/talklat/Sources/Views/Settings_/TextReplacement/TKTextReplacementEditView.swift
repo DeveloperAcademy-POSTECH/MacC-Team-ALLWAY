@@ -20,43 +20,45 @@ struct TKTextReplacementEditView: View {
     let dataStore = TKSwiftDataStore()
 
     var body: some View {
-        VStack(spacing: 10) {
-            VStack {
-                SettingTRTextField(
-                    text: store.bindingPhraseTextField(),
-                    focusState: _focusState,
-                    title: "단축어",
-                    placeholder: "아아",
-                    limit: 20
-                )
-                .focused($focusState)
-                
-                SettingTRTextField(
-                    text: store.bindingReplacementTextField(),
-                    title: "변환 문구",
-                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                    limit: 160
-                )
-                .focused($focusState)
-                .padding(.top, 36)
-            }
-            
-            Spacer()
-            
-            if !focusState {
-                Button {
-                    store.onShowDialogButtonTapped()
-                } label: {
-                    Text("텍스트 대치 삭제")
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red)
-                        .cornerRadius(20)
+        NavigationView {
+            VStack(spacing: 10) {
+                VStack {
+                    SettingTRTextField(
+                        text: store.bindingPhraseTextField(),
+                        focusState: _focusState,
+                        title: "단축어",
+                        placeholder: "아아",
+                        limit: 20
+                    )
+                    .focused($focusState)
+                    
+                    SettingTRTextField(
+                        text: store.bindingReplacementTextField(),
+                        title: "변환 문구",
+                        placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                        limit: 160
+                    )
+                    .focused($focusState)
+                    .padding(.top, 36)
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
+                
+                Spacer()
+                
+                if !focusState {
+                    Button {
+                        store.onShowDialogButtonTapped()
+                    } label: {
+                        Text("텍스트 대치 삭제")
+                            .font(.system(size: 17, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.red)
+                            .cornerRadius(20)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                }
             }
         }
         .padding()
@@ -67,6 +69,7 @@ struct TKTextReplacementEditView: View {
         .navigationTitle("편집")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
+        .disabled(store(\.isDialogShowing))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("저장") {
@@ -90,21 +93,22 @@ struct TKTextReplacementEditView: View {
                 }
             }
         }
-        .background {
-            if store(\.isDialogShowing) {
-                Color.black.opacity(0.5).ignoresSafeArea()
-            }
-        }
         .overlay {
-            TKAlert(
-                style: .removeTextReplacement,
-                isPresented: store.bindingReplacementRemoveAlert()
-            ) {
-                deleteTKTextReplacement()
-                
-            } actionButtonLabel: {
-                Text("네, 삭제할래요")
+            ZStack {
+                if store(\.isDialogShowing) {
+                    Color.black.opacity(0.5).ignoresSafeArea(.all)
+                    TKAlert(
+                        style: .removeTextReplacement,
+                        isPresented: store.bindingReplacementRemoveAlert()
+                    ) {
+                        deleteTKTextReplacement()
+                        
+                    } actionButtonLabel: {
+                        Text("네, 삭제할래요")
+                    }
+                }
             }
+//            .ignoresSafeArea()
         }
     }
     
