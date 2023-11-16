@@ -34,9 +34,9 @@ struct talklatApp: App {
             Group {
                 switch store(\.authStatus) {
                 case .splash:
-                    Temp_SplashView()
+                    TKSplashView()
                         .task {
-                            try? await Task.sleep(for: .seconds(1.5))
+                            try? await Task.sleep(for: .seconds(3.0))
                             let status = await SpeechAuthManager.switchAuthStatus()
                             store.onVoiceAuthorizationObtained(status)
                         }
@@ -54,23 +54,5 @@ struct talklatApp: App {
             }
         }
         .modelContainer(container)
-    }
-}
-
-struct Temp_SplashView: View {
-    @State private var animateFlag: Bool = false
-    
-    var body: some View {
-        Image("TalklatLogo")
-            .scaleEffect(animateFlag ? 0.3 : 0.25)
-            .opacity(animateFlag ? 1.0 : 0.6)
-            .animation(
-                .easeInOut.speed(0.35),
-                value: animateFlag
-            )
-            .frame(width: 280, height: 100)
-            .onAppear {
-                animateFlag.toggle()
-            }
     }
 }
