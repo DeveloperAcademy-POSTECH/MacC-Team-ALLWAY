@@ -10,14 +10,10 @@ import UIKit
 import MessageUI
 
 struct SettingsHelpView: View {
-    @Environment(\.openURL) var openURL
+    @Environment(\.dismiss) var dismiss
     
-    @State private var showEmail: Bool = false
-    @State private var email: SupportEmail = SupportEmail(
-        toAddress: "allway.team01a@gmail.com",
-        subject: "[TALKLAT] 오류신고/문의하기",
-        messageHeader: "[필수1] iPhone 기종 \n- \n[필수2] iOS 버전 \n- \n[필수3] 문의 내용 \n-"
-    )
+    @State private var isEmailShowing: Bool = false
+    @State private var emailResult: Result<MFMailComposeResult, Error>?
     
     var body: some View {
         VStack {
@@ -26,7 +22,7 @@ struct SettingsHelpView: View {
                 Image(systemName: "chevron.right")
             }
             .onTapGesture {
-                email.send(openURL: openURL)
+                isEmailShowing = true
             }
             
             Spacer()
@@ -34,15 +30,12 @@ struct SettingsHelpView: View {
         .padding(.top, 24)
         .padding(.horizontal, 16)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showEmail) {
-            MailView(supportEmail: $email) { result in
-                switch result {
-                case .success:
-                    return
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+        .sheet(isPresented: $isEmailShowing) {
+            EmailView(
+                isShowing: $isEmailShowing,
+                result: $emailResult
+            )
+            .ignoresSafeArea()
         }
     }
 }

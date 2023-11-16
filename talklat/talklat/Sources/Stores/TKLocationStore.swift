@@ -40,12 +40,15 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         self.configureLocationManager()
         
-        switch self.locationManager.authorizationStatus {
-        case .authorizedAlways:
-            break
-        default:
-            self.locationManager.requestAlwaysAuthorization()
-        }
+        /**
+         // MARK: TKAuthManager으로 핸들링 옮김
+         switch self.locationManager.authorizationStatus {
+         case .authorizedAlways:
+             break
+         default:
+             self.locationManager.requestAlwaysAuthorization()
+         }
+         */
         
         self.reduce(\.authorizationStatus, into: self.locationManager.authorizationStatus)
         

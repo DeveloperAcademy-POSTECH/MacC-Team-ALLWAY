@@ -161,7 +161,7 @@ struct TKTypingView: View {
                                 .resizable()
                                 .frame(width: 32, height: 10)
                                 .padding()
-                                .foregroundStyle(Color.white)
+                                .foregroundStyle(Color.BaseBGWhite)
                         }
                         .offset(
                             y: store(\.hasChevronButtonTapped)
@@ -172,7 +172,7 @@ struct TKTypingView: View {
                         Text("위로 스와이프해서 내용을 더 확인하세요.")
                             .font(.caption2)
                             .bold()
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color.BaseBGWhite)
                             .opacity(
                                 store(\.hasChevronButtonTapped)
                                 ? 1.0
@@ -224,7 +224,7 @@ struct TKTypingView: View {
             .tint(
                 store(\.answeredText).isEmpty
                 ? Color.GR2
-                : Color.white
+                : Color.BaseBGWhite
             )
             .disabled(store(\.blockButtonDoubleTap))
         }
@@ -241,7 +241,7 @@ struct TKTypingView: View {
                 } label: {
                     Image(systemName: "eraser.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(focusState ? Color.white : Color.GR3)
+                        .foregroundColor(focusState ? Color.BaseBGWhite : Color.GR3)
                         .padding(10)
                         .background(focusState ? Color.GR4 : Color.GR2)
                         .clipShape(Circle())
@@ -266,7 +266,7 @@ struct TKTypingView: View {
                         } label: {
                             Text(firstReplacement)
                                 .font(.subheadline)
-                                .foregroundColor(Color.white)
+                                .foregroundColor(Color.BaseBGWhite)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)
                                 .lineLimit(1)

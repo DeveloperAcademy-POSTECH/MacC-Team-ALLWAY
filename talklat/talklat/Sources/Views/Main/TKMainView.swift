@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var locationStore: TKLocationStore
+    @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -24,18 +24,20 @@ struct TKMainView: View {
                 
                 VStack(spacing: 10) {
                     HStack(spacing: 2) {
-                        switch locationStore(\.authorizationStatus) {
-                        case .authorizedAlways, .authorizedWhenInUse:
-                            Image(systemName: "location.fill")
-                            
-                        default:
-                            Image(systemName: "location.slash.fill")
-                        }
-                        
-                        Text(locationStore(\.mainPlaceName))
-                            .onAppear {
-                                locationStore.fetchCityName(locationStore(\.currentUserCoordinate), cityNameType: .short, usage: .main)
+                        if let status = locationStore(\.authorizationStatus) {
+                            switch status {
+                            case .authorizedAlways, .authorizedWhenInUse:
+                                Image(systemName: "location.fill")
+                                
+                            default:
+                                Image(systemName: "location.slash.fill")
                             }
+                            
+                            Text("\(locationStore(\.mainPlaceName))")
+                                .onAppear {
+                                    locationStore.fetchCityName(locationStore(\.currentUserCoordinate), cityNameType: .short, usage: .main)
+                                }
+                        }
                     }
                     .foregroundStyle(Color.GR4)
 
@@ -85,11 +87,12 @@ struct TKMainView: View {
                     }
                 }
         }
+        .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Text("TALKLAT")
-                    .font(.title)
-                    .bold()
+                Image("Talklat_Typo")
+                    .resizable()
+                    .frame(width: 115, height: 20)
                     .foregroundStyle(Color.OR5)
             }
             
@@ -167,8 +170,11 @@ struct TKMainView: View {
                     .fill(Color.OR6)
                     .frame(width: 100, height: 100)
                 
-                Image("TKBubble_Main")
+                Image("TALKLAT_BUBBLE_WHITE")
+                    .resizable()
+                    .renderingMode(.template)
                     .foregroundStyle(Color.white)
+                    .frame(width: 59, height: 70)
                     .padding(.top, 12)
                 
                 Image(systemName: "plus")

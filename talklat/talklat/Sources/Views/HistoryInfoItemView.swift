@@ -72,7 +72,7 @@ struct HistoryInfoItemView: View {
         }
         .ignoresSafeArea(.keyboard)
         .background {
-            Color.white
+            Color.BaseBGWhite
                 .onTapGesture {
                     isTextfieldFocused = false
                 }
