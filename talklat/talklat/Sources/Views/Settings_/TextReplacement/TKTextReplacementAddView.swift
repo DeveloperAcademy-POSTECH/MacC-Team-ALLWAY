@@ -70,10 +70,10 @@ struct TKTextReplacementAddView: View {
                     .disabled(!isInputValid)
                     .foregroundColor(isInputValid ? .OR6 : .GR4)
             )
+            .background(Color.SheetBGWhite)
         }
     }
 }
-
 
 struct TKTextReplacementAddView_Previews: PreviewProvider {
     @State static var isPresented = true
