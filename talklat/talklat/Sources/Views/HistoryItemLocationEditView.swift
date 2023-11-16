@@ -9,26 +9,40 @@ import MapKit
 import SwiftUI
 
 struct HistoryItemLocationEditView: View {
-    @ObservedObject var locationStore: LocationStore
-    @Binding var isShowingSheet: Bool
-    @Binding var coordinateRegion: MKCoordinateRegion
-    @State private var snapShotter: MKMapSnapshotter?
-    @State private var annotationItems: [CustomAnnotationInfo] = [CustomAnnotationInfo]()
-    @State private var isFlipped: Bool = false
+    @ObservedObject var locationStore: TKLocationStore
+    @ObservedObject var historyInfoStore: TKHistoryInfoStore
+    @State private var isFlipped = false
+    @State var editCoordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: initialLatitude,
+            longitude: initialLongitude
+        ),
+        latitudinalMeters: 500,
+        longitudinalMeters: 500
+    )
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                Map(coordinateRegion: $coordinateRegion, showsUserLocation: true, annotationItems: annotationItems) { item in
+                Map(coordinateRegion: $editCoordinateRegion,
+                    showsUserLocation: true,
+                    annotationItems: historyInfoStore(\.annotationItems)
+                ) { item in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
-                        CustomMapAnnotation(.fixed)
+                        CustomMapAnnotation(
+                            type: MapAnnotationType.fixed,
+                            isFlipped: .constant(false)
+                        )
                     }
                 }
                 .overlay {
                     currentLocationButton
                 }
                 .overlay {
-                    CustomMapAnnotation(.movable)
+                    CustomMapAnnotation(
+                        type: MapAnnotationType.movable,
+                        isFlipped: historyInfoStore.bindingFlipped()
+                    )
                 }
                 
                 mapFooterView
@@ -42,7 +56,7 @@ struct HistoryItemLocationEditView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        isShowingSheet = false
+                        historyInfoStore.reduce(\.isShowingSheet, into: false)
                     } label: {
                         Text("닫기")
                     }
@@ -50,8 +64,13 @@ struct HistoryItemLocationEditView: View {
                 }
             }
             .onAppear {
-                locationStore.fetchCityName(coordinateRegion, of: .selected)
-                //MARK: 저장된 로케이션이 있다면 넣어주는 로직
+                editCoordinateRegion = historyInfoStore(\.editCoordinateRegion) ?? initialCoordinateRegion
+                
+                locationStore.fetchCityName(
+                    historyInfoStore(\.editCoordinateRegion),
+                    cityNameType: .long,
+                    usage: .edit
+                )
             }
         }
     }
@@ -62,7 +81,10 @@ struct HistoryItemLocationEditView: View {
                 .font(.headline)
             
             Button {
-                isShowingSheet = false
+                historyInfoStore.reduce(
+                    \.isShowingSheet,
+                     into: false
+                )
             } label: {
                 Text("닫기")
             }
@@ -82,7 +104,14 @@ struct HistoryItemLocationEditView: View {
                 case .authorizedAlways, .authorizedWhenInUse:
                     Button {
                         moveToUserLocation()
-                        locationStore.fetchCityName(coordinateRegion, of: .current)
+                        
+                        if let location = historyInfoStore(\.editCoordinateRegion) {
+                            locationStore.fetchCityName(
+                                historyInfoStore(\.editCoordinateRegion),
+                                cityNameType: .long,
+                                usage: .edit
+                            )
+                        }
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
                             .fill(Color.BaseBGWhite)
@@ -117,19 +146,39 @@ struct HistoryItemLocationEditView: View {
     
     private var mapFooterView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(locationStore(\.selectedFullPlaceMark))
+            Text(locationStore(\.editPlaceName))
                 .font(.title3)
                 .fontWeight(.bold)
                 .padding(.bottom, 10)
             
             Button {
-                Task {
-                    locationStore.fetchCityName(coordinateRegion, of: .selected)
-                    plantFlag(coordinateRegion)
-                    await generateSnapShot()
-                    withAnimation {
-                        isFlipped.toggle()
-                    }
+                historyInfoStore.reduce(
+                    \.infoCoordinateRegion,
+                     into: editCoordinateRegion
+                )
+                
+                historyInfoStore.reduce(
+                    \.editCoordinateRegion,
+                     into: editCoordinateRegion
+                )
+                
+                let coordinateRegion = historyInfoStore.bindingEditCoordinate().wrappedValue
+                
+                locationStore.fetchCityName(
+                    coordinateRegion,
+                    cityNameType: .hybrid,
+                    usage: .infoAndEdit)
+                
+//                locationStore.fetchCityName(
+//                    coordinateRegion,
+//                    cityNameType: .long,
+//                    usage: .edit)
+                
+                
+                historyInfoStore.plantFlag(coordinateRegion)
+                
+                withAnimation {
+                    historyInfoStore.reduce(\.isFlipped, into: !historyInfoStore(\.isFlipped))
                 }
             } label: {
                 HStack {
@@ -153,7 +202,110 @@ struct HistoryItemLocationEditView: View {
         .padding()
     }
     
-    public func CustomMapAnnotation(_ type: MapAnnotationType) -> some View {
+    private func moveToUserLocation() {
+//        let _ = locationStore.trackUserCoordinate()
+        
+        guard let coordinateRegion = locationStore(\.currentUserCoordinate) else {
+            return
+        }
+        
+        historyInfoStore.reduce(
+            \.editCoordinateRegion,
+             into: coordinateRegion
+        )
+        editCoordinateRegion = coordinateRegion
+    }
+    
+    //    private func configureSnapshotter() -> MKMapSnapshotter.Options {
+    //        let options = MKMapSnapshotter.Options()
+    //
+    //        options.region = coordinateRegion
+    //        //MARK: 키보드가 올라오면 UIImage의 사이즈가 변경되는것을 막기 위해 -> 더 좋은 방법이 있으면 바꾸고 싶음
+    //        options.size = CGSize(
+    //            width: UIScreen.main.bounds.width - 40,
+    //            height: UIScreen.main.bounds.width - 40
+    //        )
+    //        options.scale = UIScreen.main.scale
+    //        options.showsBuildings = true
+    //        options.pointOfInterestFilter = .includingAll
+    //
+    //        return options
+    //    }
+    
+    //    @MainActor
+    //    private func generateSnapShot() async {
+    //        let options = configureSnapshotter()
+    //        snapShotter = MKMapSnapshotter(options: options)
+    //
+    //        guard let snapShotter = snapShotter else { return }
+    //
+    //        let rect = CGRect(
+    //            x: 0,
+    //            y: 0,
+    //            width: UIScreen.main.bounds.width - 40,
+    //            height: UIScreen.main.bounds.width - 40
+    //        )
+    //
+    //        do {
+    //            let snapshot = try await snapShotter.start()
+    //            var point = snapshot.point(for: coordinateRegion.center)
+    //            let image = UIGraphicsImageRenderer(size: options.size).image { _ in
+    //                snapshot.image.draw(at: .zero)
+    //
+    //                let annotationView = MKPinAnnotationView(annotation: nil, reuseIdentifier: "annotation")
+    //
+    //                let annotationImage = annotationView.image
+    //
+    //                if rect.contains(point) {
+    //                    point.x -= annotationView.bounds.width / 2
+    //                    point.y -= annotationView.bounds.height / 2
+    //                    point.x += annotationView.centerOffset.x
+    //                    point.y += annotationView.centerOffset.y
+    //                }
+    //
+    //                annotationImage?.draw(at: point)
+    //            }
+    //
+    //            locationStore.updateLocationThumbnail(image)
+    //        } catch {
+    //            print(error.localizedDescription)
+    //        }
+    //    }
+}
+
+public struct CustomAnnotationInfo: Identifiable, Equatable {
+    public let id: UUID = UUID()
+    var name: String
+    var description: String
+    var latitude: Double
+    var longitude: Double
+}
+
+private struct CustomMapPinModifier: ViewModifier {
+    @Binding var isFlipped: Bool
+    let mapAnnotationType: MapAnnotationType
+    
+    func body(content: Content) -> some View {
+        switch mapAnnotationType {
+        case .fixed:
+            content
+        case .movable:
+            content
+                .rotation3DEffect( isFlipped == true ?
+                    .degrees(360) : .zero,
+                                   axis: (x: 0, y: 1, z: 0)
+                )
+                .animation(.default, value: isFlipped)
+        }
+        
+    }
+}
+
+
+struct CustomMapAnnotation: View {
+    let type: MapAnnotationType
+    @Binding var isFlipped: Bool
+    var body: some View {
         VStack(spacing: 0) {
             switch type {
             case .movable:
@@ -180,113 +332,20 @@ struct HistoryItemLocationEditView: View {
         .padding(.bottom, 85)
     }
     
-    private func moveToUserLocation() {
-        guard let coordinateRegion = locationStore.trackUserCoordinate(type: .get) else {
-            return
-        }
-        self.coordinateRegion = coordinateRegion
-    }
-    
-    private func plantFlag(_ coordinate: MKCoordinateRegion) {
-        if annotationItems.count >= 1 {
-            let _ = annotationItems.popLast()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            annotationItems.append(CustomAnnotationInfo(
-                name: "현재 위치",
-                description: "설명",
-                latitude: coordinate.center.latitude,
-                longitude: coordinate.center.longitude
-            ))
-        }
-        
-        locationStore.fetchCityName(coordinate, of: .selected)
-    }
-    
-    private func configureSnapshotter() -> MKMapSnapshotter.Options {
-        let options = MKMapSnapshotter.Options()
-        
-        options.region = coordinateRegion
-        //MARK: 키보드가 올라오면 UIImage의 사이즈가 변경되는것을 막기 위해 -> 더 좋은 방법이 있으면 바꾸고 싶음
-        options.size = CGSize(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.width - 40)
-        options.scale = UIScreen.main.scale
-        options.showsBuildings = true
-        options.pointOfInterestFilter = .includingAll
-        
-        return options
-    }
-    
-    @MainActor
-    private func generateSnapShot() async {
-        let options = configureSnapshotter()
-        snapShotter = MKMapSnapshotter(options: options)
-        
-        guard let snapShotter = snapShotter else { return }
-        
-        let rect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.width - 40)
-        
-        do {
-            let snapshot = try await snapShotter.start()
-            var point = snapshot.point(for: coordinateRegion.center)
-            let image = UIGraphicsImageRenderer(size: options.size).image { _ in
-                snapshot.image.draw(at: .zero)
-                
-                let annotationView = MKPinAnnotationView(annotation: nil, reuseIdentifier: "annotation")
-                
-                let annotationImage = annotationView.image
-                
-                if rect.contains(point) {
-                    point.x -= annotationView.bounds.width / 2
-                    point.y -= annotationView.bounds.height / 2
-                    point.x += annotationView.centerOffset.x
-                    point.y += annotationView.centerOffset.y
-                }
-                
-                annotationImage?.draw(at: point)
-            }
-            
-            locationStore.updateLocationThumbnail(image)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-}
-
-fileprivate struct CustomAnnotationInfo: Identifiable {
-    let id: UUID = UUID()
-    var name: String
-    var description: String
-    var latitude: Double
-    var longitude: Double
-}
-
-private struct CustomMapPinModifier: ViewModifier {
-    @Binding var isFlipped: Bool
-    let mapAnnotationType: MapAnnotationType
-    
-    func body(content: Content) -> some View {
-        switch mapAnnotationType {
-        case .fixed:
-            content
-        case .movable:
-            content
-                .rotation3DEffect( isFlipped == true ?
-                    .degrees(180) : .zero,
-                                   axis: (x: 0, y: 1, z: 0)
-                )
-                .animation(.default, value: isFlipped)
-        }
-        
-    }
 }
 
 #Preview {
-    HistoryItemLocationEditView(locationStore: LocationStore(), isShowingSheet: .constant(false), coordinateRegion: .constant(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: initialLatitude,
-            longitude: initialLongitude
-        ), latitudinalMeters: 500,
-        longitudinalMeters: 500
-    )))
+    HistoryItemLocationEditView(
+        locationStore: TKLocationStore(),
+        historyInfoStore: TKHistoryInfoStore(),
+        editCoordinateRegion: MKCoordinateRegion(
+            center:
+                CLLocationCoordinate2D(
+                    latitude: initialLatitude,
+                    longitude: initialLongitude
+                ),
+            latitudinalMeters: 500,
+            longitudinalMeters: 500
+        )
+    )
 }

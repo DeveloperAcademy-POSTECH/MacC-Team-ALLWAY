@@ -11,37 +11,11 @@ import SwiftUI
 
 struct HistoryInfoItemView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject private var locationStore: LocationStore
-    
-    @State private var isShowingSheet: Bool = false
-    @State private var isShowingAlert: Bool = false
-    @State private var text: String = "토크랫(5)"
-    @State private var textLimitMessage: String = ""
-    @State private var isChanged: Bool = false
-    @State private var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: initialLatitude,
-            longitude: initialLongitude
-        ),
-        latitudinalMeters: 500,
-        longitudinalMeters: 500
-    )
+    @EnvironmentObject private var locationStore: TKLocationStore
+    @StateObject  var historyInfoStore: TKHistoryInfoStore = TKHistoryInfoStore()
     @FocusState var isTextfieldFocused: Bool
-    
-    let sampleImageData: Data = UIImage(named: "TalklatLogo")!.pngData().unsafelyUnwrapped
-    
-    //MARK: 추후 전역 SwiftDataStore가 생기면 그걸 끌어오기
-    var dataStore: TKSwiftDataStore = TKSwiftDataStore()
-    // 그냥 Bindable로 받아와서 처리해주면 되지 않을까?
+    @State private var coordinateRegion = initialCoordinateRegion
     var conversation: TKConversation
-    
-    // 저장사항이 생긴지 아닌지를 판단하는 computed property
-    private var hasChanges: Bool {
-        guard conversation.title == text else { return true }
-        guard conversation.location?.latitude == coordinateRegion.center.latitude, conversation.location?.longitude == coordinateRegion.center.longitude else { return true }
-        guard conversation.location?.mapThumbnail == locationStore(\.mapThumbnail) else { return true }
-        return false
-    }
     
     var body: some View {
         VStack {
@@ -50,87 +24,127 @@ struct HistoryInfoItemView: View {
             
             mapThumbnailView
                 .clipShape(RoundedRectangle(cornerRadius: 22))
-                .clipped()
                 .padding()
-            
             
             Spacer()
         }
+        .onAppear {
+            historyInfoStore.reduce(\.text, into: conversation.title)
+            locationStore.reduce(\.infoPlaceName, into: "위치 정보 없음")
+            if
+                let latitude = conversation.location?.latitude,
+                let longitude = conversation.location?.longitude {
+                
+                // 저장되어있는것까지 확인
+                let startCoordinateRegion = MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(
+                        latitude: latitude,
+                        longitude: longitude
+                    ),
+                    latitudinalMeters: 500,
+                    longitudinalMeters: 500)
+                
+                historyInfoStore.reduce(
+                    \.infoCoordinateRegion,
+                     into: startCoordinateRegion
+                )
+                
+                historyInfoStore.reduce(
+                    \.editCoordinateRegion,
+                     into: startCoordinateRegion
+                )
+                
+                historyInfoStore.reduce(\.text, into: conversation.title)
+                
+                historyInfoStore.plantFlag(startCoordinateRegion)
+                
+                coordinateRegion.center.latitude = latitude
+                coordinateRegion.center.longitude = longitude
+                
+                locationStore.fetchCityName(
+                    startCoordinateRegion,
+                    cityNameType: .hybrid,
+                    usage: .infoAndEdit
+                )
+                
+                historyInfoStore.reduce(\.isNotChanged, into: true)
+            }
+        }
+        .ignoresSafeArea(.keyboard)
         .background {
             Color.BaseBGWhite
                 .onTapGesture {
                     isTextfieldFocused = false
                 }
         }
-        .sheet(isPresented: $isShowingSheet) {
-            HistoryItemLocationEditView(
-                locationStore: locationStore,
-                isShowingSheet: $isShowingSheet,
-                coordinateRegion: $coordinateRegion
-            )
-        }
-        .navigationTitle("정보")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    isTextfieldFocused = false
-                    dismiss()
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("대화")
+        .sheet(
+            isPresented:
+                historyInfoStore.bindingEditSheet()) {
+                    HistoryItemLocationEditView(
+                        locationStore: locationStore,
+                        historyInfoStore: historyInfoStore,
+                        editCoordinateRegion: MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(
+                                latitude: initialLatitude,
+                                longitude: initialLongitude
+                            ),
+                            latitudinalMeters: 500,
+                            longitudinalMeters: 500
+                        )
+                    )
+                }
+                .navigationTitle("정보")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            isTextfieldFocused = false
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                Text("대화")
+                            }
+                            .tint(Color.OR5)
+                        }
                     }
-                    .tint(Color.OR5)
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            //MARK: 저장 메서드
+                            isTextfieldFocused = false
+                            updateHistoryInfo()
+                            historyInfoStore.reduce(\.isNotChanged, into: true)
+                        } label: {
+                            Text("저장")
+                        }
+                        .tint(Color.OR5)
+                        .disabled(historyInfoStore(\.text).isEmpty)
+                        .disabled(historyInfoStore(\.isNotChanged))
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    //MARK: 저장 메서드
-                    isTextfieldFocused = false
-                } label: {
-                    Text("저장")
-                }
-                .tint(Color.OR5)
-                .disabled(text.isEmpty == true)
-            }
-        }
-        .onAppear {
-            text = conversation.title
-            guard
-                let latitude = conversation.location?.latitude,
-                let longitude = conversation.location?.longitude else { return }
-            coordinateRegion.center.latitude = latitude
-            coordinateRegion.center.longitude = longitude
-        }
     }
     
     private var textFieldView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(conversation.title)
+            Text("제목")
+                .font(.headline)
                 .padding(.leading, 10)
+                .padding(.bottom, 8)
                 .foregroundStyle(Color.gray)
             
             
-            TextField("", text: $text)
-                .onChange(of: text) {
-                    if text.count >= 30 {
-                        text = String(text.prefix(30))
-                        textLimitMessage = "30/30"
-                    } else if text.count == 0 {
-                        textLimitMessage = "한 글자 이상 입력해주세요."
-                    } else {
-                        textLimitMessage = "\(text.count)/30"
-                    }
+            TextField("", text: historyInfoStore.bindingText())
+                .onChange(of: historyInfoStore(\.text)) {
+                    historyInfoStore.updateTextLimitMessage()
                 }
                 .focused($isTextfieldFocused)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 22)
                         .fill(
-                            Color(uiColor: UIColor.systemGray5)
+                            Color.GR1
                         )
                 }
                 .frame(height: 44)
@@ -138,8 +152,8 @@ struct HistoryInfoItemView: View {
                     HStack {
                         Spacer()
                         Button {
-                            text = ""
-                            
+                            // textfield 텍스트 삭제 메서드
+                            historyInfoStore.reduce(\.text, into: "")
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(Color(uiColor: UIColor.systemGray3))
@@ -150,102 +164,130 @@ struct HistoryInfoItemView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
+                .padding(.bottom, 8)
             
-            Text(textLimitMessage)
+            Text(historyInfoStore(\.textLimitMessage))
                 .padding(.leading, 10)
-                .foregroundStyle(text.isEmpty ? Color.red : Color.gray )
-        }
-        .onAppear {
-            if text.isEmpty {
-                textLimitMessage = "한 글자 이상 입력해주세요."
-            } else {
-                textLimitMessage = "\(text.count)/30"
-            }
+                .foregroundStyle(historyInfoStore(\.text).isEmpty ? Color.red : Color.gray )
         }
     }
     
     private var mapThumbnailView: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("위치")
                 .font(.headline)
                 .padding(.leading, 10)
+                .padding(.bottom, 4)
                 .foregroundStyle(Color.GR5)
             
-            switch conversation.location?.mapThumbnail {
-            case nil:
+            if conversation.location == nil {
                 Button {
                     isTextfieldFocused = false
-                    isShowingSheet = true
+                    historyInfoStore.reduce(\.isShowingSheet, into: true)
                     
                 } label: {
                     Text("위치 정보 추가")
+                        .font(.headline)
+                        .foregroundStyle(Color.OR6)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background {
                             RoundedRectangle(cornerRadius: 22)
-                                .fill(Color(uiColor: UIColor.systemGray5))
-                            
+                                .fill(Color.GR1)
                         }
                 }
                 .tint(Color.OR5)
-                .padding(.vertical)
+            } else {
+                Map(coordinateRegion: historyInfoStore.bindingInfoCoordinate(),
+                    showsUserLocation: true,
+                    annotationItems: historyInfoStore(\.annotationItems)
+                ) { item in
+                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
+                        CustomMapAnnotation(
+                            type: MapAnnotationType.fixed,
+                            isFlipped: .constant(false)
+                        )
+                    }
+                }
                 
-            default:
-                Image(uiImage: UIImage(
-                    data: locationStore(\.mapThumbnail) ?? sampleImageData
-                )!)
-                    .clipShape(RoundedRectangle(cornerRadius: 22))
-                    .clipped()
-                    .aspectRatio(
-                        1.5,
-                        contentMode: .fit
-                    )
-                    .overlay {
-                        VStack {
+                .allowsHitTesting(false)
+                .aspectRatio(1.2 ,contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 22))
+                .overlay {
+                    VStack {
+                        Spacer()
+                        
+                        HStack {
+                            Text(locationStore(\.infoPlaceName))
+                            
                             Spacer()
                             
-                            HStack {
-                                Text(locationStore(\.selectedShortPlaceMark))
-                                
-                                Spacer()
-                                
-                                Button {
-                                    //MARK: 현재 위치 사용자 친화적인 주소로 바꿔주기
-                                    isTextfieldFocused = false
-                                    isShowingSheet = true
-                                } label: {
-                                    Text("조정")
-                                        .tint(Color.OR5)
-                                }
-                            }
-                            .padding()
-                            .background {
-                                Rectangle()
-                                    .fill(Color(uiColor: UIColor.systemGray3))
+                            Button {
+                                //MARK: 현재 위치 사용자 친화적인 주소로 바꿔주기
+                                isTextfieldFocused = false
+                                historyInfoStore.reduce(\.isShowingSheet, into: true)
+                            } label: {
+                                Text("조정")
+                                    .tint(Color.OR6)
                             }
                         }
+                        .padding()
+                        .background {
+                            Rectangle()
+                                .fill(Color(uiColor: UIColor.systemGray3))
+                        }
                     }
+                }
             }
+        }
+        .onChange(of: historyInfoStore(\.infoCoordinateRegion)) { _ in
+            historyInfoStore.reduce(\.isNotChanged, into: false)
+        }
+        .onChange(of: historyInfoStore(\.text)) { _ in
+            historyInfoStore.reduce(\.isNotChanged, into: false)
         }
     }
     
     private func updateHistoryInfo() {
         isTextfieldFocused = false
-        conversation.title = text
-        if conversation.location == nil {
-            // modelContext에서 새로 데이터 생성
-            conversation.location = TKLocation(
-                latitude: coordinateRegion.center.latitude,
-                longitude: coordinateRegion.center.longitude,
-                blockName: locationStore(\.selectedShortPlaceMark),
-                mapThumbnail: locationStore(\.mapThumbnail)
-            )
-        } else {
-            conversation.location?.latitude =  coordinateRegion.center.latitude
-            conversation.location?.longitude = coordinateRegion.center.longitude
-            conversation.location?.blockName = locationStore(\.selectedShortPlaceMark)
-            conversation.location?.mapThumbnail = locationStore(\.mapThumbnail)
+        conversation.title = historyInfoStore(\.text)
+        if let coordinate = historyInfoStore(\.infoCoordinateRegion)?.center {
+            if conversation.location == nil {
+                // modelContext에서 새로 데이터 생성
+                conversation.location = TKLocation(
+                    latitude: coordinate.latitude,
+                    longitude: coordinate.longitude,
+                    blockName: locationStore(\.infoPlaceName)
+                )
+            } else {
+                conversation.location?.latitude =  coordinate.latitude
+                conversation.location?.longitude = coordinate.longitude
+                conversation.location?.blockName = locationStore(\.infoPlaceName)
+            }
         }
     }
 }
 
+
+extension MKCoordinateRegion: Equatable {
+    public static func == (lhs: MKCoordinateRegion, rhs: MKCoordinateRegion) -> Bool {
+        if lhs.center.latitude == rhs.center.latitude,
+           lhs.center.longitude ==  rhs.center.longitude,
+           lhs.span.latitudeDelta == rhs.span.latitudeDelta,
+           lhs.span.longitudeDelta == rhs.span.longitudeDelta {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+#Preview {
+    HistoryInfoItemView(
+        historyInfoStore: TKHistoryInfoStore(),
+        conversation: TKConversation(
+            title: "title",
+            createdAt: .now,
+            content: [])
+    )
+}
