@@ -108,7 +108,6 @@ struct TKTextReplacementEditView: View {
                     }
                 }
             }
-//            .ignoresSafeArea()
         }
     }
     

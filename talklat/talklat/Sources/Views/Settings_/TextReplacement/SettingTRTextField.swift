@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: 텍스트 대치에서 사용하는 텍스트 필드인데, Setting-안내문구 뷰에서도 사용됩니다.
 struct SettingTRTextField: View {
     @Binding var text: String
     @FocusState var focusState: Bool

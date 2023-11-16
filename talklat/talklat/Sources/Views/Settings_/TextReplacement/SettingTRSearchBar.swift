@@ -42,7 +42,6 @@ struct SettingTRSearchBar: View {
                     store.onSearchingText()
                 }
             }
-            
             if store.focusState {
                 Button {
                     self.hideKeyboard()
