@@ -213,19 +213,11 @@ struct TKTypingView: View {
                 Text("종료")
                     .font(.headline)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(
-                        store(\.answeredText).isEmpty
-                        ? Color.GR7
-                        : Color.OR5
-                    )
+                    .foregroundStyle(endButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(
-                store(\.answeredText).isEmpty
-                ? Color.GR2
-                : Color.white
-            )
+            .tint(endButtonTintColor())
             .disabled(store(\.blockButtonDoubleTap))
         }
         .padding(.trailing, 24)
@@ -295,6 +287,26 @@ struct TKTypingView: View {
                 .padding(.trailing, 16)
         }
     }
+    
+    private func endButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.OR6
+        } else {
+            return Color.GR7
+        }
+    }
+    
+    private func endButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.white
+        } else if store(\.historyItems).isEmpty {
+            return Color.GR2
+        } else {
+            return Color.white
+        }
+    }
 }
 
 // MARK: 텍스트 대치 검사
@@ -319,5 +331,5 @@ extension TKTypingView {
 }
 
 #Preview {
-    TKConversationView(store: .init())
+    TKConversationView(store: TKConversationViewStore())
 }
