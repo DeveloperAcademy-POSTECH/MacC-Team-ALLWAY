@@ -95,7 +95,12 @@ struct TKTextReplacementEditView: View {
     }
     
     private func fetchTKTextReplacement(forPhrase phrase: String) -> TKTextReplacement? {
+        print(#function)
+        textReplacements.forEach {
+            print($0)
+        }
         let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(phrase) }
+        print(fetchedItems)
         return fetchedItems.last
     }
     

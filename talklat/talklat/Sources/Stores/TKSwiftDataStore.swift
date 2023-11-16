@@ -102,6 +102,7 @@ extension TKSwiftDataStore {
         newPhrase: String,
         newReplacement: String
     ) {
+        print(#function, newPhrase, newReplacement)
         oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
         dataManager.appendItem(oldTextReplacement)
         refreshData()

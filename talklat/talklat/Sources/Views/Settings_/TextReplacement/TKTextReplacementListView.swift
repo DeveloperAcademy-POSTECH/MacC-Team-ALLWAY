@@ -45,26 +45,24 @@ struct TKTextReplacementListView: View {
                 .background(Color.white)
                 
             } else {
-                ScrollView(showsIndicators: false) {
-                    if sortedGroupKeys.isEmpty {
-                        // MARK: 텅 뷰
-                        VStack {
-                            Spacer()
-                            Image(systemName: "bubble.left.and.bubble.right")
-                                .font(.system(size: 30))
-                                .foregroundColor(.GR3)
-                                .padding(.bottom, 30)
-                            
-                            Text("아직 설정한 텍스트 대치가 없어요")
-                                .foregroundStyle(Color.GR3)
-                                .font(.system(size: 17, weight: .medium))
-                        }
-                        .frame(
-                            maxHeight: .infinity,
-                            alignment: .center
-                        )
+                if sortedGroupKeys.isEmpty {
+                    // MARK: 텅 뷰
+                    VStack(spacing: 0){
+                        Image(systemName: "bubble.left.and.bubble.right")
+                            .font(.system(size: 30))
+                            .foregroundColor(.GR3)
+                            .padding(.bottom, 30)
                         
-                    } else {
+                        Text("아직 설정한 텍스트 대치가 없어요")
+                            .foregroundStyle(Color.GR3)
+                            .font(.system(size: 17, weight: .medium))
+                    }
+                    .frame(
+                        maxHeight: .infinity,
+                        alignment: .center
+                    )
+                } else {
+                    ScrollView(showsIndicators: false) {
                         ForEach(
                             sortedGroupKeys,
                             id: \.self
@@ -87,13 +85,13 @@ struct TKTextReplacementListView: View {
                             }
                         }
                     }
-                }
-                .frame(maxWidth: .infinity)
-                .overlay {
-                    // MARK: 목차
-                    if(!sortedGroupKeys.isEmpty) {
-                        SectionIndexTitles(proxy: proxy)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    .frame(maxWidth: .infinity)
+                    .overlay {
+                        // MARK: 목차
+                        if(!sortedGroupKeys.isEmpty) {
+                            SectionIndexTitles(proxy: proxy)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
                     }
                 }
             }
