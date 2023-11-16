@@ -68,7 +68,7 @@ struct TKGuidingView: View {
             .padding(.horizontal, 48)
             .padding(.bottom, 24)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(Color.BaseBGWhite)
         .background { Color.OR5.ignoresSafeArea() }
         .onReceive(guideTimer) { _ in
             if circleTrim <= 1.0 {

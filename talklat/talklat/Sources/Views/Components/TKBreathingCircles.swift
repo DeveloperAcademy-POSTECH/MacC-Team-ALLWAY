@@ -29,7 +29,7 @@ struct TKBreathingCircles: View {
             ) { circles in
                 Group {
                     Circle()
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color.BaseBGWhite)
                         .frame(
                             width: abs(proxy.size.width - circles.widthDiff),
                             alignment: .center

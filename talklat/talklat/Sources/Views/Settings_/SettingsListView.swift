@@ -164,7 +164,7 @@ func authNoticeBuilder(noticeItem: String) -> some View {
         
         Spacer()
     }
-    .foregroundColor(.white)
+    .foregroundColor(Color.BaseBGWhite)
     .frame(maxWidth: .infinity)
     .padding(20)
     .background(Color.OR5)

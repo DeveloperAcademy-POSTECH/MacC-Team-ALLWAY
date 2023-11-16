@@ -55,7 +55,7 @@ struct CustomAlertView<Button: View>: View {
                         .padding([.bottom, .leading])
                     
                     cancelButton
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(Color.BaseBGWhite)
                         .padding()
                         .background {
                             RoundedRectangle(cornerRadius: 16)
@@ -67,7 +67,7 @@ struct CustomAlertView<Button: View>: View {
             }
             .background {
                 RoundedRectangle(cornerRadius: 22)
-                    .fill(.white)
+                    .fill(Color.BaseBGWhite)
             }
         }
         .ignoresSafeArea()

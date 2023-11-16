@@ -57,7 +57,7 @@ struct HistoryInfoItemView: View {
             Spacer()
         }
         .background {
-            Color.white
+            Color.BaseBGWhite
                 .onTapGesture {
                     isTextfieldFocused = false
                 }

@@ -19,7 +19,7 @@ struct TKToast: View {
                 Image(systemName: "checkmark.circle.fill")
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(
-                        Color.white,
+                        Color.BaseBGWhite,
                         Color.OR5
                     )
                     .padding(.leading, 16)

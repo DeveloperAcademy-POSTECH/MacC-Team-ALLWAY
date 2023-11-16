@@ -85,7 +85,7 @@ struct HistoryItemLocationEditView: View {
                         locationStore.fetchCityName(coordinateRegion, of: .current)
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
-                            .fill(.white)
+                            .fill(Color.BaseBGWhite)
                             .frame(width: 95, height: 44)
                             .overlay {
                                 HStack {
@@ -103,7 +103,7 @@ struct HistoryItemLocationEditView: View {
                         
                     } label: {
                         Circle()
-                            .fill(.white)
+                            .fill(Color.BaseBGWhite)
                             .frame(width: 44)
                             .overlay {
                                 Image(systemName: "location.slash.fill")

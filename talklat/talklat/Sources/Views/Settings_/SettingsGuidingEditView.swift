@@ -33,7 +33,7 @@ struct SettingsGuidingEditView: View {
                     ? "안내 문구 적용화면 미리보기"
                     : "안내 문구 미리보기"
                 )
-                    .foregroundColor(.white)
+                .foregroundColor(.BaseBGWhite)
                     .font(.system(size: 17, weight: .bold))
                     .padding(.vertical, 17)
                     .frame(maxWidth: .infinity)

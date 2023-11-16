@@ -330,7 +330,7 @@ struct CellItem: View {
                 } label: {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
-                        .foregroundColor(.white)
+                        .foregroundColor(.BaseBGWhite)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 20)
                         .background(.red)
@@ -393,7 +393,7 @@ struct CustomDialog: View {
                         isEditing = false
                     } label: {
                         Text("네, 삭제할래요")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BaseBGWhite)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
                             .background(Color.red)
