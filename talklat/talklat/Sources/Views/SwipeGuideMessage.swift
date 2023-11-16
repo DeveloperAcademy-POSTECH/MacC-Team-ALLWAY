@@ -55,7 +55,7 @@ public func swipeGuideMessage(
             .foregroundColor(Color(.systemGray))
             .background {
                 Rectangle()
-                    .fill(Color.white)
+                    .fill(Color.BaseBGWhite)
             }
         }
         .frame(

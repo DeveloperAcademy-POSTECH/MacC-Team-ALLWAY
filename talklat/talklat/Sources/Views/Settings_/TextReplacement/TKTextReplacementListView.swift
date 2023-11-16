@@ -49,6 +49,7 @@ struct TKTextReplacementListView: View {
                     if sortedGroupKeys.isEmpty {
                         // MARK: 텅 뷰
                         VStack {
+                            Spacer()
                             Image(systemName: "bubble.left.and.bubble.right")
                                 .font(.system(size: 30))
                                 .foregroundColor(.GR3)

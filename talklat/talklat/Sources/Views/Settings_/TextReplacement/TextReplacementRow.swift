@@ -16,6 +16,7 @@ struct TextReplacementRow: View {
             Text(key)
                 .font(.system(size: 17, weight: .bold))
                 .foregroundStyle(Color.GR9)
+                .foregroundStyle(Color.GR7)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineSpacing(17 * 1.3 - 17)
                 .padding(.vertical, 11)
