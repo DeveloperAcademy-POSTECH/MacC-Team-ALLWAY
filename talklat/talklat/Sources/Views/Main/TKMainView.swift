@@ -5,11 +5,12 @@
 //  Created by Celan on 11/8/23.
 //
 
+import MapKit
 import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var locationStore: LocationStore
+    @EnvironmentObject private var locationStore: TKLocationStore
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -31,7 +32,10 @@ struct TKMainView: View {
                             Image(systemName: "location.slash.fill")
                         }
                         
-                        Text("\(locationStore(\.currentShortPlaceMark))")
+                        Text(locationStore(\.mainPlaceName))
+                            .onAppear {
+                                locationStore.fetchCityName(locationStore(\.currentUserCoordinate), cityNameType: .short, usage: .main)
+                            }
                     }
                     .foregroundStyle(Color.GR4)
 
@@ -110,9 +114,6 @@ struct TKMainView: View {
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
-        .onAppear {
-            locationStore.fetchCurrentCityName()
-        }
         .overlay {
             TKAlert(
                 style: .mic,

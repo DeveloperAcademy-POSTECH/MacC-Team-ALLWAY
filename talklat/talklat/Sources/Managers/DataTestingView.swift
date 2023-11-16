@@ -69,8 +69,7 @@ struct CreateConversationView: View {
             let location = TKLocation(
                 latitude: 0.2,
                 longitude: 3.0,
-                blockName: "위치 정보 없음",
-                mapThumbnail: nil
+                blockName: "위치 정보 없음"
             )
             
             let conversation = TKConversation(

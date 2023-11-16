@@ -12,7 +12,7 @@ import SwiftData
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
-    @StateObject var locationStore: LocationStore = LocationStore()
+    @StateObject var locationStore: TKLocationStore = TKLocationStore()
     private var container: ModelContainer
 
     
