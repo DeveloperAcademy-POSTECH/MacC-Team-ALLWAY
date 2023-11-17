@@ -116,7 +116,7 @@ struct SettingsListView: View {
                                     LoadingWebView()
                                     
                                 case .creators:
-                                    EmptyView()
+                                    SettingsTeamView()
                                
                                 case .needHelp:
                                     SettingsHelpView()

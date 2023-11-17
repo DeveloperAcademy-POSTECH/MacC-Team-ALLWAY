@@ -191,6 +191,7 @@
 		7EF7378C2AD3C87700FCBA21 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7EF737942AD3DE5600FCBA21 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737932AD3DE5600FCBA21 /* Constants.swift */; };
 		7EF737972AD43EE000FCBA21 /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737962AD43EE000FCBA21 /* TKTextField.swift */; };
+		7EF74B652B073DFB00DCBA82 /* SettingsTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */; };
 		7EFA2C282AD506050013B533 /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
 		7EFA2C2B2AD51FC80013B533 /* Double+Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */; };
 		7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */; };
@@ -319,6 +320,7 @@
 		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EF737932AD3DE5600FCBA21 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
+		7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
 		CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 				EF7BB32A2B03BB4100F8FEC9 /* SettingsGestureView.swift */,
 				EF7BB32C2B03BCC200F8FEC9 /* SettingsAppInfoView.swift */,
 				EF7BB3302B03CFC100F8FEC9 /* SettingsHelpView.swift */,
+				7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */,
 				EF7BB3372B03DF6600F8FEC9 /* SettingsGuidingView.swift */,
 				EF7BB3392B03E3EC00F8FEC9 /* SettingsGuidingEditView.swift */,
 				EF7BB33D2B03EC0A00F8FEC9 /* SettingsGuidingPreView.swift */,
@@ -989,6 +992,7 @@
 				CE0CBF172B0115900048C784 /* ChatMessageCell.swift in Sources */,
 				EF1162AE2AFCBB6F000D0F5B /* AWTextField.swift in Sources */,
 				7EFE53782AE6228300DF4D85 /* View+Keyboard.swift in Sources */,
+				7EF74B652B073DFB00DCBA82 /* SettingsTeamView.swift in Sources */,
 				CE1C43312AF8DB7700EC46C8 /* LocationDataManager.swift in Sources */,
 				7EAEECA12AFF8F810066B36C /* TKSavingView.swift in Sources */,
 				7EA146AD2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift in Sources */,

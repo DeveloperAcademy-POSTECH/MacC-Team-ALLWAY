@@ -158,6 +158,7 @@ struct SearchResultItem: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(matchingContent.conversation?.title ?? "TALKLAT TITLE")
                     .font(.headline)
+                    .foregroundStyle(Color.GR8)
                
                 // 검색 키워드와 일치하는 한 개의 TKContent.text
                 let matchingText =  String(
