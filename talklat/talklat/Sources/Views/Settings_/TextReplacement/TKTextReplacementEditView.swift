@@ -51,7 +51,7 @@ struct TKTextReplacementEditView: View {
                     } label: {
                         Text("텍스트 대치 삭제")
                             .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(Color.BaseBGWhite)
+                            .foregroundColor(Color.white)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.RED)
@@ -64,9 +64,9 @@ struct TKTextReplacementEditView: View {
         }
         .padding()
         .padding(.top, 8)
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+//        .onTapGesture {
+//            self.hideKeyboard()
+//        }
         .navigationTitle("편집")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
@@ -80,6 +80,7 @@ struct TKTextReplacementEditView: View {
                 .disabled(store.isSaveButtonDisabled)
                 .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
             }
+            
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     presentationMode.wrappedValue.dismiss()

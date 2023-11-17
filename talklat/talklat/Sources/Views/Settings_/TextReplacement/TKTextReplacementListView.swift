@@ -15,6 +15,7 @@ struct TKTextReplacementListView: View {
     @Query private var lists: [TKTextReplacement]
     
     @State private var selectedList: TKTextReplacement? = nil
+    @FocusState private var isTextFieldFocused: Bool
     
     var textReplacementManager = TKTextReplacementManager()
     
@@ -32,10 +33,10 @@ struct TKTextReplacementListView: View {
     
     var body: some View {
         VStack {
-            SettingTRSearchBar(store: store)
+            searchBarBuilder()
                 .padding(.horizontal, 16)
             
-            if store.focusState {
+            if store(\.isSearching) {
                 TKTextReplacementSearchView(
                     store: store,
                     selectedList: $selectedList,
@@ -43,6 +44,7 @@ struct TKTextReplacementListView: View {
                 )
                 
             } else {
+                // MARK: - 대체어 없음
                 if sortedGroupKeys.isEmpty {
                     // MARK: 텅 뷰
                     VStack(spacing: 0){
@@ -59,7 +61,9 @@ struct TKTextReplacementListView: View {
                         maxHeight: .infinity,
                         alignment: .center
                     )
-                } else {
+                }
+                // MARK: - 대체어가 있음
+                else if !sortedGroupKeys.isEmpty {
                     ScrollViewReader { proxy in
                         ScrollView(showsIndicators: false) {
                             ForEach(
@@ -96,10 +100,22 @@ struct TKTextReplacementListView: View {
                 }
             }
         }
-//        .onTapGesture {
-//            self.hideKeyboard()
-//        }
+        .navigationBarBackButtonHidden()
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        Text("설정")
+                            .font(.system(size: 17))
+                    }
+                    .tint(Color.OR5)
+                }
+            }
+            
             ToolbarItem(placement: .principal) {
                 Text("텍스트 대치")
                     .font(.system(size: 17, weight: .bold))
@@ -118,6 +134,7 @@ struct TKTextReplacementListView: View {
         }
         .background(Color.BaseBGWhite)
     }
+    
     // MARK: 리스트 정렬
     // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..
     var sortedGroupKeys: [String] {
@@ -179,6 +196,50 @@ struct TKTextReplacementListView: View {
                         .cornerRadius(16)
                     }
                 }
+            }
+        }
+    }
+    
+    private func searchBarBuilder() -> some View {
+        HStack {
+            // 검색 텍스트 필드
+            AWTextField(
+                style: .search,
+                text: store.bindingSearchText(),
+                placeholder: "검색"
+            ) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.GR4)
+            } trailingButton: {
+                if store(\.isSearching) {
+                    Button {
+                        store.onSearchTextRemoveButtonTapped()
+                        
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.GR4)
+                    }
+                }
+            }
+            .padding(.vertical, 7)
+            .focused($isTextFieldFocused)
+            .onChange(of: isTextFieldFocused) { oldValue, newValue in
+                if !oldValue,
+                   newValue {
+                    store.onSearchingText()
+                }
+            }
+            
+            if store(\.isSearching) {
+                Button {
+                    self.hideKeyboard()
+                    store.cancelSearchAndHideKeyboard()
+                    
+                } label: {
+                    Text("취소")
+                        .font(.system(size: 17))
+                }
+                .padding(.leading, 8)
             }
         }
     }

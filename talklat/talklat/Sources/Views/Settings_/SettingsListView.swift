@@ -145,6 +145,8 @@ struct SettingsListView: View {
                 } label: {
                     HStack {
                         Image(systemName: "chevron.left")
+                            .bold()
+                        
                         Text("홈")
                     }
                     .foregroundColor(Color.OR6)
