@@ -74,7 +74,7 @@ struct SettingsTeamView: View {
                 .cornerRadius(22)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
-                TeamOneView(emoji: "🐠", name: "리앤 Lianne", jobTitle: "iOS Developer", customMessage: "홍콩 마라주먹🥊 개발자 초이리앤")
+                TeamOneView(emoji: "🐠", name: "리앤 Lianne", jobTitle: "iOS Developer", customMessage: "버그를 잡았는데요, 안잡혔습니다.")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
                 TeamOneView(emoji: "🥐", name: "매들린 Madeline", jobTitle: "iOS Developer", customMessage: "do { try 행복 } catch { 야근 }")
