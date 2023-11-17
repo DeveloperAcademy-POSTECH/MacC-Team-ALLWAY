@@ -34,7 +34,7 @@ struct SettingsTeamView: View {
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
-                HStack {
+                HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
                         .foregroundColor(.BaseBGWhite)
@@ -66,6 +66,7 @@ struct SettingsTeamView: View {
                             Spacer()
                         }
                     }
+                    .padding(.leading, 12)
                     Spacer()
                 }
                 .padding(.vertical, 16)
@@ -74,6 +75,7 @@ struct SettingsTeamView: View {
                 .cornerRadius(22)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
+                
                 TeamOneView(emoji: "🐠", name: "리앤 Lianne", jobTitle: "iOS Developer", customMessage: "버그를 잡았는데요, 안잡혔습니다.")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
@@ -116,13 +118,14 @@ struct SettingsTeamView: View {
     }
 }
 
+
 struct TeamOneView: View {
     var emoji: String
     var name: String
     var jobTitle: String
     var customMessage: String
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
                 .foregroundColor(.BaseBGWhite)

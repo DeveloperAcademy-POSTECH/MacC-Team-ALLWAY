@@ -13,7 +13,9 @@ struct CircleRenderInfo: Hashable {
 }
 
 struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnimatable {
+    
     @ObservedObject var store: TKStore
+    @State private var degree: CGFloat = 0.0
     let circleRenderInfos: [CircleRenderInfo]
     let circleColor: Color
     
@@ -40,13 +42,11 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
                     width: proxy.size.width,
                     height: proxy.size.height
                 )
-                .rotationEffect(
-                    store(\.animationFlag) ? .degrees(180) : .degrees(-180)
-                )
+                .rotationEffect(.degrees(degree))
                 .animation(
                     Animation
                         .easeInOut
-                        .speed(0.02)
+                        .speed(0.03)
                         .repeatForever(autoreverses: false),
                     value: store(\.animationFlag)
                 )
@@ -55,9 +55,7 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
         .aspectRatio(1, contentMode: .fit)
         .task {
             store.triggerAnimation(true)
-        }
-        .onDisappear {
-            store.reduce(\.animationFlag, into: false)
+            degree = 360
         }
     }
 }

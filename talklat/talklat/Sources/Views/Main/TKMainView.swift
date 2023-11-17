@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var locationStore: TKLocationStore = TKLocationStore()
+    @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -89,11 +89,18 @@ struct TKMainView: View {
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
+                .onDisappear {
+                    conversationViewStore.resetConversationState()
+                }
+                .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
+                    if !old, new {
+                        store.onConversationFullscreenDismissed()
+                    }
+                }
                 .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
                     if isSaved {
                         self.recentConversation = swiftDataStore.getRecentConversation()
                         store.onNewConversationHasSaved()
-                        conversationViewStore.resetConversationState()
                     }
                 }
         }
@@ -150,7 +157,8 @@ struct TKMainView: View {
         }
         .overlay(alignment: .top) {
             if let recent = recentConversation,
-               let location = recent.location
+               let location = recent.location,
+               store(\.isTKToastPresented)
             {
                 TKToast(
                     isPresented: store.bindingTKToast(),

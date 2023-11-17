@@ -40,6 +40,7 @@ final class SpeechRecognizer: ObservableObject {
     // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
         recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
+        recognizer?.supportsOnDeviceRecognition = true
 //        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
         guard recognizer != nil else {
             transcribeFailed(RecognizerError.nilRecognizer)
@@ -111,6 +112,8 @@ final class SpeechRecognizer: ObservableObject {
         let audioEngine = AVAudioEngine()
         
         let request = SFSpeechAudioBufferRecognitionRequest()
+        
+        request.requiresOnDeviceRecognition = true
         request.addsPunctuation = true
         request.shouldReportPartialResults = true
         

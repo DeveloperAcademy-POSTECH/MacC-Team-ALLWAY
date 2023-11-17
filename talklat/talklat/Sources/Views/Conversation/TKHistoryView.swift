@@ -39,6 +39,7 @@ struct TKHistoryView: View {
                     .hidden()
                     .padding(.bottom, 16)
             }
+            .frame(maxWidth: .infinity)
             .scrollIndicators(.hidden)
             .padding(.bottom, 16)
         }
@@ -65,15 +66,7 @@ struct TKHistoryView: View {
                 EmptyView()
             }
         }
-        .background { checkColorScheme() }
-    }
-    
-    private func checkColorScheme() -> Color {
-        if colorScheme == .light {
-            return Color.white
-        } else {
-            return Color.black
-        }
+        .background { Color.BaseBGWhite }
     }
 }
 

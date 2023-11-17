@@ -26,7 +26,6 @@ struct TKTypingView: View {
                 NavigationStack {
                     TKHistoryView(store: store)
                         .frame(
-                            maxWidth: .infinity,
                             maxHeight: store(\.isTopViewShown)
                             ? .infinity
                             : 0
@@ -35,7 +34,7 @@ struct TKTypingView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .top).animation(.easeInOut(duration: 1.0)),
-                        removal: .move(edge: .top).animation(.easeInOut(duration: 1.0))
+                        removal: .move(edge: .top)
                     )
                 )
                 
@@ -203,6 +202,15 @@ struct TKTypingView: View {
     
     private func endConversationButtonBuilder() -> some View {
         HStack {
+            Button {
+                store.onConversationDismissButtonTapped()
+                
+            } label: {
+                Image(systemName: "xmark")
+                    .bold()
+            }
+            .tint(endButtonTintColor())
+            
             Spacer()
             
             Button {
@@ -211,7 +219,7 @@ struct TKTypingView: View {
                 }
                 
             } label: {
-                Text("종료")
+                Text("저장")
                     .font(.headline)
                     .padding(.horizontal, 6)
                     .foregroundStyle(endButtonTextColor())
@@ -221,7 +229,7 @@ struct TKTypingView: View {
             .tint(endButtonTintColor())
             .disabled(store(\.blockButtonDoubleTap))
         }
-        .padding(.trailing, 24)
+        .padding(.horizontal, 24)
     }
     
     private func customToolbar() -> some View {
@@ -285,7 +293,7 @@ struct TKTypingView: View {
             
             startRecordingButtonBuilder()
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing, 16)
+                .padding(.trailing, 24)
         }
     }
     

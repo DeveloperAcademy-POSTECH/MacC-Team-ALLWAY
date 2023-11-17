@@ -124,7 +124,7 @@ struct TKListeningView: View {
         .overlay(alignment: .bottom) {
             if store(\.conversationStatus) == .recording {
                 bottomListeningButtonBuilder()
-                    .padding(.trailing, 48)
+                    .padding(.trailing, 24)
                     .padding(.bottom, 24)
                     .transition(
                         .asymmetric(

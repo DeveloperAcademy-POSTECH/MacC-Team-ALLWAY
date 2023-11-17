@@ -69,7 +69,7 @@ struct TKGuidingView: View {
             .onAppear {
                 flag.toggle()
             }
-            .padding(.horizontal, 48)
+            .padding(.horizontal, 24)
             .padding(.bottom, 24)
         }
         .foregroundStyle(Color.white)

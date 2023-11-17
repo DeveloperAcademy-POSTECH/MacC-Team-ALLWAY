@@ -17,6 +17,8 @@ final class TKConversationViewStore {
     struct ConversationState: Equatable, TKAnimatable {
         var animationFlag: Bool = false
         
+        var isConversationFullScreenDismissed: Bool = false
+        
         var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
@@ -55,7 +57,11 @@ final class TKConversationViewStore {
     public let conversationTitleLimit: Int = 20
     
     public var isAnswerCardDisplayable: Bool {
-        !self(\.historyItems).isEmpty && self(\.conversationStatus) == .writing
+        if let recentHistoryItem = self(\.historyItem) {
+            return recentHistoryItem.text != "" && recentHistoryItem.type == .answer && self(\.conversationStatus) == .writing
+        } else {
+            return false
+        }
     }
     
     // MARK: Helpers
@@ -134,12 +140,15 @@ extension TKConversationViewStore {
                     : self(\.questionText),
                     type: self(\.conversationStatus) == .recording
                     ? .answer
-                    : .question
-                    ,
+                    : .question,
                     createdAt: .init()
                  )
             )
         }
+    }
+    
+    public func onConversationDismissButtonTapped() {
+        reduce(\.isConversationFullScreenDismissed, into: true)
     }
     
     public func onSaveNewConversationButtonTapped() {
@@ -212,12 +221,7 @@ extension TKConversationViewStore {
     
     public func onStartRecordingButtonTapped() {
         withAnimation {
-//            if UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
-//                switchConverstaionStatus()
-//            } else {
-                reduce(\.hasGuidingMessageShown, into: true)
-                switchConverstaionStatus()
-//            }
+            switchConverstaionStatus()
         }
         
         if !self(\.questionText).isEmpty {
@@ -281,7 +285,7 @@ extension TKConversationViewStore {
     }
     
     public func onDismissPreviewChevronButtonTapped() {
-        withAnimation {
+        withAnimation(.bouncy(duration: 1.0)) {
             reduce(\.isTopViewShown, into: false)
         }
     }

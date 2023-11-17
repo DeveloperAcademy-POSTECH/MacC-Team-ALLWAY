@@ -43,6 +43,10 @@ final class TKMainViewStore {
         )
     }
     
+    public func onConversationFullscreenDismissed() {
+        reduce(\.isConversationFullScreenCoverDisplayed, into: false)
+    }
+    
     public func onNewConversationHasSaved() {
         self.reduce(
             \.isConversationFullScreenCoverDisplayed,

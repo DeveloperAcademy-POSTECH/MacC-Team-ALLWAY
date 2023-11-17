@@ -30,9 +30,13 @@ struct TextReplacementRow: View {
                 .foregroundStyle(Color.GR5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .lineSpacing(15 * 1.35 - 15)
-                .padding(.vertical, 11)
+                .padding(.vertical, 12)
                 .padding(.leading, 16)
         }
-        .padding(.bottom, 8)
     }
+}
+
+#Preview {
+    TextReplacementRow(key: "hi", value: "yes")
+        .background { Color.yellow }
 }
