@@ -34,7 +34,6 @@ struct SettingsTeamView: View {
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
-                
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
@@ -68,7 +67,6 @@ struct SettingsTeamView: View {
                         }
                     }
                     .padding(.leading, 12)
-                    
                     Spacer()
                 }
                 .padding(.vertical, 16)
@@ -120,11 +118,6 @@ struct SettingsTeamView: View {
     }
 }
 
-#Preview(body: {
-    NavigationStack {
-        SettingsTeamView()
-    }
-})
 
 struct TeamOneView: View {
     var emoji: String

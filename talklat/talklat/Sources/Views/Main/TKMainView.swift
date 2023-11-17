@@ -115,8 +115,8 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    HistoryListView()
-                    
+//                    HistoryListView()
+                    SettingsTeamView()
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
                         .foregroundStyle(Color.GR3)
