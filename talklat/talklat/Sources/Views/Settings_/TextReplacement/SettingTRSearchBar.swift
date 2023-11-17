@@ -34,18 +34,17 @@ struct SettingTRSearchBar: View {
             }
             .padding(.vertical, 7)
             .focused($isTextFieldFocused)
-            .onChange(of: isTextFieldFocused) { newValue in
-                store.focusState = true
-            }
             .onChange(of: store(\.searchText)) { newValue in
                 if !newValue.isEmpty {
                     store.onSearchingText()
                 }
             }
-            if store.focusState {
+            
+            if isTextFieldFocused {
                 Button {
                     self.hideKeyboard()
                     store.cancelSearchAndHideKeyboard()
+                    
                 } label: {
                     Text("취소")
                         .font(.system(size: 17))

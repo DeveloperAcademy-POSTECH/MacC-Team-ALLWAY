@@ -12,6 +12,7 @@ import SwiftData
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
+    @FocusState private var test: Bool
     private var container: ModelContainer
     
     init() {
