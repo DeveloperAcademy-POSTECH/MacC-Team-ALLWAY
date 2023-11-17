@@ -230,7 +230,7 @@ struct TKTextReplacementListView: View {
                 }
             }
             
-            if isTextFieldFocused {
+            if store(\.isSearching) {
                 Button {
                     self.hideKeyboard()
                     store.cancelSearchAndHideKeyboard()

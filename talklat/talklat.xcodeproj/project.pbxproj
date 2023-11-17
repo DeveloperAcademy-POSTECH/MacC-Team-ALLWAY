@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		572304FF2B00AF350098FFF5 /* TextReplacementViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */; };
 		572A82042B03300B00753516 /* Character+Consonant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572A82032B03300B00753516 /* Character+Consonant.swift */; };
+		574D418C2B05E662007EFE90 /* SettingsTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574D418B2B05E662007EFE90 /* SettingsTeamView.swift */; };
 		575677DF2AD6BE47002E01BE /* SignalExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677DE2AD6BE47002E01BE /* SignalExtractor.swift */; };
 		575677E12ADA6F13002E01BE /* TLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677E02ADA6F13002E01BE /* TLTextField.swift */; };
 		5769BF9D2AFB5B900036CF3D /* TKTextReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */; };
@@ -268,6 +269,7 @@
 /* Begin PBXFileReference section */
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
+		574D418B2B05E662007EFE90 /* SettingsTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
 		575677DE2AD6BE47002E01BE /* SignalExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalExtractor.swift; sourceTree = "<group>"; };
 		575677E02ADA6F13002E01BE /* TLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTextField.swift; sourceTree = "<group>"; };
 		5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementManager.swift; sourceTree = "<group>"; };
@@ -689,6 +691,7 @@
 				EF7BB3372B03DF6600F8FEC9 /* SettingsGuidingView.swift */,
 				EF7BB3392B03E3EC00F8FEC9 /* SettingsGuidingEditView.swift */,
 				EF7BB33D2B03EC0A00F8FEC9 /* SettingsGuidingPreView.swift */,
+				574D418B2B05E662007EFE90 /* SettingsTeamView.swift */,
 				EF7BB3352B03D68400F8FEC9 /* EmailView.swift */,
 				EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */,
 				EF75C6112B06184C00F83FFE /* LoadingWebView.swift */,
@@ -1142,6 +1145,7 @@
 				7E6640F42B038A5B00CDC6AB /* SpeechAuthManager.swift in Sources */,
 				7E6641262B03C03F00CDC6AB /* TKConversationViewStore.swift in Sources */,
 				7E6640F52B038A5B00CDC6AB /* SignalExtractor.swift in Sources */,
+				574D418C2B05E662007EFE90 /* SettingsTeamView.swift in Sources */,
 				7E6640F62B038A5B00CDC6AB /* SpeechRecognizer.swift in Sources */,
 				7E6640F72B038A5B00CDC6AB /* HapticManager.swift in Sources */,
 				7E6640F82B038A5B00CDC6AB /* TKTextReplacementManager.swift in Sources */,
@@ -1409,7 +1413,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
@@ -1447,7 +1452,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "Privacy - Speech Recognition Usage Description";
