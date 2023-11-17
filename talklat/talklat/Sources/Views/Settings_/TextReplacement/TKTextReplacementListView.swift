@@ -31,10 +31,9 @@ struct TKTextReplacementListView: View {
     }
     
     var body: some View {
-        // TODO: SearchBar
-        ScrollViewReader { proxy in
+        VStack {
             SettingTRSearchBar(store: store)
-            .padding(.horizontal, 16)
+                .padding(.horizontal, 16)
             
             if store.focusState {
                 TKTextReplacementSearchView(
@@ -42,65 +41,64 @@ struct TKTextReplacementListView: View {
                     selectedList: $selectedList,
                     lists: lists
                 )
-                .background(Color.BaseBGWhite)
                 
             } else {
-                ScrollView(showsIndicators: false) {
-                    if sortedGroupKeys.isEmpty {
-                        // MARK: 텅 뷰
-                        VStack {
-                            Spacer()
-                            Image(systemName: "bubble.left.and.bubble.right")
-                                .font(.system(size: 30))
-                                .foregroundColor(.GR3)
-                                .padding(.bottom, 30)
-                            
-                            Text("아직 설정한 텍스트 대치가 없어요")
-                                .foregroundStyle(Color.GR3)
-                                .font(.system(size: 17, weight: .medium))
-                        }
-                        .frame(
-                            maxHeight: .infinity,
-                            alignment: .center
-                        )
+                if sortedGroupKeys.isEmpty {
+                    // MARK: 텅 뷰
+                    VStack(spacing: 0){
+                        Image(systemName: "bubble.left.and.bubble.right")
+                            .font(.system(size: 30))
+                            .foregroundColor(.GR3)
+                            .padding(.bottom, 30)
                         
-                    } else {
-                        ForEach(
-                            sortedGroupKeys,
-                            id: \.self
-                        ) { groupKey in
-                            // MARK: 리스트의 Header
-                            Section(
-                                header:
-                                    Text(groupKey)
-                                    .id(groupKey)
-                                    .font(.subheadline)
-                                    .foregroundColor(.GR5)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 32)
-                                    .padding(.top, 24)
-                                    .lineSpacing(15 * 1.35 - 15)
-                            ) {
-                                listSection(groupKey)
-                                    .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
-                                    .padding(.horizontal, 16)
+                        Text("아직 설정한 텍스트 대치가 없어요")
+                            .foregroundStyle(Color.GR3)
+                            .font(.system(size: 17, weight: .medium))
+                    }
+                    .frame(
+                        maxHeight: .infinity,
+                        alignment: .center
+                    )
+                } else {
+                    ScrollViewReader { proxy in
+                        ScrollView(showsIndicators: false) {
+                            ForEach(
+                                sortedGroupKeys,
+                                id: \.self
+                            ) { groupKey in
+                                // MARK: 리스트의 Header
+                                Section(
+                                    header:
+                                        Text(groupKey)
+                                        .id(groupKey)
+                                        .font(.subheadline)
+                                        .foregroundColor(.GR5)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading, 32)
+                                        .padding(.top, 24)
+                                        .lineSpacing(15 * 1.35 - 15)
+                                ) {
+                                    listSection(groupKey)
+                                        .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
+                                        .padding(.horizontal, 16)
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            // MARK: 목차
+                            if(!sortedGroupKeys.isEmpty) {
+                                SectionIndexTitles(proxy: proxy)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
                             }
                         }
                     }
                 }
-                .frame(maxWidth: .infinity)
-                .overlay {
-                    // MARK: 목차
-                    if(!sortedGroupKeys.isEmpty && !store.focusState) {
-                        SectionIndexTitles(proxy: proxy)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-                }
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+//        .onTapGesture {
+//            self.hideKeyboard()
+//        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("텍스트 대치")

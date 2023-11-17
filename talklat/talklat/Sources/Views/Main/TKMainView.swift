@@ -35,7 +35,11 @@ struct TKMainView: View {
                             
                             Text("\(locationStore(\.mainPlaceName))")
                                 .onAppear {
-                                    locationStore.fetchCityName(locationStore(\.currentUserCoordinate), cityNameType: .short, usage: .main)
+                                    locationStore.fetchCityName(
+                                        locationStore(\.currentUserCoordinate),
+                                        cityNameType: .short,
+                                        usage: .main
+                                    )
                                 }
                         }
                     }
@@ -74,8 +78,14 @@ struct TKMainView: View {
                 alignment: .top
             )
             
-            // MARK: BottomSheet
-            TKDraggableList(store: store)
+            Text("새로운 위치 기반 기능이\n곧 찾아옵니다!")
+                .font(.headline)
+                .foregroundStyle(Color.OR6)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            
+//            // MARK: BottomSheet
+//            TKDraggableList(store: store)
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
@@ -149,6 +159,7 @@ struct TKMainView: View {
                 )
             }
         }
+        .environmentObject(locationStore)
     }
     
     private func startConversationButtonBuilder() -> some View {

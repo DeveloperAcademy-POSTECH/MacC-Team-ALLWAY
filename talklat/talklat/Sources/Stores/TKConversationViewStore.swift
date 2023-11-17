@@ -25,7 +25,16 @@ final class TKConversationViewStore {
         var hasGuidingMessageShown: Bool = false
         var hasSavingViewDisplayed: Bool = false
         var hasChevronButtonTapped: Bool = false
-        var historyItems: [HistoryItem] = []
+        var historyItems: [HistoryItem] = [
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+        ]
         var historyItem: HistoryItem?
         var blockButtonDoubleTap: Bool = false
         var isNewConversationSaved: Bool = false
@@ -203,12 +212,12 @@ extension TKConversationViewStore {
     
     public func onStartRecordingButtonTapped() {
         withAnimation {
-            if UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
-                switchConverstaionStatus()
-            } else {
+//            if UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
+//                switchConverstaionStatus()
+//            } else {
                 reduce(\.hasGuidingMessageShown, into: true)
                 switchConverstaionStatus()
-            }
+//            }
         }
         
         if !self(\.questionText).isEmpty {
@@ -257,13 +266,35 @@ extension TKConversationViewStore {
         HapticManager.sharedInstance.generateHaptic(.rigidTwice)
     }
     
+    @available(*, deprecated, renamed: "onPreviewChevronButton", message: "use onPreviewChevronButtonTapped")
     public func onChevronButtonTapped() {
         reduce(
             \.hasChevronButtonTapped,
-             into: self(\.hasChevronButtonTapped)
-             ? false
-             : true
+             into: !self(\.hasChevronButtonTapped)
         )
+    }
+    
+    public func onShowPreviewChevronButtonTapped() {
+        withAnimation {
+            reduce(\.isTopViewShown, into: true)
+        }
+    }
+    
+    public func onDismissPreviewChevronButtonTapped() {
+        withAnimation {
+            reduce(\.isTopViewShown, into: false)
+        }
+    }
+    
+    @MainActor
+    public func getTKContentFromHistory() async -> [TKContent] {
+        return self(\.historyItems).map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
     }
     
     public func onScrollOffsetChanged(_ value: Bool) {
