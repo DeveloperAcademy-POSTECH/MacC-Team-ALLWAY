@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct SettingTRTextField: View {
-    @State private var isTextEmpty: Bool = false
+// TODO: - SettingTRTextField와 합치기 (isTextEmpty 추가되는 스타일로 분리)
+struct SettingTextField: View {
+    @Binding var  isTextEmpty: Bool
     @Binding var text: String
     @FocusState var focusState: Bool
     
@@ -32,7 +33,6 @@ struct SettingTRTextField: View {
                 text: $text,
                 axis: .vertical
             )
-            .frame(height: 44)
             .onChange(of: text) { newValue in
                 if newValue.count > limit {
                     let lastCharIndex = text.index(
@@ -41,13 +41,11 @@ struct SettingTRTextField: View {
                     )
                     text = text.prefix(limit - 1) + String(text[lastCharIndex])
                 }
-                
-                // Handle empty guide message
-                handleEmptyText(text)
             }
             .padding(.horizontal, 16)
+            .padding(.vertical, 11)
             .background(Color.GR1)
-            .cornerRadius(22)
+            .cornerRadius(16)
             .safeAreaInset(edge: .bottom, content: {
                 HStack {
                     characterLimitViewBuilder(currentCount: text.count, limit: limit)
@@ -70,20 +68,9 @@ struct SettingTRTextField: View {
             .font(.system(size: 13, weight: .medium))
             .monospacedDigit()
             .foregroundColor(
-                currentCount == limit
-                ? .GR7
-                : .GR4
+                currentCount == limit || isTextEmpty
+                ? .RED
+                : .GR7
             )
-            .foregroundColor(
-                isTextEmpty
-                ? Color.RED
-                : Color.GR7
-            )
-    }
-    
-    private func handleEmptyText(_ text: String) {
-        if text == "" {
-            isTextEmpty = true
-        }
     }
 }

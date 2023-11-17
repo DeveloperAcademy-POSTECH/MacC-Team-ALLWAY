@@ -22,7 +22,7 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
             
             switch chatMessage.type {
             case .answer:
-                bubbleBackgroundView.backgroundColor = UIColor(Color.accentColor)
+                bubbleBackgroundView.backgroundColor = UIColor(Color.OR5)
                 textView.textColor = .white
                 leadingConstraint.isActive = true
                 trailingConstraint.isActive = false
@@ -31,7 +31,7 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
             case .question:
                 bubbleBackgroundView.backgroundColor = UIColor(Color.GR1)
 
-                textView.textColor = .black
+                textView.textColor = UIColor(Color.GR7)
                 leadingConstraint.isActive = false
                 trailingConstraint.isActive = true
                 iconView.alpha = 0
@@ -51,7 +51,7 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
         iconView.layer.cornerRadius = 12
         iconView.setSymbolImage(UIImage(systemName: "waveform.circle.fill")!, contentTransition: .automatic)
         iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.tintColor = UIColor(Color.accentColor)
+        iconView.tintColor = UIColor(Color.OR5)
         addSubview(iconView)
         
         

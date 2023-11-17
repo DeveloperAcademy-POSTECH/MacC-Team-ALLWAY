@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var settingStore = TextReplacementViewStore(viewState: .init())
+    @StateObject private var store = TextReplacementViewStore(viewState: .init())
     
     @Query private var lists: [TKTextReplacement]
     
@@ -33,22 +33,23 @@ struct TKTextReplacementListView: View {
     var body: some View {
         // TODO: SearchBar
         ScrollViewReader { proxy in
-            SettingTRSearchBar(store: settingStore)
-            .padding(.horizontal)
+            SettingTRSearchBar(store: store)
+            .padding(.horizontal, 16)
             
-            if settingStore(\.isSearching) {
+            if store.focusState {
                 TKTextReplacementSearchView(
-                    store: settingStore,
+                    store: store,
                     selectedList: $selectedList,
                     lists: lists
                 )
-                .background(Color.white)
+                .background(Color.BaseBGWhite)
                 
             } else {
                 ScrollView(showsIndicators: false) {
                     if sortedGroupKeys.isEmpty {
                         // MARK: 텅 뷰
                         VStack {
+                            Spacer()
                             Image(systemName: "bubble.left.and.bubble.right")
                                 .font(.system(size: 30))
                                 .foregroundColor(.GR3)
@@ -90,31 +91,34 @@ struct TKTextReplacementListView: View {
                 .frame(maxWidth: .infinity)
                 .overlay {
                     // MARK: 목차
-                    if(!sortedGroupKeys.isEmpty) {
+                    if(!sortedGroupKeys.isEmpty && !store.focusState) {
                         SectionIndexTitles(proxy: proxy)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("텍스트 대치")
-                    .bold()
+                    .font(.system(size: 17, weight: .bold))
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    settingStore.showTextReplacementAddView()
+                    store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
-        .sheet(isPresented: settingStore.bindingToShowTextReplacementAddView()) {
+        .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView()
         }
-        .background(Color.white)
+        .background(Color.BaseBGWhite)
     }
     // MARK: 리스트 정렬
     // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..
@@ -130,10 +134,12 @@ struct TKTextReplacementListView: View {
                 return true
             }
 
-            // 영어를 그 다음으로 배치
-            if firstCharKey1?.isCharacterEnglish == true && firstCharKey2?.isCharacterEnglish == false {
+            // 영어 알파벳 간의 정렬 처리
+            if firstCharKey1?.isCharacterEnglish == true && firstCharKey2?.isCharacterEnglish == true {
+                return key1 < key2 // 영어끼리는 사전식으로 정렬
+            } else if firstCharKey1?.isCharacterEnglish == true {
                 return false
-            } else if firstCharKey1?.isCharacterEnglish == false && firstCharKey2?.isCharacterEnglish == true {
+            } else if firstCharKey2?.isCharacterEnglish == true {
                 return true
             }
 
@@ -154,9 +160,9 @@ struct TKTextReplacementListView: View {
             ) { key, values in
                 if let firstValue = values.first {
                     NavigationLink {
-                        TKTextReplacementEditView(store: settingStore)
+                        TKTextReplacementEditView(store: store)
                             .onAppear {
-                                settingStore.selectTextReplacement(
+                                store.selectTextReplacement(
                                     phrase: key,
                                     replacement: firstValue
                                 )
@@ -172,9 +178,7 @@ struct TKTextReplacementListView: View {
                             key: key,
                             value: displayValue
                         )
-                        .padding(.horizontal, 16)
                         .cornerRadius(16)
-                        
                     }
                 }
             }

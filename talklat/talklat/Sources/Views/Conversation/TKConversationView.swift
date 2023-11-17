@@ -301,7 +301,7 @@ extension TKConversationView {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .overlay {
                         Text("듣고 있어요")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BaseBGWhite)
                             .bold()
                     }
                     .background(alignment: .bottom) {

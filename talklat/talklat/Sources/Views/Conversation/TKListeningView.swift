@@ -75,7 +75,7 @@ struct TKListeningView: View {
                         curtainAlignment: .bottom
                     ), curtain: {
                         LinearGradient(
-                            colors: [.white, .clear],
+                            colors: [.BaseBGWhite, .clear],
                             startPoint: .bottom,
                             endPoint: .top
                         )

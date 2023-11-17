@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsGuidingEditView: View {
     @State private var hasContentChanged: Bool = false
+    @State private var isTextEmpty: Bool = false
     @State private var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
     ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
@@ -33,16 +34,22 @@ struct SettingsGuidingEditView: View {
                     ? "안내 문구 적용화면 미리보기"
                     : "안내 문구 미리보기"
                 )
-                    .foregroundColor(.white)
+                .foregroundColor(.BaseBGWhite)
                     .font(.system(size: 17, weight: .bold))
                     .padding(.vertical, 17)
                     .frame(maxWidth: .infinity)
-                    .background(Color.OR5)
+                    .background(
+                        isTextEmpty
+                        ? Color.GR3
+                        : Color.OR5
+                    )
                     .cornerRadius(22)
             }
+            .disabled(isTextEmpty)
             
             // GuidingMessage TextField
-            SettingTRTextField(
+            SettingTextField(
+                isTextEmpty: $isTextEmpty,
                 text: $guidingMessage,
                 title: "안내 문구",
                 placeholder: "",
@@ -82,10 +89,15 @@ struct SettingsGuidingEditView: View {
             hasContentChanged = true
             
             // Save guidingMessage
-            UserDefaults.standard.set(
-                self.guidingMessage,
-                forKey: "guidingMessage"
-            )
+            if guidingMessage != "" {
+                UserDefaults.standard.set(
+                    self.guidingMessage,
+                    forKey: "guidingMessage"
+                )
+                isTextEmpty = false
+            } else {
+                isTextEmpty = true
+            }
         }
     }
 }

@@ -20,66 +20,93 @@ struct TKTextReplacementEditView: View {
     let dataStore = TKSwiftDataStore()
 
     var body: some View {
-        VStack(spacing: 10) {
-            SettingTRTextField(
-                text: store.bindingPhraseTextField(),
-                focusState: _focusState,
-                title: "단축어",
-                placeholder: "아아",
-                limit: 20
-            )
-            
-            SettingTRTextField(
-                text: store.bindingReplacementTextField(),
-                title: "변환 문구",
-                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                limit: 160
-            )
-                .padding(.top, 36)
-            
-            Spacer()
-            
-            Button {
-                store.onShowDialogButtonTapped()
+        NavigationView {
+            VStack(spacing: 10) {
+                VStack {
+                    SettingTRTextField(
+                        text: store.bindingPhraseTextField(),
+                        focusState: _focusState,
+                        title: "단축어",
+                        placeholder: "아아",
+                        limit: 20
+                    )
+                    .focused($focusState)
+                    
+                    SettingTRTextField(
+                        text: store.bindingReplacementTextField(),
+                        title: "변환 문구",
+                        placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                        limit: 160
+                    )
+                    .focused($focusState)
+                    .padding(.top, 36)
+                }
                 
-            } label: {
-                Text("텍스트 대치 삭제")
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red)
-                    .cornerRadius(20)
+                Spacer()
+                
+                if !focusState {
+                    Button {
+                        store.onShowDialogButtonTapped()
+                    } label: {
+                        Text("텍스트 대치 삭제")
+                            .font(.system(size: 17, weight: .bold))
+                            .foregroundColor(Color.BaseBGWhite)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.RED)
+                            .cornerRadius(20)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
         }
         .padding()
         .padding(.top, 8)
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .navigationTitle("편집")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .disabled(store(\.isDialogShowing))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("저장") {
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 }
+                .disabled(store.isSaveButtonDisabled)
+                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
             }
-        }
-        .background {
-            if store(\.isDialogShowing) {
-                Color.black.opacity(0.5).ignoresSafeArea()
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        Text("목록")
+                            .font(.system(size: 17))
+                    }
+                    .tint(Color.OR5)
+                }
             }
         }
         .overlay {
-            TKAlert(
-                style: .removeTextReplacement,
-                isPresented: store.bindingReplacementRemoveAlert()
-            ) {
-                deleteTKTextReplacement()
-                
-            } actionButtonLabel: {
-                Text("네, 삭제할래요")
+            ZStack {
+                if store(\.isDialogShowing) {
+                    Color.GR9.opacity(0.5).ignoresSafeArea(.all)
+                    TKAlert(
+                        style: .removeTextReplacement,
+                        isPresented: store.bindingReplacementRemoveAlert()
+                    ) {
+                        deleteTKTextReplacement()
+                        
+                    } actionButtonLabel: {
+                        Text("네, 삭제할래요")
+                    }
+                }
             }
         }
     }
@@ -117,7 +144,7 @@ struct TextReplacementCustomDialog: View {
         GroupBox {
             VStack(spacing: 16) {
                 Image(systemName: "trash.fill")
-                    .foregroundColor(.red)
+                    .foregroundColor(.RED)
                     .font(.system(size: 20))
                 
                 Text("텍스트 대치 삭제")
@@ -148,16 +175,16 @@ struct TextReplacementCustomDialog: View {
                         
                     } label: {
                         Text("네, 삭제할래요")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BaseBGWhite)
                             .font(.system(size: 15, weight: .semibold))
                             .padding()
-                            .background(Color.red)
+                            .background(Color.RED)
                             .cornerRadius(16)
                     }
                 }
             }
         }
-        .background(Color.white)
+        .background(Color.BaseBGWhite)
         .cornerRadius(22)
         .frame(height: 240)
         .frame(maxWidth: .infinity)

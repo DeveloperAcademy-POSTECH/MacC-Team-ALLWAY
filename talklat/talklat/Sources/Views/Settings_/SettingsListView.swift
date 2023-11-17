@@ -13,7 +13,8 @@ private enum SectionType: String, CaseIterable {
     // case displayMode = "화면 모드"
     // case haptics = "진동"
     // case gesture = "제스처"
-    case appServiceInfo = "앱 및 서비스 정보"
+    // case appServiceInfo = "앱 및 서비스 정보"
+    case dataPolicyInfo = "개인정보 처리방침"
     case creators = "만든 사람들"
     case needHelp = "도움이 필요하신가요?"
     
@@ -23,7 +24,8 @@ private enum SectionType: String, CaseIterable {
         // case .displayMode: return "접근성"
         // case .haptics: return "일반"
         // case .gesture: return "실험실"
-        case .appServiceInfo, .creators: return "정보"
+        // .appServiceInfo -> .dataPolicyInfo
+        case .dataPolicyInfo, .creators: return "정보"
         case .needHelp: return "지원"
         }
     }
@@ -35,7 +37,8 @@ private enum SectionType: String, CaseIterable {
         // case .displayMode: return "sun.max.fill"
         // case .haptics: return "water.waves"
         // case .gesture: return "hands.and.sparkles.fill"
-        case .appServiceInfo: return "app.badge.fill"
+        // case .appServiceInfo: return "app.badge.fill"
+        case .dataPolicyInfo: return "app.badge.fill"
         case .creators: return "person.2.fill"
         case .needHelp: return "person.crop.circle.fill.badge.questionmark"
         }
@@ -43,9 +46,10 @@ private enum SectionType: String, CaseIterable {
 }
 
 struct SettingsListView: View {
+    @Environment(\.dismiss) var dismiss
+    
     @State private var authStatus: AuthStatus = .authCompleted
     
-    @State private var emailSubject: String = ""
     private let sectionCategories: [String] = [
         "대화", "정보", "지원" // TODO: - "접근성", "일반", "실험실" 추가
     ]
@@ -107,9 +111,9 @@ struct SettingsListView: View {
                                          )
                                      */
                                     
-                                case .appServiceInfo:
-                                    SettingsAppInfoView()
-                               
+                                case .dataPolicyInfo:
+                                    LoadingWebView()
+                                    
                                 case .creators:
                                     EmptyView()
                                
@@ -132,6 +136,20 @@ struct SettingsListView: View {
         .padding(.horizontal, 16)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("홈")
+                    }
+                    .foregroundColor(Color.OR6)
+                }
+            }
+        }
         .scrollIndicators(.hidden)
         .task {
             await authStatus = SpeechAuthManager.switchAuthStatus()
@@ -164,7 +182,7 @@ func authNoticeBuilder(noticeItem: String) -> some View {
         
         Spacer()
     }
-    .foregroundColor(.white)
+    .foregroundColor(Color.BaseBGWhite)
     .frame(maxWidth: .infinity)
     .padding(20)
     .background(Color.OR5)

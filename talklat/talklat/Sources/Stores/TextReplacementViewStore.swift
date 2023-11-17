@@ -1,5 +1,5 @@
 //
-//  SettingViewStore.swift
+//  TextReplacementViewStore.swift
 //  talklat
 //
 //  Created by 신정연 on 11/12/23.
@@ -21,12 +21,19 @@ final class TextReplacementViewStore: TKReducer {
         
         var selectedPhrase: String = ""
         var selectedReplacement: String = ""
-        
     }
     
     @Published var viewState: ViewState = ViewState()
+    @Published var focusState: Bool = false
     
     var selectedTextReplacement: TKTextReplacement? = nil
+    var originalPhrase: String = ""
+    var originalReplacement: String = ""
+    
+    var isSaveButtonDisabled: Bool {
+        viewState.selectedPhrase.isEmpty || viewState.selectedReplacement.isEmpty ||
+        (originalPhrase == viewState.selectedPhrase && originalReplacement == viewState.selectedReplacement)
+    }
     
     init(viewState: ViewState) {
         self.viewState = viewState
@@ -73,6 +80,14 @@ final class TextReplacementViewStore: TKReducer {
         self.reduce(\.selectedPhrase, into: phrase)
         self.reduce(\.selectedReplacement, into: replacement)
         self.reduce(\.showingTextReplacementEditView, into: true)
+        self.originalPhrase = phrase
+        self.originalReplacement = replacement
+    }
+    
+    func cancelSearchAndHideKeyboard() {
+        self.reduce(\.isSearching, into: false)
+        self.reduce(\.searchText, into: "")
+        self.focusState = false
     }
     
     func bindingPhraseTextField() -> Binding<String> {

@@ -5,11 +5,12 @@
 //  Created by Celan on 11/8/23.
 //
 
+import MapKit
 import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var locationStore: LocationStore
+    @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -23,15 +24,20 @@ struct TKMainView: View {
                 
                 VStack(spacing: 10) {
                     HStack(spacing: 2) {
-                        switch locationStore(\.authorizationStatus) {
-                        case .authorizedAlways, .authorizedWhenInUse:
-                            Image(systemName: "location.fill")
+                        if let status = locationStore(\.authorizationStatus) {
+                            switch status {
+                            case .authorizedAlways, .authorizedWhenInUse:
+                                Image(systemName: "location.fill")
+                                
+                            default:
+                                Image(systemName: "location.slash.fill")
+                            }
                             
-                        default:
-                            Image(systemName: "location.slash.fill")
+                            Text("\(locationStore(\.mainPlaceName))")
+                                .onAppear {
+                                    locationStore.fetchCityName(locationStore(\.currentUserCoordinate), cityNameType: .short, usage: .main)
+                                }
                         }
-                        
-                        Text("\(locationStore(\.currentShortPlaceMark))")
                     }
                     .foregroundStyle(Color.GR4)
 
@@ -81,6 +87,7 @@ struct TKMainView: View {
                     }
                 }
         }
+        .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Image("Talklat_Typo")
@@ -110,9 +117,6 @@ struct TKMainView: View {
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
-        .onAppear {
-            locationStore.fetchCurrentCityName()
-        }
         .overlay {
             TKAlert(
                 style: .mic,

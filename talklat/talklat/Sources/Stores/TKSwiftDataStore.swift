@@ -50,16 +50,17 @@ final class TKSwiftDataStore {
 
 // MARK: - Additional Methods
 extension TKSwiftDataStore {
-    // HistoryListView에서 쓰이는 specific fetch
+    // HistoryListView에서 쓰이는 specific fetch (TKLocation -> TKConversation)
     public func getLocationBasedConversations(location: TKLocation) -> [TKConversation] {
         let conversations = dataManager.getLocationMatchingConversations(location: location)
         return conversations
     }
     
-    // HistoryListSearchView에서 쓰이는 specific fetch
+    // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKLocation)
     public func getContentBasedLocations(contents: [TKContent]) -> [TKLocation] {
+        var locations: [TKLocation] = []
         contents.forEach { content in
-            var locations = dataManager.getContentMatchingLocations(content: content)
+            locations = dataManager.getContentMatchingLocations(content: content)
         }
         return filterDuplicatedBlockNames(locations: locations)
     }
@@ -75,6 +76,15 @@ extension TKSwiftDataStore {
         refreshData()
         return conversations.sorted { $0.createdAt > $1.createdAt }.first
     }
+    
+    // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
+//    public func getContentBasedConversations(content: [TKContent]) -> [TKConversation] {
+//        var conversations: [TKConversation] = []
+//        contents.forEach { content in
+//            conversations = dataManager.getContentMatchingConversations(content: content)
+//        }
+//        return conversations
+//    }
 }
 
 // MARK: TextReplacement Related

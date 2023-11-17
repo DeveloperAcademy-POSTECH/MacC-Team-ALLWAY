@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SettingTRSearchBar: View {
     @ObservedObject var store: TextReplacementViewStore
-
+    @FocusState private var isTextFieldFocused: Bool
+    
     var body: some View {
         HStack {
             // 검색 텍스트 필드
@@ -31,19 +32,25 @@ struct SettingTRSearchBar: View {
                     }
                 }
             }
-            .onChange(of: store(\.searchText)) { _, newValue in
+            .padding(.vertical, 7)
+            .focused($isTextFieldFocused)
+            .onChange(of: isTextFieldFocused) { newValue in
+                store.focusState = true
+            }
+            .onChange(of: store(\.searchText)) { newValue in
                 if !newValue.isEmpty {
                     store.onSearchingText()
                 }
             }
-
-            if store(\.isSearching) {
+            if store.focusState {
                 Button {
-                    store.onCancelSearch()
-                    
+                    self.hideKeyboard()
+                    store.cancelSearchAndHideKeyboard()
                 } label: {
                     Text("취소")
+                        .font(.system(size: 17))
                 }
+                .padding(.leading, 8)
             }
         }
     }
