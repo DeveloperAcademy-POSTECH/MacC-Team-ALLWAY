@@ -34,11 +34,11 @@
 | 강나린(린)   | 김상우(모카)   | 이소연(코비) | 이지수(지구) |
 |--------------|----------------|--------------|--------------|
 | `Project Manager` | `Designer`       | `Designer`     | `Project Manager` |
-| ![사진5](이미지링크) | ![사진6](이미지링크) | ![사진7](이미지링크) | ![사진8](이미지링크) |
+| <img src="https://avatars.githubusercontent.com/u/97780163?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/123388563?v=4" width=150> | <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/59e08e7e-f60c-4bd6-8ef1-7214f6ed70b3" width=150> | <img src="https://avatars.githubusercontent.com/u/128975136?v=4" width=150> |
 | 🍋           | ☕️            | 👃🏻          | 🌏           |
 
-
 ---
+
 
 ### 🟠 목적 및 가치
 
