@@ -27,13 +27,13 @@
 
 | 고석환(레츠) | 신정연(매들린) | 이승준(첼란) | 최예은(리앤) |
 |--------------|----------------|--------------|--------------|
-| Developer    | Developer      | Developer    | Developer    |
+| `Developer`    | `Developer`      | `Developer`    | `Developer`    |
 | <img src="https://avatars.githubusercontent.com/u/22471820?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/88757043?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/82270058?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/89244357?v=4" width=150> |
 | 🙃           | 🥐             | 🌿           | 🐠           |
 
 | 강나린(린)   | 김상우(모카)   | 이소연(코비) | 이지수(지구) |
 |--------------|----------------|--------------|--------------|
-| Project Manager | Designer       | Designer     | Project Manager |
+| `Project Manager` | `Designer`       | `Designer`     | `Project Manager` |
 | ![사진5](이미지링크) | ![사진6](이미지링크) | ![사진7](이미지링크) | ![사진8](이미지링크) |
 | 🍋           | ☕️            | 👃🏻          | 🌏           |
 
@@ -55,7 +55,7 @@
 <table>
 <tr>
 <td>
-#### [메인 화면]
+[메인 화면]
 <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/5d3454a2-b865-49d2-a77c-a765db0c595b" height="450">
 
 </td>
