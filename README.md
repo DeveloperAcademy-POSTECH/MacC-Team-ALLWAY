@@ -26,13 +26,13 @@
 ### 🟠 팀원 소개
 
 | 고석환(레츠) | 신정연(매들린) | 이승준(첼란) | 최예은(리앤) |
-|--------------|----------------|--------------|--------------|
+| :--------------: | :----------------: | :--------------: | :--------------: |
 | `Developer`    | `Developer`      | `Developer`    | `Developer`    |
 | <img src="https://avatars.githubusercontent.com/u/22471820?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/88757043?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/82270058?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/89244357?v=4" width=150> |
 | 🙃           | 🥐             | 🌿           | 🐠           |
 
 | 강나린(린)   | 김상우(모카)   | 이소연(코비) | 이지수(지구) |
-|--------------|----------------|--------------|--------------|
+| :--------------: | :--------------: | :--------------: | :--------------: |
 | `Project Manager` | `Designer`       | `Designer`     | `Project Manager` |
 | <img src="https://avatars.githubusercontent.com/u/97780163?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/123388563?v=4" width=150> | <img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/59e08e7e-f60c-4bd6-8ef1-7214f6ed70b3" width=150> | <img src="https://avatars.githubusercontent.com/u/128975136?v=4" width=150> |
 | 🍋           | ☕️            | 👃🏻          | 🌏           |
@@ -47,7 +47,6 @@
 - 일방향적 말하기가 아닌, 청인과 청각장애인의 **각자의 소통 방식을 존중**하는 대화를 제안합니다.
 - 청각장애인이 **일상에서 적극적으로** **다양한 선택지를 고민하고 선택**할 수 있도록 노력합니다.
 - **청인과 대면해 함께 대화하며 더불어 살아갈 수 있도록,** 이들 사이의 **원활한 소통**을 위해 노력합니다.
-
 
 ---
 
