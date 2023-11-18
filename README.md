@@ -55,24 +55,24 @@
 <tr>
 <td>
 [메인 화면]
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/5d3454a2-b865-49d2-a77c-a765db0c595b" height="450">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/5d3454a2-b865-49d2-a77c-a765db0c595b" height="400">
 
 </td>
 <td>
 [대화 화면]
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/3294f639-022b-4c9f-bc79-5609e217bfe9" height="450">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/3294f639-022b-4c9f-bc79-5609e217bfe9" height="400">
 
 
 </td>
 <td>
 [위치 기반 대화 정보]
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/49c738a1-e037-4c3e-9187-09a2ed8490a1" height="450">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/49c738a1-e037-4c3e-9187-09a2ed8490a1" height="400">
 
 
 </td>
 <td>
 [히스토리]
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6a623dd8-a703-48d1-8c0b-8cebef6e1131" height="450">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/6a623dd8-a703-48d1-8c0b-8cebef6e1131" height="400">
 
 </td>
 </tr>
