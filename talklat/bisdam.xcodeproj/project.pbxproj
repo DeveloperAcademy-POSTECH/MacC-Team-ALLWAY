@@ -293,13 +293,13 @@
 		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
 		7E892E402B0350CF00788DCF /* TKAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKAlert.swift; sourceTree = "<group>"; };
 		7E892E422B036A5900788DCF /* TKToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKToast.swift; sourceTree = "<group>"; };
-		7E8D17C12ACE8AEC00E904E5 /* talklat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talklat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17C12ACE8AEC00E904E5 /* bisdam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisdam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatApp.swift; sourceTree = "<group>"; };
 		7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17D12ACE8AED00E904E5 /* bisdamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bisdamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatTests.swift; sourceTree = "<group>"; };
-		7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = talklatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E8D17DB2ACE8AED00E904E5 /* bisdamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bisdamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITests.swift; sourceTree = "<group>"; };
 		7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talklatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Namespace.swift"; sourceTree = "<group>"; };
@@ -465,9 +465,9 @@
 		7E8D17C22ACE8AEC00E904E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7E8D17C12ACE8AEC00E904E5 /* talklat.app */,
-				7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */,
-				7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */,
+				7E8D17C12ACE8AEC00E904E5 /* bisdam.app */,
+				7E8D17D12ACE8AED00E904E5 /* bisdamTests.xctest */,
+				7E8D17DB2ACE8AED00E904E5 /* bisdamUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -706,9 +706,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7E8D17C02ACE8AEC00E904E5 /* talklat */ = {
+		7E8D17C02ACE8AEC00E904E5 /* bisdam */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklat" */;
+			buildConfigurationList = 7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdam" */;
 			buildPhases = (
 				7E8D17BE2ACE8AEC00E904E5 /* Frameworks */,
 				7E8D17BF2ACE8AEC00E904E5 /* Resources */,
@@ -718,14 +718,14 @@
 			);
 			dependencies = (
 			);
-			name = talklat;
+			name = bisdam;
 			productName = talklat;
-			productReference = 7E8D17C12ACE8AEC00E904E5 /* talklat.app */;
+			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7E8D17D02ACE8AED00E904E5 /* talklatTests */ = {
+		7E8D17D02ACE8AED00E904E5 /* bisdamTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatTests" */;
+			buildConfigurationList = 7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdamTests" */;
 			buildPhases = (
 				7E8D17CD2ACE8AED00E904E5 /* Sources */,
 				7E8D17CE2ACE8AED00E904E5 /* Frameworks */,
@@ -736,14 +736,14 @@
 			dependencies = (
 				7E8D17D32ACE8AED00E904E5 /* PBXTargetDependency */,
 			);
-			name = talklatTests;
+			name = bisdamTests;
 			productName = talklatTests;
-			productReference = 7E8D17D12ACE8AED00E904E5 /* talklatTests.xctest */;
+			productReference = 7E8D17D12ACE8AED00E904E5 /* bisdamTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7E8D17DA2ACE8AED00E904E5 /* talklatUITests */ = {
+		7E8D17DA2ACE8AED00E904E5 /* bisdamUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatUITests" */;
+			buildConfigurationList = 7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdamUITests" */;
 			buildPhases = (
 				7E8D17D72ACE8AED00E904E5 /* Sources */,
 				7E8D17D82ACE8AED00E904E5 /* Frameworks */,
@@ -754,9 +754,9 @@
 			dependencies = (
 				7E8D17DD2ACE8AED00E904E5 /* PBXTargetDependency */,
 			);
-			name = talklatUITests;
+			name = bisdamUITests;
 			productName = talklatUITests;
-			productReference = 7E8D17DB2ACE8AED00E904E5 /* talklatUITests.xctest */;
+			productReference = 7E8D17DB2ACE8AED00E904E5 /* bisdamUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -782,7 +782,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "talklat" */;
+			buildConfigurationList = 7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "bisdam" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -795,9 +795,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7E8D17C02ACE8AEC00E904E5 /* talklat */,
-				7E8D17D02ACE8AED00E904E5 /* talklatTests */,
-				7E8D17DA2ACE8AED00E904E5 /* talklatUITests */,
+				7E8D17C02ACE8AEC00E904E5 /* bisdam */,
+				7E8D17D02ACE8AED00E904E5 /* bisdamTests */,
+				7E8D17DA2ACE8AED00E904E5 /* bisdamUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1280,12 +1280,12 @@
 /* Begin PBXTargetDependency section */
 		7E8D17D32ACE8AED00E904E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E8D17C02ACE8AEC00E904E5 /* talklat */;
+			target = 7E8D17C02ACE8AEC00E904E5 /* bisdam */;
 			targetProxy = 7E8D17D22ACE8AED00E904E5 /* PBXContainerItemProxy */;
 		};
 		7E8D17DD2ACE8AED00E904E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E8D17C02ACE8AEC00E904E5 /* talklat */;
+			target = 7E8D17C02ACE8AEC00E904E5 /* bisdam */;
 			targetProxy = 7E8D17DC2ACE8AED00E904E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1420,7 +1420,7 @@
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TALKLAT;
+				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
@@ -1459,7 +1459,7 @@
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TALKLAT;
+				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need your location information due to additional features.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need your location information due to additional features.";
@@ -1503,7 +1503,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/talklat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/talklat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bisdam.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/bisdam";
 			};
 			name = Debug;
 		};
@@ -1523,7 +1523,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/talklat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/talklat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bisdam.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/bisdam";
 			};
 			name = Release;
 		};
@@ -1566,7 +1566,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "talklat" */ = {
+		7E8D17BC2ACE8AEC00E904E5 /* Build configuration list for PBXProject "bisdam" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E8D17E32ACE8AED00E904E5 /* Debug */,
@@ -1575,7 +1575,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklat" */ = {
+		7E8D17E52ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdam" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E8D17E62ACE8AED00E904E5 /* Debug */,
@@ -1584,7 +1584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatTests" */ = {
+		7E8D17E82ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdamTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E8D17E92ACE8AED00E904E5 /* Debug */,
@@ -1593,7 +1593,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "talklatUITests" */ = {
+		7E8D17EB2ACE8AED00E904E5 /* Build configuration list for PBXNativeTarget "bisdamUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E8D17EC2ACE8AED00E904E5 /* Debug */,
