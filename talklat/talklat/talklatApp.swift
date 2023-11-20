@@ -11,8 +11,8 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
+    @StateObject private var authManager: TKAuthManager = TKAuthManager()
     private var container: ModelContainer
     
     init() {
@@ -31,20 +31,33 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch store(\.authStatus) {
+                switch authManager.authStatus {
                 case .splash:
                     TKSplashView()
                         .task {
                             try? await Task.sleep(for: .seconds(3.0))
-                            let status = await SpeechAuthManager.switchAuthStatus()
-                            store.onVoiceAuthorizationObtained(status)
+                            withAnimation {
+                                authManager.checkOnboardingCompletion()
+                            }
                         }
                     
-                default:
+                case .onboarding,
+                        .authCompleted,
+                        .authIncompleted:
+                    TKOnboardingView(authManager: authManager)
+                        .transition(.opacity.animation(.easeInOut))
+                    
+                case .requestAuthComplete:
                     NavigationStack {
-                        TKMainView(store: store)
+                        TKMainView(authManager: authManager)
+                            .onAppear {
+                                locationStore.onMainViewAppear()
+                            }
                     }
                     .transition(.opacity.animation(.easeInOut))
+                    
+                default:
+                    Text("그럴리가")
                 }
             }
             .environmentObject(locationStore)
