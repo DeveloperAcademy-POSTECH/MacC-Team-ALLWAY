@@ -44,7 +44,6 @@ struct SettingsDisplayView: View {
                     colorSchemeManager.colorScheme = selectedTheme
                 }
             }
-
             Spacer()
         }
         .padding(.horizontal, 16)
