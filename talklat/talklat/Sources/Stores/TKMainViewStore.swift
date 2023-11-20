@@ -60,13 +60,11 @@ final class TKMainViewStore {
         }
     }
     
-    public func onChangeOfSpeechAuth(_ status: AuthStatus) {
-        switch status {
-        case .authCompleted:
-            self.reduce(\.authStatus, into: .authCompleted)
+    public func onChangeOfSpeechAuth(_ authorized: Bool) {
+        if authorized {
             self.reduce(\.isSpeechAuthAlertPresented, into: false)
             
-        default:
+        } else {
             self.reduce(\.isSpeechAuthAlertPresented, into: true)
         }
     }
