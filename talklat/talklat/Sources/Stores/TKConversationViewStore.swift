@@ -128,23 +128,19 @@ extension TKConversationViewStore {
     }
     
     public func onMakeNewConversationData() {
-        if let last = self(\.historyItems).last,
-           last != self(\.historyItem) {
-            // 만약 배열의 마지막 항목이 새로 업데이트 된 history Item이 아니라면 새로 만들어서 어펜드
-            reduce(
-                \.historyItem,
-                 into: HistoryItem(
-                    id: .init(),
-                    text: self(\.conversationStatus) == .recording
-                    ? self(\.answeredText)
-                    : self(\.questionText),
-                    type: self(\.conversationStatus) == .recording
-                    ? .answer
-                    : .question,
-                    createdAt: .init()
-                 )
-            )
-        }
+        reduce(
+            \.historyItem,
+             into: HistoryItem(
+                id: .init(),
+                text: self(\.conversationStatus) == .recording
+                ? self(\.answeredText)
+                : self(\.questionText),
+                type: self(\.conversationStatus) == .recording
+                ? .answer
+                : .question,
+                createdAt: .init()
+             )
+        )
     }
     
     public func onConversationDismissButtonTapped() {
