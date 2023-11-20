@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct TKOnboardingView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    #warning("추후 app 에서 호출하고 status를 관리하게 될 예정")
+    #warning("View 에서 로직 분리 필요")
+    @ObservedObject var authManager: TKAuthManager
+    
     struct OnboardingInfo: Equatable {
         var step: Int
         var title: String
@@ -57,14 +62,25 @@ struct TKOnboardingView: View {
             }
             
             if case .complete = onboardingStep {
-                VStack {
+                VStack(alignment: .leading) {
                     // MARK: CONDITION
-                    Text(Constants.Onboarding.ALL_AUTH)
-                        .font(.largeTitle)
-                        .bold()
-                        .lineSpacing(17)
-                        .foregroundStyle(Color.OR6)
-                    
+                    if authManager.authStatus == .authCompleted {
+                        Text(Constants.Onboarding.ALL_AUTH)
+                            .font(.largeTitle)
+                            .bold()
+                            .lineSpacing(17)
+                            .foregroundStyle(Color.OR6)
+                        
+                    } else if authManager.authStatus == .authIncompleted {
+                        Text(Constants.Onboarding.NOT_ALL_AUTH)
+                            .font(.largeTitle)
+                            .bold()
+                            .lineSpacing(17)
+                            .foregroundStyle(Color.OR6)
+                            .padding(.bottom, 32)
+                        
+                        eachAuthStatusView()
+                    }
                 }
                 .frame(
                     maxWidth: .infinity,
@@ -79,9 +95,15 @@ struct TKOnboardingView: View {
         .safeAreaInset(edge: .bottom) {
             onboardingBottomFooter(info: onboardInfo)
         }
+        .onChange(of: scenePhase) { previousScene, currentScene in
+            if previousScene == .inactive,
+               currentScene == .active {
+                proceedOnboardingStep()
+            }
+        }
     }
     
-    private func routeOnboarding() {
+    private func proceedOnboardingStep() {
         switch onboardingStep {
         case .start:
             withAnimation {
@@ -123,6 +145,86 @@ struct TKOnboardingView: View {
                 onboardingStep = .start
             }
         }
+    }
+    
+    private func requestAuthorize() {
+        switch onboardingStep {
+        case .mic:
+            Task {
+                await authManager.getMicrophoneAuthStatus()
+            }
+            
+        case .speech:
+            Task {
+                await authManager.getSpeechRecognitionAuthStatus()
+            }
+            
+        case .location:
+            Task {
+                await authManager.getLocationAuthStatus()
+                authManager.checkAuthorizedCondition()
+            }
+            
+        case .complete:
+            authManager.onOnboardingCompleted()
+            
+        default:
+            break
+        }
+    }
+    
+    private func eachAuthStatusView() -> some View {
+        VStack(
+            alignment: .leading,
+            spacing: 16
+        ) {
+            HStack {
+                Image(
+                    systemName: authManager.isMicrophoneAuthorized
+                    ? "checkmark.circle.fill"
+                    : "xmark.circle.fill"
+                )
+                .foregroundStyle(
+                    authManager.isMicrophoneAuthorized
+                    ? Color.green
+                    : Color.RED
+                )
+                
+                Text("마이크 접근 권한")
+            }
+            
+            HStack {
+                Image(
+                    systemName: authManager.isSpeechRecognitionAuthorized
+                    ? "checkmark.circle.fill"
+                    : "xmark.circle.fill"
+                )
+                .foregroundStyle(
+                    authManager.isSpeechRecognitionAuthorized
+                    ? Color.green
+                    : Color.RED
+                )
+                
+                Text("음성 인식 접근 권한")
+            }
+            
+            HStack {
+                Image(
+                    systemName: authManager.isLocationAuthorized
+                    ? "checkmark.circle.fill"
+                    : "xmark.circle.fill"
+                )
+                .foregroundStyle(
+                    authManager.isLocationAuthorized
+                    ? Color.green
+                    : Color.RED
+                )
+                
+                Text("위치 접근 권한")
+            }
+            
+        }
+        .font(.subheadline.weight(.semibold))
     }
     
     private func onboardingStartGuideView() -> some View {
@@ -171,7 +273,12 @@ struct TKOnboardingView: View {
             }
             
             Button {
-                routeOnboarding()
+                if onboardingStep == .start {
+                    proceedOnboardingStep()
+                    
+                } else {
+                    requestAuthorize()
+                }
                 
             } label: {
                 Text(
@@ -240,5 +347,5 @@ struct TKOnboardingView: View {
 }
 
 #Preview {
-    TKOnboardingView()
+    TKOnboardingView(authManager: .init())
 }
