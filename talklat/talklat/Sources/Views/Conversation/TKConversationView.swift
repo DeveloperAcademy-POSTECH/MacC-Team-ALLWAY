@@ -69,14 +69,16 @@ struct TKConversationView: View {
                 store.onDismissSavingViewButtonTapped()
             }
         ) {
-            TKSavingView(store: store)
-                .onDisappear {
-                    speechRecognizeManager.startTranscribing()
-                }
-                .onAppear {
-                    speechRecognizeManager.stopAndResetTranscribing()
-                    store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
-                }
+            TKSavingView(
+                store: store,
+                speechRecognizeManager: speechRecognizeManager
+            )
+            .onDisappear {
+                speechRecognizeManager.startTranscribing()
+            }
+            .onAppear {
+                speechRecognizeManager.stopAndResetTranscribing()
+            }
         }
         .onChange(of: store(\.conversationStatus)) { _, newStatus in
             switch newStatus {

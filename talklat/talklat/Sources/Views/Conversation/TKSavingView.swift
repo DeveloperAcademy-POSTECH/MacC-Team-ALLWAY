@@ -12,6 +12,7 @@ struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKConversationViewStore
+    @ObservedObject var speechRecognizeManager: SpeechRecognizer
     @Environment(\.dismiss) private var dismiss
     let swiftDataStore = TKSwiftDataStore()
     
@@ -123,6 +124,7 @@ struct TKSavingView: View {
     }
     
     private func makeNewConversation() -> some PersistentModel {
+        store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
         store.onMakeNewConversationData()
         
         let newContents = store(\.historyItems).map {
@@ -152,7 +154,7 @@ struct TKSavingView: View {
         .sheet(
             isPresented: .constant(true)
         ) {
-            TKSavingView(store: .init())
+            TKSavingView(store: .init(), speechRecognizeManager: .init())
                 .environmentObject(TKLocationStore())
         }
 }
