@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4B2B0B3BC600ECF34B /* BDText.swift */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -131,6 +132,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5713DC4B2B0B3BC600ECF34B /* BDText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDText.swift; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
 		574D418B2B05E662007EFE90 /* SettingsTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
@@ -267,6 +269,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5713DC4A2B0B3B9100ECF34B /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				5713DC4B2B0B3BC600ECF34B /* BDText.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		57806D7E2AE28E85003A7B19 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -476,6 +486,7 @@
 		7EF737952AD43E8300FCBA21 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5713DC4A2B0B3B9100ECF34B /* DesignSystem */,
 				7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */,
 				575677E02ADA6F13002E01BE /* TLTextField.swift */,
 				7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */,
@@ -747,6 +758,7 @@
 				7EBD31342B0B2B1300D5514D /* TKHistoryInfoStore.swift in Sources */,
 				7EBD31352B0B2B1300D5514D /* TKDataManager.swift in Sources */,
 				7EBD31362B0B2B1300D5514D /* SpeechAuthManager.swift in Sources */,
+				5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */,
 				7EBD31372B0B2B1300D5514D /* SignalExtractor.swift in Sources */,
 				7EBD31382B0B2B1300D5514D /* SpeechRecognizer.swift in Sources */,
 				7EBD31392B0B2B1300D5514D /* HapticManager.swift in Sources */,
@@ -957,7 +969,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 231117;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;
@@ -996,7 +1008,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 231117;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;
