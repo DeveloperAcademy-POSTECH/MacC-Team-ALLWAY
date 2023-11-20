@@ -113,6 +113,10 @@ struct TKSavingView: View {
                     .animation(.none, value: store(\.conversationTitle))
             }
         }
+        .task {
+            let allConversations = swiftDataStore.getAllConversation()
+            store.onSaveConversationSheetApeear(allConversations.count)
+        }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)

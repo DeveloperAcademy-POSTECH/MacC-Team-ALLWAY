@@ -70,6 +70,13 @@ struct TKConversationView: View {
             }
         ) {
             TKSavingView(store: store)
+                .onDisappear {
+                    speechRecognizeManager.startTranscribing()
+                }
+                .onAppear {
+                    speechRecognizeManager.stopAndResetTranscribing()
+                    store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
+                }
         }
         .onChange(of: store(\.conversationStatus)) { _, newStatus in
             switch newStatus {
@@ -83,14 +90,6 @@ struct TKConversationView: View {
             case .recording:
                 speechRecognizeManager.startTranscribing()
                 break
-            }
-        }
-        .onChange(of: store(\.hasSavingViewDisplayed)) { oldValue, newValue in
-            if !oldValue, newValue {
-                speechRecognizeManager.stopAndResetTranscribing()
-                
-            } else if oldValue, !newValue {
-                speechRecognizeManager.startTranscribing()
             }
         }
         // MARK: - Flip Gesture OnChange Has been Deprecated

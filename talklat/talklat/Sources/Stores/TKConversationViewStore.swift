@@ -41,6 +41,8 @@ final class TKConversationViewStore {
         var blockButtonDoubleTap: Bool = false
         var isNewConversationSaved: Bool = false
         
+        var currentConversationCount: Int = 0
+        
         // scroll container related - TODO: ScrollStore 분리?
         var historyScrollViewHeight: CGFloat = 0
         var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
@@ -186,6 +188,11 @@ extension TKConversationViewStore {
         }
         reduce(\.blockButtonDoubleTap, into: true)
         completion()
+    }
+    
+    public func onSaveConversationSheetApeear(_ count: Int) {
+        reduce(\.currentConversationCount, into: count)
+        reduce(\.conversationTitle, into: self(\.conversationTitle) + "(\(self(\.currentConversationCount).description))")
     }
     
     public func onSaveConversationButtonTapped() {
