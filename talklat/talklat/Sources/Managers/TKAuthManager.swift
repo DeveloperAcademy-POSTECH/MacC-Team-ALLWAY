@@ -14,6 +14,8 @@ import SwiftUI
 public enum AuthStatus: String {
     case splash
     case authCompleted
+    case onboarding
+    case requestAuthComplete
     case microphoneAuthIncompleted = "마이크"
     case speechRecognitionAuthIncompleted = "음성 인식"
     case location = "위치"
@@ -27,12 +29,59 @@ public class TKAuthManager: ObservableObject {
     @Published public var isSpeechRecognitionAuthorized: Bool = false
     @Published public var isLocationAuthorized: Bool = false
     
+    private let isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "ONBOARDING")
+    
     init() { }
 }
 
 // MARK: - Switch Authorization Status
 /// Microphone, SpeechRecognition, Location의 권한 요청을 보내고 / 권한 여부를 저장합니다.
 extension TKAuthManager {
+    // 온보딩이 진행되었니?
+    public func checkOnboardingCompletion() {
+        if isOnboardingCompleted {
+            checkAuthorizedCondition()
+            authStatus = .requestAuthComplete
+            
+        } else {
+            authStatus = .onboarding
+        }
+    }
+    
+    // 온보딩이 끝났다면 권한을 다 가져오고 complete한다.
+    public func checkAuthorizedCondition() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask {
+                    await self.getMicrophoneAuthStatus()
+                }
+                
+                group.addTask {
+                    await self.getSpeechRecognitionAuthStatus()
+                }
+                
+                group.addTask {
+                    await self.getLocationAuthStatus()
+                }
+                
+                await group.waitForAll()
+            }
+        }
+        
+        if isMicrophoneAuthorized,
+           isSpeechRecognitionAuthorized,
+           isLocationAuthorized {
+            self.authStatus = .authCompleted
+        } else {
+            self.authStatus = .authIncompleted
+        }
+    }
+    
+    // Onboarding이 끝난 후
+    public func onOnboardingCompleted() {
+        UserDefaults.standard.setValue(true, forKey: "ONBOARDING")
+        authStatus = .requestAuthComplete
+    }
     
     @MainActor
     public func getMicrophoneAuthStatus() async {
