@@ -56,11 +56,20 @@ struct TKToast: View {
                 .move(edge: .top)
                 .combined(with: .opacity)
             )
+            .onTapGesture {
+                dismissToast()
+            }
             .task {
-                try? await Task.sleep(for: .seconds(3.0))
-                withAnimation {
-                    isPresented.toggle()
-                }
+                try? await Task.sleep(for: .seconds(2.5))
+                dismissToast()
+            }
+        }
+    }
+    
+    private func dismissToast() {
+        withAnimation {
+            if isPresented {
+                isPresented = false
             }
         }
     }
