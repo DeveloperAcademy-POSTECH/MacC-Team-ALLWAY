@@ -38,11 +38,12 @@ public enum Constants {
 
     enum Onboarding {
         static let GUIDE_MESSAGE: String =
-    """
-    토크랫을 이용하기 전,
-    원활한 사용을 위해
-    몇가지 설정을 해야 해요.
-    """
+        """
+        토크랫을 이용하기 전,
+        원활한 사용을 위해
+        몇가지 설정을 해야 해요.
+        """
+        
         static let MIC: String =
         """
         토크랫은 사용자가 대화하고자 하는
