@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -131,6 +132,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
 		574D418B2B05E662007EFE90 /* SettingsTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				572A82032B03300B00753516 /* Character+Consonant.swift */,
 				CE0CBF252B011EF70048C784 /* Date+Formatter.swift */,
 				7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */,
+				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				7EBD31242B0B2B1300D5514D /* SampleTKConversation.swift in Sources */,
 				7EBD31252B0B2B1300D5514D /* Double+Degree.swift in Sources */,
 				7EBD31262B0B2B1300D5514D /* Color+Hex.swift in Sources */,
+				5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */,
 				7EBD31272B0B2B1300D5514D /* View+Keyboard.swift in Sources */,
 				7EBD31282B0B2B1300D5514D /* String+Language.swift in Sources */,
 				7EBD31292B0B2B1300D5514D /* Character+Consonant.swift in Sources */,
