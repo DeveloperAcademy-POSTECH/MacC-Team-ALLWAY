@@ -83,6 +83,7 @@ struct SettingsListView: View {
                     Text(category)
                         .foregroundColor(.GR8)
                         .font(.system(size: 20, weight: .bold))
+                        .padding(.leading, 8)
                     
                     // Each Setting Cell
                     ForEach(SectionType.allCases, id: \.rawValue) { item in
@@ -135,6 +136,7 @@ struct SettingsListView: View {
             }
         }
         .padding(.horizontal, 16)
+        .padding(.top, 20)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
