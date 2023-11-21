@@ -43,17 +43,18 @@ struct TKGuidingView: View {
                 .lineSpacing(10)
                 .multilineTextAlignment(.leading)
             
-            Rectangle()
+            Spacer()
                 .frame(maxWidth: .infinity, maxHeight: 2)
-                .padding(.top, 20)
-                .padding(.bottom, 40)
+                .padding(.bottom, 32)
             
             Text(guide)
                 .font(.title2)
                 .bold()
+                .lineSpacing(10)
             
             Spacer()
         }
+        
         .padding(.horizontal, 24)
         .overlay(alignment: .bottom) {
             HStack {
