@@ -107,16 +107,17 @@ struct TKMainView: View {
         .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Image("Talklat_Typo")
+                Image("bisdam_typo")
                     .resizable()
-                    .frame(width: 115, height: 20)
+                    .frame(width: 56.15, height: 23.48)
                     .foregroundStyle(Color.OR5)
+                    .padding(.leading, 8)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-//                    HistoryListView()
-                    SettingsTeamView()
+                    HistoryListView()
+                    
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
                         .foregroundStyle(Color.GR3)
@@ -209,5 +210,6 @@ struct TKMainView: View {
 #Preview {
     NavigationStack {
         TKMainView(store: TKMainViewStore())
+            .environmentObject(TKLocationStore())
     }
 }

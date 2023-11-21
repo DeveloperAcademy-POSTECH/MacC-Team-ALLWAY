@@ -17,7 +17,7 @@ struct EmailView: UIViewControllerRepresentable {
         
         viewController.setToRecipients(["allway.team01a@gmail.com"])
         
-        viewController.setSubject("[TALKLAT]오류신고/문의하기")
+        viewController.setSubject("[BISDAM]오류신고/문의하기")
         
         let emailBody = "[필수1] iPhone 기종 \n - \n [필수2] iOS 버전 \n - \n [필수3] 문의 내용 \n - "
         viewController.setMessageBody(emailBody, isHTML: false)

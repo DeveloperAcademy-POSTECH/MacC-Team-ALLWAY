@@ -51,7 +51,7 @@ struct SettingsAppInfoView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 109)
                     
-                    Text("TALKLAT")
+                    Text("비스담")
                         .foregroundColor(.GR6)
                         .font(.system(size: 13, weight: .semibold))
                         .padding(.top, 20)

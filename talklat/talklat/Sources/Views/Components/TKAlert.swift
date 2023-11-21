@@ -143,7 +143,7 @@ extension TKAlert {
         switch alertStyle {
         case .mic:
             """
-            토크랫을 이용하기 위해
+            비스담을 이용하기 위해
             마이크 접근 권한을 허용해 주세요.
             """
         case .cancellation:
