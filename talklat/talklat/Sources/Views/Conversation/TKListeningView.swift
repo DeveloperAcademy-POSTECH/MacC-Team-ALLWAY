@@ -141,12 +141,11 @@ struct TKListeningView: View {
             Spacer()
             
             if store(\.answeredText).isEmpty {
-                Text("듣고 있어요")
-                    .font(.headline)
-                    .fontWeight(.black)
+                BDText(text: "듣고 있어요", style: .H1_B_130)
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
-                    .frame(minWidth: 110, minHeight: 50)
+                    .padding(.vertical, 10)
+                    .frame(minWidth: 110, minHeight: 42)
                     .background {
                         ZStack(alignment: .trailing) {
                             RoundedRectangle(
