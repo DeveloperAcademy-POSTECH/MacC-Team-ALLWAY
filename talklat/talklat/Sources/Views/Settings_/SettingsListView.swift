@@ -132,11 +132,10 @@ struct SettingsListView: View {
                         }
                     }
                 }
-                .padding(.bottom, 24)
+                .padding(.top, 24)
             }
         }
         .padding(.horizontal, 16)
-        .padding(.top, 20)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
