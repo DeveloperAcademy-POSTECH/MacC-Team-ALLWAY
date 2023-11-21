@@ -8,7 +8,26 @@
 import SwiftUI
 
 extension Color {
-    static var colorScheme = UITraitCollection.current.userInterfaceStyle
+    // BD app's custom colorScheme
+//    static var BDColorScheme: ColorScheme {
+//        get {
+//            return UserDefaults.standard.object(
+//                forKey: "BDColorScheme"
+//            ) as? ColorScheme ?? .unspecified
+//        }
+//        set {
+//            UserDefaults.standard.set(
+//                newValue.rawValue,
+//                forKey: "BDColorScheme"
+//            )
+//            UserDefaults.standard.synchronize()
+//        }
+//    }
+    
+    static var BDColorScheme: ColorScheme = .unspecified
+    
+    // system's colorScheme
+    static var systemColorScheme = UITraitCollection.current.userInterfaceStyle
     
     static var OR5: Color {
         get { Color(hex: "FF6838") }
@@ -20,120 +39,208 @@ extension Color {
     
     static var BaseBGWhite: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color.white
-            case .dark:
-                return Color(hex: "#000000")
-            case .unspecified:
-                return .white
-            @unknown default:
-                return .white
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#000000")
+                case .unspecified:
+                    return .white
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#000000")
+                case .unspecified:
+                    return .white
+                @unknown default:
+                    return .white
+                }
             }
         }
     }
     
     static var SheetBGWhite: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color.white
-            case .dark:
-                return Color(hex: "#272732")
-            case .unspecified:
-                return .white
-            @unknown default:
-                return .white
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#272732")
+                case .unspecified:
+                    return .white
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#272732")
+                case .unspecified:
+                    return .white
+                @unknown default:
+                    return .white
+                }
             }
         }
     }
     
     static var AlertBGWhite: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color.white
-            case .dark:
-                return Color(hex: "#3F3F49")
-            case .unspecified:
-                return .white
-            @unknown default:
-                return .white
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#3F3F49")
+                case .unspecified:
+                    return .white
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color.white
+                case .dark:
+                    return Color(hex: "#3F3F49")
+                case .unspecified:
+                    return .white
+                @unknown default:
+                    return .white
+                }
             }
         }
     }
     
     static var RED: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#F75927")
-            case .dark:
-                return Color(hex: "#FF0D2A")
-            case .unspecified:
-                return .red
-            @unknown default:
-                return .red
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#F75927")
+                case .dark:
+                    return Color(hex: "#FF0D2A")
+                case .unspecified:
+                    return .red
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#F75927")
+                case .dark:
+                    return Color(hex: "#FF0D2A")
+                case .unspecified:
+                    return .red
+                @unknown default:
+                    return .red
+                }
             }
         }
     }
-
+    
     static var GR1: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#F2F2F7")
-            case .dark:
-                return Color(hex: "#1A1A24")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#F2F2F7")
+                case .dark:
+                    return Color(hex: "#1A1A24")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#F2F2F7")
+                case .dark:
+                    return Color(hex: "#1A1A24")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR2: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#E5E5EB")
-            case .dark:
-                return Color(hex: "#272732")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#E5E5EB")
+                case .dark:
+                    return Color(hex: "#272732")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#E5E5EB")
+                case .dark:
+                    return Color(hex: "#272732")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR3: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#C0C0C8")
-            case .dark:
-                return Color(hex: "#3F3F49")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#C0C0C8")
+                case .dark:
+                    return Color(hex: "#3F3F49")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#C0C0C8")
+                case .dark:
+                    return Color(hex: "#3F3F49")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR4: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#9A9AA4")
-            case .dark:
-                return Color(hex: "#575761")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#9A9AA4")
+                case .dark:
+                    return Color(hex: "#575761")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#9A9AA4")
+                case .dark:
+                    return Color(hex: "#575761")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
@@ -144,60 +251,104 @@ extension Color {
     
     static var GR6: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#575761")
-            case .dark:
-                return Color(hex: "#9A9AA4")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#575761")
+                case .dark:
+                    return Color(hex: "#9A9AA4")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#575761")
+                case .dark:
+                    return Color(hex: "#9A9AA4")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR7: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#3F3F49")
-            case .dark:
-                return Color(hex: "#C0C0C8")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#3F3F49")
+                case .dark:
+                    return Color(hex: "#C0C0C8")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#3F3F49")
+                case .dark:
+                    return Color(hex: "#C0C0C8")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR8: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#272732")
-            case .dark:
-                return Color(hex: "#E5E5EB")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#272732")
+                case .dark:
+                    return Color(hex: "#E5E5EB")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#272732")
+                case .dark:
+                    return Color(hex: "#E5E5EB")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }
     
     static var GR9: Color {
         get {
-            switch colorScheme {
-            case .light:
-                return Color(hex: "#1A1A24")
-            case .dark:
-                return Color(hex: "#F2F2F7")
-            case .unspecified:
-                return Color.gray
-            @unknown default:
-                return Color.gray
+            if BDColorScheme != .unspecified {
+                switch BDColorScheme {
+                case .light:
+                    return Color(hex: "#1A1A24")
+                case .dark:
+                    return Color(hex: "#F2F2F7")
+                case .unspecified:
+                    return Color.gray
+                }
+            } else {
+                switch systemColorScheme {
+                case .light:
+                    return Color(hex: "#1A1A24")
+                case .dark:
+                    return Color(hex: "#F2F2F7")
+                case .unspecified:
+                    return Color.gray
+                @unknown default:
+                    return Color.gray
+                }
             }
         }
     }

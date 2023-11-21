@@ -111,6 +111,8 @@
 		7EBD31782B0B2B1300D5514D /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
+		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
+		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +216,8 @@
 		EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSwiftDataStore.swift; sourceTree = "<group>"; };
 		EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTestingView.swift; sourceTree = "<group>"; };
 		EF3F439D2AF7FF4700DFC98B /* TKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversation.swift; sourceTree = "<group>"; };
+		EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
+		EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayTestingView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAuthManager.swift; sourceTree = "<group>"; };
 		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
@@ -528,6 +532,7 @@
 				CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */,
 				5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */,
 				EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */,
+				EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -562,6 +567,7 @@
 				EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */,
 				EF75C6112B06184C00F83FFE /* LoadingWebView.swift */,
 				EF75C6132B06191000F83FFE /* WebView.swift */,
+				EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */,
 			);
 			path = Settings_;
 			sourceTree = "<group>";
@@ -737,6 +743,7 @@
 				7EBD31292B0B2B1300D5514D /* Character+Consonant.swift in Sources */,
 				7EBD312A2B0B2B1300D5514D /* Date+Formatter.swift in Sources */,
 				7EBD312B2B0B2B1300D5514D /* EnvironmentValues+Namespace.swift in Sources */,
+				EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */,
 				7EBD312C2B0B2B1300D5514D /* Constants.swift in Sources */,
 				7EBD312D2B0B2B1300D5514D /* TKMainViewStore.swift in Sources */,
 				7EBD312E2B0B2B1300D5514D /* TKConversationViewStore.swift in Sources */,
@@ -775,6 +782,7 @@
 				7EBD31512B0B2B1300D5514D /* EmailView.swift in Sources */,
 				7EBD31522B0B2B1300D5514D /* SettingTextField.swift in Sources */,
 				7EBD31532B0B2B1300D5514D /* LoadingWebView.swift in Sources */,
+				EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */,
 				7EBD31542B0B2B1300D5514D /* WebView.swift in Sources */,
 				7EBD31552B0B2B1300D5514D /* TKMainView.swift in Sources */,
 				7EBD31562B0B2B1300D5514D /* TKDraggableList.swift in Sources */,
@@ -957,7 +965,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 231117;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;
@@ -996,7 +1004,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 231117;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BISDAM;

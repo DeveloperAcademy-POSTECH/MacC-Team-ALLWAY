@@ -13,13 +13,16 @@ struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
+    @StateObject private var authManager: TKAuthManager = TKAuthManager()
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
+    
+//    @AppStorage("BDColorScheme") var colorScheme: ColorScheme = .unspecified
+    
     private var container: ModelContainer
     
     init() {
         do {
-            container = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
-            )
+            container = try ModelContainer(for: TKTextReplacement.self)
         } catch {
             fatalError("Failed to configure SwiftData container.")
         }
@@ -48,8 +51,19 @@ struct talklatApp: App {
                 }
             }
             .environmentObject(locationStore)
-            .onChange(of: scenePhase) { _, _ in
-                Color.colorScheme = UITraitCollection.current.userInterfaceStyle
+            .environmentObject(authManager)
+            .onChange(of: colorSchemeManager.colorScheme) { _, _ in
+                print("colorScheme Changed~~~~~~~~~~!!!!!!!!!!!!!!!!!")
+                Color.BDColorScheme = colorSchemeManager.colorScheme
+                print("color BDColorScheme: ", Color.BDColorScheme)
+            }
+            .environmentObject(colorSchemeManager)
+            .onAppear {
+                UserDefaults.standard.setValue(
+                    false,
+                    forKey: "_UIConstraintBasedLayoutLogUnsatisfiable"
+                )
+                colorSchemeManager.applyColorScheme()
             }
         }
         .modelContainer(container)

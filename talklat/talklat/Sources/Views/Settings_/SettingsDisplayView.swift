@@ -6,40 +6,59 @@
 //
 
 import SwiftUI
-
 struct SettingsDisplayView: View {
-    enum DisplayMode: String, CaseIterable {
-        case systemMode = "시스템 설정과 동일"
-        case lightMode = "밝은 모드"
-        case darkMode = "어두운 모드"
-    }
-
-    @Environment(\.colorScheme) var colorScheme
-   
-    @State private var selectedMode: DisplayMode = .systemMode
+    @Environment(\.colorScheme) var current
+    @EnvironmentObject var colorSchemeManager: ColorSchemeManager
+    
+    @State private var selectedTheme: ColorScheme = .dark
+    
+    @AppStorage("BDColorScheme") var BDColorScheme = ColorScheme.unspecified
     
     var body: some View {
         VStack {
-            ForEach(DisplayMode.allCases, id: \.self) { label in
-                TKListCell(label: label.rawValue) {
-                } trailingUI: {
-                    switch selectedMode {
-                    case .systemMode, .lightMode, .darkMode:
-                        if selectedMode == label {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 21))
-                                .onTapGesture {
-                                    selectedMode = label
-                                }
-                        } else {
-                            Image(systemName: "circlebadge")
-                                .font(.system(size: 26.8))
-                                .onTapGesture {
-                                    selectedMode = label
-                                }
-                        }
-                    }
+            TKListCell(label: "시스템과 동일") {
+            } trailingUI: {
+                if selectedTheme == ColorScheme.unspecified {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
                 }
+            }
+            .onTapGesture {
+                selectedTheme = ColorScheme.unspecified
+                colorSchemeManager.colorScheme = selectedTheme
+            }
+            
+            TKListCell(label: "밝은 모드") {
+            } trailingUI: {
+                if selectedTheme == ColorScheme.light {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
+                }
+            }
+            .onTapGesture {
+                selectedTheme = ColorScheme.light
+                colorSchemeManager.colorScheme = selectedTheme
+            }
+            
+            TKListCell(label:"어두운 모드") {
+            } trailingUI: {
+                if selectedTheme == ColorScheme.dark {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
+                }
+            }
+            .onTapGesture {
+                selectedTheme = ColorScheme.dark
+                colorSchemeManager.colorScheme = selectedTheme
             }
             
             Spacer()
@@ -48,17 +67,10 @@ struct SettingsDisplayView: View {
         .padding(.top, 24)
         .navigationTitle("화면 모드")
         .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    // TODO: - 지금은 작동이 안됨. 나중에 작업.
-    private func switchDisplayMode() -> ColorScheme {
-        switch selectedMode {
-        case .lightMode:
-            return ColorScheme.light
-        case .darkMode:
-            return ColorScheme.dark
-        default:
-            return ColorScheme.light
+        .onAppear {
+            selectedTheme = colorSchemeManager.colorScheme
+            
+            print("---> BDColorScheme: ", BDColorScheme)
         }
     }
 }
