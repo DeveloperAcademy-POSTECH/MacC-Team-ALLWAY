@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TKOnboardingView: View {
-    @Environment(\.scenePhase) private var scenePhase
     #warning("추후 app 에서 호출하고 status를 관리하게 될 예정")
     #warning("View 에서 로직 분리 필요")
     @ObservedObject var authManager: TKAuthManager
@@ -33,36 +32,28 @@ struct TKOnboardingView: View {
         title: "",
         description: ""
     )
-    
-    // 1. 이전 버전에서 권한을 일부 허용한 사용자
-    // 2. 권한 request를 했을 때, request 하는 버튼이 눌려도 아무 변화가 없다.
-    // 3. 이 때, 어떻게 분기처리 할 것인가?
-    // -> AuthStore가 init 될 때 상태 받아오기
-    
+        
     var body: some View {
         VStack {
             if case .start = onboardingStep {
                 onboardingStartGuideView()
             }
             
-            if case let .mic(info) = onboardingStep,
-               !authManager.isMicrophoneAuthorized {
+            if case let .mic(info) = onboardingStep {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
                 )
             }
             
-            if case let .speech(info) = onboardingStep,
-               !authManager.isSpeechRecognitionAuthorized {
+            if case let .speech(info) = onboardingStep {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
                 )
             }
             
-            if case let .location(info) = onboardingStep,
-               !authManager.isLocationAuthorized {
+            if case let .location(info) = onboardingStep {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
@@ -72,14 +63,14 @@ struct TKOnboardingView: View {
             if case .complete = onboardingStep {
                 VStack(alignment: .leading) {
                     // MARK: CONDITION
-                    if authManager.authStatus == .authCompleted {
+                    if authManager.hasAllAuthBeenObtained {
                         Text(Constants.Onboarding.ALL_AUTH)
                             .font(.largeTitle)
                             .bold()
                             .lineSpacing(17)
                             .foregroundStyle(Color.OR6)
                         
-                    } else if authManager.authStatus == .authIncompleted {
+                    } else {
                         Text(Constants.Onboarding.NOT_ALL_AUTH)
                             .font(.largeTitle)
                             .bold()
@@ -103,9 +94,20 @@ struct TKOnboardingView: View {
         .safeAreaInset(edge: .bottom) {
             onboardingBottomFooter(info: onboardInfo)
         }
-        .onChange(of: scenePhase) { previousScene, currentScene in
-            if previousScene == .inactive,
-               currentScene == .active {
+        .onChange(of: authManager.isMicrophoneAuthorized) { _, newValue in
+        #warning("추후 ViewState로 정리")
+            if newValue != nil {
+                proceedOnboardingStep()
+            }
+        }
+        .onChange(of: authManager.isSpeechRecognitionAuthorized) { _, newValue in
+            if newValue != nil {
+                proceedOnboardingStep()
+            }
+        }
+        .onChange(of: authManager.isLocationAuthorized) { _, newValue in
+            if newValue != nil {
+                authManager.checkCurrentAuthorizedCondition()
                 proceedOnboardingStep()
             }
         }
@@ -149,9 +151,7 @@ struct TKOnboardingView: View {
             }
             
         case .complete:
-            withAnimation(.spring().speed(0.6)){
-                onboardingStep = .start
-            }
+            authManager.onOnboardingCompleted()
         }
     }
     
@@ -159,28 +159,26 @@ struct TKOnboardingView: View {
         Task {
             switch onboardingStep {
             case .mic:
-                if !authManager.isMicrophoneAuthorized {
+                if authManager.isMicrophoneAuthorized == nil {
                     await authManager.getMicrophoneAuthStatus()
                 } else {
                     proceedOnboardingStep()
                 }
                 
             case .speech:
-                if !authManager.isSpeechRecognitionAuthorized {
+                if authManager.isSpeechRecognitionAuthorized == nil {
                     await authManager.getSpeechRecognitionAuthStatus()
                 } else {
                     proceedOnboardingStep()
                 }
                 
             case .location:
-                if !authManager.isLocationAuthorized {
+                if authManager.isLocationAuthorized == nil {
                     await authManager.getLocationAuthStatus()
-                    authManager.checkAuthorizedCondition()
                 } else {
                     proceedOnboardingStep()
-                    authManager.checkAuthorizedCondition()
                 }
-                
+                                
             case .complete:
                 authManager.onOnboardingCompleted()
                 
@@ -190,58 +188,63 @@ struct TKOnboardingView: View {
         }
     }
     
+    @ViewBuilder
     private func eachAuthStatusView() -> some View {
-        VStack(
-            alignment: .leading,
-            spacing: 16
-        ) {
-            HStack {
-                Image(
-                    systemName: authManager.isMicrophoneAuthorized
-                    ? "checkmark.circle.fill"
-                    : "xmark.circle.fill"
-                )
-                .foregroundStyle(
-                    authManager.isMicrophoneAuthorized
-                    ? Color.green
-                    : Color.RED
-                )
+        if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
+           let isSpeechRecognitionAuthorized = authManager.isSpeechRecognitionAuthorized,
+           let isLocationAuthorized = authManager.isLocationAuthorized {
+            VStack(
+                alignment: .leading,
+                spacing: 16
+            ) {
+                HStack {
+                    Image(
+                        systemName: isMicrophoneAuthorized
+                        ? "checkmark.circle.fill"
+                        : "xmark.circle.fill"
+                    )
+                    .foregroundStyle(
+                        isMicrophoneAuthorized
+                        ? Color.green
+                        : Color.RED
+                    )
+                    
+                    Text("마이크 접근 권한")
+                }
                 
-                Text("마이크 접근 권한")
-            }
-            
-            HStack {
-                Image(
-                    systemName: authManager.isSpeechRecognitionAuthorized
-                    ? "checkmark.circle.fill"
-                    : "xmark.circle.fill"
-                )
-                .foregroundStyle(
-                    authManager.isSpeechRecognitionAuthorized
-                    ? Color.green
-                    : Color.RED
-                )
+                HStack {
+                    Image(
+                        systemName: isSpeechRecognitionAuthorized
+                        ? "checkmark.circle.fill"
+                        : "xmark.circle.fill"
+                    )
+                    .foregroundStyle(
+                        isSpeechRecognitionAuthorized
+                        ? Color.green
+                        : Color.RED
+                    )
+                    
+                    Text("음성 인식 접근 권한")
+                }
                 
-                Text("음성 인식 접근 권한")
-            }
-            
-            HStack {
-                Image(
-                    systemName: authManager.isLocationAuthorized
-                    ? "checkmark.circle.fill"
-                    : "xmark.circle.fill"
-                )
-                .foregroundStyle(
-                    authManager.isLocationAuthorized
-                    ? Color.green
-                    : Color.RED
-                )
+                HStack {
+                    Image(
+                        systemName: isLocationAuthorized
+                        ? "checkmark.circle.fill"
+                        : "xmark.circle.fill"
+                    )
+                    .foregroundStyle(
+                        isLocationAuthorized
+                        ? Color.green
+                        : Color.RED
+                    )
+                    
+                    Text("위치 접근 권한")
+                }
                 
-                Text("위치 접근 권한")
             }
-            
+            .font(.subheadline.weight(.semibold))
         }
-        .font(.subheadline.weight(.semibold))
     }
     
     private func onboardingStartGuideView() -> some View {

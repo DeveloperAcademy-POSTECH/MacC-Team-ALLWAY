@@ -150,15 +150,6 @@ struct TKMainView: View {
                     Image(systemName: "arrow.up.right.square.fill")
                 }
             }
-            .onChange(of: scenePhase) { previousScene, currentScene in
-                if previousScene == .inactive,
-                   currentScene == .active {
-                    Task { @MainActor in
-                        await authManager.getMicrophoneAuthStatus()
-                        store.onChangeOfSpeechAuth(authManager.isMicrophoneAuthorized)
-                    }
-                }
-            }
         }
         .overlay(alignment: .top) {
             if let recent = recentConversation,
@@ -176,7 +167,8 @@ struct TKMainView: View {
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            if !authManager.isMicrophoneAuthorized {
+            if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
+               !isMicrophoneAuthorized {
                 store.onStartConversationButtonTappedWithoutAuth()
             } else {
                 store.onStartConversationButtonTapped()
