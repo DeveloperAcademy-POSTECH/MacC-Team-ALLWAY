@@ -93,9 +93,24 @@ struct TKConversationView: View {
                 speechRecognizeManager.startTranscribing()
             }
         }
-        // MARK: - Flip Gesture OnChange Has been Deprecated
-        // .onChange(of: gyroScopeStore.faced) { _ in }
-        // .onAppear { gyroScopeStore.detectDeviceMotion() }
+        // MARK: - Flip Gesture OnChange (Toggled from Settings)
+        .onAppear {
+            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+                gyroScopeStore.detectDeviceMotion()
+            }
+        }
+        .onChange(of: gyroScopeStore.faced) { facedStatus in
+            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+                switch facedStatus {
+                case .myself:
+                    store.onBackToWritingChevronTapped() // to .writing
+                case .opponent:
+                    withAnimation {
+                        store.onStartRecordingButtonTapped() // to .recording
+                    }
+                }
+            }
+        }
     }
 }
 
