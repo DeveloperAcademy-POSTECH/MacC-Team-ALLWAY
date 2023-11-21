@@ -252,9 +252,9 @@ struct TKTypingView: View {
                 } label: {
                     Image(systemName: "eraser.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(focusState ? Color.BaseBGWhite : Color.GR3)
+                        .foregroundColor(!store(\.questionText).isEmpty ? Color.BaseBGWhite : Color.GR3)
                         .padding(10)
-                        .background(focusState ? Color.GR4 : Color.GR2)
+                        .background(!store(\.questionText).isEmpty ? Color.GR4 : Color.GR2)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel(Text("Clear text"))
@@ -312,7 +312,7 @@ struct TKTypingView: View {
         if let last = store(\.historyItems).last,
            last.type == .answer {
             return Color.OR6
-        } else if !focusState {
+        } else if store(\.questionText).isEmpty {
             return Color.GR3
         } else {
             return Color.white
@@ -323,7 +323,7 @@ struct TKTypingView: View {
         if let last = store(\.historyItems).last,
            last.type == .answer {
             return Color.white
-        } else if !focusState {
+        } else if store(\.questionText).isEmpty {
             return Color.GR2
         } else {
             return Color.OR5
