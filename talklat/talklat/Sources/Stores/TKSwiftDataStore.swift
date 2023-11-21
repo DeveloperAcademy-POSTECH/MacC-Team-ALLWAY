@@ -77,6 +77,10 @@ extension TKSwiftDataStore {
         return conversations.sorted { $0.createdAt > $1.createdAt }.first
     }
     
+    public func getAllConversation() -> [TKConversation] {
+        dataManager.getAllConversations()
+    }
+    
     // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
 //    public func getContentBasedConversations(content: [TKContent]) -> [TKConversation] {
 //        var conversations: [TKConversation] = []
