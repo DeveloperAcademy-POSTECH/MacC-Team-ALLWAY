@@ -31,23 +31,20 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch authManager.authStatus {
-                case .splash:
+                if case .splash = authManager.authStatus {
                     TKSplashView()
                         .task {
                             try? await Task.sleep(for: .seconds(3.0))
-                            withAnimation {
-                                authManager.checkOnboardingCompletion()
-                            }
+                            authManager.checkOnboardingCompletion()
                         }
-                    
-                case .onboarding,
-                        .authCompleted,
-                        .authIncompleted:
+                }
+                
+                if case .onboarding = authManager.authStatus {
                     TKOnboardingView(authManager: authManager)
-                        .transition(.opacity.animation(.easeInOut))
-                    
-                case .requestAuthComplete:
+                        .transition(.opacity.animation(.easeInOut(duration: 1.0)))
+                }
+                
+                if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
                         TKMainView(authManager: authManager)
                             .onAppear {
@@ -55,9 +52,6 @@ struct talklatApp: App {
                             }
                     }
                     .transition(.opacity.animation(.easeInOut))
-                    
-                default:
-                    Text("그럴리가")
                 }
             }
             .environmentObject(locationStore)
