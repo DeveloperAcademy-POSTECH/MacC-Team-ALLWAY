@@ -27,6 +27,8 @@ struct SettingsHelpView: View {
             
             Spacer()
         }
+        .navigationTitle("도움이 필요하신가요?")
+        .navigationBarTitleDisplayMode(.inline)
         .padding(.top, 24)
         .padding(.horizontal, 16)
         .navigationBarTitleDisplayMode(.inline)
