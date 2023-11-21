@@ -71,6 +71,14 @@ extension TKDataManager {
 }
 
 extension TKDataManager {
+    internal func getAllConversations() -> [TKConversation] {
+        do {
+            return try self.fetchItems(TKConversation.self) ?? []
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     // HistoryListView에서 쓰이는 specific fetch (TKLocation -> TKConversation)
     internal func getLocationMatchingConversations(
         location: TKLocation

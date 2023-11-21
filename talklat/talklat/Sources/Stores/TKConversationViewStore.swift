@@ -41,6 +41,8 @@ final class TKConversationViewStore {
         var blockButtonDoubleTap: Bool = false
         var isNewConversationSaved: Bool = false
         
+        var currentConversationCount: Int = 0
+        
         // scroll container related - TODO: ScrollStore 분리?
         var historyScrollViewHeight: CGFloat = 0
         var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
@@ -128,23 +130,19 @@ extension TKConversationViewStore {
     }
     
     public func onMakeNewConversationData() {
-        if let last = self(\.historyItems).last,
-           last != self(\.historyItem) {
-            // 만약 배열의 마지막 항목이 새로 업데이트 된 history Item이 아니라면 새로 만들어서 어펜드
-            reduce(
-                \.historyItem,
-                 into: HistoryItem(
-                    id: .init(),
-                    text: self(\.conversationStatus) == .recording
-                    ? self(\.answeredText)
-                    : self(\.questionText),
-                    type: self(\.conversationStatus) == .recording
-                    ? .answer
-                    : .question,
-                    createdAt: .init()
-                 )
-            )
-        }
+        reduce(
+            \.historyItem,
+             into: HistoryItem(
+                id: .init(),
+                text: self(\.conversationStatus) == .recording
+                ? self(\.answeredText)
+                : self(\.questionText),
+                type: self(\.conversationStatus) == .recording
+                ? .answer
+                : .question,
+                createdAt: .init()
+             )
+        )
     }
     
     public func onConversationDismissButtonTapped() {
@@ -190,6 +188,11 @@ extension TKConversationViewStore {
         }
         reduce(\.blockButtonDoubleTap, into: true)
         completion()
+    }
+    
+    public func onSaveConversationSheetApeear(_ count: Int) {
+        reduce(\.currentConversationCount, into: count)
+        reduce(\.conversationTitle, into: self(\.conversationTitle) + "(\(self(\.currentConversationCount).description))")
     }
     
     public func onSaveConversationButtonTapped() {

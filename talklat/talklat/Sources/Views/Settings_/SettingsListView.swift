@@ -57,26 +57,26 @@ struct SettingsListView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                // TODO: appRootManager.switchAuthStatus에서 분기처리 변경 (위치 권한 분기 추가)
-                switch authStatus {
-                case .microphoneAuthIncompleted, .speechRecognitionAuthIncompleted:
-                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
-                
-                    // TODO: case .locationAuthIncompleted:
-                    // authNoticeBuilder(noticeItem: "위치")
-                    
-                case .authIncompleted:
-                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
-                    authNoticeBuilder(noticeItem: "위치")
-                    
-                default:
-                    Color.clear
-                        .frame(height: 0)
-                }
-            }
-            .padding(.top, 10)
-            .padding(.bottom, authStatus == .authCompleted ? 0 : 24)
+//            VStack {
+//                // TODO: appRootManager.switchAuthStatus에서 분기처리 변경 (위치 권한 분기 추가)
+//                switch authStatus {
+//                case .microphoneAuthIncompleted, .speechRecognitionAuthIncompleted:
+//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
+//                
+//                    // TODO: case .locationAuthIncompleted:
+//                    // authNoticeBuilder(noticeItem: "위치")
+//                    
+//                case .authIncompleted:
+//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
+//                    authNoticeBuilder(noticeItem: "위치")
+//                    
+//                default:
+//                    Color.clear
+//                        .frame(height: 0)
+//                }
+//            }
+//            .padding(.top, 10)
+//            .padding(.bottom, authStatus == .authCompleted ? 0 : 24)
             
             ForEach(sectionCategories, id: \.self) { category in
                 VStack(alignment: .leading) {

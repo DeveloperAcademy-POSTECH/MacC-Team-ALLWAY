@@ -11,49 +11,22 @@ struct TKSplashView: View {
     @State private var animateFlag: Bool = false
     
     var body: some View {
-        HStack(spacing: 0) {
-            ZStack {
-                Circle()
-                    .fill(Color.OR5)
-                    .frame(width: 35)
-                    .offset(y: -10)
-                    .opacity(
-                        animateFlag
-                        ? 1.0
-                        : 0.0
-                    )
-                
-                Color.OR6
-                    .opacity(0.6)
-                    .mask {
-                        Image("TALKLAT_BUBBLE")
-                            .resizable()
-                            .frame(
-                                width: 35,
-                                height: 41
-                            )
-                    }
-                    .offset(
-                        y: animateFlag
-                        ? 10
-                        : -5
-                    )
-            }
-            .frame(
-                width: 50,
-                height: 80
-            )
-            .padding(.trailing, 18)
-            
-            Image("Talklat_Typo")
+        HStack {
+            Image("bisdam_icon")
                 .resizable()
-                .frame(width: 215, height: 36)
-                .aspectRatio(contentMode: .fit)
+                .frame(width: 92, height: 92)
+                .grayscale(animateFlag ? 0.0 : 1.0)
+                .opacity(animateFlag ? 1.0 : 0.0)
+            
+            Image("bisdam_typo")
+                .resizable()
+                .frame(width: 160, height: 77)
+                .opacity(animateFlag ? 1.0 : 0.0)
         }
         .frame(maxWidth: .infinity)
         .animation(
             .default
-                .delay(0.3)
+                .delay(0.2)
                 .speed(0.30),
             value: animateFlag
         )
