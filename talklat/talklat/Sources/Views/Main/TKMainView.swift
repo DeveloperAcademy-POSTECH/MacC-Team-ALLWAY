@@ -35,6 +35,7 @@ struct TKMainView: View {
                             }
                             
                             Text("\(locationStore(\.mainPlaceName))")
+                                .bold()
                                 .onAppear {
                                     locationStore.fetchCityName(
                                         locationStore(\.currentUserCoordinate),
@@ -119,8 +120,8 @@ struct TKMainView: View {
                     HistoryListView()
                     
                 } label: {
-                    Image(systemName: colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
-                        .foregroundStyle(Color.GR3)
+                    Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
+                        .resizable()
                 }
             }
             
@@ -129,8 +130,8 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
-                    Image(systemName: colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
-                        .foregroundStyle(Color.GR3)
+                    Image(colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
+                        .resizable()
                 }
             }
         }
