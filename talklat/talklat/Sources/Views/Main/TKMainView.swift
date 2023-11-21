@@ -108,10 +108,11 @@ struct TKMainView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Image("Talklat_Typo")
+                Image("bisdam_typo")
                     .resizable()
-                    .frame(width: 115, height: 20)
+                    .frame(width: 56.15, height: 23.48)
                     .foregroundStyle(Color.OR5)
+                    .padding(.leading, 8)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -211,6 +212,7 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView(authManager: .init())
+        TKMainView(authManager: TKAuthManager())
+            .environmentObject(TKLocationStore())
     }
 }

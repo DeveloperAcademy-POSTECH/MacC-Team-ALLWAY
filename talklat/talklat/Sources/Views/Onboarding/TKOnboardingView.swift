@@ -34,27 +34,35 @@ struct TKOnboardingView: View {
         description: ""
     )
     
+    // 1. 이전 버전에서 권한을 일부 허용한 사용자
+    // 2. 권한 request를 했을 때, request 하는 버튼이 눌려도 아무 변화가 없다.
+    // 3. 이 때, 어떻게 분기처리 할 것인가?
+    // -> AuthStore가 init 될 때 상태 받아오기
+    
     var body: some View {
         VStack {
             if case .start = onboardingStep {
                 onboardingStartGuideView()
             }
             
-            if case let .mic(info) = onboardingStep {
+            if case let .mic(info) = onboardingStep,
+               !authManager.isMicrophoneAuthorized {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
                 )
             }
             
-            if case let .speech(info) = onboardingStep {
+            if case let .speech(info) = onboardingStep,
+               !authManager.isSpeechRecognitionAuthorized {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
                 )
             }
             
-            if case let .location(info) = onboardingStep {
+            if case let .location(info) = onboardingStep,
+               !authManager.isLocationAuthorized {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
@@ -148,28 +156,37 @@ struct TKOnboardingView: View {
     }
     
     private func requestAuthorize() {
-        switch onboardingStep {
-        case .mic:
-            Task {
-                await authManager.getMicrophoneAuthStatus()
+        Task {
+            switch onboardingStep {
+            case .mic:
+                if !authManager.isMicrophoneAuthorized {
+                    await authManager.getMicrophoneAuthStatus()
+                } else {
+                    proceedOnboardingStep()
+                }
+                
+            case .speech:
+                if !authManager.isSpeechRecognitionAuthorized {
+                    await authManager.getSpeechRecognitionAuthStatus()
+                } else {
+                    proceedOnboardingStep()
+                }
+                
+            case .location:
+                if !authManager.isLocationAuthorized {
+                    await authManager.getLocationAuthStatus()
+                    authManager.checkAuthorizedCondition()
+                } else {
+                    proceedOnboardingStep()
+                    authManager.checkAuthorizedCondition()
+                }
+                
+            case .complete:
+                authManager.onOnboardingCompleted()
+                
+            default:
+                break
             }
-            
-        case .speech:
-            Task {
-                await authManager.getSpeechRecognitionAuthStatus()
-            }
-            
-        case .location:
-            Task {
-                await authManager.getLocationAuthStatus()
-                authManager.checkAuthorizedCondition()
-            }
-            
-        case .complete:
-            authManager.onOnboardingCompleted()
-            
-        default:
-            break
         }
     }
     
@@ -339,7 +356,6 @@ struct TKOnboardingView: View {
                         insertion: .move(edge: .bottom),
                         removal: .opacity
                     )
-            
                 )
             }
         }

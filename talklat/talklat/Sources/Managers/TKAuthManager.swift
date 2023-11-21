@@ -31,12 +31,38 @@ public class TKAuthManager: ObservableObject {
     
     private let isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "ONBOARDING")
     
-    init() { }
+    init() {
+        initAuthStatus()
+    }
 }
 
 // MARK: - Switch Authorization Status
 /// Microphone, SpeechRecognition, Location의 권한 요청을 보내고 / 권한 여부를 저장합니다.
 extension TKAuthManager {
+    private func initAuthStatus() {
+        switch AVAudioApplication.shared.recordPermission {
+        case .granted:
+            isMicrophoneAuthorized = true
+        default:
+            isMicrophoneAuthorized = false
+        }
+        
+        
+        switch SFSpeechRecognizer.authorizationStatus() {
+        case .authorized:
+            isSpeechRecognitionAuthorized = true
+        default:
+            isSpeechRecognitionAuthorized = false
+        }
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways, .authorizedWhenInUse:
+            isLocationAuthorized = true
+        default:
+            isLocationAuthorized = false
+        }
+    }
+    
     // 온보딩이 진행되었니?
     public func checkOnboardingCompletion() {
         if isOnboardingCompleted {
