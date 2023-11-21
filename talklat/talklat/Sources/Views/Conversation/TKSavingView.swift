@@ -31,7 +31,12 @@ struct TKSavingView: View {
                 
                 Spacer()
                 
-                Text("새 대화 저장")
+                HStack(spacing: 5) {
+                    Image(systemName: "location.fill")
+                    
+                    BDText(text: locationStore(\.mainPlaceName), style: .H2_SB_135)
+                }
+                .foregroundStyle(Color.GR7)
                 
                 Spacer()
                 
@@ -57,16 +62,7 @@ struct TKSavingView: View {
                     .foregroundStyle(Color.GR5)
                 
                 Spacer()
-                
-                HStack(spacing: 5) {
-                    Image(systemName: "location.fill")
-                    
-                    Text(locationStore(\.mainPlaceName))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundStyle(Color.GR7)
-                
+
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 8)

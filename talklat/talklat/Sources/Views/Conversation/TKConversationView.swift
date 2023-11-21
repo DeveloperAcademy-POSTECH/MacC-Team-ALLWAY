@@ -63,7 +63,7 @@ struct TKConversationView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .fullScreenCover(
+        .sheet(
             isPresented: store.bindingSaveConversationViewFlag(),
             onDismiss: {
                 store.onDismissSavingViewButtonTapped()

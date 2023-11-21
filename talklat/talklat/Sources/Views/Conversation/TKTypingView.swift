@@ -187,7 +187,7 @@ struct TKTypingView: View {
                                 .resizable()
                                 .frame(width: 32, height: 10)
                                 .padding()
-                                .foregroundStyle(Color.BaseBGWhite)
+                                .foregroundStyle(Color.white)
                         }
                         
                         endConversationButtonBuilder()
