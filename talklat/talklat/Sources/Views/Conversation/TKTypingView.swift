@@ -206,10 +206,13 @@ struct TKTypingView: View {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                Image(systemName: "xmark")
-                    .bold()
+                BDText(text: "취소", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(cancelButtonTextColor())
             }
-            .tint(endButtonTintColor())
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(cancelButtonTintColor())
             
             Spacer()
             
@@ -222,13 +225,14 @@ struct TKTypingView: View {
                 Text("저장")
                     .font(.headline)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(endButtonTextColor())
+                    .foregroundStyle(saveButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(endButtonTintColor())
+            .tint(saveButtonTintColor())
             .disabled(store(\.blockButtonDoubleTap))
         }
+        .frame(height: 44)
         .padding(.horizontal, 24)
     }
     
@@ -297,23 +301,43 @@ struct TKTypingView: View {
         }
     }
     
-    private func endButtonTextColor() -> Color {
+    private func saveButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.OR6
+        } else if !focusState {
+            return Color.GR3
+        } else {
+            return Color.white
+        }
+    }
+    
+    private func saveButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.white
+        } else if !focusState {
+            return Color.GR2
+        } else {
+            return Color.OR5
+        }
+    }
+    
+    private func cancelButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.white
+        } else {
+            return Color.GR6
+        }
+    }
+    
+    private func cancelButtonTintColor() -> Color {
         if let last = store(\.historyItems).last,
            last.type == .answer {
             return Color.OR6
         } else {
-            return Color.GR7
-        }
-    }
-    
-    private func endButtonTintColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
-            return Color.white
-        } else if store(\.historyItems).isEmpty {
-            return Color.GR2
-        } else {
-            return Color.white
+            return Color.GR1
         }
     }
 }
