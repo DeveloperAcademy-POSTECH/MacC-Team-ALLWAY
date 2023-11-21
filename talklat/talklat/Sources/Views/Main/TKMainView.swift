@@ -11,6 +11,7 @@ import SwiftUI
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var locationStore: TKLocationStore
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var store: TKMainViewStore
     @StateObject private var conversationViewStore = TKConversationViewStore()
     @State private var recentConversation: TKConversation?
@@ -107,10 +108,9 @@ struct TKMainView: View {
         .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Image("bisdam_typo")
+                Image(colorScheme == .light ? "bisdam_typo" : "bisdam_typo_Dark")
                     .resizable()
                     .frame(width: 56.15, height: 23.48)
-                    .foregroundStyle(Color.OR5)
                     .padding(.leading, 8)
             }
             
@@ -119,7 +119,7 @@ struct TKMainView: View {
                     HistoryListView()
                     
                 } label: {
-                    Image(systemName: "list.bullet.rectangle.fill")
+                    Image(systemName: colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
                         .foregroundStyle(Color.GR3)
                 }
             }
@@ -129,7 +129,7 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
                         .foregroundStyle(Color.GR3)
                 }
             }
