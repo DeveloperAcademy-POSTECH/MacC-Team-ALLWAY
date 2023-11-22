@@ -16,8 +16,6 @@ struct talklatApp: App {
     @StateObject private var authManager: TKAuthManager = TKAuthManager()
     @StateObject private var colorSchemeManager = ColorSchemeManager()
     
-//    @AppStorage("BDColorScheme") var colorScheme: ColorScheme = .unspecified
-    
     private var container: ModelContainer
     
     init() {
@@ -52,11 +50,6 @@ struct talklatApp: App {
             }
             .environmentObject(locationStore)
             .environmentObject(authManager)
-            .onChange(of: colorSchemeManager.colorScheme) { _, _ in
-                print("colorScheme Changed~~~~~~~~~~!!!!!!!!!!!!!!!!!")
-                Color.BDColorScheme = colorSchemeManager.colorScheme
-                print("color BDColorScheme: ", Color.BDColorScheme)
-            }
             .environmentObject(colorSchemeManager)
             .onAppear {
                 UserDefaults.standard.setValue(

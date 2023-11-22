@@ -122,7 +122,7 @@ struct SettingsListView: View {
                                     SettingsHelpView()
                                 }
                             } label: {
-                                TKListCell(label: item.rawValue) {
+                                BDListCell(label: item.rawValue) {
                                     Image(systemName: item.icon)
                                 } trailingUI: {
                                     Image(systemName: "chevron.right")

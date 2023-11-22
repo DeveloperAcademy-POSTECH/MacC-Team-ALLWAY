@@ -6,61 +6,45 @@
 //
 
 import SwiftUI
+
+private enum ColorSchemeType: String, CaseIterable {
+    case device = "시스템 설정과 동일"
+    case light = "밝은 모드"
+    case dark = "어두운 모드"
+    
+    var theme: ColorScheme {
+        switch self {
+        case .device: return ColorScheme.unspecified
+        case .light: return ColorScheme.light
+        case .dark: return ColorScheme.dark
+        }
+    }
+}
+
 struct SettingsDisplayView: View {
-    @Environment(\.colorScheme) var current
-    @EnvironmentObject var colorSchemeManager: ColorSchemeManager
-    
-    @State private var selectedTheme: ColorScheme = .dark
-    
     @AppStorage("BDColorScheme") var BDColorScheme = ColorScheme.unspecified
+    @EnvironmentObject var colorSchemeManager: ColorSchemeManager
+    @State private var selectedTheme: ColorScheme = .dark
     
     var body: some View {
         VStack {
-            TKListCell(label: "시스템과 동일") {
-            } trailingUI: {
-                if selectedTheme == ColorScheme.unspecified {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 21))
-                } else {
-                    Image(systemName: "circlebadge")
-                        .font(.system(size: 26.8))
+            ForEach(ColorSchemeType.allCases, id: \.self) { type in
+                BDListCell(label: type.rawValue) {
+                } trailingUI: {
+                    if selectedTheme == type.theme {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 21))
+                    } else {
+                        Image(systemName: "circlebadge")
+                            .font(.system(size: 26.8))
+                    }
+                }
+                .onTapGesture {
+                    selectedTheme = type.theme
+                    colorSchemeManager.colorScheme = selectedTheme
                 }
             }
-            .onTapGesture {
-                selectedTheme = ColorScheme.unspecified
-                colorSchemeManager.colorScheme = selectedTheme
-            }
-            
-            TKListCell(label: "밝은 모드") {
-            } trailingUI: {
-                if selectedTheme == ColorScheme.light {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 21))
-                } else {
-                    Image(systemName: "circlebadge")
-                        .font(.system(size: 26.8))
-                }
-            }
-            .onTapGesture {
-                selectedTheme = ColorScheme.light
-                colorSchemeManager.colorScheme = selectedTheme
-            }
-            
-            TKListCell(label:"어두운 모드") {
-            } trailingUI: {
-                if selectedTheme == ColorScheme.dark {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 21))
-                } else {
-                    Image(systemName: "circlebadge")
-                        .font(.system(size: 26.8))
-                }
-            }
-            .onTapGesture {
-                selectedTheme = ColorScheme.dark
-                colorSchemeManager.colorScheme = selectedTheme
-            }
-            
+
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -69,8 +53,6 @@ struct SettingsDisplayView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             selectedTheme = colorSchemeManager.colorScheme
-            
-            print("---> BDColorScheme: ", BDColorScheme)
         }
     }
 }

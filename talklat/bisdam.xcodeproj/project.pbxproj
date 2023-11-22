@@ -101,7 +101,7 @@
 		7EBD316E2B0B2B1300D5514D /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF292B0287E50048C784 /* CustomAlertView.swift */; };
 		7EBD316F2B0B2B1300D5514D /* TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E892E402B0350CF00788DCF /* TKAlert.swift */; };
 		7EBD31702B0B2B1300D5514D /* TKToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E892E422B036A5900788DCF /* TKToast.swift */; };
-		7EBD31712B0B2B1300D5514D /* TKListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BB3242B03A38000F8FEC9 /* TKListCell.swift */; };
+		7EBD31712B0B2B1300D5514D /* BDListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BB3242B03A38000F8FEC9 /* BDListCell.swift */; };
 		7EBD31722B0B2B1300D5514D /* TKSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0313802B04F8BB0090A704 /* TKSplashView.swift */; };
 		7EBD31732B0B2B1300D5514D /* ScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */; };
 		7EBD31742B0B2B1300D5514D /* SwipeGuideMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */; };
@@ -226,7 +226,7 @@
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
-		EF7BB3242B03A38000F8FEC9 /* TKListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKListCell.swift; sourceTree = "<group>"; };
+		EF7BB3242B03A38000F8FEC9 /* BDListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDListCell.swift; sourceTree = "<group>"; };
 		EF7BB3282B03B78300F8FEC9 /* SettingsHapticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHapticView.swift; sourceTree = "<group>"; };
 		EF7BB32A2B03BB4100F8FEC9 /* SettingsGestureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGestureView.swift; sourceTree = "<group>"; };
 		EF7BB32C2B03BCC200F8FEC9 /* SettingsAppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppInfoView.swift; sourceTree = "<group>"; };
@@ -489,7 +489,7 @@
 				CE0CBF292B0287E50048C784 /* CustomAlertView.swift */,
 				7E892E402B0350CF00788DCF /* TKAlert.swift */,
 				7E892E422B036A5900788DCF /* TKToast.swift */,
-				EF7BB3242B03A38000F8FEC9 /* TKListCell.swift */,
+				EF7BB3242B03A38000F8FEC9 /* BDListCell.swift */,
 				7E0313802B04F8BB0090A704 /* TKSplashView.swift */,
 			);
 			path = Components;
@@ -812,7 +812,7 @@
 				7EBD316E2B0B2B1300D5514D /* CustomAlertView.swift in Sources */,
 				7EBD316F2B0B2B1300D5514D /* TKAlert.swift in Sources */,
 				7EBD31702B0B2B1300D5514D /* TKToast.swift in Sources */,
-				7EBD31712B0B2B1300D5514D /* TKListCell.swift in Sources */,
+				7EBD31712B0B2B1300D5514D /* BDListCell.swift in Sources */,
 				7EBD31722B0B2B1300D5514D /* TKSplashView.swift in Sources */,
 				7EBD31732B0B2B1300D5514D /* ScrollContainer.swift in Sources */,
 				7EBD31742B0B2B1300D5514D /* SwipeGuideMessage.swift in Sources */,
