@@ -66,14 +66,14 @@ struct TKTypingView: View {
                             maxHeight: 250,
                             alignment: .top
                         )
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 24)
                         .background {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
                                     in: namespaceID
                                 )
-                                .ignoresSafeArea(edges: .top)
+                                .ignoresSafeArea()
                         }
                         
                     } else {
@@ -113,13 +113,17 @@ struct TKTypingView: View {
                     }
                     
                     Spacer()
-                    
-                    customToolbar()
-                        .padding(.bottom, 16)
                 }
             }
         }
         .frame(maxWidth: .infinity)
+        .task {
+            focusState = true
+        }
+        .overlay(alignment: .bottom) {
+            customToolbar()
+                .padding(.bottom, 16)
+        }
     }
     
     private func characterLimitViewBuilder() -> some View {
@@ -298,8 +302,7 @@ struct TKTypingView: View {
     }
     
     private func endButtonTextColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.OR6
         } else {
             return Color.GR7
@@ -307,13 +310,10 @@ struct TKTypingView: View {
     }
     
     private func endButtonTintColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.white
-        } else if store(\.historyItems).isEmpty {
-            return Color.GR2
         } else {
-            return Color.white
+            return Color.GR2
         }
     }
 }
