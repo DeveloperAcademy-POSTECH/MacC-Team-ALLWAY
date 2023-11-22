@@ -13,24 +13,23 @@ struct TKOnboardingView: View {
     @ObservedObject var authManager: TKAuthManager
     
     struct OnboardingInfo: Equatable {
-        var step: Int
         var title: String
         var description: String
+        var highlightTarget: [String]
     }
     
     enum OnboardingStep: Equatable {
         case start
-        case mic(OnboardingInfo)
-        case speech(OnboardingInfo)
+        case conversation(OnboardingInfo)
         case location(OnboardingInfo)
         case complete
     }
     
     @State private var onboardingStep: OnboardingStep = .start
     @State private var onboardInfo: OnboardingInfo = OnboardingInfo(
-        step: 0,
         title: "",
-        description: ""
+        description: "",
+        highlightTarget: []
     )
         
     var body: some View {
@@ -39,14 +38,7 @@ struct TKOnboardingView: View {
                 onboardingStartGuideView()
             }
             
-            if case let .mic(info) = onboardingStep {
-                TKOnboardingAuthReqeustView(
-                    parentInfo: $onboardInfo,
-                    info: info
-                )
-            }
-            
-            if case let .speech(info) = onboardingStep {
+            if case let .conversation(info) = onboardingStep {
                 TKOnboardingAuthReqeustView(
                     parentInfo: $onboardInfo,
                     info: info
@@ -61,7 +53,10 @@ struct TKOnboardingView: View {
             }
             
             if case .complete = onboardingStep {
-                VStack(alignment: .leading) {
+                VStack(
+                    alignment: .leading,
+                    spacing: 32
+                ) {
                     // MARK: CONDITION
                     if authManager.hasAllAuthBeenObtained {
                         Text(Constants.Onboarding.ALL_AUTH)
@@ -76,10 +71,9 @@ struct TKOnboardingView: View {
                             .bold()
                             .lineSpacing(17)
                             .foregroundStyle(Color.OR6)
-                            .padding(.bottom, 32)
-                        
-                        eachAuthStatusView()
                     }
+                    
+                    eachAuthStatusView()
                 }
                 .frame(
                     maxWidth: .infinity,
@@ -97,7 +91,9 @@ struct TKOnboardingView: View {
         .onChange(of: authManager.isMicrophoneAuthorized) { _, newValue in
         #warning("추후 ViewState로 정리")
             if newValue != nil {
-                proceedOnboardingStep()
+                Task {
+                    await authManager.getSpeechRecognitionAuthStatus()
+                }
             }
         }
         .onChange(of: authManager.isSpeechRecognitionAuthorized) { _, newValue in
@@ -117,34 +113,25 @@ struct TKOnboardingView: View {
         switch onboardingStep {
         case .start:
             withAnimation {
-                onboardingStep = .mic(
+                onboardingStep = .conversation(
                     OnboardingInfo(
-                        step: 0,
-                        title: "마이크",
-                        description: Constants.Onboarding.MIC
+                        title: "마이크와 음성 인식",
+                        description: Constants.Onboarding.CONVERSATION,
+                        highlightTarget: ["마이크 권한","음성 인식 권한"]
                     )
                 )
             }
-        case .mic:
-            withAnimation {
-                onboardingStep = .speech(
-                    OnboardingInfo(
-                        step: 1,
-                        title: "음성 인식",
-                        description: Constants.Onboarding.SPEECH
-                    )
-                )
-            }
-        case .speech:
+        case .conversation:
             withAnimation {
                 onboardingStep = .location(
                     OnboardingInfo(
-                        step: 2,
                         title: "위치",
-                        description: Constants.Onboarding.LOCATION
+                        description: Constants.Onboarding.LOCATION,
+                        highlightTarget: ["위치 정보 권한","정확한 위치 켬"]
                     )
                 )
             }
+            
         case .location:
             withAnimation(.spring().speed(0.6)){
                 onboardingStep = .complete
@@ -158,16 +145,9 @@ struct TKOnboardingView: View {
     private func requestAuthorize() {
         Task {
             switch onboardingStep {
-            case .mic:
+            case .conversation:
                 if authManager.isMicrophoneAuthorized == nil {
                     await authManager.getMicrophoneAuthStatus()
-                } else {
-                    proceedOnboardingStep()
-                }
-                
-            case .speech:
-                if authManager.isSpeechRecognitionAuthorized == nil {
-                    await authManager.getSpeechRecognitionAuthStatus()
                 } else {
                     proceedOnboardingStep()
                 }
@@ -209,7 +189,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("마이크 접근 권한")
+                    Text("마이크 권한")
                 }
                 
                 HStack {
@@ -224,7 +204,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("음성 인식 접근 권한")
+                    Text("음성 인식 권한")
                 }
                 
                 HStack {
@@ -239,7 +219,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("위치 접근 권한")
+                    Text("위치 정보 권한")
                 }
                 
             }
@@ -258,7 +238,9 @@ struct TKOnboardingView: View {
                 .lineSpacing(17)
                 .foregroundStyle(Color.OR6)
             
-            Image("TALKALT_BUBBLES_MARK")
+            Image("bisdam_icon")
+                .resizable()
+                .frame(width: 100, height: 100)
         }
         .frame(
             maxWidth: .infinity,
@@ -271,25 +253,21 @@ struct TKOnboardingView: View {
         VStack(spacing: 24) {
             if onboardingStep != .complete,
                onboardingStep != .start {
-                Group {
-                    HStack {
-                        ForEach(0..<3) { idx in
-                            Circle()
-                                .fill(
-                                    idx == info.step
-                                    ? Color.OR6
-                                    : Color.GR2
-                                )
-                                .frame(width: 12)
-                        }
-                    }
+                Text("다음 버튼을 누르고\n\(info.title) 권한을 허용해 주세요.")
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.OR6)
+                    .multilineTextAlignment(.center)
+            }
+            
+            if onboardingStep == .complete,
+               !authManager.hasAllAuthBeenObtained {
+                Text(Constants.Onboarding.ASK_FOR_AUTH_ALL_GUIDE)
+                    .font(.headline)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(Color.white)
                     
-                    Text("다음 버튼을 누르고\n\(info.title) 권한을 허용해 주세요.")
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.OR6)
-                        .multilineTextAlignment(.center)
-                }
             }
             
             Button {
