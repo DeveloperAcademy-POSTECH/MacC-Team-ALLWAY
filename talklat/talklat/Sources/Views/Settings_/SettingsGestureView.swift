@@ -28,6 +28,17 @@ struct SettingsGestureView: View {
         .padding(.horizontal, 16)
         .navigationTitle("진동")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            isGestureEnabled = UserDefaults.standard.bool(
+                forKey: "isGestureEnabled"
+            )
+        }
+        .onChange(of: isGestureEnabled) { _, _ in
+            UserDefaults.standard.setValue(
+                isGestureEnabled,
+                forKey: "isGestureEnabled"
+            )
+        }
 
     }
 }
