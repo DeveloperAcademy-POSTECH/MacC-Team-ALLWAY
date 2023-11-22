@@ -14,58 +14,37 @@ struct TKListeningView: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    store.blockButtonDoubleTap {
-                        store.onBackToWritingChevronTapped()
-                    }
-                    
-                } label: {
-                    Rectangle()
-                        .foregroundStyle(.clear)
-                        .frame(width: 44, height: 44)
-                        .overlay {
-                            Image(systemName: "chevron.left")
-                                .fontWeight(.black)
+                if store(\.answeredText).isEmpty {
+                    Button {
+                        store.blockButtonDoubleTap {
+                            store.onBackToWritingChevronTapped()
                         }
+                        
+                    } label: {
+                        Rectangle()
+                            .foregroundStyle(.clear)
+                            .frame(width: 44, height: 44)
+                            .overlay {
+                                Image(systemName: "chevron.left")
+                                    .fontWeight(.black)
+                            }
+                    }
+                    .animation(
+                        .easeInOut,
+                        value: store(\.answeredText).isEmpty
+                    )
+                    .disabled(store(\.blockButtonDoubleTap))
+                    .padding(.leading, 12)
+                    .padding(.trailing, 24)
+                    .padding(.bottom, 24)
+                    
+                    Spacer()
+                } else {
+                    endConversationButtonBuilder()
+                        .padding(.bottom, 20)
                 }
-                .opacity(
-                    store(\.answeredText).isEmpty
-                    ? 1.0
-                    : 0.0
-                )
-                .animation(
-                    .easeInOut,
-                    value: store(\.answeredText).isEmpty
-                )
-                .disabled(store(\.blockButtonDoubleTap))
-                
-                Spacer()
-                
-                Button {
-                    store.onSaveConversationButtonTapped()
-                } label: {
-                    Text("종료")
-                        .font(.headline)
-                        .foregroundStyle(Color.GR7)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
-                .tint(Color.GR2)
-                .opacity(
-                    store(\.answeredText).isEmpty
-                    ? 0.0
-                    : 1.0
-                )
-                .animation(
-                    .easeInOut,
-                    value: store(\.answeredText).isEmpty
-                )
             }
-            .padding(.leading, 12)
-            .padding(.trailing, 24)
-            .padding(.bottom, 24)
+            
             
             if store(\.conversationStatus) == .recording {
                 TKScrollView(
@@ -203,6 +182,42 @@ struct TKListeningView: View {
             }
             .disabled(store(\.blockButtonDoubleTap))
         }
+    }
+    
+    private func endConversationButtonBuilder() -> some View {
+        HStack {
+            Button {
+                store.onConversationDismissButtonTapped()
+            } label: {
+                BDText(text: "취소", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.GR6)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .frame(height: 34)
+            .tint(Color.GR1)
+            
+            Spacer()
+            
+            Button {
+                store.blockButtonDoubleTap {
+                    store.onSaveConversationButtonTapped()
+                }
+            } label: {
+                BDText(text: "저장", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.white)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .frame(height: 34)
+            .tint(Color.OR5)
+            .disabled(store(\.questionText).isEmpty ? true : false)
+            .disabled(store(\.blockButtonDoubleTap))
+        }
+        .frame(height: 44)
+        .padding(.horizontal, 24)
     }
 }
 
