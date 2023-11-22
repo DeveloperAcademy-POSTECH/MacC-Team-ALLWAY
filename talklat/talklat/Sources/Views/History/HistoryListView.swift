@@ -222,7 +222,8 @@ struct LocationList: View {
             // Each List Cell
             if !isCollapsed {
                 ForEach(
-                    dataStore.getLocationBasedConversations(location: location),
+                    dataStore.getLocationBasedConversations(location: location)
+                        .sorted { $0.createdAt > $1.createdAt },
                     id: \.self
                 ) { conversation in
                     NavigationLink {
@@ -300,14 +301,10 @@ struct CellItem: View {
                         .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(Color.GR8)
                     
-                    Text(
-                        conversation.createdAt.formatted( // TODO: format
-                            date: .abbreviated,
-                            time: .omitted
-                        )
-                    )
+                    Text(conversation.formattedCreatedAt)
                     .foregroundColor(.GR4)
                     .font(.system(size: 15, weight: .medium))
+
                 }
                 
                 Spacer()
@@ -323,10 +320,13 @@ struct CellItem: View {
                         )
                     )
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+//            .frame(maxWidth: .infinity)
+//            .padding()
+            .frame(height: 60)
+            .padding(.horizontal)
+
             .background(Color.GR1)
-            .cornerRadius(22)
+            .cornerRadius(16)
             .onTapGesture {
                 if isRemoving && isEditing {
                     withAnimation(
