@@ -105,7 +105,7 @@ struct HistoryItemLocationEditView: View {
                     Button {
                         moveToUserLocation()
                         
-                        if let location = historyInfoStore(\.editCoordinateRegion) {
+                        if let _ = historyInfoStore(\.editCoordinateRegion) {
                             locationStore.fetchCityName(
                                 historyInfoStore(\.editCoordinateRegion),
                                 cityNameType: .long,
@@ -203,7 +203,6 @@ struct HistoryItemLocationEditView: View {
     }
     
     private func moveToUserLocation() {
-//        let _ = locationStore.trackUserCoordinate()
         
         guard let coordinateRegion = locationStore(\.currentUserCoordinate) else {
             return

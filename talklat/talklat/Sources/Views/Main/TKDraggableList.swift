@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct TKDraggableList: View {
+    @EnvironmentObject private var locationStore: TKLocationStore
     @ObservedObject var store: TKMainViewStore
+    @State private var conversations: [TKConversation] = [TKConversation]()
     @GestureState var gestureOffset: CGFloat = 0
     let firstOffset = UIScreen.main.bounds.height * 0.65
+    let dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
     
     var body: some View {
         ZStack {
@@ -26,12 +30,30 @@ struct TKDraggableList: View {
                     .padding(.bottom, 20)
                 
                 // MARK: - RECENT CONVERSATION LIST
-                TKRecentConversationListView()
+                TKRecentConversationListView(conversations: conversations)
                     .scrollDisabled(!store(\.isBottomSheetMaxed))
                     .scrollIndicators(.hidden)
             }
             .onChange(of: store(\.lastOffset)) { _, _ in
                 store.onBottomSheetMaxed(firstOffset)
+            }
+            .onChange(of: dataStore.conversations) { _, _ in
+                conversations = locationStore.getClosestConversation(dataStore.conversations)
+            }
+            .onChange(of: locationStore(\.authorizationStatus)) { _, _ in
+                if locationStore.detectAuthorization() {
+                    locationStore.trackUserCoordinate()
+                    conversations = locationStore.getClosestConversation(dataStore.conversations)
+                }
+            }
+            .onChange(of: locationStore(\.currentUserCoordinate)) { _, _ in
+                
+                //MARK: circularRegion 관찰이 아닌 currentUserCoordinate 관찰
+                conversations = locationStore.getClosestConversation(dataStore.conversations)
+            }
+            .onAppear {
+                locationStore.trackUserCoordinate()
+                conversations = locationStore.getClosestConversation(dataStore.conversations)
             }
         }
         // 시작할 때 보여줄 리스트의 offset
