@@ -218,6 +218,7 @@ struct TKTypingView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
+            .frame(height: 34)
             .tint(cancelButtonTintColor())
             
             Spacer()
@@ -228,13 +229,13 @@ struct TKTypingView: View {
                 }
                 
             } label: {
-                Text("저장")
-                    .font(.headline)
+                BDText(text: "저장", style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(saveButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
+            .frame(height: 34)
             .tint(saveButtonTintColor())
             .disabled(store(\.blockButtonDoubleTap))
         }
