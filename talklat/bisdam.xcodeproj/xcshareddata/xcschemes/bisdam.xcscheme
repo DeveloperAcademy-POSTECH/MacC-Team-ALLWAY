@@ -17,7 +17,7 @@
                BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
                BuildableName = "bisdam.app"
                BlueprintName = "bisdam"
-               ReferencedContainer = "container:bisdam.xcodeproj">
+               ReferencedContainer = "container:talklat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
             BuildableName = "bisdam.app"
             BlueprintName = "bisdam"
-            ReferencedContainer = "container:bisdam.xcodeproj">
+            ReferencedContainer = "container:talklat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,7 +71,7 @@
             BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
             BuildableName = "bisdam.app"
             BlueprintName = "bisdam"
-            ReferencedContainer = "container:bisdam.xcodeproj">
+            ReferencedContainer = "container:talklat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
