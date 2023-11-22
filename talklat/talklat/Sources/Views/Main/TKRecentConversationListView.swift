@@ -17,7 +17,7 @@ struct TKRecentConversationListView: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
-                    if locationAuthorization {
+                    if locationStore(\.authorizationStatus) == .authorizedAlways || locationStore(\.authorizationStatus) == .authorizedWhenInUse {
                         Image(systemName: "bubble.left.and.bubble.right.fill")
                             .foregroundColor(.GR5)
                             .padding(.trailing, 7)
