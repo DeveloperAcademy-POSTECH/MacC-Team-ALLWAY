@@ -154,3 +154,14 @@ public var initialCoordinateRegion: MKCoordinateRegion = MKCoordinateRegion(
     latitudinalMeters: 500,
     longitudinalMeters: 500
 )
+
+public enum HistoryInfoLocationStatus {
+    case locationNotChanged
+    case locationChanged
+}
+
+public enum HistoryInfoTextStatus {
+    case textEmpty
+    case textNotChanged
+    case textChanged
+}

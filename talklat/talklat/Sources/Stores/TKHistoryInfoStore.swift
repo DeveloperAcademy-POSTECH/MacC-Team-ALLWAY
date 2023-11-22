@@ -103,8 +103,6 @@ class TKHistoryInfoStore: TKReducer {
         let textStatus = self.hasTextChanged(conversation.title)
         let locationStatus = self.hasLocationChanged(conversation.location)
         
-        print(#function, textStatus, locationStatus)
-        
         guard textStatus != .textEmpty else { return true }
         
         // 총 4가지 경우가 있음
@@ -119,7 +117,7 @@ class TKHistoryInfoStore: TKReducer {
         }
     }
     
-    private func hasTextChanged(_ title: String) -> HistoryDetailSaveStatus {
+    private func hasTextChanged(_ title: String) -> HistoryInfoTextStatus {
         if title != self(\.text) {
             if self(\.text).isEmpty {
                 return .textEmpty
@@ -131,7 +129,7 @@ class TKHistoryInfoStore: TKReducer {
         }
     }
     
-    private func hasLocationChanged(_ location: TKLocation?) -> HistoryDetailSaveStatus {
+    private func hasLocationChanged(_ location: TKLocation?) -> HistoryInfoLocationStatus {
         // conversation location은 있음
         if let latitude = location?.latitude, let longitude = location?.longitude {
             let conversationCoordinate = CLLocationCoordinate2D(
@@ -177,20 +175,5 @@ class TKHistoryInfoStore: TKReducer {
     func reduce<Value: Equatable>(_ path: WritableKeyPath<ViewState, Value>,
                                   into newValue: Value) {
         self.viewState[keyPath: path] = newValue
-    }
-}
-
-
-enum HistoryDetailSaveStatus {
-    case textEmpty
-    case textNotChanged
-    case textChanged
-    case locationNotChanged
-    case locationChanged
-}
-
-extension CLLocationCoordinate2D: Equatable {
-    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
-        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
     }
 }
