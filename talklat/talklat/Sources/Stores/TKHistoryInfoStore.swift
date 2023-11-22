@@ -89,13 +89,13 @@ class TKHistoryInfoStore: TKReducer {
     }
     
     public func updateTextLimitMessage() {
-        if self(\.text).count >= 30 {
-            self.reduce(\.text, into: String(self(\.text).prefix(30)))
-            self.reduce(\.textLimitMessage, into: "30/30")
+        if self(\.text).count >= 20 {
+            self.reduce(\.text, into: String(self(\.text).prefix(20)))
+            self.reduce(\.textLimitMessage, into: "20/20")
         } else if self(\.text).count == 0 {
             self.reduce(\.textLimitMessage, into: "한 글자 이상 입력해주세요.")
         } else {
-            self.reduce(\.textLimitMessage, into: "\(self(\.text).count)/30")
+            self.reduce(\.textLimitMessage, into: "\(self(\.text).count)/20")
         }
     }
     
