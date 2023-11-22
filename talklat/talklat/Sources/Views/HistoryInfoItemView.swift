@@ -120,8 +120,7 @@ struct HistoryInfoItemView: View {
                             Text("저장")
                         }
                         .tint(Color.OR5)
-                        .disabled(historyInfoStore(\.text).isEmpty)
-                        .disabled(historyInfoStore(\.isNotChanged))
+                        .disabled(historyInfoStore.saveButtonDisabled(conversation))
                     }
                 }
                 .fontWeight(.bold)
@@ -241,12 +240,12 @@ struct HistoryInfoItemView: View {
                 }
             }
         }
-        .onChange(of: historyInfoStore(\.infoCoordinateRegion)) { _ in
-            historyInfoStore.reduce(\.isNotChanged, into: false)
-        }
-        .onChange(of: historyInfoStore(\.text)) { _ in
-            historyInfoStore.reduce(\.isNotChanged, into: false)
-        }
+//        .onChange(of: historyInfoStore(\.infoCoordinateRegion)) { _ in
+//            historyInfoStore.reduce(\.isNotChanged, into: false)
+//        }
+//        .onChange(of: historyInfoStore(\.text)) { _ in
+//            historyInfoStore.reduce(\.isNotChanged, into: false)
+//        }
     }
     
     private func updateHistoryInfo() {
