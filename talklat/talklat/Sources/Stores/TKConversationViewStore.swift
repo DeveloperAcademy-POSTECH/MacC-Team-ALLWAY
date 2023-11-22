@@ -341,8 +341,10 @@ extension TKConversationViewStore {
     }
     
     public func onSpeechTransicriptionUpdated(_ str: String) {
-        reduce(\.answeredText, into: str)
-        HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
+        if !str.isEmpty {
+            reduce(\.answeredText, into: str)
+            HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
+        }
     }
 }
 
