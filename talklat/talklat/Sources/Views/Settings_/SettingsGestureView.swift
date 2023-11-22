@@ -17,7 +17,7 @@ struct SettingsGestureView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 16)
             
-            TKListCell(label: "플립 제스처") {
+            BDListCell(label: "플립 제스처") {
                 } trailingUI: {
                     Toggle("", isOn: $isGestureEnabled)
                 }

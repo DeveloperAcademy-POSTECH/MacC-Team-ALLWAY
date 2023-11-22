@@ -58,14 +58,14 @@ struct SettingsListView: View {
 //                case .microphoneAuthIncompleted,
 //                        .speechRecognitionAuthIncompleted:
 //                    authNoticeBuilder(noticeItem: "마이크 및 음성인식")
-//
+//                    
 //                case .locationAuthIncompleted:
 //                    authNoticeBuilder(noticeItem: "위치")
-//
+//                    
 //                case .authIncompleted:
 //                    authNoticeBuilder(noticeItem: "마이크 및 음성인식")
 //                    authNoticeBuilder(noticeItem: "위치")
-//
+//                    
 //                default:
 //                    Color.clear
 //                        .frame(height: 0)
@@ -122,7 +122,7 @@ struct SettingsListView: View {
                                     SettingsHelpView()
                                 }
                             } label: {
-                                TKListCell(label: item.rawValue) {
+                                BDListCell(label: item.rawValue) {
                                     Image(systemName: item.icon)
                                 } trailingUI: {
                                     Image(systemName: "chevron.right")

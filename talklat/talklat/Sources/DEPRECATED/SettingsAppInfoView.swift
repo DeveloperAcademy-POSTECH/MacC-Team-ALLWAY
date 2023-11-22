@@ -76,7 +76,7 @@ struct SettingsAppInfoView: View {
                             .ignoresSafeArea(edges: .bottom)
                     }
                 } label: {
-                    TKListCell(label: info.rawValue) {
+                    BDListCell(label: info.rawValue) {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
                     }
