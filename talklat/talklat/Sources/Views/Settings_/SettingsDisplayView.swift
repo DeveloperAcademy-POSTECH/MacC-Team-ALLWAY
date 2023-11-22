@@ -7,58 +7,119 @@
 
 import SwiftUI
 
-struct SettingsDisplayView: View {
-    enum DisplayMode: String, CaseIterable {
-        case systemMode = "시스템 설정과 동일"
-        case lightMode = "밝은 모드"
-        case darkMode = "어두운 모드"
-    }
+internal enum Theme: String, CaseIterable {
+  case device = "시스템 설정과 동일"
+  case light = "밝은 모드"
+  case dark = "어두운 모드"
+}
 
+struct SettingsDisplayView: View {
     @Environment(\.colorScheme) var colorScheme
-   
-    @State private var selectedMode: DisplayMode = .systemMode
+    @State private var selectedTheme: Theme = .device
     
     var body: some View {
         VStack {
-            ForEach(DisplayMode.allCases, id: \.self) { label in
-                TKListCell(label: label.rawValue) {
-                } trailingUI: {
-                    switch selectedMode {
-                    case .systemMode, .lightMode, .darkMode:
-                        if selectedMode == label {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 21))
-                                .onTapGesture {
-                                    selectedMode = label
-                                }
-                        } else {
-                            Image(systemName: "circlebadge")
-                                .font(.system(size: 26.8))
-                                .onTapGesture {
-                                    selectedMode = label
-                                }
-                        }
-                    }
+            TKListCell(label: Theme.device.rawValue) {
+            } trailingUI: {
+                if selectedTheme == .device {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
                 }
+            }
+            .onTapGesture {
+                selectedTheme = .device
+                changeTheme(to: .device)
+            }
+            
+            TKListCell(label: Theme.light.rawValue) {
+            } trailingUI: {
+                if selectedTheme == .light {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
+                }
+            }
+            .onTapGesture {
+                selectedTheme = .light
+                changeTheme(to: .light)
+            }
+            
+            TKListCell(label: Theme.dark.rawValue) {
+            } trailingUI: {
+                if selectedTheme == .dark {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 21))
+                } else {
+                    Image(systemName: "circlebadge")
+                        .font(.system(size: 26.8))
+                }
+            }
+            .onTapGesture {
+                selectedTheme = .dark
+                changeTheme(to: .dark)
             }
             
             Spacer()
+        }
+        .onAppear {
+            selectedTheme = UserDefaults.standard.theme
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .navigationTitle("화면 모드")
         .navigationBarTitleDisplayMode(.inline)
     }
+
+    private func changeTheme(to theme: Theme) {
+        UserDefaults.standard.theme = theme
+        UIApplication.shared.windows.first?.overrideUserInterfaceStyle  = theme.userInterfaceStyle
+    }
+}
+
+extension Theme {
+    var userInterfaceStyle: UIUserInterfaceStyle {
+        switch self {
+        case .device:
+            return .unspecified
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        }
+    }
     
-    // TODO: - 지금은 작동이 안됨. 나중에 작업.
-    private func switchDisplayMode() -> ColorScheme {
-        switch selectedMode {
-        case .lightMode:
-            return ColorScheme.light
-        case .darkMode:
-            return ColorScheme.dark
-        default:
-            return ColorScheme.light
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .device:
+            return nil
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        }
+    }
+}
+
+extension UserDefaults {
+    var theme: Theme {
+        get {
+            register(defaults: [#function: Theme.device.rawValue])
+            return Theme(
+                rawValue: string(
+                    forKey: #function
+                ) ?? "시스템 설정과 동일"
+            ) ?? .device
+        }
+        set {
+            set(
+                newValue.rawValue,
+                forKey: #function
+            )
         }
     }
 }
