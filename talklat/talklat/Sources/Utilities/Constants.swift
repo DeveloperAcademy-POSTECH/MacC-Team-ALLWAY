@@ -86,6 +86,11 @@ public enum Constants {
     시작하기
     """
     
+    static let SHOWINGVIEW_GUIDINGMESSAGE: String =
+    """
+    음성인식이 되고 있어요.
+    또박또박 말씀해 주세요.
+    """
 }
 
 public enum FlippedStatus: String {
