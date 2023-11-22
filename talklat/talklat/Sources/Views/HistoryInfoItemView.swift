@@ -165,7 +165,6 @@ struct HistoryInfoItemView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
                 .padding(.bottom, 8)
             
             Text(historyInfoStore(\.textLimitMessage))
@@ -179,7 +178,7 @@ struct HistoryInfoItemView: View {
             Text("위치")
                 .font(.headline)
                 .padding(.leading, 10)
-                .padding(.bottom, 4)
+                .padding(.bottom, 8)
                 .foregroundStyle(Color.GR5)
             
             if conversation.location == nil {
