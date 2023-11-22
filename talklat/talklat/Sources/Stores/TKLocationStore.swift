@@ -27,7 +27,14 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         var infoPlaceName: String = "위치 정보 없음"
         var editPlaceName: String = "위치 정보 없음"
         
-        var circularRegion: CLCircularRegion = CLCircularRegion()
+        var circularRegion: CLCircularRegion = CLCircularRegion(
+            center: CLLocationCoordinate2D(
+                latitude: initialLatitude,
+                longitude: initialLongitude
+            ),
+            radius: 10,
+            identifier: "circularRegion"
+        )
     }
     
     
@@ -278,6 +285,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     }
     
     public func getClosestConversation(_ conversations: [TKConversation]) -> [TKConversation] {
+        
         guard self.detectAuthorization() == true else { return [TKConversation]() }
         
         // 거리 순에 따른 정리

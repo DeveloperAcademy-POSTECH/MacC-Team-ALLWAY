@@ -30,7 +30,7 @@ struct TKDraggableList: View {
                     .padding(.bottom, 20)
                 
                 // MARK: - RECENT CONVERSATION LIST
-                TKRecentConversationListView(conversations: conversations)
+                TKRecentConversationListView(conversations: $conversations)
                     .scrollDisabled(!store(\.isBottomSheetMaxed))
                     .scrollIndicators(.hidden)
             }
@@ -47,8 +47,7 @@ struct TKDraggableList: View {
                 }
             }
             .onChange(of: locationStore(\.currentUserCoordinate)) { _, _ in
-                
-                //MARK: circularRegion 관찰이 아닌 currentUserCoordinate 관찰
+                //MARK: circularRegion 관찰이 아닌 currentUserCoordinate 관찰 -> 근데 정확도 좀 떨어짐
                 conversations = locationStore.getClosestConversation(dataStore.conversations)
             }
             .onAppear {

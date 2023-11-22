@@ -11,7 +11,7 @@ struct TKRecentConversationListView: View {
     @EnvironmentObject var locationStore: TKLocationStore
     @State private var locationAuthorization = false
     let dataStore: TKSwiftDataStore = TKSwiftDataStore()
-    let conversations: [TKConversation]
+    @Binding var conversations: [TKConversation]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -43,7 +43,6 @@ struct TKRecentConversationListView: View {
             .padding(.bottom, 16)
             
             ScrollView {
-                #warning("CONVERSATION LIST COUNT")
                 if locationStore(\.authorizationStatus) == .authorizedAlways || locationStore(\.authorizationStatus) == .authorizedWhenInUse {
                     if conversations.count > 0 {
                         ForEach(conversations, id: \.self) { conversation in
@@ -80,7 +79,6 @@ struct TKRecentConversationListView: View {
                                         .font(.footnote)
                                         .foregroundStyle(Color.GR7)
                                     }
-                                    
                                 }
                                 .padding(.horizontal, 32)
                                 .padding(.vertical, 16)
@@ -104,6 +102,12 @@ struct TKRecentConversationListView: View {
                         .padding(.bottom, 32)
                 }
             }
+            .refreshable {
+                if locationStore.detectAuthorization() {
+                    locationStore.trackUserCoordinate()
+                    conversations = locationStore.getClosestConversation(dataStore.conversations)
+                }
+            }
         }
         .onAppear {
             locationAuthorization = locationStore.detectAuthorization()
@@ -112,5 +116,5 @@ struct TKRecentConversationListView: View {
 }
 
 #Preview {
-    TKRecentConversationListView(conversations: [TKConversation]())
+    TKRecentConversationListView(conversations: .constant([TKConversation]()))
 }
