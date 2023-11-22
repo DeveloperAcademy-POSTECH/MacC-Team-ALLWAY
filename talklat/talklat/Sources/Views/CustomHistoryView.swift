@@ -98,6 +98,7 @@ struct CustomHistoryView: View {
                 }
             }
         }
+        .fontWeight(.bold)
         .navigationTitle(historyViewType == .item ? conversation.title : "대화 내용")
         .navigationBarBackButtonHidden(true)
     }

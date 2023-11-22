@@ -124,6 +124,7 @@ struct HistoryInfoItemView: View {
                         .disabled(historyInfoStore(\.isNotChanged))
                     }
                 }
+                .fontWeight(.bold)
     }
     
     private var textFieldView: some View {
