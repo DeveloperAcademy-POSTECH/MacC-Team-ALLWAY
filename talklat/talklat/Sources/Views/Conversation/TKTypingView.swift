@@ -113,12 +113,6 @@ struct TKTypingView: View {
                     }
                     
                     Spacer()
-                    // C10-10 텍스트필드 영역 확대 위한 modifier -> 확인필요
-                        .frame(maxHeight: .infinity)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            self.focusState = true
-                        }
                     
                     customToolbar()
                         .padding(.bottom, 16)
@@ -237,6 +231,7 @@ struct TKTypingView: View {
             .buttonBorderShape(.capsule)
             .frame(height: 34)
             .tint(saveButtonTintColor())
+            .disabled(store(\.questionText).isEmpty ? true : false)
             .disabled(store(\.blockButtonDoubleTap))
         }
         .frame(height: 44)
