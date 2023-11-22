@@ -316,7 +316,6 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     func makeNewRegion() {
         guard let coordinate = locationManager.location?.coordinate else { return }
         
-        
         // 현재 region을 관찰하는걸 멈춤
         locationManager.stopMonitoring(for: self(\.circularRegion))
         
@@ -335,7 +334,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         // 새로운 circular region 생성
         let currentRegion = CLCircularRegion(
             center: coordinate,
-            radius: 50,
+            radius: 10,
             identifier: "circularRegion")
         currentRegion.notifyOnExit = true
         
