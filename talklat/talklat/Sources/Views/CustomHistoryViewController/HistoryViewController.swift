@@ -25,7 +25,7 @@ class HistoryViewController: UIViewController {
         
         customTableViewController = CustomTableViewController()
         customTableViewController.conversation = conversation
-        customTableViewController.messages = sortMessages(conversation.content)
+        customTableViewController.messages = dataStore.getConversationBasedContent(conversation)
         customTableViewController.view.translatesAutoresizingMaskIntoConstraints = false
         self.addChild(customTableViewController)
         self.view.addSubview(customTableViewController.view)
@@ -92,35 +92,6 @@ class HistoryViewController: UIViewController {
                 self?.floatingButton.alpha = 0
             }
         }
-    }
-    
-    private func sortMessages(_ content: [TKContent]?) -> [[TKContent]] {
-        // 우선 dictionary에 created: [Content] 형식으로 저장
-//        guard let content = content else { return [[]] }
-//        var contentDict = [Date: [TKContent]]()
-//        
-//        content.forEach { item in
-//            if contentDict[item.createdAt] == nil {
-//                // 해당 Date에 해당하는 값이 없으면 배열을 만들어주고 넣어줌
-//                contentDict[item.createdAt] = [TKContent]()
-//            }
-//            contentDict[item.createdAt]!.append(item)
-//        }
-//        
-//        // key(Date)를 뽑아내고 오름차순으로 정렬
-//        let dateKeys = contentDict.keys
-//        let sortedDateKeys = dateKeys.sorted(by: { $0 < $1 })
-//        
-//        var sortedMessages = [[TKContent]]()
-//        sortedDateKeys.forEach { key in
-//            if let contentArray = contentDict[key] {
-//                sortedMessages.append(contentArray)
-//            }
-//        }
-//        
-//        return sortedMessages
-        
-        return dataStore.getConversationBasedContent(conversation)
     }
 }
 
