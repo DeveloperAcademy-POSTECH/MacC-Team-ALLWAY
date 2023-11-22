@@ -18,7 +18,7 @@ struct CustomHistoryView: View {
     var conversation: TKConversation
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             CustomHistoryViewControllerRepresentable(conversation: conversation)
                 .onReceive(NotificationCenter.default.publisher(for: swipeDetectNotification)) { _ in
                     //MARK: swipe down action
@@ -74,7 +74,6 @@ struct CustomHistoryView: View {
 //                }
             }
         }
-        .padding()
         .toolbar {
             if historyViewType == .item {
                 ToolbarItem(placement: .topBarTrailing) {

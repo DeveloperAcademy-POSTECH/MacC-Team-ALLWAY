@@ -30,6 +30,7 @@ class HistoryViewController: UIViewController {
         self.addChild(customTableViewController)
         self.view.addSubview(customTableViewController.view)
         
+        navigationController?.navigationBar.barTintColor = .red
         
         createFloatingButton()
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +71,7 @@ class HistoryViewController: UIViewController {
     private func createFloatingButton() {
         floatingButton = UIButton()
         floatingButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        floatingButton.backgroundColor = .systemGray3
+        floatingButton.backgroundColor = UIColor(Color.GR3)
         floatingButton.layer.cornerRadius = 22
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
         floatingButton.setImage(UIImage(systemName: "chevron.down", withConfiguration: imageConfig), for: .normal)
