@@ -236,7 +236,7 @@ struct HistoryInfoItemView: View {
                         .padding()
                         .background {
                             Rectangle()
-                                .fill(Color(uiColor: UIColor.systemGray3))
+                                .fill(Color.GR1)
                         }
                     }
                 }
