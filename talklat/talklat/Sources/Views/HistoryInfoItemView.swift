@@ -14,7 +14,8 @@ struct HistoryInfoItemView: View {
     @EnvironmentObject private var locationStore: TKLocationStore
     @StateObject  var historyInfoStore: TKHistoryInfoStore = TKHistoryInfoStore()
     @FocusState var isTextfieldFocused: Bool
-    @State private var coordinateRegion = initialCoordinateRegion
+    @State private var coordinateRegion: MKCoordinateRegion = initialCoordinateRegion
+    @State private var isShowingAlert: Bool = false
     var conversation: TKConversation
     
     var body: some View {
@@ -99,8 +100,12 @@ struct HistoryInfoItemView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
-                            isTextfieldFocused = false
-                            dismiss()
+                            if historyInfoStore.saveButtonDisabled(conversation) {
+                                isTextfieldFocused = false
+                                dismiss()
+                            } else {
+                                isShowingAlert = true
+                            }
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
@@ -124,6 +129,16 @@ struct HistoryInfoItemView: View {
                     }
                 }
                 .fontWeight(.bold)
+                .overlay {
+                    TKAlert(
+                        style: .cancellation,
+                        isPresented: $isShowingAlert
+                    ) {
+                        dismiss()
+                    } actionButtonLabel: {
+                        Text("네, 취소할래요.")
+                    }
+                }
     }
     
     private var textFieldView: some View {
