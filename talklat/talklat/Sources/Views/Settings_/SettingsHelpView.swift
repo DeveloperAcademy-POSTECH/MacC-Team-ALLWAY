@@ -17,7 +17,7 @@ struct SettingsHelpView: View {
     
     var body: some View {
         VStack {
-            TKListCell(label: "문의 및 오류 신고하기") {
+            BDListCell(label: "문의 및 오류 신고하기") {
             } trailingUI: {
                 Image(systemName: "chevron.right")
             }
