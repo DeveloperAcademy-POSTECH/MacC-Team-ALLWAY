@@ -137,6 +137,7 @@ struct HistoryInfoItemView: View {
             
             
             TextField("", text: historyInfoStore.bindingText())
+                .frame(height: 22)
                 .onChange(of: historyInfoStore(\.text)) {
                     historyInfoStore.updateTextLimitMessage()
                 }
@@ -147,8 +148,8 @@ struct HistoryInfoItemView: View {
                         .fill(
                             Color.GR1
                         )
+                        .frame(height: 44)
                 }
-                .frame(height: 44)
                 .overlay {
                     HStack {
                         Spacer()
