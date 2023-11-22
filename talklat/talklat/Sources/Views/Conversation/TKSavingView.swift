@@ -34,7 +34,7 @@ struct TKSavingView: View {
                 HStack(spacing: 5) {
                     Image(systemName: "location.fill")
                     
-                    BDText(text: locationStore(\.mainPlaceName), style: .H2_SB_135)
+                    BDText(text: locationStore(\.mainPlaceName), style: .H1_B_130)
                 }
                 .foregroundStyle(Color.GR7)
                 
