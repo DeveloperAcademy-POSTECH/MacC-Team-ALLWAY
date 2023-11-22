@@ -320,11 +320,8 @@ struct CellItem: View {
                         )
                     )
             }
-//            .frame(maxWidth: .infinity)
-//            .padding()
             .frame(height: 60)
             .padding(.horizontal)
-
             .background(Color.GR1)
             .cornerRadius(16)
             .onTapGesture {
@@ -351,11 +348,12 @@ struct CellItem: View {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
                         .foregroundColor(.BaseBGWhite)
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 20)
+                        .padding(.horizontal, 25)
+                        .padding(.vertical, 14)
                         .background(.red)
-                        .cornerRadius(22)
+                        .cornerRadius(16)
                 }
+                .frame(height: 60)
                 .transition(.move(edge: .trailing))
             }
         }
