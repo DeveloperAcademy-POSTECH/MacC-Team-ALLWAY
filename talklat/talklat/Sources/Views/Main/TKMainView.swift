@@ -149,12 +149,6 @@ struct TKMainView: View {
                     Image(systemName: "arrow.up.right.square.fill")
                 }
             }
-            .onChange(of: scenePhase) { _, _ in
-                Task { @MainActor in
-                    let authResult = await SpeechAuthManager.switchAuthStatus()
-                    store.onChangeOfSpeechAuth(authResult)
-                }
-            }
         }
         .overlay(alignment: .top) {
             if let recent = recentConversation,
