@@ -11,11 +11,14 @@ import SwiftUI
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var locationStore: TKLocationStore
+<<<<<<< HEAD
     @Environment(\.colorScheme) private var colorScheme
+=======
+    @EnvironmentObject var authManager: TKAuthManager
+>>>>>>> Feat/#184-TKAlert-UI-Update
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
-    @ObservedObject var authManager: TKAuthManager
     @State private var recentConversation: TKConversation?
     let swiftDataStore = TKSwiftDataStore()
     
@@ -74,8 +77,7 @@ struct TKMainView: View {
                 alignment: .top
             )
             
-
-//            // MARK: BottomSheet
+            // MARK: BottomSheet
             TKDraggableList(store: store)
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
@@ -107,9 +109,14 @@ struct TKMainView: View {
                 NavigationLink {
                     HistoryListView()
                 } label: {
+<<<<<<< HEAD
                     Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
                         .resizable()
+=======
+                    Image(systemName: "list.bullet.rectangle.fill")
+>>>>>>> Feat/#184-TKAlert-UI-Update
                 }
+                .tint(Color.GR3)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -117,25 +124,28 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
+<<<<<<< HEAD
                     Image(colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
                         .resizable()
+=======
+                    Image(systemName: "gearshape.fill")
+>>>>>>> Feat/#184-TKAlert-UI-Update
                 }
+                .tint(Color.GR3)
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
-        .overlay {
-            TKAlert(
-                style: .mic,
-                isPresented: store.bindingSpeechAuthAlert()
-            ) {
-                store.onGoSettingScreenButtonTapped()
+        .showTKAlert(
+            isPresented: store.bindingSpeechAuthAlert(),
+            style: .conversation
+        ) {
+            store.onGoSettingScreenButtonTapped()
+            
+        } confirmButtonLabel: {
+            HStack(spacing: 8) {
+                Text("설정으로 이동")
                 
-            } actionButtonLabel: {
-                HStack(spacing: 8) {
-                    Text("설정으로 이동")
-                    
-                    Image(systemName: "arrow.up.right.square.fill")
-                }
+                Image(systemName: "arrow.up.right.square.fill")
             }
         }
         .overlay(alignment: .top) {
@@ -155,8 +165,10 @@ struct TKMainView: View {
     private func startConversationButtonBuilder() -> some View {
         Button {
             if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
-               !isMicrophoneAuthorized {
+               let isSpeechRecognitionAuthorized = authManager.isSpeechRecognitionAuthorized,
+               !isMicrophoneAuthorized || !isSpeechRecognitionAuthorized {
                 store.onStartConversationButtonTappedWithoutAuth()
+                
             } else {
                 store.onStartConversationButtonTapped()
             }
@@ -191,7 +203,8 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView(authManager: TKAuthManager())
+        TKMainView()
             .environmentObject(TKLocationStore())
+            .environmentObject(TKAuthManager())
     }
 }

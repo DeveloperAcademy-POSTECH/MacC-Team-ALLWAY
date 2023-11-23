@@ -67,9 +67,9 @@ extension Color {
         get {
             switch colorScheme {
             case .light:
-                return Color(hex: "#F75927")
-            case .dark:
                 return Color(hex: "#FF0D2A")
+            case .dark:
+                return Color(hex: "#FF3743")
             case .unspecified:
                 return .red
             @unknown default:

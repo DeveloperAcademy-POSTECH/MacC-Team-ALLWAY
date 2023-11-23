@@ -46,7 +46,7 @@ struct talklatApp: App {
                 
                 if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
-                        TKMainView(authManager: authManager)
+                        TKMainView()
                             .onAppear {
                                 locationStore.onMainViewAppear()
                             }
@@ -55,6 +55,7 @@ struct talklatApp: App {
                 }
             }
             .environmentObject(locationStore)
+            .environmentObject(authManager)
             .onChange(of: scenePhase) { _, _ in
                 Color.colorScheme = UITraitCollection.current.userInterfaceStyle
             }
