@@ -32,7 +32,8 @@ struct SettingTRTextField: View {
                 text: $text,
                 axis: .vertical
             )
-            .frame(height: 44)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
             .onChange(of: text) { newValue in
                 if newValue.count > limit {
                     let lastCharIndex = text.index(
@@ -42,9 +43,9 @@ struct SettingTRTextField: View {
                     text = text.prefix(limit - 1) + String(text[lastCharIndex])
                 }
                 
-                // Handle empty guide message
                 handleEmptyText(text)
             }
+            .padding(.vertical, 11)
             .padding(.horizontal, 16)
             .background(Color.GR1)
             .cornerRadius(22)
