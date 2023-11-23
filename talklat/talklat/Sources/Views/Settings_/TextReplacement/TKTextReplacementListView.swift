@@ -131,6 +131,7 @@ struct TKTextReplacementListView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .disabled(store(\.isSearching))
             }
         }
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
