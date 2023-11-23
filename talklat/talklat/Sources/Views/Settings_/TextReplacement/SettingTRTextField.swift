@@ -67,7 +67,7 @@ struct SettingTRTextField: View {
         limit: Int,
         isTextEmpty: Bool
     ) -> some View {
-        if isTextEmpty {
+        if currentCount == 0 {
             return Text("한 글자 이상 입력해 주세요")
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(Color.RED)
