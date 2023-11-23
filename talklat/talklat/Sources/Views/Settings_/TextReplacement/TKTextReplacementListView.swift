@@ -98,6 +98,7 @@ struct TKTextReplacementListView: View {
                             if(!sortedGroupKeys.isEmpty) {
                                 SectionIndexTitles(proxy: proxy)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .padding(.trailing, 3)
                             }
                         }
                     }
@@ -141,7 +142,6 @@ struct TKTextReplacementListView: View {
     }
     
     // MARK: 리스트 정렬
-    // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..
     var sortedGroupKeys: [String] {
         return groupedLists.keys.sorted { key1, key2 in
             let firstCharKey1 = key1.first
