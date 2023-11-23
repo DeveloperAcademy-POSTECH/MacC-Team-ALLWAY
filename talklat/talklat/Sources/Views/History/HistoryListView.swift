@@ -180,7 +180,6 @@ struct LocationList: View {
                 
                 // Collapse Button
                 Button {
-                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
