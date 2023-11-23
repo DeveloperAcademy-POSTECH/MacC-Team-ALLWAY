@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadingWebView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State private var isLoading = true
     @State private var error: Error? = nil
@@ -41,7 +41,7 @@ struct LoadingWebView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     HStack {
                         Image(systemName: "chevron.left")
