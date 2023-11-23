@@ -42,10 +42,22 @@ private enum SectionType: String, CaseIterable {
     }
 }
 
+internal enum AuthorizationType: String {
+    case micAndSpeech = "마이크 및 음성인식"
+    case location = "위치"
+    
+    var icon: String {
+        switch self {
+        case .micAndSpeech: return "mic.slash.circle.fill"
+        case .location: return "location.slash.circle.fill"
+        }
+    }
+}
+
 struct SettingsListView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var authManager: TKAuthManager
-    // @State private var authStatus: AuthStatus = .authCompleted
+    @EnvironmentObject private var authManager: TKAuthManager
+    @EnvironmentObject private var locationStore: TKLocationStore
     
     private let sectionCategories: [String] = [
         "대화", "접근성", "실험실", "정보", "지원" // TODO: "일반" 추가
@@ -53,26 +65,25 @@ struct SettingsListView: View {
     
     var body: some View {
         ScrollView {
-//            VStack {
-//                // TODO: appRootManager.switchAuthStatus에서 분기처리 변경 (위치 권한 분기 추가)
-//                switch authStatus {
-//                case .microphoneAuthIncompleted, .speechRecognitionAuthIncompleted:
-//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
-//                
-//                    // TODO: case .locationAuthIncompleted:
-//                    // authNoticeBuilder(noticeItem: "위치")
-//                    
-//                case .authIncompleted:
-//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
-//                    authNoticeBuilder(noticeItem: "위치")
-//                    
-//                default:
-//                    Color.clear
-//                        .frame(height: 0)
-//                }
-//            }
-//            .padding(.top, 10)
-//            .padding(.bottom, authStatus == .authCompleted ? 0 : 24)
+            VStack {
+                if let isMicAuthorized = authManager.isMicrophoneAuthorized,
+                   let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
+                    if !isMicAuthorized || !isSpeechAuthorized {
+                        authNoticeBuilder(noticeItem: AuthorizationType.micAndSpeech)
+                    }
+                }
+                
+                if let isLocationAuthorized = authManager.isLocationAuthorized {
+                    if !isLocationAuthorized {
+                        authNoticeBuilder(noticeItem: AuthorizationType.location)
+                    }
+                }
+            }
+            .padding(.top, 10)
+            .padding(
+                .bottom,
+                authManager.authStatus == .authCompleted ? 0 : 24
+            )
             
             ForEach(
                 sectionCategories,
@@ -135,6 +146,14 @@ struct SettingsListView: View {
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onChange(of: locationStore(\.authorizationStatus), { oldValue, newValue in
+            switch newValue {
+            case .authorizedAlways, .authorizedWhenInUse:
+                authManager.isLocationAuthorized = true
+            default:
+                authManager.isLocationAuthorized = false
+            }
+        })
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -151,14 +170,11 @@ struct SettingsListView: View {
             }
         }
         .scrollIndicators(.hidden)
-//        .onAppear {
-//            authManager.switchAuthStatus()
-//        }
     }
 }
 
 @ViewBuilder
-func authNoticeBuilder(noticeItem: String) -> some View {
+func authNoticeBuilder(noticeItem: AuthorizationType) -> some View {
     Button {
         if let url = URL(
             string: UIApplication.openSettingsURLString
@@ -167,28 +183,22 @@ func authNoticeBuilder(noticeItem: String) -> some View {
         }
     } label: {
         HStack {
-            if noticeItem == "마이크 및 음성인식" {
-                Image(systemName: "mic.slash.circle.fill")
-                    .foregroundColor(.white) // white 고정값 맞아요!
-                    .font(.system(size: 45))
-            } else if noticeItem == "위치" {
-                Image(systemName: "location.slash.circle.fill")
-                    .foregroundColor(.white) // white 고정값 맞아요!
-                    .font(.system(size: 45))
-            }
+            Image(systemName: noticeItem.icon)
+                .foregroundColor(.white)
+                .font(.system(size: 45))
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("\(noticeItem) 권한이 꺼져있어요.")
-                    .foregroundColor(.white) // white 고정값 맞아요!
+                Text("\(noticeItem.rawValue) 권한이 꺼져있어요.")
+                    .foregroundColor(.white)
                     .font(.system(size: 17, weight: .bold))
                 
                 HStack {
                     Text("권한 허용하러 가기")
-                        .foregroundColor(.white) // white 고정값 맞아요!
+                        .foregroundColor(.white)
                         .font(.system(size: 17, weight: .bold))
                     
                     Image(systemName: "arrow.up.forward.app.fill")
-                        .foregroundColor(.white) // white 고정값 맞아요!
+                        .foregroundColor(.white)
                 }
             }
             
