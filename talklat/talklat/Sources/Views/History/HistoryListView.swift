@@ -301,10 +301,7 @@ struct CellItem: View {
                         .foregroundStyle(Color.GR8)
                     
                     Text(
-                        conversation.createdAt.formatted( // TODO: format
-                            date: .abbreviated,
-                            time: .omitted
-                        )
+                        conversation.createdAt.convertToDate()
                     )
                     .foregroundColor(.GR4)
                     .font(.system(size: 15, weight: .medium))

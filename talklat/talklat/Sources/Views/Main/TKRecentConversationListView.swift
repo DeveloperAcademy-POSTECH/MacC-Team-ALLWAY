@@ -63,7 +63,8 @@ struct TKRecentConversationListView: View {
                                             .foregroundStyle(Color.OR6)
                                     }
                                     HStack {
-                                        Text((conversation.updatedAt ?? Date.now).convertToDate())
+                                        // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
+                                        Text((conversation.createdAt).convertToDate())
                                             .font(.footnote)
                                             .foregroundStyle(Color.GR4)
                                         

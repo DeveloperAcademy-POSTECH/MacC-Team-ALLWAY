@@ -10,20 +10,19 @@ import UIKit
 
 class TableHeader: UITableViewHeaderFooterView {
     static let identifier: String = "TableHeader"
-    private var dateLabel: UILabel = UILabel()
-    private var timeLabel: UILabel = UILabel()
-    var date: Date = Date()
+    var dateLabel: UILabel = UILabel()
+    var timeLabel: UILabel = UILabel()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        dateLabel.text = date.convertToDate()
+        dateLabel.text = Date.now.convertToDate()
         dateLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         
         dateLabel.textAlignment = .center
         dateLabel.textColor = UIColor.systemGray
         
-        timeLabel.text = date.convertToTime()
+        timeLabel.text = Date.now.convertToTime()
         timeLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         timeLabel.textColor = UIColor.systemGray2
         timeLabel.textAlignment = .center
