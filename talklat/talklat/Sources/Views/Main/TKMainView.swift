@@ -36,13 +36,6 @@ struct TKMainView: View {
                             }
                             
                             Text("\(locationStore(\.mainPlaceName))")
-                                .onAppear {
-                                    locationStore.fetchCityName(
-                                        locationStore(\.currentUserCoordinate),
-                                        cityNameType: .short,
-                                        usage: .main
-                                    )
-                                }
                         }
                     }
                     .foregroundStyle(Color.GR4)
@@ -80,12 +73,7 @@ struct TKMainView: View {
                 alignment: .top
             )
             
-//            Text("새로운 위치 기반 기능이\n곧 찾아옵니다!")
-//                .font(.headline)
-//                .foregroundStyle(Color.OR6)
-//                .multilineTextAlignment(.center)
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-//            
+
 //            // MARK: BottomSheet
             TKDraggableList(store: store)
         }
