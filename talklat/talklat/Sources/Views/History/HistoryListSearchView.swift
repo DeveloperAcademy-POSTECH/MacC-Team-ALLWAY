@@ -147,6 +147,7 @@ struct SearchResultSection: View {
         }
         .padding(.top, 24)
         .onAppear {
+            // TODO: 모든 로직 Store로 분리
             var matchingConversations = [TKConversation]()
             matchingContents.forEach { content in
                 if let conversation = content.conversation {

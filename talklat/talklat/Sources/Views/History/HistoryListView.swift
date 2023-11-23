@@ -41,6 +41,7 @@ struct HistoryListView: View {
             .navigationBarBackButtonHidden(
                 isSearching ? true : false
             )
+            .disabled(isEditing ? true : false)
             
             Spacer()
             
@@ -103,7 +104,7 @@ struct HistoryListView: View {
                                         }
                                     }
                                 } label: {
-                                    Text("편집")
+                                    Text(isEditing ? "완료" : "편집")
                                         .foregroundColor(.accentColor)
                                         .fontWeight(.medium)
                                 }
@@ -276,7 +277,7 @@ struct CellItem: View {
                     } label: {
                         if !isRemoving {
                             Image(systemName: "minus.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundStyle(.white, .red)
                                 .font(.system(size: 20))
                                 .padding(.trailing, 5)
                                 .transition(
@@ -300,10 +301,7 @@ struct CellItem: View {
                         .foregroundStyle(Color.GR8)
                     
                     Text(
-                        conversation.createdAt.formatted( // TODO: format
-                            date: .abbreviated,
-                            time: .omitted
-                        )
+                        conversation.createdAt.convertToDate()
                     )
                     .foregroundColor(.GR4)
                     .font(.system(size: 15, weight: .medium))
@@ -349,7 +347,7 @@ struct CellItem: View {
                 } label: {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
-                        .foregroundColor(.BaseBGWhite)
+                        .foregroundColor(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 20)
                         .background(.red)
