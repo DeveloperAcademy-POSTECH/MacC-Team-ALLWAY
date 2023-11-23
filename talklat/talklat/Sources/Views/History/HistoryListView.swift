@@ -171,7 +171,12 @@ struct LocationList: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "location.fill")
+                if location.blockName != "위치정보없음" { // TODO: nil 값 확인 필요
+                    Image(systemName: "location.fill")
+                } else {
+                    Image(systemName: "location.slash.fill")
+                }
+                
                 Text(location.blockName)
                     .foregroundColor(.GR8)
                     .font(.system(size: 20, weight: .bold))
