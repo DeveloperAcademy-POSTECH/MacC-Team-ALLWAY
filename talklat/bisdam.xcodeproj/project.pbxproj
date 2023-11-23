@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4B2B0B3BC600ECF34B /* BDText.swift */; };
+		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		577B45202B0DE76500DA010E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45172B0DE76500DA010E /* Pretendard-Thin.otf */; };
 		577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45182B0DE76500DA010E /* Pretendard-Black.otf */; };
 		577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45192B0DE76500DA010E /* Pretendard-SemiBold.otf */; };
@@ -143,8 +143,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		5713DC4B2B0B3BC600ECF34B /* BDText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDText.swift; sourceTree = "<group>"; };
+		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
 		574D418B2B05E662007EFE90 /* SettingsTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
@@ -1025,7 +1025,6 @@
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1068,7 +1067,6 @@
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
