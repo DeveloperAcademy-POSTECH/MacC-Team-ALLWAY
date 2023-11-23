@@ -76,7 +76,7 @@ struct TKMainView: View {
             
 
 //            // MARK: BottomSheet
-            TKDraggableList(store: store)
+            TKDraggableList(mainViewstore: store, conversationViewStore: conversationViewStore)
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TKRecentConversationListView: View {
     @EnvironmentObject var locationStore: TKLocationStore
-    @State private var locationAuthorization = false
-    let dataStore: TKSwiftDataStore = TKSwiftDataStore()
-    @Binding var conversations: [TKConversation]
+    @ObservedObject var conversationViewStore: TKConversationViewStore
+    @ObservedObject var draggableListViewStore: TKDraggableListViewStore
+    let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -44,13 +44,11 @@ struct TKRecentConversationListView: View {
             
             ScrollView {
                 if locationStore(\.isAuthorized) {
-                    if conversations.count > 0 {
-                        ForEach(conversations, id: \.self) { conversation in
-                            NavigationLink {
-                                CustomHistoryView(
-                                    historyViewType: .item,
-                                    conversation: conversation
-                                )
+                    if draggableListViewStore(\.conversations).count > 0 {
+                        ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
+                            Button {
+                                draggableListViewStore.onTapDraggableListItem(conversation)
+                                conversationViewStore.reduce(\.previousConversation, into: conversation)
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -105,16 +103,35 @@ struct TKRecentConversationListView: View {
             .refreshable {
                 if locationStore.detectAuthorization() {
                     locationStore.trackUserCoordinate()
-                    conversations = locationStore.getClosestConversation(dataStore.conversations)
+                    draggableListViewStore.reduce(
+                        \.conversations,
+                         into: locationStore.getClosestConversation(swiftDataStore.conversations)
+                    )
+//                    conversations = locationStore.getClosestConversation(swiftDataStore.conversations)
                 }
             }
         }
-        .onAppear {
-            locationAuthorization = locationStore.detectAuthorization()
+        .fullScreenCover(isPresented: draggableListViewStore.bindingIsShowingConversationView()) {
+            TKConversationView(store: conversationViewStore)
+                .onDisappear {
+                    conversationViewStore.resetConversationState()
+                }
+                .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
+                    if !old, new {
+//                        store.onConversationFullscreenDismissed()
+//                        dismiss()
+                    }
+                }
+                .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
+                    if isSaved {
+//                        self.recentConversation = swiftDataStore.getRecentConversation()
+//                        store.onNewConversationHasSaved()
+                    }
+                }
         }
     }
 }
 
 #Preview {
-    TKRecentConversationListView(conversations: .constant([TKConversation]()))
+    TKRecentConversationListView(conversationViewStore: .init(), draggableListViewStore: .init())
 }

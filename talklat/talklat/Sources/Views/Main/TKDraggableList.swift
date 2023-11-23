@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TKDraggableList: View {
     @EnvironmentObject private var locationStore: TKLocationStore
-    @ObservedObject var store: TKMainViewStore
+    @ObservedObject var mainViewstore: TKMainViewStore
+    @ObservedObject var conversationViewStore: TKConversationViewStore
+    @StateObject private var draggableListViewStore: TKDraggableListViewStore = TKDraggableListViewStore()
     @State private var conversations: [TKConversation] = [TKConversation]()
     @GestureState var gestureOffset: CGFloat = 0
     let firstOffset = UIScreen.main.bounds.height * 0.65
@@ -30,15 +32,21 @@ struct TKDraggableList: View {
                     .padding(.bottom, 20)
                 
                 // MARK: - RECENT CONVERSATION LIST
-                TKRecentConversationListView(conversations: $conversations)
-                    .scrollDisabled(!store(\.isBottomSheetMaxed))
+                TKRecentConversationListView(
+                    conversationViewStore: conversationViewStore,
+                    draggableListViewStore: draggableListViewStore
+                )
+                    .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
                     .scrollIndicators(.hidden)
             }
-            .onChange(of: store(\.lastOffset)) { _, _ in
-                store.onBottomSheetMaxed(firstOffset)
+            .onChange(of: mainViewstore(\.lastOffset)) { _, _ in
+                mainViewstore.onBottomSheetMaxed(firstOffset)
             }
             .onChange(of: dataStore.conversations) { _, _ in
-                conversations = locationStore.getClosestConversation(dataStore.conversations)
+                draggableListViewStore.reduce(
+                    \.conversations,
+                     into: locationStore.getClosestConversation(dataStore.conversations)
+                )
             }
             .onChange(of: locationStore(\.authorizationStatus)) { _, _ in
                 if locationStore.detectAuthorization() {
@@ -48,26 +56,32 @@ struct TKDraggableList: View {
             }
             .onChange(of: locationStore(\.currentUserCoordinate)) { _, _ in
                 //MARK: circularRegion 관찰이 아닌 currentUserCoordinate 관찰 -> 근데 정확도 좀 떨어짐
-                conversations = locationStore.getClosestConversation(dataStore.conversations)
+                draggableListViewStore.reduce(
+                    \.conversations,
+                     into: locationStore.getClosestConversation(dataStore.conversations)
+                )
             }
             .onAppear {
                 locationStore.trackUserCoordinate()
-                conversations = locationStore.getClosestConversation(dataStore.conversations)
+                draggableListViewStore.reduce(
+                    \.conversations,
+                     into: locationStore.getClosestConversation(dataStore.conversations)
+                )
             }
         }
         // 시작할 때 보여줄 리스트의 offset
         .offset(y: firstOffset)
         // 유저가 드래그할 때 리스트의 위치를 정하는 offset
-        .offset(y: store(\.offset))
+        .offset(y: mainViewstore(\.offset))
         // 유저의 드래그가 끝나고 위치를 정하는 offset
-        .offset(y: store(\.lastOffset))
+        .offset(y: mainViewstore(\.lastOffset))
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    store.onUpdatingDragOffset(value.translation.height)
+                    mainViewstore.onUpdatingDragOffset(value.translation.height)
                 }
                 .onEnded{ value in
-                    store.onDragEnded(firstOffset)
+                    mainViewstore.onDragEnded(firstOffset)
                 }
         )
         .ignoresSafeArea(.all, edges: .bottom)
@@ -78,6 +92,6 @@ struct TKDraggableList: View {
 #Preview {
     ZStack {
         Color.yellow
-        TKDraggableList(store: .init())
+        TKDraggableList(mainViewstore: .init(), conversationViewStore: .init())
     }
 }

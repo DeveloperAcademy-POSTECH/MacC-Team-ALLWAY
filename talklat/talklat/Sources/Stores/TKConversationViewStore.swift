@@ -51,6 +51,7 @@ final class TKConversationViewStore {
         var bottomInset: CGFloat = 0
         var isTopViewShown: Bool = false
         var isHistoryViewShownWithTransition: Bool = false
+        var previousConversation: TKConversation? = nil
     }
     
     @Published private var viewState: ConversationState = ConversationState(conversationStatus: .writing)
@@ -150,6 +151,19 @@ extension TKConversationViewStore {
     }
     
     public func onSaveNewConversationButtonTapped() {
+        withAnimation {
+            reduce(
+                \.isNewConversationSaved,
+                 into: true
+            )
+        }
+    }
+    
+    public func onSaveToPreviousButtonTapped(_ newContents: [TKContent]) {
+        if let _ = self(\.previousConversation) {
+            self(\.previousConversation)?.content.append(contentsOf: newContents)
+        }
+        
         withAnimation {
             reduce(
                 \.isNewConversationSaved,
