@@ -185,7 +185,7 @@ struct TKTypingView: View {
                                 .resizable()
                                 .frame(width: 32, height: 10)
                                 .padding()
-                                .foregroundStyle(Color.BaseBGWhite)
+                                .foregroundStyle(Color.white)
                         }
                         
                         endConversationButtonBuilder()
@@ -210,10 +210,14 @@ struct TKTypingView: View {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                Image(systemName: "xmark")
-                    .bold()
+                BDText(text: "취소", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(cancelButtonTextColor())
             }
-            .tint(endButtonTintColor())
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .frame(height: 34)
+            .tint(cancelButtonTintColor())
             
             Spacer()
             
@@ -223,16 +227,18 @@ struct TKTypingView: View {
                 }
                 
             } label: {
-                Text("저장")
-                    .font(.headline)
+                BDText(text: "저장", style: .H1_B_130)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(endButtonTextColor())
+                    .foregroundStyle(saveButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(endButtonTintColor())
+            .frame(height: 34)
+            .tint(saveButtonTintColor())
+            .disabled(store(\.questionText).isEmpty ? true : false)
             .disabled(store(\.blockButtonDoubleTap))
         }
+        .frame(height: 44)
         .padding(.horizontal, 24)
     }
     
@@ -246,9 +252,9 @@ struct TKTypingView: View {
                 } label: {
                     Image(systemName: "eraser.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(focusState ? Color.BaseBGWhite : Color.GR3)
+                        .foregroundColor(!store(\.questionText).isEmpty ? Color.BaseBGWhite : Color.GR3)
                         .padding(10)
-                        .background(focusState ? Color.GR4 : Color.GR2)
+                        .background(!store(\.questionText).isEmpty ? Color.GR4 : Color.GR2)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel(Text("Clear text"))
@@ -298,22 +304,47 @@ struct TKTypingView: View {
             startRecordingButtonBuilder()
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 24)
+                .padding(.top, 32)
         }
     }
-    
-    private func endButtonTextColor() -> Color {
-        if store.isAnswerCardDisplayable {
+
+    private func saveButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
             return Color.OR6
+        } else if store(\.questionText).isEmpty {
+            return Color.GR3
         } else {
-            return Color.GR7
+            return Color.white
         }
     }
     
-    private func endButtonTintColor() -> Color {
-        if store.isAnswerCardDisplayable {
+    private func saveButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.white
+        } else if store(\.questionText).isEmpty {
+            return Color.GR2
+        } else {
+            return Color.OR5
+        }
+    }
+    
+    private func cancelButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
             return Color.white
         } else {
-            return Color.GR2
+            return Color.GR6
+        }
+    }
+    
+    private func cancelButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.OR6
+        } else {
+            return Color.GR1
         }
     }
 }
