@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TKRecentConversationListView: View {
     let conversation = TKConversation(title: "Hi", createdAt: Date.now, content: [TKContent]())
+    let dataStore: TKSwiftDataStore = TKSwiftDataStore()
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
@@ -33,7 +34,7 @@ struct TKRecentConversationListView: View {
             
             ScrollView {
                 #warning("CONVERSATION LIST COUNT")
-                ForEach(0..<10) { _ in
+                ForEach(dataStore.conversations) { conversation in
                     NavigationLink {
                         CustomHistoryView(
                             historyViewType: .item, 
