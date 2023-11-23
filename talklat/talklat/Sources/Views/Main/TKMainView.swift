@@ -10,10 +10,12 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject var locationStore: TKLocationStore
+    @EnvironmentObject private var locationStore: TKLocationStore
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject var store: TKMainViewStore
+    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
+    
+    @ObservedObject var authManager: TKAuthManager
     @State private var recentConversation: TKConversation?
     let swiftDataStore = TKSwiftDataStore()
     
@@ -80,14 +82,14 @@ struct TKMainView: View {
                 alignment: .top
             )
             
-            Text("새로운 위치 기반 기능이\n곧 찾아옵니다!")
-                .font(.headline)
-                .foregroundStyle(Color.OR6)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            
+//            Text("새로운 위치 기반 기능이\n곧 찾아옵니다!")
+//                .font(.headline)
+//                .foregroundStyle(Color.OR6)
+//                .multilineTextAlignment(.center)
+//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+//            
 //            // MARK: BottomSheet
-//            TKDraggableList(store: store)
+            TKDraggableList(store: store)
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
@@ -106,7 +108,6 @@ struct TKMainView: View {
                     }
                 }
         }
-        .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Image(colorScheme == .light ? "bisdam_typo" : "bisdam_typo_Dark")
@@ -118,7 +119,6 @@ struct TKMainView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     HistoryListView()
-                    
                 } label: {
                     Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
                         .resizable()
@@ -150,12 +150,6 @@ struct TKMainView: View {
                     Image(systemName: "arrow.up.right.square.fill")
                 }
             }
-            .onChange(of: scenePhase) { _, _ in
-                Task { @MainActor in
-                    let authResult = await SpeechAuthManager.switchAuthStatus()
-                    store.onChangeOfSpeechAuth(authResult)
-                }
-            }
         }
         .overlay(alignment: .top) {
             if let recent = recentConversation,
@@ -169,12 +163,12 @@ struct TKMainView: View {
                 )
             }
         }
-        .environmentObject(locationStore)
     }
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            if store(\.authStatus) != .authCompleted {
+            if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
+               !isMicrophoneAuthorized {
                 store.onStartConversationButtonTappedWithoutAuth()
             } else {
                 store.onStartConversationButtonTapped()
@@ -210,7 +204,7 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView(store: TKMainViewStore())
+        TKMainView(authManager: TKAuthManager())
             .environmentObject(TKLocationStore())
     }
 }
