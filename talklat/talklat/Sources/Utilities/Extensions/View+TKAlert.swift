@@ -7,12 +7,73 @@
 
 import SwiftUI
 
-struct View_TKAlert: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension View {
+    internal func showTKAlert<TKLabel: View>(
+        isPresented: Binding<Bool>,
+        style: TKAlert<TKLabel>.AlertStyle,
+        onDismiss: @escaping () -> Void,
+        confirmButtonAction: @escaping () -> Void,
+        confirmButtonLabel: @escaping () -> TKLabel
+    ) -> some View {
+        self
+            .disabled(isPresented.wrappedValue)
+            .overlay {
+                if isPresented.wrappedValue {
+                    Color.black
+                        .opacity(0.4)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                        .onTapGesture {
+                            onDismiss()
+                            withAnimation {
+                                isPresented.wrappedValue = false
+                            }
+                        }
+                }
+            }
+            .overlay {
+                if isPresented.wrappedValue {
+                    TKAlert(
+                        style: style,
+                        isPresented: isPresented,
+                        onDismiss: onDismiss,
+                        confirmButtonAction: confirmButtonAction,
+                        confirmButtonLabel: confirmButtonLabel
+                    )
+                }
+            }
     }
-}
-
-#Preview {
-    View_TKAlert()
+    
+    internal func showTKAlert<TKLabel: View>(
+        isPresented: Binding<Bool>,
+        style: TKAlert<TKLabel>.AlertStyle,
+        confirmButtonAction: @escaping () -> Void,
+        confirmButtonLabel: @escaping () -> TKLabel
+    ) -> some View {
+        self
+            .disabled(isPresented.wrappedValue)
+            .overlay {
+                if isPresented.wrappedValue {
+                    Color.black
+                        .opacity(0.4)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                        .onTapGesture {
+                            withAnimation {
+                                isPresented.wrappedValue = false
+                            }
+                        }
+                }
+            }
+            .overlay {
+                if isPresented.wrappedValue {
+                    TKAlert(
+                        style: style,
+                        isPresented: isPresented,
+                        confirmButtonAction: confirmButtonAction,
+                        confirmButtonLabel: confirmButtonLabel
+                    )
+                }
+            }
+    }
 }
