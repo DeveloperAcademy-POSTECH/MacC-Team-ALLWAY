@@ -83,9 +83,9 @@ struct HistoryListView: View {
                                     Image(systemName: "chevron.left")
                                     Text("홈")
                                 }
-                                .foregroundColor(Color.OR6)
                                 .fontWeight(.medium)
                             }
+                            .tint(Color.OR6)
                         }
                         
                         ToolbarItem(placement: .topBarTrailing) {
@@ -98,15 +98,13 @@ struct HistoryListView: View {
                                             blendDuration: 0.4
                                         )
                                     ) {
-                                        withAnimation {
-                                            isEditing.toggle()
-                                        }
+                                        isEditing.toggle()
                                     }
                                 } label: {
                                     Text("편집")
-                                        .foregroundColor(.accentColor)
                                         .fontWeight(.medium)
                                 }
+                                .tint(Color.OR6)
                             }
                         }
                     }
@@ -124,16 +122,24 @@ struct HistoryListView: View {
             
         }
         .padding(.horizontal, 20)
-        .overlay {
-            if isDialogShowing {
-                Color.black.opacity(0.5)
-                    .ignoresSafeArea()
-                CustomDialog(
-                    dataStore: dataStore,
-                    selectedConversation: $selectedConversation,
-                    isDialogShowing: $isDialogShowing,
-                    isEditing: $isEditing
-                )
+        .showTKAlert(
+            isPresented: $isDialogShowing,
+            style: .removeConversation(title: selectedConversation.title)
+        ) {
+            isDialogShowing = false
+            withAnimation {
+                isEditing = false
+            }
+        } confirmButtonAction: {
+            withAnimation {
+                dataStore.removeItem(selectedConversation)
+                isDialogShowing = false
+                isEditing = false
+            }
+            
+        } confirmButtonLabel: {
+            HStack(spacing: 8) {
+                Text("네, 삭제할래요")
             }
         }
         .onChange(of: isSearchFocused) { _, _ in
