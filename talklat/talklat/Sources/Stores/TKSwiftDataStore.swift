@@ -77,6 +77,10 @@ extension TKSwiftDataStore {
         return conversations.sorted { $0.createdAt > $1.createdAt }.first
     }
     
+    public func getAllConversation() -> [TKConversation] {
+        dataManager.getAllConversations()
+    }
+    
     // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
 //    public func getContentBasedConversations(content: [TKContent]) -> [TKConversation] {
 //        var conversations: [TKConversation] = []
@@ -106,5 +110,40 @@ extension TKSwiftDataStore {
         oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
         dataManager.appendItem(oldTextReplacement)
         refreshData()
+    }
+}
+
+// MARK: CustomHistoryView Related
+extension TKSwiftDataStore {
+    public func getConversationBasedContent(_ conversation: TKConversation) -> [[TKContent]] {
+        
+        // 1. conversation에 맞는 contents를 전부 불러옴
+        let contents = dataManager.getConversationMatchingContents(conversation: conversation)
+        
+        print(#function, contents)
+        
+        // 2. contents의 날짜별 분류를 위한 contentDict와 return을 위한 targetContents
+        var contentDict = [String: [TKContent]]()
+        var targetContents = [[TKContent]]()
+        
+        // 3. 날짜별 분류 시작
+        contents.forEach { content in
+            if let _ = contentDict[content.createdAt.convertToDate()] {
+                
+            } else {
+                contentDict[content.createdAt.convertToDate()] = []
+            }
+            
+            contentDict[content.createdAt.convertToDate()]?.append(content)
+        }
+        
+        let dateKeys = contentDict.keys.sorted(by: { $0 < $1} )
+        print(#function, dateKeys)
+        
+        dateKeys.forEach { key in
+            targetContents.append(contentDict[key] ?? [TKContent]())
+        }
+        
+        return targetContents
     }
 }

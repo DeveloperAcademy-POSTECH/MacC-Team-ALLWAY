@@ -54,16 +54,16 @@ struct SettingsListView: View {
     var body: some View {
         ScrollView {
 //            VStack {
-//                switch authManager.authStatus {
-//                case .microphoneAuthIncompleted,
-//                        .speechRecognitionAuthIncompleted:
-//                    authNoticeBuilder(noticeItem: "마이크 및 음성인식")
-//                    
-//                case .locationAuthIncompleted:
-//                    authNoticeBuilder(noticeItem: "위치")
+//                // TODO: appRootManager.switchAuthStatus에서 분기처리 변경 (위치 권한 분기 추가)
+//                switch authStatus {
+//                case .microphoneAuthIncompleted, .speechRecognitionAuthIncompleted:
+//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
+//                
+//                    // TODO: case .locationAuthIncompleted:
+//                    // authNoticeBuilder(noticeItem: "위치")
 //                    
 //                case .authIncompleted:
-//                    authNoticeBuilder(noticeItem: "마이크 및 음성인식")
+//                    authNoticeBuilder(noticeItem: "마이크와 음성인식")
 //                    authNoticeBuilder(noticeItem: "위치")
 //                    
 //                default:
@@ -72,10 +72,7 @@ struct SettingsListView: View {
 //                }
 //            }
 //            .padding(.top, 10)
-//            .padding(
-//                .bottom,
-//                authManager.authStatus == .authCompleted ? 0 : 24
-//            )
+//            .padding(.bottom, authStatus == .authCompleted ? 0 : 24)
             
             ForEach(
                 sectionCategories,

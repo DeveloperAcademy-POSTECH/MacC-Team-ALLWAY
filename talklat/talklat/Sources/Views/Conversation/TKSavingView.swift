@@ -12,7 +12,9 @@ struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKConversationViewStore
+    @ObservedObject var speechRecognizeManager: SpeechRecognizer
     @Environment(\.dismiss) private var dismiss
+    @FocusState var focusState: Bool
     let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
@@ -78,6 +80,7 @@ struct TKSavingView: View {
                 .font(.headline)
                 .padding(.leading, 16)
                 .padding(.vertical, 12)
+                .focused($focusState)
                 
                 Spacer()
                 
@@ -113,12 +116,18 @@ struct TKSavingView: View {
                     .animation(.none, value: store(\.conversationTitle))
             }
         }
+        .task {
+            let allConversations = swiftDataStore.getAllConversation()
+            store.onSaveConversationSheetApeear(allConversations.count)
+            focusState = true
+        }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
     }
     
     private func makeNewConversation() -> some PersistentModel {
+        store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
         store.onMakeNewConversationData()
         
         let newContents = store(\.historyItems).map {
@@ -148,7 +157,7 @@ struct TKSavingView: View {
         .sheet(
             isPresented: .constant(true)
         ) {
-            TKSavingView(store: .init())
+            TKSavingView(store: .init(), speechRecognizeManager: .init())
                 .environmentObject(TKLocationStore())
         }
 }

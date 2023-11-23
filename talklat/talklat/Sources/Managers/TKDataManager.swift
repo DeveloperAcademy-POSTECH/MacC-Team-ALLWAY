@@ -71,6 +71,14 @@ extension TKDataManager {
 }
 
 extension TKDataManager {
+    internal func getAllConversations() -> [TKConversation] {
+        do {
+            return try self.fetchItems(TKConversation.self) ?? []
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     // HistoryListView에서 쓰이는 specific fetch (TKLocation -> TKConversation)
     internal func getLocationMatchingConversations(
         location: TKLocation
@@ -102,6 +110,23 @@ extension TKDataManager {
             return try modelContext.fetch(descriptor)
         } catch {
             fatalError(error.localizedDescription)
+        }
+    }
+    
+    internal func getConversationMatchingContents(
+        conversation: TKConversation
+    ) -> [TKContent] {
+        do {
+            let conversationIndicatior = conversation.persistentModelID
+            let predicate = #Predicate<TKContent> { content in
+                content.conversation?.persistentModelID == conversationIndicatior
+            }
+            let descriptor = FetchDescriptor<TKContent>(predicate: predicate)
+            
+            return try modelContext.fetch(descriptor)
+        } catch {
+            print("Cannot fetch contents of conversation: \(conversation.title)")
+            return [TKContent]()
         }
     }
     

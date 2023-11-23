@@ -16,22 +16,25 @@ struct TKOnboardingAuthReqeustView: View {
             alignment: .leading,
             spacing: 0
         ) {
-            HStack(spacing: 15) {
-                Circle()
-                    .frame(width: 34, height: 34)
-                
-                Text("\(info.title).")
-                    .font(.largeTitle)
-                    .bold()
-            }
-            .foregroundStyle(Color.OR6)
-            .padding(.bottom, 36)
-            
-            Text("\(info.description)")
-                .font(.title2)
+            Text("\(info.title).")
+                .font(.largeTitle)
                 .bold()
-                .multilineTextAlignment(.leading)
-                .lineSpacing(16)
+                .foregroundStyle(Color.OR6)
+                .padding(.bottom, 36)
+            
+            AttributedText(
+                str: info.description,
+                searched: info.highlightTarget
+            )
+            .font(.title2)
+            .bold()
+            .multilineTextAlignment(.leading)
+            .lineSpacing(10)
+            .padding(.bottom, 20)
+            
+            Text(Constants.Onboarding.CHANGE_AUTH_GUIDE)
+                .font(.subheadline)
+                .foregroundStyle(Color.GR4)
             
             Spacer()
         }
@@ -43,11 +46,30 @@ struct TKOnboardingAuthReqeustView: View {
         .transition(
             .asymmetric(
                 insertion: .move(edge: .trailing),
-                removal: .move(edge: .leading)
+                removal: .move(edge: .leading).combined(with: .opacity.animation(.easeInOut))
             )
         )
         .onAppear {
             self.parentInfo = info
         }
     }
+    
+    private func AttributedText(
+        str: String,
+        searched: [String]
+    ) -> Text {
+        var attributed = AttributedString(str)
+        
+        for search in searched {
+            if let range = attributed.range(of: search) {
+                attributed[range].foregroundColor = .OR6
+            }
+        }
+        
+        return Text(attributed)
+    }
+}
+
+#Preview {
+    TKOnboardingView(authManager: .init())
 }

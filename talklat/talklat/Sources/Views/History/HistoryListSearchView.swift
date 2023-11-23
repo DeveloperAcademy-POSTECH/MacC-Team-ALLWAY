@@ -156,7 +156,7 @@ struct SearchResultItem: View {
         // Cell Contents
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                Text(matchingContent.conversation?.title ?? "TALKLAT TITLE")
+                Text(matchingContent.conversation?.title ?? "BISDAM TITLE")
                     .font(.headline)
                     .foregroundStyle(Color.GR8)
                

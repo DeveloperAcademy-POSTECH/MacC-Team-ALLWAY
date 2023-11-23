@@ -40,7 +40,7 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-                .onChange(of: speechRecognizeManager.transcript) { _, transcript in
+                .onChange(of: speechRecognizeManager.transcript) { old, transcript in
                     withAnimation {
                         store.onSpeechTransicriptionUpdated(transcript)
                     }
@@ -69,7 +69,16 @@ struct TKConversationView: View {
                 store.onDismissSavingViewButtonTapped()
             }
         ) {
-            TKSavingView(store: store)
+            TKSavingView(
+                store: store,
+                speechRecognizeManager: speechRecognizeManager
+            )
+            .onDisappear {
+                speechRecognizeManager.startTranscribing()
+            }
+            .onAppear {
+                speechRecognizeManager.stopAndResetTranscribing()
+            }
         }
         .onChange(of: store(\.conversationStatus)) { _, newStatus in
             switch newStatus {
@@ -101,6 +110,7 @@ struct TKConversationView: View {
         }
         .onChange(of: gyroScopeStore.faced) { facedStatus in
             if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+                #warning("Conversation 쪽 로직 확인 필요")
                 switch facedStatus {
                 case .myself:
                     store.onBackToWritingChevronTapped() // to .writing

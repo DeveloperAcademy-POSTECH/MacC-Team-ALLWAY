@@ -38,28 +38,27 @@ public enum Constants {
 
     enum Onboarding {
         static let GUIDE_MESSAGE: String =
-    """
-    토크랫을 이용하기 전,
-    원활한 사용을 위해
-    몇가지 설정을 해야 해요.
-    """
-        static let MIC: String =
         """
-        토크랫은 사용자가 대화하고자 하는
-        상대방의 음성을 인식하기 위해
-        마이크 권한을 필요로 합니다.
+        비스담을 이용하기 전,
+        원활한 사용을 위해
+        몇가지 설정을 해야 해요.
         """
         
-        static let SPEECH: String =
+        static let CONVERSATION: String =
         """
-        토크랫은 인식한 상대방의 음성을
-        텍스트로 변환하기 위해 마이크와 함께
-        음성 인식 권한을 필요로 합니다.
+        비스담은 당신이 대화하고자 하는 상대방의 음성을 인식하기 위해 마이크 권한을 필요로 하며, 인식한 상대방의 음성을 텍스트로 변환하기 위해 음성 인식 권한을 필요로 해요.
         """
+        
+//        static let SPEECH: String =
+//        """
+//        비스담은 인식한 상대방의 음성을
+//        텍스트로 변환하기 위해 마이크와 함께
+//        음성 인식 권한을 필요로 합니다.
+//        """
         
         static let LOCATION: String =
         """
-        토크랫은 사용자가 이전에 대화한
+        비스담은 사용자가 이전에 대화한
         장소를 방문할 경우 이어 대화하기를
         제안하기 위해 정확한 위치 켬과
         위치 정보 권한을 필요로 합니다.
@@ -68,15 +67,23 @@ public enum Constants {
         static let ALL_AUTH: String =
         """
         좋아요!
-        이제 토크랫을
+        이제 비스담을
         이용해 볼까요?
         """
         
         static let NOT_ALL_AUTH: String =
         """
         저런:(
-        모든 권한을
-        허용하지 않았네요.
+        허용하지 않은
+        권한이 있군요.
+        """
+        
+        static let CHANGE_AUTH_GUIDE: String = "나중에 설정에서 권한을 다시 변경할 수 있어요."
+        
+        static let ASK_FOR_AUTH_ALL_GUIDE: String =
+        """
+        원활한 앱 사용을 위해
+        앱 설정에서 모든 권한을 허용해 주세요.
         """
     }
     
