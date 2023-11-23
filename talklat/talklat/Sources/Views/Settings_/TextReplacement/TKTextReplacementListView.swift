@@ -53,14 +53,13 @@ struct TKTextReplacementListView: View {
                 if sortedGroupKeys.isEmpty {
                     // MARK: 텅 뷰
                     VStack(spacing: 0){
-                        Image(systemName: "bubble.left.and.bubble.right")
-                            .font(.system(size: 30))
-                            .foregroundColor(.GR3)
+                        Image(systemName: "bubble.left.and.text.bubble.right.fill")
+                            .font(.system(size: 90))
+                            .foregroundColor(.GR2)
                             .padding(.bottom, 30)
                         
-                        Text("아직 설정한 텍스트 대치가 없어요")
+                        BDText(text: "아직 설정한 텍스트 대치가 없어요", style: .H1_M_130)
                             .foregroundStyle(Color.GR3)
-                            .font(.system(size: 17, weight: .medium))
                     }
                     .frame(
                         maxHeight: .infinity,
