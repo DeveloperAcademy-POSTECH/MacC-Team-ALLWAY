@@ -35,6 +35,10 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
             radius: 10,
             identifier: "circularRegion"
         )
+        
+        var isAuthorized: Bool {
+            return authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
+        }
     }
     
     

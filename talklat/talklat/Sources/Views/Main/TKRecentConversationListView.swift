@@ -17,7 +17,7 @@ struct TKRecentConversationListView: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
-                    if locationStore(\.authorizationStatus) == .authorizedAlways || locationStore(\.authorizationStatus) == .authorizedWhenInUse {
+                    if locationStore(\.isAuthorized) {
                         Image(systemName: "bubble.left.and.bubble.right.fill")
                             .foregroundColor(.GR5)
                             .padding(.trailing, 7)
@@ -43,7 +43,7 @@ struct TKRecentConversationListView: View {
             .padding(.bottom, 16)
             
             ScrollView {
-                if locationStore(\.authorizationStatus) == .authorizedAlways || locationStore(\.authorizationStatus) == .authorizedWhenInUse {
+                if locationStore(\.isAuthorized) {
                     if conversations.count > 0 {
                         ForEach(conversations, id: \.self) { conversation in
                             NavigationLink {
