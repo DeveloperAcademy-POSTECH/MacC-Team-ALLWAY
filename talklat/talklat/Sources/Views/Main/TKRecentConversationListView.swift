@@ -62,7 +62,6 @@ struct TKRecentConversationListView: View {
                                             .font(.footnote)
                                             .foregroundStyle(Color.OR6)
                                     }
-                                    
                                     HStack {
                                         Text((conversation.updatedAt ?? Date.now).convertToDate())
                                             .font(.footnote)

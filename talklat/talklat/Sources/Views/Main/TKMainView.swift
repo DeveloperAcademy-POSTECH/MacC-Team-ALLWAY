@@ -10,9 +10,11 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject var locationStore: TKLocationStore
-    @ObservedObject var store: TKMainViewStore
+    @EnvironmentObject private var locationStore: TKLocationStore
+    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
+    
+    @ObservedObject var authManager: TKAuthManager
     @State private var recentConversation: TKConversation?
     let swiftDataStore = TKSwiftDataStore()
     
@@ -71,6 +73,7 @@ struct TKMainView: View {
                 alignment: .top
             )
             
+
 //            // MARK: BottomSheet
             TKDraggableList(store: store)
         }
@@ -91,7 +94,6 @@ struct TKMainView: View {
                     }
                 }
         }
-        .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Image("bisdam_typo")
@@ -104,7 +106,6 @@ struct TKMainView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     HistoryListView()
-                    
                 } label: {
                     Image(systemName: "list.bullet.rectangle.fill")
                         .foregroundStyle(Color.GR3)
@@ -149,12 +150,12 @@ struct TKMainView: View {
                 )
             }
         }
-        .environmentObject(locationStore)
     }
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            if store(\.authStatus) != .authCompleted {
+            if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
+               !isMicrophoneAuthorized {
                 store.onStartConversationButtonTappedWithoutAuth()
             } else {
                 store.onStartConversationButtonTapped()
@@ -190,7 +191,7 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView(store: TKMainViewStore())
+        TKMainView(authManager: TKAuthManager())
             .environmentObject(TKLocationStore())
     }
 }

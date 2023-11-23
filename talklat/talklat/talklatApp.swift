@@ -11,8 +11,8 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
+    @StateObject private var authManager: TKAuthManager = TKAuthManager()
     private var container: ModelContainer
     
     init() {
@@ -31,18 +31,25 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch store(\.authStatus) {
-                case .splash:
+                if case .splash = authManager.authStatus {
                     TKSplashView()
                         .task {
                             try? await Task.sleep(for: .seconds(3.0))
-                            let status = await SpeechAuthManager.switchAuthStatus()
-                            store.onVoiceAuthorizationObtained(status)
+                            authManager.checkOnboardingCompletion()
                         }
-                    
-                default:
+                }
+                
+                if case .onboarding = authManager.authStatus {
+                    TKOnboardingView(authManager: authManager)
+                        .transition(.opacity.animation(.easeInOut(duration: 1.0)))
+                }
+                
+                if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
-                        TKMainView(store: store)
+                        TKMainView(authManager: authManager)
+                            .onAppear {
+                                locationStore.onMainViewAppear()
+                            }
                     }
                     .transition(.opacity.animation(.easeInOut))
                 }

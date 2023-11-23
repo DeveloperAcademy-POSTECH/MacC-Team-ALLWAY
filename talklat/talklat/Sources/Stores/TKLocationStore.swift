@@ -50,20 +50,10 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     
     override init() {
         super.init()
-        
+    }
+    
+    public func onMainViewAppear() {
         self.configureLocationManager()
-        
-        /**
-         // MARK: TKAuthManager으로 핸들링 옮김
-         switch self.locationManager.authorizationStatus {
-         case .authorizedAlways:
-             break
-         default:
-             self.locationManager.requestAlwaysAuthorization()
-         }
-         */
-        
-        self.reduce(\.authorizationStatus, into: self.locationManager.authorizationStatus)
         
         // 초기 사용자 위치 & 주소 가져오기
         self.initialUserTracking()
@@ -81,6 +71,11 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         // location update 시작
         self.locationManager.startUpdatingLocation()
+        
+        self.reduce(
+            \.authorizationStatus,
+             into: self.locationManager.authorizationStatus
+        )
     }
     
     public func callAsFunction<Value: Equatable>(_ keyPath: KeyPath<ViewState, Value>) -> Value {

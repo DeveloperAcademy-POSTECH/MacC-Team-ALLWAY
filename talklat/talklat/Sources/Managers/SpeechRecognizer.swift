@@ -34,14 +34,15 @@ final class SpeechRecognizer: ObservableObject {
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
+    
     private var audioBuffers: [AVAudioPCMBuffer] = []
     private let signalExtractor = SignalExtractor()
     
     // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
     init() {
         recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
+        
         recognizer?.supportsOnDeviceRecognition = true
-//        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
         guard recognizer != nil else {
             transcribeFailed(RecognizerError.nilRecognizer)
             return
@@ -77,7 +78,10 @@ final class SpeechRecognizer: ObservableObject {
     
     // text 전환을 시작합니다.
     private func beginTranscribe() {
-        guard let recognizer = recognizer, recognizer.isAvailable else {
+        stopAndResetTranscribe()
+        
+        guard let recognizer = recognizer,
+              recognizer.isAvailable else {
             self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
             return
         }
@@ -98,11 +102,12 @@ final class SpeechRecognizer: ObservableObject {
             self.transcribeFailed(error)
         }
     }
-
     
     private func stopAndResetTranscribe() {
+        request?.endAudio()
         task?.cancel()
         audioEngine?.stop()
+        transcript.removeAll(keepingCapacity: true)
         audioEngine = nil
         request = nil
         task = nil
@@ -113,7 +118,6 @@ final class SpeechRecognizer: ObservableObject {
         
         let request = SFSpeechAudioBufferRecognitionRequest()
         
-        request.requiresOnDeviceRecognition = true
         request.addsPunctuation = true
         request.shouldReportPartialResults = true
         
@@ -170,20 +174,21 @@ final class SpeechRecognizer: ObservableObject {
          result: SFSpeechRecognitionResult?,
          error: Error?
     ) {
-        let receivedFinalResult = result?.isFinal ?? false
-        let receivedError = error != nil
-        
-        if receivedFinalResult || receivedError {
-            audioBuffers = []
-            audioEngine.stop()
-            audioEngine.inputNode.removeTap(onBus: 0)
-        }
+        var isFinal = false
         
         if let result = result {
             let recognizedText = result.bestTranscription.formattedString
             transcribe(recognizedText)
-        } else if let error = error {
-            // 에러 처리
+            
+            isFinal = result.isFinal
+        } else if let error {
+            print(error.localizedDescription)
+        }
+        
+        if isFinal || error != nil {
+            audioBuffers = []
+            audioEngine.stop()
+            audioEngine.inputNode.removeTap(onBus: 0)
         }
     }
     
@@ -213,7 +218,8 @@ final class SpeechRecognizer: ObservableObject {
 
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
-            transcript = addPunctuation(message)
+            let res = addPunctuation(message)
+            transcript = res
         }
     }
     
