@@ -45,8 +45,11 @@ class CustomTableViewController: UITableViewController {
     // haeder section view를 결정하는 메서드
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableHeader") as? TableHeader
-        //MARK: 여기 date 바꾼걸 넣어줘야함
-        header!.date = Date.now
+        guard let header = header else { return UIView() }
+        guard let firstItem = messages[section].first else { return header }
+        
+        header.dateLabel.text = firstItem.createdAt.convertToDate()
+        header.timeLabel.text = firstItem.createdAt.convertToTime()
         
         return header
     }

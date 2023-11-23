@@ -26,6 +26,19 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         var mainPlaceName: String = "위치 정보 없음"
         var infoPlaceName: String = "위치 정보 없음"
         var editPlaceName: String = "위치 정보 없음"
+        
+        var circularRegion: CLCircularRegion = CLCircularRegion(
+            center: CLLocationCoordinate2D(
+                latitude: initialLatitude,
+                longitude: initialLongitude
+            ),
+            radius: 10,
+            identifier: "circularRegion"
+        )
+        
+        var isAuthorized: Bool {
+            return authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
+        }
     }
     
     
@@ -37,20 +50,10 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     
     override init() {
         super.init()
-        
+    }
+    
+    public func onMainViewAppear() {
         self.configureLocationManager()
-        
-        /**
-         // MARK: TKAuthManager으로 핸들링 옮김
-         switch self.locationManager.authorizationStatus {
-         case .authorizedAlways:
-             break
-         default:
-             self.locationManager.requestAlwaysAuthorization()
-         }
-         */
-        
-        self.reduce(\.authorizationStatus, into: self.locationManager.authorizationStatus)
         
         // 초기 사용자 위치 & 주소 가져오기
         self.initialUserTracking()
@@ -68,6 +71,11 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         // location update 시작
         self.locationManager.startUpdatingLocation()
+        
+        self.reduce(
+            \.authorizationStatus,
+             into: self.locationManager.authorizationStatus
+        )
     }
     
     public func callAsFunction<Value: Equatable>(_ keyPath: KeyPath<ViewState, Value>) -> Value {
@@ -93,8 +101,8 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         self.locationManager.stopUpdatingLocation()
     }
     
-    func trackUserCoordinate() async -> MKCoordinateRegion? {
-        guard let userLocation: CLLocationCoordinate2D = locationManager.location?.coordinate else { return nil }
+    func trackUserCoordinate() {
+        guard let userLocation: CLLocationCoordinate2D = locationManager.location?.coordinate else { return }
         
         let userCoordinate = MKCoordinateRegion(
             center: userLocation,
@@ -106,7 +114,6 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         self.fetchCityName(userCoordinate, cityNameType: .short, usage: .main)
         
-        return self(\.currentUserCoordinate)
     }
     
     // 동네 이름을 가져와서 뿌려주기
@@ -128,7 +135,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         geocoderQueue.async { [weak self] in
             self?.geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 guard error == nil else {
-                    ("Geocoder revser geocode location error: \(String(describing: error?.localizedDescription))")
+                    print("Geocoder revser geocode location error: \(String(describing: error?.localizedDescription))")
                     self?.reduce(\.returnString, into: "위치 정보 없음")
                     return
                 }
@@ -170,12 +177,18 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     internal func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         self.reduce(\.authorizationStatus, into: self.locationManager.authorizationStatus)
         
-        switch self.locationState.authorizationStatus {
+        switch self(\.authorizationStatus) {
         case .authorizedAlways, .authorizedWhenInUse:
             self.initialUserTracking()
         default:
             locationManager.requestWhenInUseAuthorization()
+            self.reduce(\.currentUserCoordinate, into: nil)
+            self.reduce(\.mainPlaceName, into: "위치 정보 없음")
+            self.reduce(\.infoPlaceName, into: "위치 정보 없음")
+            self.reduce(\.editPlaceName, into: "위치 정보 없음")
         }
+        
+        
     }
     
     private func initialUserTracking() {
@@ -198,22 +211,23 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         self.fetchCityName(initialUserCoordinate, cityNameType: .short, usage: .main)
         
+        self.makeNewRegion()
     }
     
     
     private func getCityName(placeMark: CLPlacemark, type: CityNameType) -> [String] {
         switch type {
         case .short:
-            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+//            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
             let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
             let subLocality = (placeMark.subLocality != nil) ? placeMark.subLocality! : ""
-            let name = (placeMark.name != nil) ? placeMark.name! : ""
+//            let name = (placeMark.name != nil) ? placeMark.name! : ""
             
             return ["\(locality) \(subLocality)"]
             
         case .long:
             let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
-            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+//            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
             let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
             let subLocality = (placeMark.subLocality != nil) ? placeMark.subLocality! : ""
             let name = (placeMark.name != nil) ? placeMark.name! : ""
@@ -223,7 +237,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
             
         case .hybrid:
             let subAdministrativeArea = (placeMark.subAdministrativeArea != nil) ? placeMark.subAdministrativeArea! : ""
-            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
+//            let administrativeArea = (placeMark.administrativeArea != nil) ? placeMark.administrativeArea! : ""
             let locality = (placeMark.locality != nil) ? placeMark.locality! : ""
             let subLocality = (placeMark.subLocality != nil) ? placeMark.subLocality! : ""
             let name = (placeMark.name != nil) ? placeMark.name! : ""
@@ -235,7 +249,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         }
     }
     
-    func detectAuthorization() -> Bool {
+    public func detectAuthorization() -> Bool {
         switch locationState.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             return true
@@ -244,7 +258,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         }
     }
     
-    func calculateDistance(_ location: TKLocation?) -> Int? {
+    public func calculateDistance(_ location: TKLocation?) -> Int? {
         guard let coordinate = self(\.currentUserCoordinate)?.center else { return nil }
         guard let location = location else { return nil }
         
@@ -255,15 +269,10 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         let earthRadius = 6371 * 1000 // m단위
         let dLat = (lat1 - lat2).toRadians()
-        let dLon = (lon1 - lon2)
+        let dLon = (lon1 - lon2).toRadians()
         
-        let a =
-        sin(dLat/2)
-        * sin(dLat/2)
-        + cos(lat1.toRadians())
-        * cos(lat2.toRadians())
-        * sin(dLon/2)
-        * sin(dLon/2)
+        let a = sin(dLat/2) * sin(dLat/2)
+        + cos(lat1.toRadians()) * cos(lat2.toRadians()) * sin(dLon/2) * sin(dLon/2)
         
         let c = 2 * atan2(
             sqrt(a),
@@ -272,6 +281,73 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         let distanceInMeters = Double(earthRadius) * c
         return Int(distanceInMeters)
+    }
+    
+    public func getClosestConversation(_ conversations: [TKConversation]) -> [TKConversation] {
+        
+        guard self.detectAuthorization() == true else { return [TKConversation]() }
+        
+        // 거리 순에 따른 정리
+        var distanceConversationDict = [Int: TKConversation]()
+        conversations.forEach { conversation in
+            if let location = conversation.location {
+                if let calculatedDistance = calculateDistance(location) {
+                    if calculatedDistance < 4000 { // 4km 이내만 반환
+                        distanceConversationDict[calculatedDistance] = conversation
+                    }
+                }
+            }
+        }
+        
+        let keys = distanceConversationDict.keys.sorted(by: {$0 < $1}) // 거리에 따라 key sorting
+        var closeConversations = [TKConversation]()
+        
+        keys.forEach { key in
+            if let value = distanceConversationDict[key] {
+                closeConversations.append(value)
+            }
+        }
+        
+        // 가까운 10개만 잘라서 반환
+        if closeConversations.count > 10 {
+            return Array(closeConversations[0..<10])
+        } else {
+            return closeConversations
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        makeNewRegion()
+    }
+    
+    func makeNewRegion() {
+        guard let coordinate = locationManager.location?.coordinate else { return }
+        
+        // 현재 region을 관찰하는걸 멈춤
+        locationManager.stopMonitoring(for: self(\.circularRegion))
+        
+        // 유저 위치 다시 트래킹
+        self.trackUserCoordinate()
+        self.fetchCityName(
+            MKCoordinateRegion(
+                center: coordinate,
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
+            ), 
+            cityNameType: .short,
+            usage: .main
+        )
+        
+        // 새로운 circular region 생성
+        let currentRegion = CLCircularRegion(
+            center: coordinate,
+            radius: 10,
+            identifier: "circularRegion")
+        currentRegion.notifyOnExit = true
+        
+        // 새로운 circular region 관찰 시작
+        locationManager.startMonitoring(for: currentRegion)
+        self.reduce(\.circularRegion, into: currentRegion)
     }
 }
 
@@ -289,13 +365,13 @@ public struct UserCoordinate: Equatable {
     var blockName: String
 }
 
-enum CityNameType {
+public enum CityNameType {
     case short
     case long
     case hybrid
 }
 
-enum NameUsageType {
+public enum NameUsageType {
     case main
     case info
     case edit

@@ -66,14 +66,14 @@ struct TKTypingView: View {
                             maxHeight: 250,
                             alignment: .top
                         )
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 24)
                         .background {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
                                     in: namespaceID
                                 )
-                                .ignoresSafeArea(edges: .top)
+                                .ignoresSafeArea()
                         }
                         
                     } else {
@@ -113,13 +113,17 @@ struct TKTypingView: View {
                     }
                     
                     Spacer()
-                    
-                    customToolbar()
-                        .padding(.bottom, 16)
                 }
             }
         }
         .frame(maxWidth: .infinity)
+        .task {
+            focusState = true
+        }
+        .overlay(alignment: .bottom) {
+            customToolbar()
+                .padding(.bottom, 16)
+        }
     }
     
     private func characterLimitViewBuilder() -> some View {
@@ -303,7 +307,7 @@ struct TKTypingView: View {
                 .padding(.top, 32)
         }
     }
-    
+
     private func saveButtonTextColor() -> Color {
         if let last = store(\.historyItems).last,
            last.type == .answer {

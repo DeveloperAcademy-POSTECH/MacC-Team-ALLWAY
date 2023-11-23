@@ -40,7 +40,7 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-                .onChange(of: speechRecognizeManager.transcript) { _, transcript in
+                .onChange(of: speechRecognizeManager.transcript) { old, transcript in
                     withAnimation {
                         store.onSpeechTransicriptionUpdated(transcript)
                     }

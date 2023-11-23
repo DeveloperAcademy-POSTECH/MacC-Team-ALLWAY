@@ -9,12 +9,13 @@ import SwiftUI
 
 struct SettingsTeamView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         ScrollView {
             VStack {
                 HStack {
-                    Image("TeamLogo")
+                    Image(colorScheme == .light ? "TeamLogo" : "TeamLogo_Dark")
                     Spacer()
                 }
                 .padding(.leading, 24)
@@ -37,7 +38,7 @@ struct SettingsTeamView: View {
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.BaseBGWhite)
+                        .foregroundColor(.AlertBGWhite)
                         .overlay {
                             Text("🙃")
                                 .font(.largeTitle)
@@ -128,7 +129,7 @@ struct TeamOneView: View {
         HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.BaseBGWhite)
+                .foregroundColor(.AlertBGWhite)
                 .overlay {
                     Text(emoji)
                         .font(.largeTitle)
