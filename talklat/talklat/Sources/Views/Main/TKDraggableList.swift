@@ -50,7 +50,7 @@ struct TKDraggableList: View {
                 //MARK: circularRegion 관찰이 아닌 currentUserCoordinate 관찰 -> 근데 정확도 좀 떨어짐
                 conversations = locationStore.getClosestConversation(dataStore.conversations)
             }
-            .onAppear {
+            .task {
                 locationStore.trackUserCoordinate()
                 conversations = locationStore.getClosestConversation(dataStore.conversations)
             }
@@ -72,7 +72,6 @@ struct TKDraggableList: View {
         )
         .ignoresSafeArea(.all, edges: .bottom)
     }
-    
 }
 
 #Preview {

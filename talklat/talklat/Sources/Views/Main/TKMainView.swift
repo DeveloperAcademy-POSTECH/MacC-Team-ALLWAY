@@ -10,16 +10,15 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var locationStore: TKLocationStore
-<<<<<<< HEAD
     @Environment(\.colorScheme) private var colorScheme
-=======
+    @EnvironmentObject private var locationStore: TKLocationStore
     @EnvironmentObject var authManager: TKAuthManager
->>>>>>> Feat/#184-TKAlert-UI-Update
+
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
+    @State private var isLoaded: Bool = false
     let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
@@ -73,12 +72,23 @@ struct TKMainView: View {
                 }
             }
             .frame(
+                maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
             
             // MARK: BottomSheet
-            TKDraggableList(store: store)
+            if isLoaded {
+                TKDraggableList(store: store)
+                    .redacted(reason: isLoaded ? [] : .placeholder)
+                    .transition(.move(edge: .bottom))
+            }
+        }
+        .task {
+            try? await Task.sleep(for: .seconds(0.75))
+            withAnimation {
+                isLoaded = true
+            }
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
@@ -109,12 +119,8 @@ struct TKMainView: View {
                 NavigationLink {
                     HistoryListView()
                 } label: {
-<<<<<<< HEAD
                     Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
                         .resizable()
-=======
-                    Image(systemName: "list.bullet.rectangle.fill")
->>>>>>> Feat/#184-TKAlert-UI-Update
                 }
                 .tint(Color.GR3)
             }
@@ -124,12 +130,8 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
-<<<<<<< HEAD
                     Image(colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
                         .resizable()
-=======
-                    Image(systemName: "gearshape.fill")
->>>>>>> Feat/#184-TKAlert-UI-Update
                 }
                 .tint(Color.GR3)
             }
