@@ -18,7 +18,6 @@ struct TKMainView: View {
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
-    @State private var isLoaded: Bool = false
     let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
@@ -78,17 +77,13 @@ struct TKMainView: View {
             )
             
             // MARK: BottomSheet
-            if isLoaded {
+            if store(\.isTKMainViewAppeared) {
                 TKDraggableList(store: store)
-                    .redacted(reason: isLoaded ? [] : .placeholder)
                     .transition(.move(edge: .bottom))
             }
         }
         .task {
-            try? await Task.sleep(for: .seconds(0.75))
-            withAnimation {
-                isLoaded = true
-            }
+           await store.onTKMainViewAppeared()
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
