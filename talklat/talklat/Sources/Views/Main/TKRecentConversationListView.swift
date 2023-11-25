@@ -107,7 +107,6 @@ struct TKRecentConversationListView: View {
                         \.conversations,
                          into: locationStore.getClosestConversation(swiftDataStore.conversations)
                     )
-//                    conversations = locationStore.getClosestConversation(swiftDataStore.conversations)
                 }
             }
         }
@@ -115,18 +114,6 @@ struct TKRecentConversationListView: View {
             TKConversationView(store: conversationViewStore)
                 .onDisappear {
                     conversationViewStore.resetConversationState()
-                }
-                .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
-                    if !old, new {
-//                        store.onConversationFullscreenDismissed()
-//                        dismiss()
-                    }
-                }
-                .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
-                    if isSaved {
-//                        self.recentConversation = swiftDataStore.getRecentConversation()
-//                        store.onNewConversationHasSaved()
-                    }
                 }
         }
     }

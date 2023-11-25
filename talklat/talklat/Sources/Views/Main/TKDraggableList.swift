@@ -12,7 +12,6 @@ struct TKDraggableList: View {
     @ObservedObject var mainViewstore: TKMainViewStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
     @StateObject private var draggableListViewStore: TKDraggableListViewStore = TKDraggableListViewStore()
-    @State private var conversations: [TKConversation] = [TKConversation]()
     @GestureState var gestureOffset: CGFloat = 0
     let firstOffset = UIScreen.main.bounds.height * 0.65
     let dataStore: TKSwiftDataStore = TKSwiftDataStore()
@@ -51,7 +50,10 @@ struct TKDraggableList: View {
             .onChange(of: locationStore(\.authorizationStatus)) { _, _ in
                 if locationStore.detectAuthorization() {
                     locationStore.trackUserCoordinate()
-                    conversations = locationStore.getClosestConversation(dataStore.conversations)
+                    draggableListViewStore.reduce(
+                        \.conversations,
+                         into: locationStore.getClosestConversation(dataStore.conversations)
+                    )
                 }
             }
             .onChange(of: locationStore(\.currentUserCoordinate)) { _, _ in

@@ -12,11 +12,6 @@ class TKDraggableListViewStore: TKReducer {
     struct ViewState {
         var isShowingConversationView: Bool = false
         var conversations: [TKConversation] = [TKConversation]()
-//        var selectedConversation: TKConversation = TKConversation(
-//            title: "",
-//            createdAt: Date(),
-//            content: [TKContent]()
-//        )
     }
     
     @Published private var viewState: ViewState = ViewState()
@@ -38,7 +33,6 @@ class TKDraggableListViewStore: TKReducer {
     }
     
     public func onTapDraggableListItem(_ conversation: TKConversation) {
-//        self.reduce(\.selectedConversation, into: conversation)
         self.reduce(\.isShowingConversationView, into: true)
     }
 }
