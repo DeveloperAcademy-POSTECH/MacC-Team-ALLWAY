@@ -120,8 +120,6 @@ extension TKSwiftDataStore {
         // 1. conversation에 맞는 contents를 전부 불러옴
         let contents = dataManager.getConversationMatchingContents(conversation: conversation)
         
-        print(#function, contents)
-        
         // 2. contents의 날짜별 분류를 위한 contentDict와 return을 위한 targetContents
         var contentDict = [String: [TKContent]]()
         var targetContents = [[TKContent]]()
@@ -138,10 +136,11 @@ extension TKSwiftDataStore {
         }
         
         let dateKeys = contentDict.keys.sorted(by: { $0 < $1} )
-        print(#function, dateKeys)
         
         dateKeys.forEach { key in
-            targetContents.append(contentDict[key] ?? [TKContent]())
+            if let contents = contentDict[key] {
+                targetContents.append(contents.sorted(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending }))
+            }
         }
         
         return targetContents
