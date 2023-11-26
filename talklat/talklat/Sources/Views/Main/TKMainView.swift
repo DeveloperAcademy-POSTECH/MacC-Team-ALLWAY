@@ -93,6 +93,15 @@ struct TKMainView: View {
                         store.onNewConversationHasSaved()
                     }
                 }
+                .showTKAlert(
+                    isPresented: conversationViewStore.bindingTKAlertFlag(),
+                    style: .conversationCancellation
+                ) {
+                    store.onConversationFullscreenDismissed()
+                    
+                } confirmButtonLabel: {
+                    Text("네, 그만 할래요")
+                }
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
