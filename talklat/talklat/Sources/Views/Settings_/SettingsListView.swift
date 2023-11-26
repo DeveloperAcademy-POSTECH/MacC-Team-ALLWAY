@@ -80,9 +80,8 @@ struct SettingsListView: View {
             
             ForEach(sectionCategories, id: \.self) { category in
                 VStack(alignment: .leading) {
-                    Text(category)
+                    BDText(text: category, style: .H1_B_130)
                         .foregroundColor(.GR8)
-                        .font(.system(size: 20, weight: .bold))
                         .padding(.leading, 8)
                     
                     // Each Setting Cell

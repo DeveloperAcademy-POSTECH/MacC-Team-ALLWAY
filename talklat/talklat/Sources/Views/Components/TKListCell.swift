@@ -19,9 +19,8 @@ struct TKListCell<LabelIcon: View, TrailingUI: View>: View {
                 .font(.system(size: 15))
             
             VStack(alignment: .leading, spacing: 3) {
-                Text(label)
+                BDText(text: label, style: .H1_B_130)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 17, weight: .bold))
             }
             
             Spacer()

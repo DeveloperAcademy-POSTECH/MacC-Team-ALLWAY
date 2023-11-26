@@ -182,16 +182,14 @@ struct LocationList: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "location.fill")
-                Text(location.blockName)
+                BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
                 // Collapse Button
                 Button {
-                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -307,15 +305,17 @@ struct CellItem: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title)
-                        .font(.system(size: 17, weight: .medium))
+                    BDText(
+                        text: conversation.title,
+                        style: .H1_B_130
+                    )
                         .foregroundStyle(Color.GR8)
                     
-                    Text(
-                        conversation.createdAt.convertToDate()
+                    BDText(
+                        text:conversation.createdAt.convertToDate(),
+                        style: .H2_M_135
                     )
                     .foregroundColor(.GR4)
-                    .font(.system(size: 15, weight: .medium))
                 }
                 
                 Spacer()

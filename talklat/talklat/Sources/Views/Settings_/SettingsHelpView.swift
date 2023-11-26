@@ -28,8 +28,6 @@ struct SettingsHelpView: View {
             
             Spacer()
         }
-        .navigationTitle("도움이 필요하신가요?")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -44,6 +42,14 @@ struct SettingsHelpView: View {
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "도움이 필요하신가요?",
+                    style: .H1_B_130
+                )
             }
         }
         .padding(.top, 24)

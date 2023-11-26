@@ -98,8 +98,6 @@ struct SettingsTeamView: View {
                 
             }
         }
-        .navigationTitle("만든 사람들")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -117,6 +115,14 @@ struct SettingsTeamView: View {
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "만든 사람들",
+                    style: .H1_B_130
+                )
             }
         }
     }

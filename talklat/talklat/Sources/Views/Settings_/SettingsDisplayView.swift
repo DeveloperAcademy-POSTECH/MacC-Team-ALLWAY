@@ -46,8 +46,11 @@ struct SettingsDisplayView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .navigationTitle("화면 모드")
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                BDText(text: "화면 모드", style: .H1_B_130)
+            }
+        }
     }
     
     // TODO: - 지금은 작동이 안됨. 나중에 작업.
