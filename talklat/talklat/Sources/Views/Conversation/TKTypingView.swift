@@ -163,9 +163,10 @@ struct TKTypingView: View {
                 Circle()
                     .foregroundStyle(Color.OR5)
                     .overlay {
-                        Text("TALK")
-                            .font(.headline)
+                        Image(systemName: "chevron.right")
                             .foregroundStyle(Color.white)
+                            .scaleEffect(1.4)
+                            .fontWeight(.bold)
                     }
             }
         }
