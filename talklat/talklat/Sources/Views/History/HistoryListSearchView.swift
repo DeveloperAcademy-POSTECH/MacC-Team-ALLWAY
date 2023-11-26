@@ -101,7 +101,7 @@ struct SearchResultSection: View {
     var location: TKLocation
     var dataStore: TKSwiftDataStore
     
-    @State private var filteredConversations = [TKConversation]()
+    @State private var filteredConversations = Set<TKConversation>()
     @State private var filteredContents = [TKContent]()
     @Binding var matchingContents: [TKContent]
     @Binding var searchText: String
@@ -148,16 +148,12 @@ struct SearchResultSection: View {
         .padding(.top, 24)
         .onAppear {
             // TODO: 모든 로직 Store로 분리
-            var matchingConversations = [TKConversation]()
+            // MARK: - 검색 결과에서 중복된 Conversation 제거 & 시간상 마지막 Conversation 보여주기
             matchingContents.forEach { content in
                 if let conversation = content.conversation {
-                    matchingConversations.append(conversation)
+                    filteredConversations.insert(conversation)
                 }
             }
-            
-            // MARK: - 검색 결과에서 중복된 Conversation 제거 & 시간상 마지막 Conversation 보여주기
-            // "~개 발견됨"에 들어갈 count용 filtered Conversations
-            filteredConversations = Array(Set(matchingConversations))
             
             // Conversation을 기준으로 그룹핑 된 matchingContents을 담은 딕셔너리
             /// [(TKConversation: [TKContent, TKContent]) ... ]
@@ -169,7 +165,6 @@ struct SearchResultSection: View {
             // 그룹핑 된 딕셔너리에서 한 개 이상의 Content가 존재할 경우, 마지막 Content만 필터링 된 배열에 추가
             groupedContents.forEach { (key: TKConversation?, value: [TKContent]) in
                 if value.count > 1 {
-                    
                     /// createdAt 기준으로 오름차순 정렬
                     var createdAtArray = value.map { $0.createdAt }
                     createdAtArray.sort(
