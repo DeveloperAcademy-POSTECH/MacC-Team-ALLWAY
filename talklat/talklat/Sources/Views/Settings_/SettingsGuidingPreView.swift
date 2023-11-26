@@ -17,9 +17,10 @@ struct SettingsGuidingPreView: View {
             Button {
                 dismiss()
             } label: {
-                Text("취소")
-                    .font(.headline)
-                    .bold()
+                BDText(
+                    text: "취소",
+                    style: .H1_B_130
+                )
             }
             
             Spacer()

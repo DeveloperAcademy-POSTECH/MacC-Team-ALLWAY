@@ -49,8 +49,7 @@ struct TKTextReplacementEditView: View {
                     Button {
                         store.onShowDialogButtonTapped()
                     } label: {
-                        Text("텍스트 대치 삭제")
-                            .font(.system(size: 17, weight: .bold))
+                        BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
                             .foregroundColor(Color.white)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -67,20 +66,9 @@ struct TKTextReplacementEditView: View {
 //        .onTapGesture {
 //            self.hideKeyboard()
 //        }
-        .navigationTitle("편집")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .disabled(store(\.isDialogShowing))
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button("저장") {
-                    updateTextReplacement()
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .disabled(store.isSaveButtonDisabled)
-                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
-            }
-            
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -88,11 +76,36 @@ struct TKTextReplacementEditView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("목록")
-                            .font(.system(size: 17))
+                       
+                        BDText(
+                            text: "목록",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "편집",
+                    style: .H1_B_130
+                )
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    updateTextReplacement()
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    BDText(
+                        text: "저장",
+                        style: .H1_B_130
+                    )
+                }
+                .disabled(store.isSaveButtonDisabled)
+                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
             }
         }
         .overlay {
@@ -179,9 +192,8 @@ struct TextReplacementCustomDialog: View {
                     .foregroundColor(.RED)
                     .font(.system(size: 20))
                 
-                Text("텍스트 대치 삭제")
+                BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
                     .foregroundColor(.GR9)
-                    .font(.system(size: 17, weight: .bold))
                 
                 Text("현재 텍스트 대치가 삭제됩니다.")
                     .multilineTextAlignment(.center)

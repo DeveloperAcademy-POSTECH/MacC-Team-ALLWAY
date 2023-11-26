@@ -27,7 +27,10 @@ struct TKSavingView: View {
                     store.onDismissSavingViewButtonTapped()
                     
                 } label: {
-                    Text("취소")
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 
                 Spacer()
@@ -47,7 +50,10 @@ struct TKSavingView: View {
                     store.onSaveNewConversationButtonTapped()
                     
                 } label: {
-                    Text("저장")
+                    BDText(
+                        text: "저장",
+                        style: .H1_B_130
+                    )
                 }
                 .disabled(store(\.historyItems).isEmpty || store(\.conversationTitle).isEmpty)
             }

@@ -77,6 +77,32 @@ struct CustomHistoryView: View {
         .padding()
         .toolbar {
             if historyViewType == .item {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .bold()
+                            
+                            BDText(
+                                text: "목록",
+                                style: .H1_B_130
+                            )
+                        }
+                    }
+                }
+                
+                // Navigation Title
+                ToolbarItem(placement: .principal) {
+                    BDText(
+                        text: historyViewType == .item
+                        ? conversation.title
+                        : "대화 내용",
+                        style: .H1_B_130
+                    )
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryInfoItemView(conversation: conversation)
@@ -86,20 +112,8 @@ struct CustomHistoryView: View {
                     }
                     .tint(Color.OR5)
                 }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("목록")
-                        }
-                    }
-                }
             }
         }
-        .navigationTitle(historyViewType == .item ? conversation.title : "대화 내용")
         .navigationBarBackButtonHidden(true)
     }
     

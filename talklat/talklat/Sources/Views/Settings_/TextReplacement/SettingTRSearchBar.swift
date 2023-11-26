@@ -46,8 +46,10 @@ struct SettingTRSearchBar: View {
                     store.cancelSearchAndHideKeyboard()
                     
                 } label: {
-                    Text("취소")
-                        .font(.system(size: 17))
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 .padding(.leading, 8)
             }

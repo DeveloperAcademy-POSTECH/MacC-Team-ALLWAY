@@ -136,8 +136,6 @@ struct SettingsListView: View {
             }
         }
         .padding(.horizontal, 16)
-        .navigationTitle("설정")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -148,10 +146,20 @@ struct SettingsListView: View {
                         Image(systemName: "chevron.left")
                             .bold()
                         
-                        Text("홈")
+                        BDText(
+                            text: "홈",
+                            style: .H1_B_130
+                        )
                     }
                     .foregroundColor(Color.OR6)
                 }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "설정",
+                    style: .H1_B_130
+                )
             }
         }
         .scrollIndicators(.hidden)

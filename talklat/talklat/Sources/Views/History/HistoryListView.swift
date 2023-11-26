@@ -71,42 +71,53 @@ struct HistoryListView: View {
                         .padding(.top, 24)
                     }
                     .scrollIndicators(.hidden)
-                    .navigationTitle("히스토리")
                     .navigationBarBackButtonHidden(true)
-                    .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
+                            // Back Button
                             Button {
                                 dismiss()
                             } label: {
                                 HStack {
                                     Image(systemName: "chevron.left")
-                                    Text("홈")
+                                        .bold()
+                                 
+                                    BDText(
+                                        text: "홈",
+                                        style: .H1_B_130
+                                    )
                                 }
                                 .foregroundColor(Color.OR6)
                                 .fontWeight(.medium)
                             }
                         }
                         
+                        // Navigation Title
+                        ToolbarItem(placement: .principal) {
+                            BDText(
+                                text: "히스토리",
+                                style: .H1_B_130
+                            )
+                        }
+                        
                         ToolbarItem(placement: .topBarTrailing) {
                             // Edit Button
-                            ZStack {
-                                Button {
-                                    withAnimation(
-                                        .spring(
-                                            dampingFraction: 0.7,
-                                            blendDuration: 0.4
-                                        )
-                                    ) {
-                                        withAnimation {
-                                            isEditing.toggle()
-                                        }
+                            Button {
+                                withAnimation(
+                                    .spring(
+                                        dampingFraction: 0.7,
+                                        blendDuration: 0.4
+                                    )
+                                ) {
+                                    withAnimation {
+                                        isEditing.toggle()
                                     }
-                                } label: {
-                                    Text("편집")
-                                        .foregroundColor(.accentColor)
-                                        .fontWeight(.medium)
                                 }
+                            } label: {
+                                BDText(
+                                    text: "편집",
+                                    style: .H1_B_130
+                                )
                             }
                         }
                     }
