@@ -18,6 +18,7 @@ final class TKConversationViewStore {
         var animationFlag: Bool = false
         
         var isConversationFullScreenDismissed: Bool = false
+        var isConversationDismissAlertPresented: Bool = false
         
         var conversationStatus: ConversationStatus
         var questionText: String = ""
@@ -118,6 +119,13 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
+    
+    public func bindingTKAlertFlag() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isConversationDismissAlertPresented) },
+            set: { self.reduce(\.isConversationDismissAlertPresented, into: $0) }
+        )
+    }
 }
 
 extension TKConversationViewStore {
@@ -146,7 +154,9 @@ extension TKConversationViewStore {
     }
     
     public func onConversationDismissButtonTapped() {
-        reduce(\.isConversationFullScreenDismissed, into: true)
+        withAnimation {
+            reduce(\.isConversationDismissAlertPresented, into: true)
+        }
     }
     
     public func onSaveNewConversationButtonTapped() {
