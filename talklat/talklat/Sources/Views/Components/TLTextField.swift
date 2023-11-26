@@ -9,6 +9,7 @@ import SwiftUI
 
 enum TLTextFieldStyle {
     case normal(textLimit: Int)
+    case typing(textLimit: Int)
 }
 
 struct TLTextField<Button: View>: View {
@@ -37,6 +38,10 @@ struct TLTextField<Button: View>: View {
                 leadingButtonSection
                 inputFieldSection(textLimit: textLimit)
             }
+        case let .typing(textLimit):
+            VStack {
+                inputFieldSection(textLimit: textLimit)
+            }
         }
     }
     
@@ -51,26 +56,26 @@ struct TLTextField<Button: View>: View {
     }
     
     private func inputFieldSection(textLimit: Int) -> some View {
-        ZStack {
-            TextField(
-                placeholder,
-                text: $text,
-                axis: .vertical
-            )
-            .font(.title3)
-            .bold()
-            .lineSpacing(12)
-            .lineLimit(5, reservesSpace: true)
-            .padding(.horizontal, 24)
-            .frame(maxWidth: .infinity)
-            .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
-            .onChange(of: text) { _ in
-                if text.count > textLimit {
-                    text = String(text.prefix(textLimit))
-                }
+        
+        TextField(
+            placeholder,
+            text: $text,
+            axis: .vertical
+        )
+        .font(.title3)
+        .bold()
+        .lineSpacing(12)
+        .lineLimit(5, reservesSpace: true)
+        .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity)
+        .autocorrectionDisabled()
+        .textInputAutocapitalization(.never)
+        .onChange(of: text) { _ in
+            if text.count > textLimit {
+                text = String(text.prefix(textLimit))
             }
         }
+        
     }
 }
 
