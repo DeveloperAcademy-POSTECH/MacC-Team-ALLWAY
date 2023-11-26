@@ -27,7 +27,7 @@ struct TKTextReplacementEditView: View {
                     SettingTRTextField(
                         text: store.bindingPhraseTextField(),
                         focusState: _focusState,
-                        title: "단축어",
+                        allowSpace: false, title: "단축어",
                         placeholder: "아아",
                         limit: 20
                     )

@@ -12,6 +12,7 @@ struct SettingTRTextField: View {
     @Binding var text: String
     @FocusState var focusState: Bool
     
+    var allowSpace: Bool = true // 띄어쓰기 허용 여부
     var title: String
     var placeholder: String
     var limit: Int
@@ -35,6 +36,9 @@ struct SettingTRTextField: View {
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             .onChange(of: text) { newValue in
+                if !allowSpace && newValue.contains(" ") {
+                    text = newValue.replacingOccurrences(of: " ", with: "")
+                }
                 if newValue.count > limit {
                     let lastCharIndex = text.index(
                         text.startIndex,
@@ -67,6 +71,11 @@ struct SettingTRTextField: View {
         limit: Int,
         isTextEmpty: Bool
     ) -> some View {
+        if !allowSpace && text.contains(" ") {
+            return Text("단축어에는 띄어쓰기를 사용할 수 없어요")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(Color.RED)
+        }
         if currentCount == 0 {
             return Text("한 글자 이상 입력해 주세요")
                 .font(.system(size: 13, weight: .medium))
@@ -78,7 +87,7 @@ struct SettingTRTextField: View {
                 .monospacedDigit()
                 .foregroundColor(
                     currentCount >= limit
-                    ? Color.GR7
+                    ? Color.RED
                     : Color.GR4
                 )
         }

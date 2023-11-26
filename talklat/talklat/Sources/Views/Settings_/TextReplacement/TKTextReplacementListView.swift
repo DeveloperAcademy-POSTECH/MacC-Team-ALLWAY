@@ -216,7 +216,7 @@ struct TKTextReplacementListView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
-                if store(\.isSearching) {
+                if !store.viewState.searchText.isEmpty {
                     Button {
                         store.onSearchTextRemoveButtonTapped()
                         
