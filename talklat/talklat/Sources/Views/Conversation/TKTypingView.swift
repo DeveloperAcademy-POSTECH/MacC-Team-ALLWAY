@@ -251,10 +251,10 @@ struct TKTypingView: View {
                     
                 } label: {
                     Image(systemName: "eraser.fill")
-                        .font(.system(size: 22))
-                        .foregroundColor(!store(\.questionText).isEmpty ? Color.BaseBGWhite : Color.GR3)
-                        .padding(10)
-                        .background(!store(\.questionText).isEmpty ? Color.GR4 : Color.GR2)
+                        .font(.system(size: 23))
+                        .foregroundColor(Color.GR1)
+                        .padding(13)
+                        .background(!store(\.questionText).isEmpty ? Color.GR3 : Color.GR2)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel(Text("Clear text"))
@@ -275,15 +275,14 @@ struct TKTypingView: View {
                             )
                             
                         } label: {
-                            Text(firstReplacement)
-                                .font(.subheadline)
-                                .foregroundColor(Color.BaseBGWhite)
+                            BDText(text: firstReplacement, style: .H2_SB_160)
+                                .foregroundColor(Color.GR7)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)
                                 .lineLimit(1)
                                 .background {
                                     RoundedRectangle(cornerRadius: 24)
-                                        .fill(Color.GR4)
+                                        .fill(Color.GR1)
                                 }
                         }
                         .padding(.vertical, 4)
