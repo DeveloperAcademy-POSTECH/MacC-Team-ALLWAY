@@ -348,6 +348,19 @@ extension TKConversationViewStore {
     }
 }
 
+extension TKConversationViewStore {
+    public func isTextFieldEmpty() -> Bool {
+        switch self(\.conversationStatus) {
+        case .writing:
+            return self(\.questionText).isEmpty
+        case .recording:
+            return self(\.answeredText).isEmpty
+        default:
+            return true // For other statuses, handle as required
+        }
+    }
+}
+
 // MARK: Reduce
 extension TKConversationViewStore: TKReducer {
     /// ViewState를 업데이트하는 keyPath 기반 메소드

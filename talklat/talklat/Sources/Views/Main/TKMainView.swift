@@ -10,8 +10,10 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var locationStore: TKLocationStore
-    @EnvironmentObject var authManager: TKAuthManager
+    @EnvironmentObject private var authManager: TKAuthManager
+    
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
@@ -36,13 +38,6 @@ struct TKMainView: View {
                             }
                             
                             Text("\(locationStore(\.mainPlaceName))")
-                                .onAppear {
-                                    locationStore.fetchCityName(
-                                        locationStore(\.currentUserCoordinate),
-                                        cityNameType: .short,
-                                        usage: .main
-                                    )
-                                }
                         }
                     }
                     .foregroundStyle(Color.GR4)
@@ -101,10 +96,9 @@ struct TKMainView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Image("bisdam_typo")
+                Image(colorScheme == .light ? "bisdam_typo" : "bisdam_typo_Dark")
                     .resizable()
                     .frame(width: 56.15, height: 23.48)
-                    .foregroundStyle(Color.OR5)
                     .padding(.leading, 8)
             }
             
@@ -112,7 +106,8 @@ struct TKMainView: View {
                 NavigationLink {
                     HistoryListView()
                 } label: {
-                    Image(systemName: "list.bullet.rectangle.fill")
+                    Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
+                        .resizable()
                 }
                 .tint(Color.GR3)
             }
@@ -122,7 +117,8 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
-                    Image(systemName: "gearshape.fill")
+                    Image(colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
+                        .resizable()
                 }
                 .tint(Color.GR3)
             }

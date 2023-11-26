@@ -7,7 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4B2B0B3BC600ECF34B /* BDText.swift */; };
+		577B45202B0DE76500DA010E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45172B0DE76500DA010E /* Pretendard-Thin.otf */; };
+		577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45182B0DE76500DA010E /* Pretendard-Black.otf */; };
+		577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45192B0DE76500DA010E /* Pretendard-SemiBold.otf */; };
+		577B45232B0DE76500DA010E /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451A2B0DE76500DA010E /* Pretendard-ExtraBold.otf */; };
+		577B45242B0DE76500DA010E /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451B2B0DE76500DA010E /* Pretendard-ExtraLight.otf */; };
+		577B45252B0DE76500DA010E /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451C2B0DE76500DA010E /* Pretendard-Light.otf */; };
+		577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */; };
+		577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */; };
+		577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -113,6 +123,7 @@
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
+		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +144,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		5713DC4B2B0B3BC600ECF34B /* BDText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDText.swift; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
@@ -141,6 +153,16 @@
 		575677E02ADA6F13002E01BE /* TLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTextField.swift; sourceTree = "<group>"; };
 		5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacementManager.swift; sourceTree = "<group>"; };
 		5769BFDF2AFE142F0036CF3D /* String+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Language.swift"; sourceTree = "<group>"; };
+		577B45172B0DE76500DA010E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		577B45182B0DE76500DA010E /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		577B45192B0DE76500DA010E /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		577B451A2B0DE76500DA010E /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		577B451B2B0DE76500DA010E /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		577B451C2B0DE76500DA010E /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		577B45292B0DE78E00DA010E /* bisdam-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "bisdam-Info.plist"; sourceTree = "<group>"; };
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
 		57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTKSettingView.swift; sourceTree = "<group>"; };
@@ -206,6 +228,7 @@
 		CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
 		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
+		CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionalInt+Distance.swift"; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -274,9 +297,26 @@
 		5713DC4A2B0B3B9100ECF34B /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				577B45162B0DE74700DA010E /* Fonts */,
 				5713DC4B2B0B3BC600ECF34B /* BDText.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		577B45162B0DE74700DA010E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				577B45182B0DE76500DA010E /* Pretendard-Black.otf */,
+				577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */,
+				577B451A2B0DE76500DA010E /* Pretendard-ExtraBold.otf */,
+				577B451B2B0DE76500DA010E /* Pretendard-ExtraLight.otf */,
+				577B451C2B0DE76500DA010E /* Pretendard-Light.otf */,
+				577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */,
+				577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */,
+				577B45192B0DE76500DA010E /* Pretendard-SemiBold.otf */,
+				577B45172B0DE76500DA010E /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		57806D7E2AE28E85003A7B19 /* Models */ = {
@@ -330,6 +370,7 @@
 		7E8D17B82ACE8AEC00E904E5 = {
 			isa = PBXGroup;
 			children = (
+				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
@@ -515,6 +556,8 @@
 				CE0CBF252B011EF70048C784 /* Date+Formatter.swift */,
 				7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */,
 				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
+				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
+				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -684,8 +727,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577B45242B0DE76500DA010E /* Pretendard-ExtraLight.otf in Resources */,
+				577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */,
+				577B45252B0DE76500DA010E /* Pretendard-Light.otf in Resources */,
+				577B45202B0DE76500DA010E /* Pretendard-Thin.otf in Resources */,
 				7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */,
+				577B45232B0DE76500DA010E /* Pretendard-ExtraBold.otf in Resources */,
+				577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */,
+				577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */,
+				577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */,
 				7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */,
+				577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +798,7 @@
 				7EBD31242B0B2B1300D5514D /* SampleTKConversation.swift in Sources */,
 				7EBD31252B0B2B1300D5514D /* Double+Degree.swift in Sources */,
 				7EBD31262B0B2B1300D5514D /* Color+Hex.swift in Sources */,
+				5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */,
 				7EBD31272B0B2B1300D5514D /* View+Keyboard.swift in Sources */,
 				7EBD31282B0B2B1300D5514D /* String+Language.swift in Sources */,
 				7EBD31292B0B2B1300D5514D /* Character+Consonant.swift in Sources */,
@@ -792,6 +845,7 @@
 				7EBD31522B0B2B1300D5514D /* SettingTextField.swift in Sources */,
 				7EBD31532B0B2B1300D5514D /* LoadingWebView.swift in Sources */,
 				7EBD31542B0B2B1300D5514D /* WebView.swift in Sources */,
+				CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */,
 				7EBD31552B0B2B1300D5514D /* TKMainView.swift in Sources */,
 				7EBD31562B0B2B1300D5514D /* TKDraggableList.swift in Sources */,
 				7EBD31572B0B2B1300D5514D /* TKRecentConversationListView.swift in Sources */,
@@ -970,12 +1024,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "bisdam-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "비스담";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다.";
@@ -995,6 +1055,7 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1009,12 +1070,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "bisdam-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "비스담";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다.";
@@ -1034,6 +1101,7 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
