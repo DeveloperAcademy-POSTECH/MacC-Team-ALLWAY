@@ -55,6 +55,13 @@ final class TextReplacementViewStore: TKReducer {
         )
     }
     
+    public func bindingShowTKAlert() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isDialogShowing) },
+            set: { self.reduce(\.isDialogShowing, into: $0) }
+        )
+    }
+    
     public func onDismissRemoveAlert() {
         self.reduce(\.isDialogShowing, into: false)
     }
@@ -73,7 +80,9 @@ final class TextReplacementViewStore: TKReducer {
     }
     
     public func onShowDialogButtonTapped() {
-        self.reduce(\.isDialogShowing, into: true)
+        withAnimation {
+            self.reduce(\.isDialogShowing, into: true)
+        }
     }
     
     func selectTextReplacement(phrase: String, replacement: String) {

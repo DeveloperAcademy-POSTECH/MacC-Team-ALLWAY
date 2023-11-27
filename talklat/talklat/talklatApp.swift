@@ -13,6 +13,8 @@ struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @StateObject private var authManager: TKAuthManager = TKAuthManager()
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
+    
     private var container: ModelContainer
     
     init() {
@@ -46,7 +48,7 @@ struct talklatApp: App {
                 
                 if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
-                        TKMainView(authManager: authManager)
+                        TKMainView()
                             .onAppear {
                                 locationStore.onMainViewAppear()
                             }
@@ -55,8 +57,14 @@ struct talklatApp: App {
                 }
             }
             .environmentObject(locationStore)
-            .onChange(of: scenePhase) { _, _ in
-                Color.colorScheme = UITraitCollection.current.userInterfaceStyle
+            .environmentObject(authManager)
+            .environmentObject(colorSchemeManager)
+            .onAppear {
+                UserDefaults.standard.setValue(
+                    false,
+                    forKey: "_UIConstraintBasedLayoutLogUnsatisfiable"
+                )
+                colorSchemeManager.applyColorScheme()
             }
         }
         .modelContainer(container)

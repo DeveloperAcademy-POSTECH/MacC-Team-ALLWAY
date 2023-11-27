@@ -17,7 +17,7 @@ struct SettingsGestureView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 16)
             
-            TKListCell(label: "플립 제스처") {
+            BDListCell(label: "플립 제스처") {
                 } trailingUI: {
                     Toggle("", isOn: $isGestureEnabled)
                 }
@@ -28,6 +28,17 @@ struct SettingsGestureView: View {
         .padding(.horizontal, 16)
         .navigationTitle("진동")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            isGestureEnabled = UserDefaults.standard.bool(
+                forKey: "isGestureEnabled"
+            )
+        }
+        .onChange(of: isGestureEnabled) { _, _ in
+            UserDefaults.standard.setValue(
+                isGestureEnabled,
+                forKey: "isGestureEnabled"
+            )
+        }
 
     }
 }
