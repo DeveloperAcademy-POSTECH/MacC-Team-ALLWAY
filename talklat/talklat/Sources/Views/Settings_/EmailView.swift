@@ -15,7 +15,7 @@ struct EmailView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let viewController = MFMailComposeViewController()
         
-        viewController.setToRecipients(["allway.team01a@gmail.com"])
+        viewController.setToRecipients(["allway.team01@gmail.com"])
         
         viewController.setSubject("[BISDAM]오류신고/문의하기")
         

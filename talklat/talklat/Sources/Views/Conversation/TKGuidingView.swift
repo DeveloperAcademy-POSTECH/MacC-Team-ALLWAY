@@ -29,31 +29,23 @@ struct TKGuidingView: View {
             Button {
                 store.onGuideCancelButtonTapped()
             } label: {
-                Text("취소")
-                    .font(.headline)
-                    .bold()
+                BDText(text: "취소", style: .H1_B_130)
             }
+            .frame(width: 44, height: 44)
+            .padding(.bottom, 20)
             
-            Spacer()
-                .frame(maxHeight: 60)
-            
-            Text(guidingMessage)
-                .font(.largeTitle)
-                .bold()
-                .lineSpacing(10)
+            BDText(text: guidingMessage, style: .LT_B_120)
                 .multilineTextAlignment(.leading)
             
-            Rectangle()
+            Spacer()
                 .frame(maxWidth: .infinity, maxHeight: 2)
-                .padding(.top, 20)
-                .padding(.bottom, 40)
+                .padding(.bottom, 32)
             
-            Text(guide)
-                .font(.title2)
-                .bold()
+            BDText(text: guide, style: .T2_B_160)
             
             Spacer()
         }
+        
         .padding(.horizontal, 24)
         .overlay(alignment: .bottom) {
             HStack {

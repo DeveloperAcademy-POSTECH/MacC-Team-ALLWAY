@@ -10,9 +10,13 @@ import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject var locationStore: TKLocationStore
-    @ObservedObject var store: TKMainViewStore
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var locationStore: TKLocationStore
+    @EnvironmentObject private var authManager: TKAuthManager
+    
+    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
+    
     @State private var recentConversation: TKConversation?
     let swiftDataStore = TKSwiftDataStore()
     
@@ -34,13 +38,6 @@ struct TKMainView: View {
                             }
                             
                             Text("\(locationStore(\.mainPlaceName))")
-                                .onAppear {
-                                    locationStore.fetchCityName(
-                                        locationStore(\.currentUserCoordinate),
-                                        cityNameType: .short,
-                                        usage: .main
-                                    )
-                                }
                         }
                     }
                     .foregroundStyle(Color.GR4)
@@ -74,18 +71,22 @@ struct TKMainView: View {
                 }
             }
             .frame(
+                maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
             
-//            Text("새로운 위치 기반 기능이\n곧 찾아옵니다!")
-//                .font(.headline)
-//                .foregroundStyle(Color.OR6)
-//                .multilineTextAlignment(.center)
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-//            
-//            // MARK: BottomSheet
-            TKDraggableList(store: store)
+            // MARK: BottomSheet
+            if store(\.isTKMainViewAppeared) {
+                TKDraggableList(
+                    mainViewstore: store,
+                    conversationViewStore: conversationViewStore
+                )
+                .transition(.move(edge: .bottom))
+            }
+        }
+        .task {
+           await store.onTKMainViewAppeared()
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
@@ -103,14 +104,21 @@ struct TKMainView: View {
                         store.onNewConversationHasSaved()
                     }
                 }
+                .showTKAlert(
+                    isPresented: conversationViewStore.bindingTKAlertFlag(),
+                    style: .conversationCancellation
+                ) {
+                    store.onConversationFullscreenDismissed()
+                    
+                } confirmButtonLabel: {
+                    Text("네, 그만 할래요")
+                }
         }
-        .environmentObject(locationStore)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Image("bisdam_typo")
+                Image(colorScheme == .light ? "bisdam_typo" : "bisdam_typo_Dark")
                     .resizable()
                     .frame(width: 56.15, height: 23.48)
-                    .foregroundStyle(Color.OR5)
                     .padding(.leading, 8)
             }
             
@@ -118,9 +126,10 @@ struct TKMainView: View {
                 NavigationLink {
                     HistoryListView()
                 } label: {
-                    Image(systemName: "list.bullet.rectangle.fill")
-                        .foregroundStyle(Color.GR3)
+                    Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
+                        .resizable()
                 }
+                .tint(Color.GR3)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -128,25 +137,24 @@ struct TKMainView: View {
                     SettingsListView()
                     
                 } label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundStyle(Color.GR3)
+                    Image(colorScheme == .light ? "settings_symbol_light" : "settings_symbol_dark")
+                        .resizable()
                 }
+                .tint(Color.GR3)
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
-        .overlay {
-            TKAlert(
-                style: .mic,
-                isPresented: store.bindingSpeechAuthAlert()
-            ) {
-                store.onGoSettingScreenButtonTapped()
+        .showTKAlert(
+            isPresented: store.bindingSpeechAuthAlert(),
+            style: .conversation
+        ) {
+            store.onGoSettingScreenButtonTapped()
+            
+        } confirmButtonLabel: {
+            HStack(spacing: 8) {
+                Text("설정으로 이동")
                 
-            } actionButtonLabel: {
-                HStack(spacing: 8) {
-                    Text("설정으로 이동")
-                    
-                    Image(systemName: "arrow.up.right.square.fill")
-                }
+                Image(systemName: "arrow.up.right.square.fill")
             }
         }
         .overlay(alignment: .top) {
@@ -161,13 +169,15 @@ struct TKMainView: View {
                 )
             }
         }
-        .environmentObject(locationStore)
     }
     
     private func startConversationButtonBuilder() -> some View {
         Button {
-            if store(\.authStatus) != .authCompleted {
+            if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
+               let isSpeechRecognitionAuthorized = authManager.isSpeechRecognitionAuthorized,
+               !isMicrophoneAuthorized || !isSpeechRecognitionAuthorized {
                 store.onStartConversationButtonTappedWithoutAuth()
+                
             } else {
                 store.onStartConversationButtonTapped()
             }
@@ -202,7 +212,8 @@ struct TKMainView: View {
 
 #Preview {
     NavigationStack {
-        TKMainView(store: TKMainViewStore())
+        TKMainView()
             .environmentObject(TKLocationStore())
+            .environmentObject(TKAuthManager())
     }
 }

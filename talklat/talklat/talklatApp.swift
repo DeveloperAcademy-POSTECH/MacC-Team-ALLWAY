@@ -11,8 +11,10 @@ import SwiftData
 @main
 struct talklatApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
+    @StateObject private var authManager: TKAuthManager = TKAuthManager()
+    @StateObject private var colorSchemeManager = ColorSchemeManager()
+    
     private var container: ModelContainer
     
     init() {
@@ -31,25 +33,38 @@ struct talklatApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                switch store(\.authStatus) {
-                case .splash:
+                if case .splash = authManager.authStatus {
                     TKSplashView()
                         .task {
                             try? await Task.sleep(for: .seconds(3.0))
-                            let status = await SpeechAuthManager.switchAuthStatus()
-                            store.onVoiceAuthorizationObtained(status)
+                            authManager.checkOnboardingCompletion()
                         }
-                    
-                default:
+                }
+                
+                if case .onboarding = authManager.authStatus {
+                    TKOnboardingView(authManager: authManager)
+                        .transition(.opacity.animation(.easeInOut(duration: 1.0)))
+                }
+                
+                if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
-                        TKMainView(store: store)
+                        TKMainView()
+                            .onAppear {
+                                locationStore.onMainViewAppear()
+                            }
                     }
                     .transition(.opacity.animation(.easeInOut))
                 }
             }
             .environmentObject(locationStore)
-            .onChange(of: scenePhase) { _, _ in
-                Color.colorScheme = UITraitCollection.current.userInterfaceStyle
+            .environmentObject(authManager)
+            .environmentObject(colorSchemeManager)
+            .onAppear {
+                UserDefaults.standard.setValue(
+                    false,
+                    forKey: "_UIConstraintBasedLayoutLogUnsatisfiable"
+                )
+                colorSchemeManager.applyColorScheme()
             }
         }
         .modelContainer(container)

@@ -19,12 +19,6 @@ final class TKConversation {
     @Relationship(deleteRule: .cascade, inverse: \TKLocation.conversation)
     var location: TKLocation?
     
-    var formattedCreatedAt: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd. HH:mm"
-        return dateFormatter.string(from: self.createdAt)
-    }
-    
     init(
         title: String,
         createdAt: Date,

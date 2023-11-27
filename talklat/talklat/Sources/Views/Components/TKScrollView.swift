@@ -29,28 +29,39 @@ struct TKScrollView: View {
         switch style {
         case let .question(question, answer, align):
             ScrollView {
-                Text(question)
-                    .font(
-                        answer.isEmpty
-                        ? .title
-                        : .title3
-                    )
-                    .lineSpacing(
-                        answer.isEmpty
-                        ? 10
-                        : 14
-                    )
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .topLeading
-                    )
-                    .padding(.horizontal, 24)
-                    .animation(
-                        .easeInOut,
-                        value: answer.isEmpty
-                    )
+                if question.isEmpty {
+                    BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)
+                        .foregroundColor(Color.GR4) // GR4 색상
+                        .multilineTextAlignment(.leading)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .topLeading
+                        )
+                        .padding(.horizontal, 24)
+                } else {
+                    Text(question)
+                        .font(
+                            answer.isEmpty
+                            ? .title
+                            : .title3
+                        )
+                        .lineSpacing(
+                            answer.isEmpty
+                            ? 10
+                            : 14
+                        )
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .topLeading
+                        )
+                        .padding(.horizontal, 24)
+                        .animation(
+                            .easeInOut,
+                            value: answer.isEmpty
+                        )
+                }
             }
             .scrollIndicators(.hidden)
             .frame(maxHeight: 250)
