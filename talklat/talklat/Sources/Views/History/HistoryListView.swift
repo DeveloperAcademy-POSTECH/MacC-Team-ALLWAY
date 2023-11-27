@@ -41,6 +41,7 @@ struct HistoryListView: View {
             .navigationBarBackButtonHidden(
                 isSearching ? true : false
             )
+            .disabled(isEditing ? true : false)
             
             Spacer()
             
@@ -101,7 +102,8 @@ struct HistoryListView: View {
                                         isEditing.toggle()
                                     }
                                 } label: {
-                                    Text("편집")
+                                    Text(isEditing ? "완료" : "편집")
+                                        .foregroundColor(.accentColor)
                                         .fontWeight(.medium)
                                 }
                                 .tint(Color.OR6)
@@ -176,7 +178,12 @@ struct LocationList: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "location.fill")
+                if location.blockName != "위치정보없음" { // TODO: nil 값 확인 필요
+                    Image(systemName: "location.fill")
+                } else {
+                    Image(systemName: "location.slash.fill")
+                }
+                
                 Text(location.blockName)
                     .foregroundColor(.GR8)
                     .font(.system(size: 20, weight: .bold))
@@ -186,7 +193,6 @@ struct LocationList: View {
                 
                 // Collapse Button
                 Button {
-                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -284,7 +290,7 @@ struct CellItem: View {
                     } label: {
                         if !isRemoving {
                             Image(systemName: "minus.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundStyle(.white, .red)
                                 .font(.system(size: 20))
                                 .padding(.trailing, 5)
                                 .transition(
@@ -310,7 +316,6 @@ struct CellItem: View {
                     Text(conversation.createdAt.convertToDate())
                         .foregroundStyle(Color.GR4)
                         .font(.system(size: 15, weight: .medium))
-
                 }
                 
                 Spacer()
@@ -353,10 +358,10 @@ struct CellItem: View {
                 } label: {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
-                        .foregroundColor(.BaseBGWhite)
+                        .foregroundColor(.white)
                         .padding(.horizontal, 25)
                         .padding(.vertical, 14)
-                        .background(.red)
+                        .background(Color.RED)
                         .cornerRadius(16)
                 }
                 .frame(height: 60)

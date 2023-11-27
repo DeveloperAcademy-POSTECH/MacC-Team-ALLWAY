@@ -43,16 +43,16 @@ final class TKSwiftDataStore {
         dataManager.removeItem(item)
         refreshData()
     }
-
-//    public func updateItem(_ item: ) {
-//    }
 }
 
-// MARK: - Additional Methods
+// MARK: - HistoryListView Related
 extension TKSwiftDataStore {
     // HistoryListView에서 쓰이는 specific fetch (TKLocation -> TKConversation)
     public func getLocationBasedConversations(location: TKLocation) -> [TKConversation] {
-        let conversations = dataManager.getLocationMatchingConversations(location: location)
+        var conversations = dataManager.getLocationMatchingConversations(location: location)
+        conversations.sort(
+            by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
+        )
         return conversations
     }
     
@@ -68,7 +68,9 @@ extension TKSwiftDataStore {
     // 중복되는 blockName을 제거한 [TKLocation]
     public func filterDuplicatedBlockNames(locations: [TKLocation]) -> [TKLocation] {
         let groupedLocations = Dictionary(grouping: locations, by: { $0.blockName })
-        let uniqueLocations = groupedLocations.compactMap { $0.value.first }
+        var uniqueLocations = groupedLocations.compactMap { $0.value.first }
+        // TODO: sorting이 잘 되는지 다른 동에서 테스트 해봐야 함
+        uniqueLocations.sort(by: { $0.blockName.compare($1.blockName) == .orderedAscending })
         return uniqueLocations
     }
     
@@ -80,18 +82,9 @@ extension TKSwiftDataStore {
     public func getAllConversation() -> [TKConversation] {
         dataManager.getAllConversations()
     }
-    
-    // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
-//    public func getContentBasedConversations(content: [TKContent]) -> [TKConversation] {
-//        var conversations: [TKConversation] = []
-//        contents.forEach { content in
-//            conversations = dataManager.getContentMatchingConversations(content: content)
-//        }
-//        return conversations
-//    }
 }
 
-// MARK: TextReplacement Related
+// MARK: - TextReplacement Related
 extension TKSwiftDataStore {
     
     // MARK: 기본 Create
@@ -113,7 +106,7 @@ extension TKSwiftDataStore {
     }
 }
 
-// MARK: CustomHistoryView Related
+// MARK: - CustomHistoryView Related
 extension TKSwiftDataStore {
     public func getConversationBasedContent(_ conversation: TKConversation) -> [[TKContent]] {
         
