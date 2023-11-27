@@ -33,5 +33,6 @@ final class TKContent {
         self.text = text
         self.createdAt = createdAt
         self.status = type.rawValue
+        self.type = type
     }
 }

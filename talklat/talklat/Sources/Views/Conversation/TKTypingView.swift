@@ -255,7 +255,11 @@ struct TKTypingView: View {
                 store.blockButtonDoubleTap {
                     if let previousConversation = store(\.previousConversation) {
                         let res = makeNewContent()
-                        previousConversation.content.append(contentsOf: res)
+                        if var content = previousConversation.content {
+                            content.append(contentsOf: res)
+
+                        }
+//                        previousConversation.content.append(contentsOf: res)
                         
                         dismiss()
                     } else {

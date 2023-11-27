@@ -432,6 +432,10 @@ struct CustomDialog: View {
                     Button {
                         // Delete
                         dataStore.removeItem(selectedConversation)
+                        // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
+//                        selectedConversation.content.forEach { content in
+//                            dataStore.removeItem(content)
+//                        }
                         isDialogShowing = false
                         isEditing = false
                     } label: {

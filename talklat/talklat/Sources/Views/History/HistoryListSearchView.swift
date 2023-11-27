@@ -115,6 +115,7 @@ struct SearchResultSection: View {
                 BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
                     .padding(.leading, -5)
+                    .lineLimit(1)
                 
                 Spacer()
                 
@@ -186,6 +187,12 @@ struct SearchResultSection: View {
                 filteredContents.sort(
                     by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
                 )
+            }
+        }
+        .onChange(of: dataStore.conversations) { oldValue, newValue in
+            // 데이터 최신화 (임시방편)
+            filteredContents = filteredContents.filter { content in
+                dataStore.contents.contains(content)
             }
         }
     }

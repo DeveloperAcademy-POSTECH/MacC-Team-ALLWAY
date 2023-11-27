@@ -171,7 +171,10 @@ extension TKConversationViewStore {
     
     public func onSaveToPreviousButtonTapped(_ newContents: [TKContent]) {
         if let _ = self(\.previousConversation) {
-            self(\.previousConversation)?.content.append(contentsOf: newContents)
+            if var content = self(\.previousConversation)?.content {
+                content.append(contentsOf: newContents)
+            }
+//            self(\.previousConversation)?.content.append(contentsOf: newContents)
         }
         
         withAnimation {

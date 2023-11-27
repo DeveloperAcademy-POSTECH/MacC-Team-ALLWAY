@@ -14,7 +14,7 @@ final class TKConversation {
     var updatedAt: Date?
     
     @Relationship(deleteRule: .cascade, inverse: \TKContent.conversation)
-    var content: [TKContent] = [TKContent]()
+    var content: [TKContent]?
     
     @Relationship(deleteRule: .cascade, inverse: \TKLocation.conversation)
     var location: TKLocation?
@@ -22,7 +22,7 @@ final class TKConversation {
     init(
         title: String,
         createdAt: Date,
-        content: [TKContent],
+        content: [TKContent] = [],
         location: TKLocation? = nil
     ) {
         self.title = title
