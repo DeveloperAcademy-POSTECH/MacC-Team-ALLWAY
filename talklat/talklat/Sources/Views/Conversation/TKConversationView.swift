@@ -115,9 +115,7 @@ struct TKConversationView: View {
                 case .myself:
                     store.onBackToWritingChevronTapped() // to .writing
                 case .opponent:
-                    withAnimation {
-                        store.onStartRecordingButtonTapped() // to .recording
-                    }
+                    store.onStartRecordingButtonTapped() // to .recording
                 }
             }
         }

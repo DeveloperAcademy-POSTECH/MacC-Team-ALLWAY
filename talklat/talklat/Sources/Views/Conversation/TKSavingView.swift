@@ -10,12 +10,13 @@ import SwiftUI
 
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKConversationViewStore
     @ObservedObject var speechRecognizeManager: SpeechRecognizer
-    @Environment(\.dismiss) private var dismiss
     @FocusState var focusState: Bool
-    let swiftDataStore = TKSwiftDataStore()
+    @State private var allConversationTitles: [String] = []
+    private let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         VStack(
@@ -45,9 +46,17 @@ struct TKSavingView: View {
                 Spacer()
                 
                 Button {
-                    let res = makeNewConversation()
-                    swiftDataStore.appendItem(res)
-                    store.onSaveNewConversationButtonTapped()
+                    if let res: TKConversation = store.makeNewConversation(
+                        with: speechRecognizeManager.transcript,
+                        at: TKLocation(
+                            latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude,
+                            longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,
+                            blockName: locationStore(\.mainPlaceName)
+                        )
+                    ) {
+                        swiftDataStore.appendItem(res)
+                        store.onSaveNewConversationButtonTapped()
+                    }
                     
                 } label: {
                     BDText(
@@ -110,6 +119,12 @@ struct TKSavingView: View {
                     .padding(.leading, 32)
                     .transition(.opacity.animation(.easeInOut))
                 
+            } else if store(\.hasCurrentConversationTitlePrevious) {
+                Text("이미 있는 제목이다 아이가?")
+                    .font(.footnote)
+                    .foregroundStyle(Color.RED)
+                    .padding(.leading, 32)
+                
             } else {
                 Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
                     .font(.footnote)
@@ -119,38 +134,16 @@ struct TKSavingView: View {
             }
         }
         .task {
-            let allConversations = swiftDataStore.getAllConversation()
-            store.onSaveConversationSheetApeear(allConversations.count)
+            if !swiftDataStore.conversations.isEmpty {
+                let allConversations = swiftDataStore.getAllConversation()
+                store.onSaveConversationSheetAppear(allConversations)
+            }
+            
             focusState = true
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
-    }
-    
-    private func makeNewConversation() -> some PersistentModel {
-        store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
-        store.onMakeNewConversationData()
-        
-        let newContents = store(\.historyItems).map {
-            TKContent(
-                text: $0.text,
-                type: $0.type == .answer ? .answer : .question,
-                createdAt: $0.createdAt
-            )
-        }
-        
-        let newConversation = TKConversation(
-            title: store(\.conversationTitle),
-            createdAt: Date(),
-            content: newContents,
-            location: TKLocation(
-                latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude ,
-                longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,
-                blockName: locationStore(\.mainPlaceName)
-        ))
-        
-        return newConversation
     }
 }
 
