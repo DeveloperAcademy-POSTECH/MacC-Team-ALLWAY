@@ -30,8 +30,6 @@ class HistoryViewController: UIViewController {
         self.addChild(customTableViewController)
         self.view.addSubview(customTableViewController.view)
         
-        navigationController?.navigationBar.barTintColor = .red
-        
         createFloatingButton()
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(floatingButton)
