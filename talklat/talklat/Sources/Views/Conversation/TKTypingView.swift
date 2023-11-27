@@ -255,8 +255,8 @@ struct TKTypingView: View {
                         .foregroundColor(Color.GR1)
                         .padding(13)
                         .background(!store(\.questionText).isEmpty ? Color.GR3 : Color.GR2)
-                        .clipShape(Circle())
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 40))
                 .accessibilityLabel(Text("Clear text"))
                 
                 if focusState {
@@ -275,10 +275,10 @@ struct TKTypingView: View {
                             )
                             
                         } label: {
-                            BDText(text: firstReplacement, style: .H2_SB_160)
+                            BDText(text: firstReplacement, style: .H2_SB_135)
                                 .foregroundColor(Color.GR7)
                                 .padding(.horizontal, 16)
-                                .padding(.vertical, 10)
+                                .padding(.vertical, 8)
                                 .lineLimit(1)
                                 .background {
                                     RoundedRectangle(cornerRadius: 24)
@@ -286,12 +286,12 @@ struct TKTypingView: View {
                                 }
                         }
                         .padding(.vertical, 4)
-                        .padding(.trailing, 4)
+                        .padding(.trailing, 6)
                     }
                 }
             }
             .background(focusState ? Color.GR2 : Color.clear)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .clipShape(RoundedRectangle(cornerRadius: 40))
             .padding(.leading, 16)
             .frame(
                 maxWidth: 275,
