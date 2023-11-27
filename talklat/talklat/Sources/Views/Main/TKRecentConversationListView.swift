@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TKRecentConversationListView: View {
     @EnvironmentObject var locationStore: TKLocationStore
-    @State private var locationAuthorization = false
-    let dataStore: TKSwiftDataStore = TKSwiftDataStore()
-    @Binding var conversations: [TKConversation]
+    @ObservedObject var conversationViewStore: TKConversationViewStore
+    @ObservedObject var draggableListViewStore: TKDraggableListViewStore
+    let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -44,13 +44,11 @@ struct TKRecentConversationListView: View {
             
             ScrollView {
                 if locationStore(\.isAuthorized) {
-                    if conversations.count > 0 {
-                        ForEach(conversations, id: \.self) { conversation in
-                            NavigationLink {
-                                CustomHistoryView(
-                                    historyViewType: .item,
-                                    conversation: conversation
-                                )
+                    if draggableListViewStore(\.conversations).count > 0 {
+                        ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
+                            Button {
+                                draggableListViewStore.onTapDraggableListItem(conversation)
+                                conversationViewStore.reduce(\.previousConversation, into: conversation)
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -62,6 +60,7 @@ struct TKRecentConversationListView: View {
                                             .font(.footnote)
                                             .foregroundStyle(Color.OR6)
                                     }
+                                    
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
                                         Text((conversation.createdAt).convertToDate())
@@ -94,28 +93,47 @@ struct TKRecentConversationListView: View {
                     } else {
                         Text("근처에서 나눈 대화가 없어요.")
                             .foregroundStyle(Color.GR3)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
                             .padding(.bottom, 32)
+                            .padding(.leading, 32)
                     }
                 } else {
                     Text("근처 대화목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.")
                         .foregroundStyle(Color.GR3)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
                         .padding(.bottom, 32)
+                        .padding(.leading, 32)
                 }
             }
             .refreshable {
                 if locationStore.detectAuthorization() {
                     locationStore.trackUserCoordinate()
-                    conversations = locationStore.getClosestConversation(dataStore.conversations)
+                    draggableListViewStore.reduce(
+                        \.conversations,
+                         into: locationStore.getClosestConversation(swiftDataStore.conversations)
+                    )
                 }
             }
         }
-        .onAppear {
-            locationAuthorization = locationStore.detectAuthorization()
+        .fullScreenCover(isPresented: draggableListViewStore.bindingIsShowingConversationView()) {
+            TKConversationView(store: conversationViewStore)
+                .onDisappear {
+                    conversationViewStore.resetConversationState()
+                }
         }
     }
 }
 
 #Preview {
-    TKRecentConversationListView(conversations: .constant([TKConversation]()))
-        .environmentObject(TKLocationStore())
+    TKRecentConversationListView(
+        conversationViewStore: .init(),
+        draggableListViewStore: .init()
+    )
+    .environmentObject(TKLocationStore())
 }

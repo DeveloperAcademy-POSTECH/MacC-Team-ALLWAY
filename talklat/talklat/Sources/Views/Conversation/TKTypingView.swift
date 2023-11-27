@@ -11,12 +11,13 @@ import SwiftData
 struct TKTypingView: View {
     // TextReplacement
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var store: TKConversationViewStore
+    @FocusState var focusState: Bool
+    
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
-    
-    @ObservedObject var store: TKConversationViewStore
-    @FocusState var focusState: Bool
     
     let namespaceID: Namespace.ID
     
@@ -218,23 +219,47 @@ struct TKTypingView: View {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
-                store.onConversationDismissButtonTapped()
-                
+                if let _ = store(\.previousConversation) {
+                    dismiss()
+                } else {
+                    store.onConversationDismissButtonTapped()
+                }
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
+                Text("취소")
+                    .font(.headline)
+                    .fontWeight(.bold)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(cancelButtonTextColor())
+                    .foregroundStyle(Color.GR6)
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .frame(height: 34)
-            .tint(cancelButtonTintColor())
+            .tint(Color.GR1)
+            
+            Spacer()
+            
+            if let previousConversation = store(\.previousConversation),
+               !store.isAnswerCardDisplayable {
+                Label(
+                    previousConversation.title,
+                    systemImage: "location.fill"
+                )
+                .font(.headline)
+                .foregroundStyle(Color.GR9)
+            }
+
             
             Spacer()
             
             Button {
                 store.blockButtonDoubleTap {
-                    store.onSaveConversationButtonTapped()
+                    if let previousConversation = store(\.previousConversation) {
+                        let res = makeNewContent()
+                        previousConversation.content.append(contentsOf: res)
+                        
+                        dismiss()
+                    } else {
+                        store.onSaveConversationButtonTapped()
+                    }
                 }
                 
             } label: {
@@ -248,6 +273,7 @@ struct TKTypingView: View {
             .tint(saveButtonTintColor())
             .disabled(store(\.questionText).isEmpty ? true : false)
             .disabled(store(\.blockButtonDoubleTap))
+            .disabled(store(\.historyItems).isEmpty)
         }
         .frame(height: 44)
         .padding(.horizontal, 24)
@@ -318,7 +344,7 @@ struct TKTypingView: View {
                 .padding(.top, 32)
         }
     }
-
+    
     private func saveButtonTextColor() -> Color {
         if let last = store(\.historyItems).last,
            last.type == .answer {
@@ -355,8 +381,21 @@ struct TKTypingView: View {
            last.type == .answer {
             return Color.OR6
         } else {
+
             return Color.GR1
         }
+    }
+    
+    private func makeNewContent() -> [TKContent] {
+        let newContents = store(\.historyItems).map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
+        
+        return newContents
     }
 }
 

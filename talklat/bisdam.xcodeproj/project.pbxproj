@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4B2B0B3BC600ECF34B /* BDText.swift */; };
+		5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */; };
 		577B45202B0DE76500DA010E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45172B0DE76500DA010E /* Pretendard-Thin.otf */; };
 		577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45182B0DE76500DA010E /* Pretendard-Black.otf */; };
 		577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B45192B0DE76500DA010E /* Pretendard-SemiBold.otf */; };
@@ -124,6 +124,7 @@
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
+		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,8 +145,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		5713DC4B2B0B3BC600ECF34B /* BDText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDText.swift; sourceTree = "<group>"; };
+		5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SwipeGesture.swift"; sourceTree = "<group>"; };
 		572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextReplacementViewStore.swift; sourceTree = "<group>"; };
 		572A82032B03300B00753516 /* Character+Consonant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Consonant.swift"; sourceTree = "<group>"; };
 		574D418B2B05E662007EFE90 /* SettingsTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
@@ -229,6 +230,7 @@
 		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
 		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
 		CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionalInt+Distance.swift"; sourceTree = "<group>"; };
+		CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableListViewStore.swift; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 				572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */,
 				CE0CBF4F2B04D8BA0048C784 /* TKHistoryInfoStore.swift */,
+				CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				7EBD313E2B0B2B1300D5514D /* TKTextReplacementListView.swift in Sources */,
 				7EBD313F2B0B2B1300D5514D /* SectionIndexTitles.swift in Sources */,
 				7EBD31402B0B2B1300D5514D /* SettingTRTextField.swift in Sources */,
+				CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */,
 				7EBD31412B0B2B1300D5514D /* SettingTRSearchBar.swift in Sources */,
 				7EBD31422B0B2B1300D5514D /* TextReplacementRow.swift in Sources */,
 				7EBD31432B0B2B1300D5514D /* TKTextReplacementEditView.swift in Sources */,

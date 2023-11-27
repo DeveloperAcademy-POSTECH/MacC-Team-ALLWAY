@@ -78,8 +78,11 @@ struct TKMainView: View {
             
             // MARK: BottomSheet
             if store(\.isTKMainViewAppeared) {
-                TKDraggableList(store: store)
-                    .transition(.move(edge: .bottom))
+                TKDraggableList(
+                    mainViewstore: store,
+                    conversationViewStore: conversationViewStore
+                )
+                .transition(.move(edge: .bottom))
             }
         }
         .task {
