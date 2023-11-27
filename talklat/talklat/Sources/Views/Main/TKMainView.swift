@@ -36,8 +36,7 @@ struct TKMainView: View {
                             default:
                                 Image(systemName: "location.slash.fill")
                             }
-                            
-                            Text("\(locationStore(\.mainPlaceName))")
+                            BDText(text: "\(locationStore(\.mainPlaceName))", style: .H1_B_130)
                         }
                     }
                     .foregroundStyle(Color.GR4)
