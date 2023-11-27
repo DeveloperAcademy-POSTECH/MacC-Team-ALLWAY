@@ -60,6 +60,7 @@ struct TKRecentConversationListView: View {
                                             .font(.footnote)
                                             .foregroundStyle(Color.OR6)
                                     }
+                                    
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
                                         Text((conversation.createdAt).convertToDate())
@@ -92,12 +93,22 @@ struct TKRecentConversationListView: View {
                     } else {
                         Text("근처에서 나눈 대화가 없어요.")
                             .foregroundStyle(Color.GR3)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
                             .padding(.bottom, 32)
+                            .padding(.leading, 32)
                     }
                 } else {
                     Text("근처 대화목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.")
                         .foregroundStyle(Color.GR3)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
                         .padding(.bottom, 32)
+                        .padding(.leading, 32)
                 }
             }
             .refreshable {
@@ -120,5 +131,9 @@ struct TKRecentConversationListView: View {
 }
 
 #Preview {
-    TKRecentConversationListView(conversationViewStore: .init(), draggableListViewStore: .init())
+    TKRecentConversationListView(
+        conversationViewStore: .init(),
+        draggableListViewStore: .init()
+    )
+    .environmentObject(TKLocationStore())
 }

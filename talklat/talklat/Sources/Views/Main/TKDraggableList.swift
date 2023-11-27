@@ -63,7 +63,7 @@ struct TKDraggableList: View {
                      into: locationStore.getClosestConversation(dataStore.conversations)
                 )
             }
-            .onAppear {
+            .task {
                 locationStore.trackUserCoordinate()
                 draggableListViewStore.reduce(
                     \.conversations,
@@ -88,7 +88,6 @@ struct TKDraggableList: View {
         )
         .ignoresSafeArea(.all, edges: .bottom)
     }
-    
 }
 
 #Preview {

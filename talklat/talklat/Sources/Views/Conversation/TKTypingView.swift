@@ -35,7 +35,7 @@ struct TKTypingView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .top).animation(.easeInOut(duration: 1.0)),
-                        removal: .move(edge: .top)
+                        removal: .push(from: .bottom).animation(.easeInOut(duration: 1.0))
                     )
                 )
                 
@@ -117,13 +117,23 @@ struct TKTypingView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .onTapGesture {
+            focusState = false
+        }
         .task {
-            focusState = true
+            if !focusState {
+                focusState = true
+            }
         }
         .overlay(alignment: .bottom) {
-            customToolbar()
-                .padding(.bottom, 16)
+            if !store(\.isTopViewShown) {
+                customToolbar()
+                    .padding(.bottom, 16)
+            }
         }
     }
     
@@ -179,6 +189,7 @@ struct TKTypingView: View {
                 ZStack {
                     Group {
                         Button {
+                            focusState = false
                             store.onShowPreviewChevronButtonTapped()
                             
                         } label: {
@@ -226,10 +237,14 @@ struct TKTypingView: View {
             
             Spacer()
             
-            if let previousConversation = store(\.previousConversation) {
-                Label(previousConversation.title, systemImage: "location.fill")
-                    .font(.headline)
-                    .foregroundStyle(Color.GR9)
+            if let previousConversation = store(\.previousConversation),
+               !store.isAnswerCardDisplayable {
+                Label(
+                    previousConversation.title,
+                    systemImage: "location.fill"
+                )
+                .font(.headline)
+                .foregroundStyle(Color.GR9)
             }
 
             
