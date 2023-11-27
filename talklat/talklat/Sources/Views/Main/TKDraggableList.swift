@@ -16,7 +16,6 @@ struct TKDraggableList: View {
     let firstOffset = UIScreen.main.bounds.height * 0.65
     let dataStore: TKSwiftDataStore = TKSwiftDataStore()
     
-    
     var body: some View {
         ZStack {
             // MARK: - BOTTOM SHEET BACKGROUND
@@ -24,27 +23,29 @@ struct TKDraggableList: View {
                 .foregroundStyle(Color.SheetBGWhite)
             
             VStack(spacing: 0) {
-                Capsule()
-                    .fill(Color.GR3)
-                    .frame(width: 36, height: 5)
-                    .padding(.top, 6)
-                    .padding(.bottom, 20)
+                if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
+                    Capsule()
+                        .fill(Color.GR3)
+                        .frame(width: 36, height: 5)
+                        .padding(.top, 6)
+                }
                 
                 // MARK: - RECENT CONVERSATION LIST
                 TKRecentConversationListView(
                     conversationViewStore: conversationViewStore,
                     draggableListViewStore: draggableListViewStore
                 )
-                    .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
-                    .scrollIndicators(.hidden)
+                .padding(.top, 20)
+                .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
+                .scrollIndicators(.hidden)
             }
             .onChange(of: mainViewstore(\.lastOffset)) { _, _ in
                 mainViewstore.onBottomSheetMaxed(firstOffset)
             }
-            .onChange(of: dataStore.conversations) { _, _ in
+            .onChange(of: dataStore.conversations) { _, newValue in
                 draggableListViewStore.reduce(
                     \.conversations,
-                     into: locationStore.getClosestConversation(dataStore.conversations)
+                     into: locationStore.getClosestConversation(newValue)
                 )
             }
             .onChange(of: locationStore(\.authorizationStatus)) { _, _ in
@@ -80,10 +81,14 @@ struct TKDraggableList: View {
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    mainViewstore.onUpdatingDragOffset(value.translation.height)
+                    if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
+                        mainViewstore.onUpdatingDragOffset(value.translation.height)
+                    }
                 }
-                .onEnded{ value in
-                    mainViewstore.onDragEnded(firstOffset)
+                .onEnded { value in
+                    if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
+                        mainViewstore.onDragEnded(firstOffset)
+                    }
                 }
         )
         .ignoresSafeArea(.all, edges: .bottom)
