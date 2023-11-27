@@ -124,6 +124,7 @@ extension TKAuthManager {
         }
     }
     
+    @MainActor
     public func getSpeechRecognitionAuthStatus() async {
         if await SFSpeechRecognizer.hasAuthorizationToRecognize() == true {
             isSpeechRecognitionAuthorized = true
@@ -137,6 +138,7 @@ extension TKAuthManager {
         locationManager.requestWhenInUseAuthorization()
     }
     
+    @MainActor
     public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
