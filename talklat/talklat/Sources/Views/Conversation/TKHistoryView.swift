@@ -58,9 +58,7 @@ struct TKHistoryView: View {
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {
-                        Text("작성 화면으로 돌아가기")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
+                        BDText(text: "작성 화면으로 돌아가기", style: .FN_SB_135)
                         
                         Image(systemName: "chevron.compact.down")
                             .resizable()
@@ -79,8 +77,7 @@ struct TKHistoryView: View {
 
 extension TKHistoryView {
     private func questionTextBuilder(_ item: HistoryItem) -> some View {
-        Text(item.text)
-            .font(.subheadline)
+        BDText(text: item.text, style: .H2_SB_160)
             .foregroundColor(Color.GR7)
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
@@ -105,8 +102,7 @@ extension TKHistoryView {
                 .foregroundColor(Color.OR5)
                 .padding(.leading, 4)
             
-            Text(item.text)
-                .font(.headline)
+            BDText(text: item.text, style: .H2_SB_160)
                 .foregroundColor(Color.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
