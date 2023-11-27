@@ -58,25 +58,52 @@ struct CustomHistoryView: View {
             
             case .item:
                 // TODO: ver 1.1
-                Button {
-                    // MARK: Start Conversation From This Location
-                } label: {
-                    Text("이 위치에서 대화 시작하기")
-                        .foregroundStyle(Color.OR6)
-                        .font(.headline)
-                        .padding()
-                }
-                .frame(maxWidth: .infinity)
-                .background {
-                    RoundedRectangle(cornerRadius: 22)
-                        .fill(Color.GR1)
-                        
-                }
-                .padding(.horizontal, 10)
+                EmptyView()
+//                Button {
+//                    // MARK: Start Conversation From This Location
+//                } label: {
+//                    Text("이 위치에서 대화 시작하기")
+//                        .foregroundStyle(Color.OR6)
+//                        .font(.headline)
+//                        .padding()
+//                }
+//                .frame(maxWidth: .infinity)
+//                .background {
+//                    RoundedRectangle(cornerRadius: 22)
+//                        .fill(Color.GR1)
+//                        
+//                }
+//                .padding(.horizontal, 10)
             }
         }
         .toolbar {
             if historyViewType == .item {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .bold()
+                            
+                            BDText(
+                                text: "목록",
+                                style: .H1_B_130
+                            )
+                        }
+                    }
+                }
+                
+                // Navigation Title
+                ToolbarItem(placement: .principal) {
+                    BDText(
+                        text: historyViewType == .item
+                        ? conversation.title
+                        : "대화 내용",
+                        style: .H1_B_130
+                    )
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryInfoItemView(conversation: conversation)
@@ -85,17 +112,6 @@ struct CustomHistoryView: View {
                         Image(systemName: "info.circle.fill")
                     }
                     .tint(Color.OR5)
-                }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("목록")
-                        }
-                    }
                 }
             }
         }

@@ -29,21 +29,21 @@ struct SettingsGuidingEditView: View {
                     guidingMessage: $guidingMessage
                 )
             } label: {
-                Text(
-                    hasContentChanged
+                BDText(
+                    text: hasContentChanged
                     ? "안내 문구 적용화면 미리보기"
-                    : "안내 문구 미리보기"
+                    : "안내 문구 미리보기",
+                    style: .H1_B_130
                 )
                 .foregroundColor(.BaseBGWhite)
-                    .font(.system(size: 17, weight: .bold))
-                    .padding(.vertical, 17)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        isTextEmpty
-                        ? Color.GR3
-                        : Color.OR5
-                    )
-                    .cornerRadius(22)
+                .padding(.vertical, 17)
+                .frame(maxWidth: .infinity)
+                .background(
+                    isTextEmpty
+                    ? Color.GR3
+                    : Color.OR5
+                )
+                .cornerRadius(22)
             }
             .disabled(isTextEmpty)
             
@@ -60,10 +60,8 @@ struct SettingsGuidingEditView: View {
             
             // FixedMessage Text
             VStack(alignment: .leading) {
-                Text("고정 문구")
+                BDText(text: "고정 문구", style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
-                    .font(.system(size: 15))
-                    .fontWeight(.semibold)
                     .padding(.horizontal, 16)
                 
                 HStack {
@@ -83,8 +81,11 @@ struct SettingsGuidingEditView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .navigationTitle("안내 문구 편집")
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                BDText(text: "안내 문구 편집", style: .H1_B_130)
+            }
+        }
         .onChange(of: guidingMessage) { _, _ in
             hasContentChanged = true
             

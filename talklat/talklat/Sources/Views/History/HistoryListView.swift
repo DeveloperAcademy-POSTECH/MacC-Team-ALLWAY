@@ -41,6 +41,7 @@ struct HistoryListView: View {
             .navigationBarBackButtonHidden(
                 isSearching ? true : false
             )
+            .disabled(isEditing ? true : false)
             
             Spacer()
             
@@ -71,40 +72,53 @@ struct HistoryListView: View {
                         .padding(.top, 24)
                     }
                     .scrollIndicators(.hidden)
-                    .navigationTitle("히스토리")
                     .navigationBarBackButtonHidden(true)
-                    .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
+                            // Back Button
                             Button {
                                 dismiss()
                             } label: {
                                 HStack {
                                     Image(systemName: "chevron.left")
-                                    Text("홈")
+                                        .bold()
+                                 
+                                    BDText(
+                                        text: "홈",
+                                        style: .H1_B_130
+                                    )
                                 }
                                 .fontWeight(.medium)
                             }
                             .tint(Color.OR6)
                         }
                         
+                        // Navigation Title
+                        ToolbarItem(placement: .principal) {
+                            BDText(
+                                text: "히스토리",
+                                style: .H1_B_130
+                            )
+                        }
+                        
                         ToolbarItem(placement: .topBarTrailing) {
                             // Edit Button
-                            ZStack {
-                                Button {
-                                    withAnimation(
-                                        .spring(
-                                            dampingFraction: 0.7,
-                                            blendDuration: 0.4
-                                        )
-                                    ) {
+                            Button {
+                                withAnimation(
+                                    .spring(
+                                        dampingFraction: 0.7,
+                                        blendDuration: 0.4
+                                    )
+                                ) {
+                                    withAnimation {
                                         isEditing.toggle()
                                     }
-                                } label: {
-                                    Text("편집")
-                                        .fontWeight(.medium)
                                 }
-                                .tint(Color.OR6)
+                            } label: {
+                                BDText(
+                                    text: isEditing ? "완료" : "편집",
+                                    style: .H1_B_130
+                                )
                             }
                         }
                     }
@@ -176,17 +190,20 @@ struct LocationList: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "location.fill")
-                Text(location.blockName)
+                if location.blockName != "위치정보없음" { // TODO: nil 값 확인 필요
+                    Image(systemName: "location.fill")
+                } else {
+                    Image(systemName: "location.slash.fill")
+                }
+                
+                BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
                 // Collapse Button
                 Button {
-                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -228,7 +245,8 @@ struct LocationList: View {
             // Each List Cell
             if !isCollapsed {
                 ForEach(
-                    dataStore.getLocationBasedConversations(location: location),
+                    dataStore.getLocationBasedConversations(location: location)
+                        .sorted { $0.createdAt > $1.createdAt },
                     id: \.self
                 ) { conversation in
                     NavigationLink {
@@ -283,7 +301,7 @@ struct CellItem: View {
                     } label: {
                         if !isRemoving {
                             Image(systemName: "minus.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundStyle(.white, .red)
                                 .font(.system(size: 20))
                                 .padding(.trailing, 5)
                                 .transition(
@@ -302,15 +320,17 @@ struct CellItem: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title)
-                        .font(.system(size: 17, weight: .medium))
+                    BDText(
+                        text: conversation.title,
+                        style: .H1_B_130
+                    )
                         .foregroundStyle(Color.GR8)
                     
-                    Text(
-                        conversation.createdAt.convertToDate()
+                    BDText(
+                        text:conversation.createdAt.convertToDate(),
+                        style: .H2_M_135
                     )
                     .foregroundColor(.GR4)
-                    .font(.system(size: 15, weight: .medium))
                 }
                 
                 Spacer()
@@ -326,10 +346,10 @@ struct CellItem: View {
                         )
                     )
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+            .frame(height: 60)
+            .padding(.horizontal)
             .background(Color.GR1)
-            .cornerRadius(22)
+            .cornerRadius(16)
             .onTapGesture {
                 if isRemoving && isEditing {
                     withAnimation(
@@ -353,12 +373,13 @@ struct CellItem: View {
                 } label: {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
-                        .foregroundColor(.BaseBGWhite)
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 20)
-                        .background(.red)
-                        .cornerRadius(22)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 25)
+                        .padding(.vertical, 14)
+                        .background(Color.RED)
+                        .cornerRadius(16)
                 }
+                .frame(height: 60)
                 .transition(.move(edge: .trailing))
             }
         }

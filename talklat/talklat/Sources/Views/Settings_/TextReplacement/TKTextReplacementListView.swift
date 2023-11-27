@@ -18,12 +18,17 @@ struct TKTextReplacementListView: View {
     @FocusState private var isTextFieldFocused: Bool
     
     var textReplacementManager = TKTextReplacementManager()
-    
+
     var groupedLists: [String: [TKTextReplacement]] {
         Dictionary(grouping: lists) { entry in
             if let firstChar = entry.wordDictionary.keys.first?.first {
-                // 한글 첫 자음을 추출하여 그룹화 기준으로 사용
-                return firstChar.koreanFirstConsonant ?? "#"
+                // 한글 첫 자음 또는 단일 자음을 추출하여 그룹화 기준으로 사용
+                if let consonant = firstChar.koreanFirstConsonant {
+                    return consonant
+                } else {
+                    // 한글 또는 영어가 아닌 경우 기본값으로 "#"
+                    return firstChar.isCharacterKorean || firstChar.isCharacterEnglish ? String(firstChar) : "#"
+                }
             } else {
                 // 첫 글자가 없는 경우 기본값으로 "#"
                 return "#"
@@ -48,14 +53,13 @@ struct TKTextReplacementListView: View {
                 if sortedGroupKeys.isEmpty {
                     // MARK: 텅 뷰
                     VStack(spacing: 0){
-                        Image(systemName: "bubble.left.and.bubble.right")
-                            .font(.system(size: 30))
-                            .foregroundColor(.GR3)
+                        Image(systemName: "bubble.left.and.text.bubble.right.fill")
+                            .font(.system(size: 90))
+                            .foregroundColor(.GR2)
                             .padding(.bottom, 30)
                         
-                        Text("아직 설정한 텍스트 대치가 없어요")
+                        BDText(text: "아직 설정한 텍스트 대치가 없어요", style: .H1_M_130)
                             .foregroundStyle(Color.GR3)
-                            .font(.system(size: 17, weight: .medium))
                     }
                     .frame(
                         maxHeight: .infinity,
@@ -94,6 +98,7 @@ struct TKTextReplacementListView: View {
                             if(!sortedGroupKeys.isEmpty) {
                                 SectionIndexTitles(proxy: proxy)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .padding(.trailing, 3)
                             }
                         }
                     }
@@ -109,16 +114,18 @@ struct TKTextReplacementListView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                Text("텍스트 대치")
-                    .font(.system(size: 17, weight: .bold))
+                BDText(text: "텍스트 대치", style: .H1_B_130)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -126,7 +133,9 @@ struct TKTextReplacementListView: View {
                     store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
+                        .bold()
                 }
+                .disabled(store(\.isSearching))
             }
         }
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
@@ -136,7 +145,6 @@ struct TKTextReplacementListView: View {
     }
     
     // MARK: 리스트 정렬
-    // TODO: #(그 외 문자들)이 젤 먼저 나온다ㅠㅠ수정..
     var sortedGroupKeys: [String] {
         return groupedLists.keys.sorted { key1, key2 in
             let firstCharKey1 = key1.first
@@ -211,7 +219,7 @@ struct TKTextReplacementListView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
-                if store(\.isSearching) {
+                if !store.viewState.searchText.isEmpty {
                     Button {
                         store.onSearchTextRemoveButtonTapped()
                         
@@ -236,8 +244,10 @@ struct TKTextReplacementListView: View {
                     store.cancelSearchAndHideKeyboard()
                     
                 } label: {
-                    Text("취소")
-                        .font(.system(size: 17))
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 .padding(.leading, 8)
             }

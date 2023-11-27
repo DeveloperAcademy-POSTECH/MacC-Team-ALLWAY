@@ -20,10 +20,8 @@ struct SettingTextField: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Text(title)
+                BDText(text: title, style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
-                    .font(.system(size: 15))
-                    .fontWeight(.semibold)
                     .padding(.horizontal, 16)
                 Spacer()
             }
@@ -64,8 +62,7 @@ struct SettingTextField: View {
         limit: Int
     ) -> some View {
         let displayCount = min(currentCount, limit)
-        return Text("\(displayCount)/\(limit)")
-            .font(.system(size: 13, weight: .medium))
+        return BDText(text: "\(displayCount)/\(limit)", style: .FN_M_135)
             .monospacedDigit()
             .foregroundColor(
                 currentCount == limit || isTextEmpty

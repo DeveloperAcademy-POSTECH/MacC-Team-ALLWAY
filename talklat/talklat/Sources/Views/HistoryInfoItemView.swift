@@ -94,8 +94,6 @@ struct HistoryInfoItemView: View {
                         )
                     )
                 }
-                .navigationTitle("정보")
-                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -104,15 +102,28 @@ struct HistoryInfoItemView: View {
                                 isTextfieldFocused = false
                                 dismiss()
                             } else {
-                                isShowingAlert = true
+                                historyInfoStore.reduce(\.isShowingAlert, into: true)
                             }
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
-                                Text("대화")
+                                    .bold()
+                                
+                                BDText(
+                                    text: "대화",
+                                    style: .H1_B_130
+                                )
                             }
                             .tint(Color.OR5)
                         }
+                    }
+                    
+                    // Navigation Title
+                    ToolbarItem(placement: .principal) {
+                        BDText(
+                            text: "정보",
+                            style: .H1_B_130
+                        )
                     }
                     
                     ToolbarItem(placement: .topBarTrailing) {
@@ -129,16 +140,17 @@ struct HistoryInfoItemView: View {
                     }
                 }
                 .fontWeight(.bold)
-                .overlay {
-                    TKAlert(
-                        style: .cancellation,
-                        isPresented: $isShowingAlert
-                    ) {
+                .showTKAlert(
+                    isPresented: historyInfoStore.bindingAlert(),
+                    style: .editCancellation(title: "변경 사항 취소"),
+                    confirmButtonAction: ({
+                        historyInfoStore.reduce(\.isShowingAlert, into: false)
                         dismiss()
-                    } actionButtonLabel: {
-                        Text("네, 취소할래요.")
+                    }),
+                    confirmButtonLabel: {
+                        BDText(text: "네, 취소할래요.", style: .H2_SB_135)
                     }
-                }
+                )
     }
     
     private var textFieldView: some View {
@@ -214,7 +226,7 @@ struct HistoryInfoItemView: View {
                 .tint(Color.OR5)
             } else {
                 Map(coordinateRegion: historyInfoStore.bindingInfoCoordinate(),
-                    showsUserLocation: true,
+                    showsUserLocation: false,
                     annotationItems: historyInfoStore(\.annotationItems)
                 ) { item in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
@@ -237,7 +249,6 @@ struct HistoryInfoItemView: View {
                             Spacer()
                             
                             Button {
-                                //MARK: 현재 위치 사용자 친화적인 주소로 바꿔주기
                                 isTextfieldFocused = false
                                 historyInfoStore.reduce(\.isShowingSheet, into: true)
                             } label: {
@@ -254,12 +265,6 @@ struct HistoryInfoItemView: View {
                 }
             }
         }
-//        .onChange(of: historyInfoStore(\.infoCoordinateRegion)) { _ in
-//            historyInfoStore.reduce(\.isNotChanged, into: false)
-//        }
-//        .onChange(of: historyInfoStore(\.text)) { _ in
-//            historyInfoStore.reduce(\.isNotChanged, into: false)
-//        }
     }
     
     private func updateHistoryInfo() {

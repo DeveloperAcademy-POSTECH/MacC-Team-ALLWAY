@@ -24,8 +24,7 @@ func TKUnavailableViewBuilder(
                 .frame(width: 80)
                 .foregroundColor(.GR2)
             
-            Text(description)
-                .font(.system(size: 17, weight: .medium))
+            BDText(text: description, style: .H1_B_130)
                 .foregroundColor(.GR3)
         }
     }

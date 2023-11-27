@@ -43,8 +43,15 @@ struct TKHistoryView: View {
             .scrollIndicators(.hidden)
             .padding(.bottom, 16)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("대화 내용")
+        .toolbar {
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "대화 내용",
+                    style: .H1_B_130
+                )
+            }
+        }
         .safeAreaInset(edge: .bottom) {
             if store(\.isTopViewShown) {
                 Button {

@@ -143,9 +143,9 @@ struct BDText: View {
         case .H1_M_160:
             return (Font.custom("Pretendard-Medium", size: 17), .medium, 1.6, 17)
         case .H2_SB_160:
-            return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.6, 17)
+            return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.6, 15)
         case .H2_M_160:
-            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.6, 17)
+            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.6, 15)
             
         }
     }

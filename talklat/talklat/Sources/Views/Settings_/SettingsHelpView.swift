@@ -18,7 +18,7 @@ struct SettingsHelpView: View {
     
     var body: some View {
         VStack {
-            TKListCell(label: "문의 및 오류 신고하기") {
+            BDListCell(label: "문의 및 오류 신고하기") {
             } trailingUI: {
                 Image(systemName: "chevron.right")
             }
@@ -28,8 +28,6 @@ struct SettingsHelpView: View {
             
             Spacer()
         }
-        .navigationTitle("도움이 필요하신가요?")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -39,11 +37,19 @@ struct SettingsHelpView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(text: "설정", style: .H1_B_130)
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "도움이 필요하신가요?",
+                    style: .H1_B_130
+                )
             }
         }
         .padding(.top, 24)

@@ -140,7 +140,7 @@ class TKHistoryInfoStore: TKReducer {
             // 근데 infoCoordinate가 없음
             guard let infoCoordinate = self(\.infoCoordinateRegion)?.center else { return .locationChanged }
             
-            if conversationCoordinate != infoCoordinate {
+            if !conversationCoordinate.latitude.isDoubleEqual(infoCoordinate.latitude) || !conversationCoordinate.longitude.isDoubleEqual(infoCoordinate.longitude) {
                 return .locationChanged
             } else {
                 return .locationNotChanged
@@ -154,7 +154,7 @@ class TKHistoryInfoStore: TKReducer {
         }
     }
     
-    func plantFlag(_ coordinate: MKCoordinateRegion) {
+    public func plantFlag(_ coordinate: MKCoordinateRegion) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             var newAnnotation = [CustomAnnotationInfo]()
             newAnnotation.append(CustomAnnotationInfo(
@@ -166,6 +166,13 @@ class TKHistoryInfoStore: TKReducer {
             
             self.reduce(\.annotationItems, into: newAnnotation)
         }
+    }
+    
+    public func bindingAlert() -> Binding<Bool> {
+        return Binding(
+            get: { self(\.isShowingAlert) },
+            set: { self.reduce(\.isShowingAlert, into: $0) }
+        )
     }
     
     func callAsFunction<Value: Equatable> (_ path: KeyPath<ViewState, Value>) -> Value {
