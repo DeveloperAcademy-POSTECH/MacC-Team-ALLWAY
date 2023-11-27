@@ -11,6 +11,7 @@ import SwiftData
 struct TKTypingView: View {
     // TextReplacement
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     
@@ -34,7 +35,7 @@ struct TKTypingView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .top).animation(.easeInOut(duration: 1.0)),
-                        removal: .move(edge: .top)
+                        removal: .push(from: .bottom).animation(.easeInOut(duration: 1.0))
                     )
                 )
                 
@@ -116,13 +117,23 @@ struct TKTypingView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .onTapGesture {
+            focusState = false
+        }
         .task {
-            focusState = true
+            if !focusState {
+                focusState = true
+            }
         }
         .overlay(alignment: .bottom) {
-            customToolbar()
-                .padding(.bottom, 16)
+            if !store(\.isTopViewShown) {
+                customToolbar()
+                    .padding(.bottom, 16)
+            }
         }
     }
     
@@ -178,6 +189,7 @@ struct TKTypingView: View {
                 ZStack {
                     Group {
                         Button {
+                            focusState = false
                             store.onShowPreviewChevronButtonTapped()
                             
                         } label: {
@@ -185,7 +197,7 @@ struct TKTypingView: View {
                                 .resizable()
                                 .frame(width: 32, height: 10)
                                 .padding()
-                                .foregroundStyle(Color.BaseBGWhite)
+                                .foregroundStyle(Color.white)
                         }
                         
                         endConversationButtonBuilder()
@@ -207,32 +219,63 @@ struct TKTypingView: View {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
-                store.onConversationDismissButtonTapped()
-                
+                if let _ = store(\.previousConversation) {
+                    dismiss()
+                } else {
+                    store.onConversationDismissButtonTapped()
+                }
             } label: {
-                Image(systemName: "xmark")
-                    .bold()
+                Text("취소")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.GR6)
             }
-            .tint(endButtonTintColor())
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(Color.GR1)
+            
+            Spacer()
+            
+            if let previousConversation = store(\.previousConversation),
+               !store.isAnswerCardDisplayable {
+                Label(
+                    previousConversation.title,
+                    systemImage: "location.fill"
+                )
+                .font(.headline)
+                .foregroundStyle(Color.GR9)
+            }
+
             
             Spacer()
             
             Button {
                 store.blockButtonDoubleTap {
-                    store.onSaveConversationButtonTapped()
+                    if let previousConversation = store(\.previousConversation) {
+                        let res = makeNewContent()
+                        previousConversation.content.append(contentsOf: res)
+                        
+                        dismiss()
+                    } else {
+                        store.onSaveConversationButtonTapped()
+                    }
                 }
                 
             } label: {
-                Text("저장")
-                    .font(.headline)
+                BDText(text: "저장", style: .H1_B_130)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(endButtonTextColor())
+                    .foregroundStyle(saveButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(endButtonTintColor())
+            .frame(height: 34)
+            .tint(saveButtonTintColor())
+            .disabled(store(\.questionText).isEmpty ? true : false)
             .disabled(store(\.blockButtonDoubleTap))
+            .disabled(store(\.historyItems).isEmpty)
         }
+        .frame(height: 44)
         .padding(.horizontal, 24)
     }
     
@@ -246,9 +289,9 @@ struct TKTypingView: View {
                 } label: {
                     Image(systemName: "eraser.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(focusState ? Color.BaseBGWhite : Color.GR3)
+                        .foregroundColor(!store(\.questionText).isEmpty ? Color.BaseBGWhite : Color.GR3)
                         .padding(10)
-                        .background(focusState ? Color.GR4 : Color.GR2)
+                        .background(!store(\.questionText).isEmpty ? Color.GR4 : Color.GR2)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel(Text("Clear text"))
@@ -298,23 +341,61 @@ struct TKTypingView: View {
             startRecordingButtonBuilder()
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 24)
+                .padding(.top, 32)
         }
     }
     
-    private func endButtonTextColor() -> Color {
-        if store.isAnswerCardDisplayable {
+    private func saveButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
             return Color.OR6
+        } else if store(\.questionText).isEmpty {
+            return Color.GR3
         } else {
-            return Color.GR7
+            return Color.white
         }
     }
     
-    private func endButtonTintColor() -> Color {
-        if store.isAnswerCardDisplayable {
+    private func saveButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.white
+        } else if store(\.questionText).isEmpty {
+            return Color.GR2
+        } else {
+            return Color.OR5
+        }
+    }
+    
+    private func cancelButtonTextColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
             return Color.white
         } else {
-            return Color.GR2
+            return Color.GR6
         }
+    }
+    
+    private func cancelButtonTintColor() -> Color {
+        if let last = store(\.historyItems).last,
+           last.type == .answer {
+            return Color.OR6
+        } else {
+
+            return Color.GR1
+        }
+    }
+    
+    private func makeNewContent() -> [TKContent] {
+        let newContents = store(\.historyItems).map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
+        
+        return newContents
     }
 }
 
