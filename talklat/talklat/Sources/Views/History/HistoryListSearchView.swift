@@ -119,7 +119,7 @@ struct SearchResultSection: View {
                 Spacer()
                 
                 BDText(
-                    text: "\(matchingContents.count)개 발견됨",
+                    text: "\(filteredConversations.count)개 발견됨",
                     style: .H2_M_135
                 )
                 .foregroundColor(.GR5)
@@ -201,7 +201,7 @@ struct SearchResultItem: View {
     var body: some View {
         // Cell Contents
         HStack {
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: -3) {
                 BDText(
                     text: matchingContent.conversation?.title ?? "BISDAM TITLE",
                     style: .H1_B_130
@@ -231,11 +231,11 @@ struct SearchResultItem: View {
                                 text: String(character.element),
                                 style: .H2_M_135
                             )
-                                .foregroundStyle(
-                                    isHighlighted
-                                    ? Color.OR6
-                                    : Color.GR5
-                                )
+                            .foregroundStyle(
+                                isHighlighted
+                                ? Color.OR6
+                                : Color.GR5
+                            )
                         }
                     }
                 }
@@ -250,9 +250,10 @@ struct SearchResultItem: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .padding()
+        .padding(.vertical, 9)
+        .padding(.horizontal, 16)
         .background(Color.GR1)
-        .cornerRadius(22)
+        .cornerRadius(16)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")
         

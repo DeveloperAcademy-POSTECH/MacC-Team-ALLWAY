@@ -132,9 +132,6 @@ struct HistoryListView: View {
                 )
             }
         }
-        .onAppear {
-            
-        }
         .padding(.horizontal, 20)
         .showTKAlert(
             isPresented: $isDialogShowing,
@@ -245,8 +242,10 @@ struct LocationList: View {
             // Each List Cell
             if !isCollapsed {
                 ForEach(
-                    dataStore.getLocationBasedConversations(location: location)
-                        .sorted { $0.createdAt > $1.createdAt },
+                    dataStore.getLocationBasedConversations(
+                        location: location
+                    )
+                    .sorted { $0.createdAt > $1.createdAt },
                     id: \.self
                 ) { conversation in
                     NavigationLink {
@@ -319,7 +318,7 @@ struct CellItem: View {
                     )
                 }
                 
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: -3) {
                     BDText(
                         text: conversation.title,
                         style: .H1_B_130
