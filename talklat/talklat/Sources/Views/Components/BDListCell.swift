@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct TKListCell<LabelIcon: View, TrailingUI: View>: View {
+// TODO: 구조 변경
+struct BDListCell<LabelIcon: View, TrailingUI: View>: View {
     private var label: String
     private var leadingIcon: LabelIcon
     private var trailingUI: TrailingUI
@@ -21,7 +22,7 @@ struct TKListCell<LabelIcon: View, TrailingUI: View>: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(label)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 17, weight: .medium))
+                    .font(.system(size: 17, weight: .bold))
             }
             
             Spacer()
@@ -51,13 +52,13 @@ struct TKListCell<LabelIcon: View, TrailingUI: View>: View {
 
 #Preview {
     VStack {
-        TKListCell(label: "리스트 아이템 1") {
+        BDListCell(label: "리스트 아이템 1") {
             Image(systemName: "sun.max.fill")
         } trailingUI: {
             Image(systemName: "chevron.right")
         }
         
-        TKListCell(label: "리스트 아이템 2") {
+        BDListCell(label: "리스트 아이템 2") {
         } trailingUI: {
             Toggle("", isOn: .constant(true))
         }

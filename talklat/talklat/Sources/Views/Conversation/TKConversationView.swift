@@ -63,7 +63,7 @@ struct TKConversationView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
-        .fullScreenCover(
+        .sheet(
             isPresented: store.bindingSaveConversationViewFlag(),
             onDismiss: {
                 store.onDismissSavingViewButtonTapped()
@@ -94,9 +94,33 @@ struct TKConversationView: View {
                 break
             }
         }
-        // MARK: - Flip Gesture OnChange Has been Deprecated
-        // .onChange(of: gyroScopeStore.faced) { _ in }
-        // .onAppear { gyroScopeStore.detectDeviceMotion() }
+        .onChange(of: store(\.hasSavingViewDisplayed)) { oldValue, newValue in
+            if !oldValue, newValue {
+                speechRecognizeManager.stopAndResetTranscribing()
+                
+            } else if oldValue, !newValue {
+                speechRecognizeManager.startTranscribing()
+            }
+        }
+        // MARK: - Flip Gesture OnChange (Toggled from Settings)
+        .onAppear {
+            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+                gyroScopeStore.detectDeviceMotion()
+            }
+        }
+        .onChange(of: gyroScopeStore.faced) { facedStatus in
+            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+                #warning("Conversation 쪽 로직 확인 필요")
+                switch facedStatus {
+                case .myself:
+                    store.onBackToWritingChevronTapped() // to .writing
+                case .opponent:
+                    withAnimation {
+                        store.onStartRecordingButtonTapped() // to .recording
+                    }
+                }
+            }
+        }
     }
 }
 

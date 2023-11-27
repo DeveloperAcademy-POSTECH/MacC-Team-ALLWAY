@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoadingWebView: View {
+    @Environment(\.dismiss) var dismiss
+    
     @State private var isLoading = true
     @State private var error: Error? = nil
     let url = URL(string: "https://yenchoichoi.notion.site/TALKLAT-fbba4b6204ee4eb9a9681c4d75a673cb?pvs=4")
@@ -32,6 +34,24 @@ struct LoadingWebView: View {
                 Text("Sorry, we could not load this url.")
             }
  
+        }
+        .navigationTitle("개인정보 처리방침")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        Text("설정")
+                            .font(.system(size: 17))
+                    }
+                    .tint(Color.OR5)
+                }
+            }
         }
     }
 }

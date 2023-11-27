@@ -84,9 +84,9 @@ struct HistoryListView: View {
                                     Image(systemName: "chevron.left")
                                     Text("홈")
                                 }
-                                .foregroundColor(Color.OR6)
                                 .fontWeight(.medium)
                             }
+                            .tint(Color.OR6)
                         }
                         
                         ToolbarItem(placement: .topBarTrailing) {
@@ -99,15 +99,14 @@ struct HistoryListView: View {
                                             blendDuration: 0.4
                                         )
                                     ) {
-                                        withAnimation {
-                                            isEditing.toggle()
-                                        }
+                                        isEditing.toggle()
                                     }
                                 } label: {
                                     Text(isEditing ? "완료" : "편집")
                                         .foregroundColor(.accentColor)
                                         .fontWeight(.medium)
                                 }
+                                .tint(Color.OR6)
                             }
                         }
                     }
@@ -125,16 +124,24 @@ struct HistoryListView: View {
             
         }
         .padding(.horizontal, 20)
-        .overlay {
-            if isDialogShowing {
-                Color.black.opacity(0.5)
-                    .ignoresSafeArea()
-                CustomDialog(
-                    dataStore: dataStore,
-                    selectedConversation: $selectedConversation,
-                    isDialogShowing: $isDialogShowing,
-                    isEditing: $isEditing
-                )
+        .showTKAlert(
+            isPresented: $isDialogShowing,
+            style: .removeConversation(title: selectedConversation.title)
+        ) {
+            isDialogShowing = false
+            withAnimation {
+                isEditing = false
+            }
+        } confirmButtonAction: {
+            withAnimation {
+                dataStore.removeItem(selectedConversation)
+                isDialogShowing = false
+                isEditing = false
+            }
+            
+        } confirmButtonLabel: {
+            HStack(spacing: 8) {
+                Text("네, 삭제할래요")
             }
         }
         .onChange(of: isSearchFocused) { _, _ in
@@ -227,7 +234,8 @@ struct LocationList: View {
             // Each List Cell
             if !isCollapsed {
                 ForEach(
-                    dataStore.getLocationBasedConversations(location: location),
+                    dataStore.getLocationBasedConversations(location: location)
+                        .sorted { $0.createdAt > $1.createdAt },
                     id: \.self
                 ) { conversation in
                     NavigationLink {
@@ -305,11 +313,9 @@ struct CellItem: View {
                         .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(Color.GR8)
                     
-                    Text(
-                        conversation.createdAt.convertToDate()
-                    )
-                    .foregroundColor(.GR4)
-                    .font(.system(size: 15, weight: .medium))
+                    Text(conversation.createdAt.convertToDate())
+                        .foregroundStyle(Color.GR4)
+                        .font(.system(size: 15, weight: .medium))
                 }
                 
                 Spacer()
@@ -325,10 +331,10 @@ struct CellItem: View {
                         )
                     )
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+            .frame(height: 60)
+            .padding(.horizontal)
             .background(Color.GR1)
-            .cornerRadius(22)
+            .cornerRadius(16)
             .onTapGesture {
                 if isRemoving && isEditing {
                     withAnimation(
@@ -353,11 +359,12 @@ struct CellItem: View {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
                         .foregroundColor(.white)
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 20)
-                        .background(.red)
-                        .cornerRadius(22)
+                        .padding(.horizontal, 25)
+                        .padding(.vertical, 14)
+                        .background(Color.RED)
+                        .cornerRadius(16)
                 }
+                .frame(height: 60)
                 .transition(.move(edge: .trailing))
             }
         }

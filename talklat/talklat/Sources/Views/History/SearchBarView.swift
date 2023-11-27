@@ -23,7 +23,8 @@ struct SearchBarView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
-                if isSearching {
+                if isSearching 
+                    && !searchText.isEmpty {
                     Button {
                         // Remove All
                         searchText = ""
