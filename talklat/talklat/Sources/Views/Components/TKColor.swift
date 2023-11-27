@@ -16,7 +16,6 @@ extension Color {
     static let AlertBGWhite = Color("AlertBGWhite")
     
     static let RED = Color("RED")
-    
     static let GR1 = Color("GR1")
     static let GR2 = Color("GR2")
     static let GR3 = Color("GR3")

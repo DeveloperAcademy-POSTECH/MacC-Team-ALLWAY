@@ -22,7 +22,7 @@ struct BDListCell<LabelIcon: View, TrailingUI: View>: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(label)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 17, weight: .medium))
+                    .font(.system(size: 17, weight: .bold))
             }
             
             Spacer()

@@ -8,15 +8,25 @@
 import SwiftUI
 
 struct TKRecentConversationListView: View {
-    let conversation = TKConversation(title: "Hi", createdAt: Date.now, content: [TKContent]())
-    let dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    @EnvironmentObject var locationStore: TKLocationStore
+    @ObservedObject var conversationViewStore: TKConversationViewStore
+    @ObservedObject var draggableListViewStore: TKDraggableListViewStore
+    let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                        .foregroundColor(.GR5)
-                        .padding(.trailing, 7)
+                    if locationStore(\.isAuthorized) {
+                        Image(systemName: "bubble.left.and.bubble.right.fill")
+                            .foregroundColor(.GR5)
+                            .padding(.trailing, 7)
+                    } else {
+                        Image("none.talk.light")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(.trailing, 7)
+                    }
                     
                     Text("내 주변 대화 목록")
                         .foregroundStyle(Color.GR7)
@@ -33,59 +43,97 @@ struct TKRecentConversationListView: View {
             .padding(.bottom, 16)
             
             ScrollView {
-                #warning("CONVERSATION LIST COUNT")
-                ForEach(dataStore.conversations) { conversation in
-                    NavigationLink {
-                        CustomHistoryView(
-                            historyViewType: .item, 
-                            conversation: conversation
-                        )
-                    } label: {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("메가커피")
-                                    .foregroundStyle(Color.GR8)
-                                    .bold()
-                                
-                                Text("20m")
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.OR6)
-                            }
-                            
-                            HStack {
-                                Text("2023.10.29(일)")
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.GR4)
-                                
-                                Spacer()
-                                
-                                Group {
-                                    Text("대화하기")
-                                        .foregroundStyle(Color.GR7)
+                if locationStore(\.isAuthorized) {
+                    if draggableListViewStore(\.conversations).count > 0 {
+                        ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
+                            Button {
+                                draggableListViewStore.onTapDraggableListItem(conversation)
+                                conversationViewStore.reduce(\.previousConversation, into: conversation)
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text(conversation.title)
+                                            .foregroundStyle(Color.GR8)
+                                            .bold()
+                                        
+                                        Text(locationStore.calculateDistance(conversation.location).toStringDistance())
+                                            .font(.footnote)
+                                            .foregroundStyle(Color.OR6)
+                                    }
                                     
-                                    Image(systemName: "chevron.right")
+                                    HStack {
+                                        // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
+                                        Text((conversation.createdAt).convertToDate())
+                                            .font(.footnote)
+                                            .foregroundStyle(Color.GR4)
+                                        
+                                        Spacer()
+                                        
+                                        Group {
+                                            Text("대화하기")
+                                                .foregroundStyle(Color.GR7)
+                                            
+                                            Image(systemName: "chevron.right")
+                                        }
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.GR7)
+                                    }
                                 }
-                                .font(.footnote)
-                                .foregroundStyle(Color.GR7)
+                                .padding(.horizontal, 32)
+                                .padding(.vertical, 16)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color.GR1)
+                                        .padding(.horizontal, 16)
+                                }
                             }
-                            
+                            .padding(.vertical, 4)
                         }
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 16)
-                        .background {
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.GR1)
-                                .padding(.horizontal, 16)
-                        }
+                        //                    .padding(.bottom, 32)
+                    } else {
+                        Text("근처에서 나눈 대화가 없어요.")
+                            .foregroundStyle(Color.GR3)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                            .padding(.bottom, 32)
+                            .padding(.leading, 32)
                     }
-                    .padding(.vertical, 4)
+                } else {
+                    Text("근처 대화목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.")
+                        .foregroundStyle(Color.GR3)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                        .padding(.bottom, 32)
+                        .padding(.leading, 32)
                 }
-                .padding(.bottom, 32)
             }
+            .refreshable {
+                if locationStore.detectAuthorization() {
+                    locationStore.trackUserCoordinate()
+                    draggableListViewStore.reduce(
+                        \.conversations,
+                         into: locationStore.getClosestConversation(swiftDataStore.conversations)
+                    )
+                }
+            }
+        }
+        .fullScreenCover(isPresented: draggableListViewStore.bindingIsShowingConversationView()) {
+            TKConversationView(store: conversationViewStore)
+                .onDisappear {
+                    conversationViewStore.resetConversationState()
+                }
         }
     }
 }
 
 #Preview {
-    TKRecentConversationListView()
+    TKRecentConversationListView(
+        conversationViewStore: .init(),
+        draggableListViewStore: .init()
+    )
+    .environmentObject(TKLocationStore())
 }

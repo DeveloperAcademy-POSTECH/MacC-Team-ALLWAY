@@ -82,7 +82,7 @@ struct SettingsListView: View {
             .padding(.top, 10)
             .padding(
                 .bottom,
-                authManager.authStatus == .authCompleted ? 0 : 24
+                authManager.hasAllAuthBeenObtained ? 0 : 24
             )
             
             ForEach(
@@ -93,6 +93,7 @@ struct SettingsListView: View {
                     Text(category)
                         .foregroundColor(.GR8)
                         .font(.system(size: 20, weight: .bold))
+                        .padding(.leading, 8)
                     
                     // Each Setting Cell
                     ForEach(
@@ -139,7 +140,7 @@ struct SettingsListView: View {
                         }
                     }
                 }
-                .padding(.bottom, 24)
+                .padding(.top, 24)
             }
         }
         .padding(.horizontal, 16)

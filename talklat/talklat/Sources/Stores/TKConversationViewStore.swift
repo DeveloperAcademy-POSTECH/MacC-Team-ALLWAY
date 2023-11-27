@@ -18,6 +18,7 @@ final class TKConversationViewStore {
         var animationFlag: Bool = false
         
         var isConversationFullScreenDismissed: Bool = false
+        var isConversationDismissAlertPresented: Bool = false
         
         var conversationStatus: ConversationStatus
         var questionText: String = ""
@@ -51,6 +52,7 @@ final class TKConversationViewStore {
         var bottomInset: CGFloat = 0
         var isTopViewShown: Bool = false
         var isHistoryViewShownWithTransition: Bool = false
+        var previousConversation: TKConversation? = nil
     }
     
     @Published private var viewState: ConversationState = ConversationState(conversationStatus: .writing)
@@ -60,7 +62,7 @@ final class TKConversationViewStore {
     
     public var isAnswerCardDisplayable: Bool {
         if let recentHistoryItem = self(\.historyItem) {
-            return recentHistoryItem.text != "" && recentHistoryItem.type == .answer && self(\.conversationStatus) == .writing
+            return recentHistoryItem.type == .answer && self(\.conversationStatus) == .writing
         } else {
             return false
         }
@@ -118,6 +120,13 @@ final class TKConversationViewStore {
             set: { _ in }
         )
     }
+    
+    public func bindingTKAlertFlag() -> Binding<Bool> {
+        Binding(
+            get: { self(\.isConversationDismissAlertPresented) },
+            set: { self.reduce(\.isConversationDismissAlertPresented, into: $0) }
+        )
+    }
 }
 
 extension TKConversationViewStore {
@@ -146,10 +155,25 @@ extension TKConversationViewStore {
     }
     
     public func onConversationDismissButtonTapped() {
-        reduce(\.isConversationFullScreenDismissed, into: true)
+        withAnimation {
+            reduce(\.isConversationDismissAlertPresented, into: true)
+        }
     }
     
     public func onSaveNewConversationButtonTapped() {
+        withAnimation {
+            reduce(
+                \.isNewConversationSaved,
+                 into: true
+            )
+        }
+    }
+    
+    public func onSaveToPreviousButtonTapped(_ newContents: [TKContent]) {
+        if let _ = self(\.previousConversation) {
+            self(\.previousConversation)?.content.append(contentsOf: newContents)
+        }
+        
         withAnimation {
             reduce(
                 \.isNewConversationSaved,
@@ -344,6 +368,19 @@ extension TKConversationViewStore {
         if !str.isEmpty {
             reduce(\.answeredText, into: str)
             HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
+        }
+    }
+}
+
+extension TKConversationViewStore {
+    public func isTextFieldEmpty() -> Bool {
+        switch self(\.conversationStatus) {
+        case .writing:
+            return self(\.questionText).isEmpty
+        case .recording:
+            return self(\.answeredText).isEmpty
+        default:
+            return true // For other statuses, handle as required
         }
     }
 }

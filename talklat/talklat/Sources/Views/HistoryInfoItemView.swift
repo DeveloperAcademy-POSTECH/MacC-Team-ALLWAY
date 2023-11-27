@@ -209,7 +209,6 @@ struct HistoryInfoItemView: View {
                         )
                     }
                 }
-                
                 .allowsHitTesting(false)
                 .aspectRatio(1.2 ,contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 22))

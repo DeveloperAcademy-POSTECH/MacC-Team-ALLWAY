@@ -70,15 +70,13 @@ struct TKTextReplacementEditView: View {
         .navigationTitle("편집")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        .disabled(store(\.isDialogShowing))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("저장") {
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 }
-                .disabled(store.isSaveButtonDisabled)
-                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
+                .tint(Color.OR6)
             }
             
             ToolbarItem(placement: .topBarLeading) {
@@ -91,18 +89,21 @@ struct TKTextReplacementEditView: View {
                         Text("목록")
                             .font(.system(size: 17))
                     }
-                    .tint(Color.OR5)
                 }
+                .tint(Color.OR6)
             }
         }
-        .overlay {
-            ZStack {
-                if store(\.isDialogShowing) {
-                    Color.black.opacity(0.4).ignoresSafeArea(.all)
-                    TextReplacementCustomDialog(store: store, onDelete: { deleteTKTextReplacement() })
-                }
+        .showTKAlert(
+            isPresented: store.bindingShowTKAlert(),
+            style: .removeTextReplacement(title: "텍스트 대치 삭제"),
+            confirmButtonAction: {
+                deleteTKTextReplacement()
+                store.onDismissRemoveAlert()
+            },
+            confirmButtonLabel: {
+                Text("네, 삭제할래요")
             }
-        }
+        )
     }
     
     private func updateTextReplacement() {
@@ -201,7 +202,7 @@ struct TextReplacementCustomDialog: View {
                     }
                     
                     Button {
-                        onDelete()
+//                        onDelete()
                         store.onDismissRemoveAlert()
                     } label: {
                         Text("네, 삭제할래요")

@@ -46,7 +46,7 @@ struct talklatApp: App {
                 
                 if case .requestAuthComplete = authManager.authStatus {
                     NavigationStack {
-                        TKMainView(authManager: authManager)
+                        TKMainView()
                             .onAppear {
                                 locationStore.onMainViewAppear()
                             }
