@@ -63,7 +63,6 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                                 .padding(.top, 32)
                             
                             eachAuthStatusView()
-
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 32)
@@ -79,7 +78,8 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                 }
 
             case
-                .cancellation(_),
+                .editCancellation(_),
+                .conversationCancellation,
                 .removeConversation(_),
                 .removeTextReplacement(_):
                 ZStack {
@@ -183,7 +183,8 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundStyle(Color.GR6)
-                    .frame(width: 140, height: 56)
+                    .padding(.vertical, 18)
+                    .frame(maxWidth: .infinity)
                     .background {
                         RoundedRectangle(cornerRadius: 22)
                             .fill(Color.GR2)
@@ -197,7 +198,8 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundStyle(Color.white)
-                    .frame(width: 140, height: 56)
+                    .padding(.vertical, 18)
+                    .frame(maxWidth: .infinity)
                     .background {
                         RoundedRectangle(cornerRadius: 22)
                             .fill(tintColor)
@@ -247,28 +249,30 @@ extension TKAlert {
     
     enum AlertStyle {
         case conversation
-        case cancellation(title: String)
+        case editCancellation(title: String)
+        case conversationCancellation
         case removeTextReplacement(title: String)
         case removeConversation(title: String)
     }
     
     var tintColor: Color {
         switch alertStyle {
-        case .conversation, .cancellation: Color.OR5
+        case .conversation, .editCancellation, .conversationCancellation: Color.OR5
         case .removeTextReplacement, .removeConversation(_): Color.RED
         }
     }
     
     var image: Image {
         switch alertStyle {
-        case .conversation, .cancellation: Image(systemName: "exclamationmark.triangle.fill")
+        case .conversation, .editCancellation, .conversationCancellation: Image(systemName: "exclamationmark.triangle.fill")
         case .removeTextReplacement, .removeConversation(_): Image(systemName: "trash.fill")
         }
     }
     
     var headerTitle: String {
         switch alertStyle {
-        case .cancellation: "변경 사항 취소"
+        case .editCancellation: "변경 사항 취소"
+        case .conversationCancellation: "대화를 그만하시겠어요?"
         case .removeTextReplacement: "텍스트 대치 삭제"
         case .removeConversation: "대화 삭제"
         default: ""
@@ -282,9 +286,13 @@ extension TKAlert {
             비스담을 이용하기 위해 마이크와
             음성 인식 접근 권한을 허용해 주세요.
             """
-        case .cancellation:
+        case .editCancellation:
             """
             현재 변경한 내용이 저장되지 않아요.
+            """
+        case .conversationCancellation:
+            """
+            현재 진행중인 대화가 저장되지 않아요.
             """
         case .removeTextReplacement:
             """
@@ -301,7 +309,8 @@ extension TKAlert {
     var dismissText: String {
         switch alertStyle {
         case .conversation: "돌아가기"
-        case .cancellation: "아니요, 저장할래요"
+        case .editCancellation: "아니요, 저장할래요"
+        case .conversationCancellation: "아니요"
         case .removeTextReplacement: "아니요, 취소할래요"
         case .removeConversation(_): "아니요, 취소할래요"
         }
@@ -322,7 +331,7 @@ struct PreviewPro: PreviewProvider {
         }
         .showTKAlert(
             isPresented: $flag,
-            style: .removeConversation(title: "정말 엄청나게 긴 제목이 들어온다면 어떻게 되는가?"),
+            style: .conversation,
             confirmButtonAction: {
                 print("conf")
             },

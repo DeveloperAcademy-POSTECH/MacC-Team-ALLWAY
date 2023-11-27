@@ -12,8 +12,8 @@ struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var locationStore: TKLocationStore
-    @EnvironmentObject var authManager: TKAuthManager
-
+    @EnvironmentObject private var authManager: TKAuthManager
+    
     @StateObject private var store: TKMainViewStore = TKMainViewStore()
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
@@ -100,6 +100,15 @@ struct TKMainView: View {
                         self.recentConversation = swiftDataStore.getRecentConversation()
                         store.onNewConversationHasSaved()
                     }
+                }
+                .showTKAlert(
+                    isPresented: conversationViewStore.bindingTKAlertFlag(),
+                    style: .conversationCancellation
+                ) {
+                    store.onConversationFullscreenDismissed()
+                    
+                } confirmButtonLabel: {
+                    Text("네, 그만 할래요")
                 }
         }
         .toolbar {

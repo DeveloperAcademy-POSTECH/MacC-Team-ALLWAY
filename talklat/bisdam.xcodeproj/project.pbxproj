@@ -122,8 +122,8 @@
 		7EBD31782B0B2B1300D5514D /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
-		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
+		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -555,9 +555,9 @@
 				572A82032B03300B00753516 /* Character+Consonant.swift */,
 				CE0CBF252B011EF70048C784 /* Date+Formatter.swift */,
 				7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */,
+				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
 				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
-				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1028,14 +1028,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "비스담";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다.";
@@ -1074,14 +1074,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
 				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "비스담";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다.";
