@@ -91,13 +91,10 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                             .scaleEffect(1.3)
                             .foregroundStyle(tintColor)
                         
-                        Text(headerTitle)
-                            .font(.headline)
+                        BDText(text: headerTitle, style: .H1_B_130)
                             .foregroundStyle(Color.GR9)
                         
-                        Text(description)
-                            .font(.subheadline)
-                            .bold()
+                        BDText(text: description, style: .H2_SB_135)
                             .foregroundStyle(Color.GR6)
                             .multilineTextAlignment(.center)
                             .padding(.bottom, 16)
@@ -122,13 +119,10 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                 alignment: .leading,
                 spacing: 16
             ) {
-                Text(getConversationAuthTitle())
-                    .font(.headline)
+                BDText(text: getConversationAuthTitle(), style: .H1_B_130)
                     .foregroundStyle(Color.GR9)
                 
-                Text(getConversationAuthDescription())
-                    .font(.subheadline)
-                    .bold()
+                BDText(text: getConversationAuthDescription(), style: .H2_SB_135)
                     .foregroundStyle(Color.GR6)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 16)
@@ -145,7 +139,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                         : Color.RED
                     )
                     
-                    Text("마이크 접근 권한")
+                    BDText(text: "마이크 접근 권한", style: .H2_SB_135)
                 }
                 
                 HStack {
@@ -160,7 +154,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                         : Color.RED
                     )
                     
-                    Text("음성 인식 권한")
+                    BDText(text: "음성 인식 권한", style: .H2_SB_135)
                 }
             }
             .font(.subheadline.weight(.semibold))
@@ -179,9 +173,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                     }
                 }
             } label: {
-                Text(dismissText)
-                    .font(.subheadline)
-                    .bold()
+                BDText(text: dismissText, style: .H2_SB_135)
                     .foregroundStyle(Color.GR6)
                     .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)

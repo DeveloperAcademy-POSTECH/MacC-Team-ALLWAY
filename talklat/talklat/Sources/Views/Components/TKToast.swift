@@ -26,8 +26,7 @@ struct TKToast: View {
                     .padding(.leading, 16)
                 
                 VStack(alignment: .leading) {
-                    Text(title)
-                        .font(.headline)
+                    BDText(text: title, style: .H2_SB_135)
                         .foregroundStyle(Color.white)
                     
                     HStack(spacing: 4) {

@@ -153,7 +153,7 @@ struct HistoryListView: View {
             
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                Text("네, 삭제할래요")
+                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
             }
         }
         .onChange(of: isSearchFocused) { _, _ in

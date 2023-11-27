@@ -47,8 +47,8 @@ struct CustomHistoryView: View {
                     //MARK: Swipe down action
                 } label: {
                     VStack {
-                        Text("작성화면으로 돌아가기")
-                            .font(.footnote)
+                        BDText(text: "작성화면으로 돌아가기", style: .FN_SB_135)
+                        
                         Image(systemName: "chevron.down")
                             .resizable()
                             .frame(width: 32, height: 10)
