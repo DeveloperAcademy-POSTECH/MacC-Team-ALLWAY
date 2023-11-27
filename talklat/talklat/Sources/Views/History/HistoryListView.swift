@@ -138,16 +138,22 @@ struct HistoryListView: View {
             style: .removeConversation(title: selectedConversation.title)
         ) {
             isDialogShowing = false
-            withAnimation {
-                isEditing = false
-            }
+            
         } confirmButtonAction: {
             withAnimation {
+                // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
+                // Delete Content
+                selectedConversation.content.forEach { content in
+                    dataStore.removeItem(content)
+                }
+                // Delete Location
+                if let location = selectedConversation.location {
+                    dataStore.removeItem(location)
+                }
+                // Delete Conversation
                 dataStore.removeItem(selectedConversation)
-                isDialogShowing = false
-                isEditing = false
+                isDialogShowing = false // TODO: 이거 필요한가? 중복된 코드 아닌가
             }
-            
         } confirmButtonLabel: {
             HStack(spacing: 8) {
                 Text("네, 삭제할래요")
@@ -392,68 +398,65 @@ struct CellItem: View {
 
 // TODO: 히스토리뷰 스토어 생성 후 TKDialogBuilder로 분리
 /// enum case .destruction (빨간색), .cancel (주황색) 필요
-struct CustomDialog: View {
-    var dataStore: TKSwiftDataStore
-    
-    @Binding internal var selectedConversation: TKConversation
-    @Binding internal var isDialogShowing: Bool
-    @Binding internal var isEditing: Bool
-    
-    var body: some View {
-        GroupBox {
-            VStack(spacing: 16) {
-                Image(systemName: "trash.fill")
-                    .foregroundColor(.red)
-                    .font(.system(size: 20))
-                
-                Text("대화 삭제")
-                    .foregroundColor(.GR9)
-                    .font(.system(size: 17, weight: .bold))
-                
-                Text("\"\(selectedConversation.title)\"에서 저장된\n모든 데이터가 삭제됩니다.")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.GR6)
-                    .font(.system(size: 15, weight: .medium))
-                
-                HStack {
-                    Button {
-                        isDialogShowing = false
-                        isEditing = false
-                        
-                    } label: {
-                        Text("아니요, 취소할래요")
-                            .foregroundColor(.GR6)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.GR2)
-                            .cornerRadius(16)
-                    }
-                    
-                    Button {
-                        // Delete
-                        dataStore.removeItem(selectedConversation)
-                        // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
-//                        selectedConversation.content.forEach { content in
-//                            dataStore.removeItem(content)
-//                        }
-                        isDialogShowing = false
-                        isEditing = false
-                    } label: {
-                        Text("네, 삭제할래요")
-                            .foregroundColor(.BaseBGWhite)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.red)
-                            .cornerRadius(16)
-                    }
-                }
-            }
-        }
-        .cornerRadius(22)
-        .frame(height: 240)
-        .frame(maxWidth: .infinity)
-    }
-}
+//struct CustomDialog: View {
+//    var dataStore: TKSwiftDataStore
+//    
+//    @Binding internal var selectedConversation: TKConversation
+//    @Binding internal var isDialogShowing: Bool
+//    @Binding internal var isEditing: Bool
+//    
+//    var body: some View {
+//        GroupBox {
+//            VStack(spacing: 16) {
+//                Image(systemName: "trash.fill")
+//                    .foregroundColor(.red)
+//                    .font(.system(size: 20))
+//                
+//                Text("대화 삭제")
+//                    .foregroundColor(.GR9)
+//                    .font(.system(size: 17, weight: .bold))
+//                
+//                Text("\"\(selectedConversation.title)\"에서 저장된\n모든 데이터가 삭제됩니다.")
+//                    .multilineTextAlignment(.center)
+//                    .foregroundColor(.GR6)
+//                    .font(.system(size: 15, weight: .medium))
+//                
+//                HStack {
+//                    Button {
+//                        isDialogShowing = false
+//                        isEditing = false
+//                        
+//                    } label: {
+//                        Text("아니요, 취소할래요")
+//                            .foregroundColor(.GR6)
+//                            .font(.system(size: 15, weight: .semibold))
+//                            .padding()
+//                            .background(Color.GR2)
+//                            .cornerRadius(16)
+//                    }
+//                    
+//                    Button {
+//                        // Delete
+//                        dataStore.removeItem(selectedConversation)
+//                       
+//                        isDialogShowing = false
+//                        isEditing = false
+//                    } label: {
+//                        Text("네, 삭제할래요")
+//                            .foregroundColor(.BaseBGWhite)
+//                            .font(.system(size: 15, weight: .semibold))
+//                            .padding()
+//                            .background(Color.red)
+//                            .cornerRadius(16)
+//                    }
+//                }
+//            }
+//        }
+//        .cornerRadius(22)
+//        .frame(height: 240)
+//        .frame(maxWidth: .infinity)
+//    }
+//}
 
 #Preview {
     NavigationStack {

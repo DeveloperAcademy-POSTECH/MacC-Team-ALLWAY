@@ -121,7 +121,7 @@ struct TKSavingView: View {
         .task {
             let allConversations = swiftDataStore.getAllConversation()
             store.onSaveConversationSheetApeear(allConversations.count)
-            focusState = true
+//            focusState = true
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)

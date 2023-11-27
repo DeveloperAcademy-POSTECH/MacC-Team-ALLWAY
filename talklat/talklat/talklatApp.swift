@@ -20,7 +20,10 @@ struct talklatApp: App {
     init() {
         do {
             container = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
+                for: TKConversation.self,
+                TKContent.self,
+                TKLocation.self,
+                TKTextReplacement.self
             )
         } catch {
             fatalError("Failed to configure SwiftData container.")
