@@ -59,17 +59,11 @@ struct TKOnboardingView: View {
                 ) {
                     // MARK: CONDITION
                     if authManager.hasAllAuthBeenObtained {
-                        Text(Constants.Onboarding.ALL_AUTH)
-                            .font(.largeTitle)
-                            .bold()
-                            .lineSpacing(17)
+                        BDText(text: Constants.Onboarding.ALL_AUTH, style: .LT_B_160)
                             .foregroundStyle(Color.OR6)
                         
                     } else {
-                        Text(Constants.Onboarding.NOT_ALL_AUTH)
-                            .font(.largeTitle)
-                            .bold()
-                            .lineSpacing(17)
+                        BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: .LT_B_160)
                             .foregroundStyle(Color.OR6)
                     }
                     
@@ -189,7 +183,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("마이크 권한")
+                    BDText(text: "마이크 권한", style: .H2_SB_135)
                 }
                 
                 HStack {
@@ -204,7 +198,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("음성 인식 권한")
+                    BDText(text: "음성 인식 권한", style: .H2_SB_135)
                 }
                 
                 HStack {
@@ -219,11 +213,11 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    Text("위치 정보 권한")
+                    BDText(text: "위치 정보 권한", style: .H2_SB_135)
                 }
                 
             }
-            .font(.subheadline.weight(.semibold))
+            
         }
     }
     
@@ -232,10 +226,7 @@ struct TKOnboardingView: View {
             alignment: .leading,
             spacing: 52
         ) {
-            Text(Constants.Onboarding.GUIDE_MESSAGE)
-                .font(.largeTitle)
-                .bold()
-                .lineSpacing(17)
+            BDText(text: Constants.Onboarding.GUIDE_MESSAGE, style: .LT_B_160)
                 .foregroundStyle(Color.OR6)
             
             Image("bisdam_icon")
@@ -253,18 +244,14 @@ struct TKOnboardingView: View {
         VStack(spacing: 24) {
             if onboardingStep != .complete,
                onboardingStep != .start {
-                Text("다음 버튼을 누르고\n\(info.title) 권한을 허용해 주세요.")
-                    .font(.footnote)
-                    .fontWeight(.semibold)
+                BDText(text: "다음 버튼을 누르고\n\(info.title) 권한을 허용해 주세요.", style: .FN_SB_135)
                     .foregroundStyle(Color.OR6)
                     .multilineTextAlignment(.center)
             }
             
             if onboardingStep == .complete,
                !authManager.hasAllAuthBeenObtained {
-                Text(Constants.Onboarding.ASK_FOR_AUTH_ALL_GUIDE)
-                    .font(.headline)
-                    .bold()
+                BDText(text: Constants.Onboarding.ASK_FOR_AUTH_ALL_GUIDE, style: .H1_B_130)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.white)
                     
@@ -279,13 +266,12 @@ struct TKOnboardingView: View {
                 }
                 
             } label: {
-                Text(
-                    onboardingStep == .complete
-                    ? "시작하기"
-                    : "다음"
+                BDText(
+                    text: onboardingStep == .complete
+                       ? "시작하기"
+                       : "다음",
+                    style: .H1_B_130
                 )
-                .font(.headline)
-                .bold()
                 .foregroundStyle(
                     onboardingStep == .complete
                     ? Color.OR6
