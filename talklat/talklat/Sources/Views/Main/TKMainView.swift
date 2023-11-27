@@ -58,6 +58,7 @@ struct TKMainView: View {
                     ],
                     circleColor: Color.OR6
                 )
+                .task { store.triggerAnimation(true) }
                 .frame(maxHeight: 200)
                 .overlay {
                     Circle()

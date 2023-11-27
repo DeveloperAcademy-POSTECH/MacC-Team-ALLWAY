@@ -158,6 +158,7 @@ struct TKTypingView: View {
                 ],
                 circleColor: Color.OR5
             )
+            .task { store.triggerAnimation(false) }
             .frame(height: 64)
             .overlay {
                 Circle()

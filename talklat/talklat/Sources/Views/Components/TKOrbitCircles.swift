@@ -57,16 +57,17 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
             store.triggerAnimation(false)
         }
         .task {
-            store.triggerAnimation(true)
             degree = 360
         }
     }
 }
 
 #Preview {
-    NavigationStack {
+    @ObservedObject var store: TKMainViewStore = TKMainViewStore()
+    
+    return NavigationStack {
         TKOrbitCircles(
-            store: TKMainViewStore(),
+            store: store,
             circleRenderInfos: [
                 CircleRenderInfo(x: -25, y: -15),
                 CircleRenderInfo(x: 0, y: 27),
@@ -75,6 +76,7 @@ struct TKOrbitCircles<TKStore: TKReducer>: View where TKStore.ViewState : TKAnim
             circleColor: .red
         )
         .frame(width: 200, height: 200)
-        .background { Color.white}
+        .background { Color.white }
+        .task { store.triggerAnimation(true) }
     }
 }
