@@ -93,8 +93,6 @@ struct HistoryInfoItemView: View {
                         )
                     )
                 }
-                .navigationTitle("정보")
-                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -104,10 +102,23 @@ struct HistoryInfoItemView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
-                                Text("대화")
+                                    .bold()
+                                
+                                BDText(
+                                    text: "대화",
+                                    style: .H1_B_130
+                                )
                             }
                             .tint(Color.OR5)
                         }
+                    }
+                    
+                    // Navigation Title
+                    ToolbarItem(placement: .principal) {
+                        BDText(
+                            text: "정보",
+                            style: .H1_B_130
+                        )
                     }
                     
                     ToolbarItem(placement: .topBarTrailing) {

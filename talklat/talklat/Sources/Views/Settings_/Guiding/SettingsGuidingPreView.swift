@@ -13,36 +13,25 @@ struct SettingsGuidingPreView: View {
     @Binding var guidingMessage: String
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 20) {
             Button {
                 dismiss()
             } label: {
-                Text("취소")
-                    .font(.headline)
-                    .bold()
+                BDText(
+                    text: "취소",
+                    style: .H1_B_130
+                )
             }
             
-            Spacer()
-                .frame(maxHeight: 60)
-            
-            Text(guidingMessage)
-                .font(.largeTitle)
-                .bold()
-                .lineSpacing(10)
+            BDText(text: guidingMessage, style: .LT_B_160)
                 .multilineTextAlignment(.leading)
             
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 2)
-                .padding(.top, 20)
-                .padding(.bottom, 40)
-            
-            Text("해당 화면이 종료되면 \n음성인식이 시작됩니다. \n제 글을 읽고 또박또박 말씀해 주세요."
+            BDText(
+                text: "해당 화면이 종료되면 \n음성인식이 시작됩니다. \n제 글을 읽고 또박또박 말씀해 주세요.",
+                style: .T2_B_160
             )
-            .font(.title2)
-            .bold()
             
             Spacer()
-            
         }
         .foregroundColor(.BaseBGWhite)
         .frame(

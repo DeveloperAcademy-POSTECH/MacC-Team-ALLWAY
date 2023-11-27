@@ -46,8 +46,11 @@ struct LoadingWebView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }

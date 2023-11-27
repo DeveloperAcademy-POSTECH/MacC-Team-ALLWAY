@@ -159,6 +159,7 @@ struct TKListeningView: View {
                     ? Color.OR5
                     : Color.white
                 )
+                .task { store.triggerAnimation(true) }
                 .frame(height: 64)
                 .overlay {
                     Circle()

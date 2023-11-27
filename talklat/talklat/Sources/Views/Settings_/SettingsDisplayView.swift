@@ -48,8 +48,11 @@ struct SettingsDisplayView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .navigationTitle("화면 모드")
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                BDText(text: "화면 모드", style: .H1_B_130)
+            }
+        }
         .onAppear {
             selectedTheme = colorSchemeManager.colorScheme
         }

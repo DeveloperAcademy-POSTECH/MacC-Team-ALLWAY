@@ -52,7 +52,7 @@ struct TKConversationView: View {
                                 store.onShowingQuestionCancelButtonTapped()
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .foregroundColor(.accentColor)
+                                    .bold()
                             }
                         }
                     }

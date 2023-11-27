@@ -90,9 +90,8 @@ struct SettingsListView: View {
                 id: \.self
             ) { category in
                 VStack(alignment: .leading) {
-                    Text(category)
+                    BDText(text: category, style: .H1_B_130)
                         .foregroundColor(.GR8)
-                        .font(.system(size: 20, weight: .bold))
                         .padding(.leading, 8)
                     
                     // Each Setting Cell
@@ -144,8 +143,6 @@ struct SettingsListView: View {
             }
         }
         .padding(.horizontal, 16)
-        .navigationTitle("설정")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .onChange(of: locationStore(\.authorizationStatus), { oldValue, newValue in
             switch newValue {
@@ -164,10 +161,20 @@ struct SettingsListView: View {
                         Image(systemName: "chevron.left")
                             .bold()
                         
-                        Text("홈")
+                        BDText(
+                            text: "홈",
+                            style: .H1_B_130
+                        )
                     }
                     .foregroundColor(Color.OR6)
                 }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "설정",
+                    style: .H1_B_130
+                )
             }
         }
         .scrollIndicators(.hidden)

@@ -48,7 +48,7 @@ struct TKMainView: View {
                         .bold()
                         .foregroundStyle(Color.OR5)
                 }
-                .padding(.bottom, 50)
+                .padding(.bottom, 60)
 
                 TKOrbitCircles(
                     store: store,
@@ -59,6 +59,7 @@ struct TKMainView: View {
                     ],
                     circleColor: Color.OR6
                 )
+                .task { store.triggerAnimation(true) }
                 .frame(maxHeight: 200)
                 .overlay {
                     Circle()

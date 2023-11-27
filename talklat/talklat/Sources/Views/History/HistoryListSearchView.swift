@@ -112,16 +112,17 @@ struct SearchResultSection: View {
             HStack {
                 Image(systemName: "location.fill")
                 
-                Text(location.blockName)
+                BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
-                Text("\(filteredConversations.count)개 발견됨")
-                    .foregroundColor(.GR5)
-                    .font(.system(size: 15, weight: .medium))
+                BDText(
+                    text: "\(matchingContents.count)개 발견됨",
+                    style: .H2_M_135
+                )
+                .foregroundColor(.GR5)
             }
             
             // Contents
@@ -201,10 +202,12 @@ struct SearchResultItem: View {
         // Cell Contents
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                Text(matchingContent.conversation?.title ?? "BISDAM TITLE")
-                    .font(.headline)
-                    .foregroundStyle(Color.GR8)
-               
+                BDText(
+                    text: matchingContent.conversation?.title ?? "BISDAM TITLE",
+                    style: .H1_B_130
+                )
+                .foregroundStyle(Color.GR8)
+                
                 // 검색 키워드와 일치하는 한 개의 TKContent.text
                 let matchingText =  String(
                     matchingContent.text[highlightIndex ..< matchingContent.text.endIndex]
@@ -224,7 +227,10 @@ struct SearchResultItem: View {
                                 let _ = isHighlighted = false
                             }
                             
-                            Text(String(character.element))
+                            BDText(
+                                text: String(character.element),
+                                style: .H2_M_135
+                            )
                                 .foregroundStyle(
                                     isHighlighted
                                     ? Color.OR6
@@ -234,11 +240,11 @@ struct SearchResultItem: View {
                     }
                 }
                 
-                Text(
-                    matchingContent.createdAt.convertToDate()
+                BDText(
+                    text: matchingContent.createdAt.convertToDate(),
+                    style: .H2_M_135
                 )
                 .foregroundColor(.GR4)
-                .font(.system(size: 15, weight: .medium))
             }
             
             Spacer()

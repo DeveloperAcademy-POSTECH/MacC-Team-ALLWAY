@@ -169,14 +169,16 @@ struct TKTypingView: View {
                 ],
                 circleColor: Color.OR5
             )
+            .task { store.triggerAnimation(false) }
             .frame(height: 64)
             .overlay {
                 Circle()
                     .foregroundStyle(Color.OR5)
                     .overlay {
-                        Text("TALK")
-                            .font(.headline)
+                        Image(systemName: "chevron.right")
                             .foregroundStyle(Color.white)
+                            .scaleEffect(1.4)
+                            .fontWeight(.bold)
                     }
             }
         }
@@ -233,7 +235,7 @@ struct TKTypingView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(Color.GR1)
+            .tint(Color.OR6)
             
             Spacer()
             
@@ -246,7 +248,6 @@ struct TKTypingView: View {
                 .font(.headline)
                 .foregroundStyle(Color.GR9)
             }
-
             
             Spacer()
             

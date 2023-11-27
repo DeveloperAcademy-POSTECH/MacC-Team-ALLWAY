@@ -50,7 +50,7 @@ final class TKMainViewStore {
     
     @MainActor
     public func onTKMainViewAppeared() async {
-        try? await Task.sleep(for: .seconds(0.75))
+        try? await Task.sleep(for: .seconds(0.5))
         withAnimation {
             reduce(\.isTKMainViewAppeared, into: true)
         }

@@ -114,16 +114,18 @@ struct TKTextReplacementListView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                Text("텍스트 대치")
-                    .font(.system(size: 17, weight: .bold))
+                BDText(text: "텍스트 대치", style: .H1_B_130)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -131,6 +133,7 @@ struct TKTextReplacementListView: View {
                     store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
+                        .bold()
                 }
                 .disabled(store(\.isSearching))
             }
@@ -241,8 +244,10 @@ struct TKTextReplacementListView: View {
                     store.cancelSearchAndHideKeyboard()
                     
                 } label: {
-                    Text("취소")
-                        .font(.system(size: 17))
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 .padding(.leading, 8)
             }

@@ -21,11 +21,13 @@ struct SettingsGuidingView: View {
                     .frame(width: 70)
                 }
             
-            Text("안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요.")
-                .foregroundColor(.GR3)
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.bottom, 24)
-                .padding(.top, 3)
+            BDText(
+                text: "안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요.",
+                style: .H2_SB_135
+            )
+            .foregroundColor(.GR3)
+            .padding(.bottom, 24)
+            .padding(.top, 3)
             
             NavigationLink {
                 SettingsGuidingEditView()

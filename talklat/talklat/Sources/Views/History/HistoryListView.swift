@@ -72,41 +72,53 @@ struct HistoryListView: View {
                         .padding(.top, 24)
                     }
                     .scrollIndicators(.hidden)
-                    .navigationTitle("히스토리")
                     .navigationBarBackButtonHidden(true)
-                    .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
+                            // Back Button
                             Button {
                                 dismiss()
                             } label: {
                                 HStack {
                                     Image(systemName: "chevron.left")
-                                    Text("홈")
+                                        .bold()
+                                 
+                                    BDText(
+                                        text: "홈",
+                                        style: .H1_B_130
+                                    )
                                 }
                                 .fontWeight(.medium)
                             }
                             .tint(Color.OR6)
                         }
                         
+                        // Navigation Title
+                        ToolbarItem(placement: .principal) {
+                            BDText(
+                                text: "히스토리",
+                                style: .H1_B_130
+                            )
+                        }
+                        
                         ToolbarItem(placement: .topBarTrailing) {
                             // Edit Button
-                            ZStack {
-                                Button {
-                                    withAnimation(
-                                        .spring(
-                                            dampingFraction: 0.7,
-                                            blendDuration: 0.4
-                                        )
-                                    ) {
+                            Button {
+                                withAnimation(
+                                    .spring(
+                                        dampingFraction: 0.7,
+                                        blendDuration: 0.4
+                                    )
+                                ) {
+                                    withAnimation {
                                         isEditing.toggle()
                                     }
-                                } label: {
-                                    Text(isEditing ? "완료" : "편집")
-                                        .foregroundColor(.accentColor)
-                                        .fontWeight(.medium)
                                 }
-                                .tint(Color.OR6)
+                            } label: {
+                                BDText(
+                                    text: isEditing ? "완료" : "편집",
+                                    style: .H1_B_130
+                                )
                             }
                         }
                     }
@@ -184,9 +196,8 @@ struct LocationList: View {
                     Image(systemName: "location.slash.fill")
                 }
                 
-                Text(location.blockName)
+                BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
@@ -309,13 +320,17 @@ struct CellItem: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title)
-                        .font(.system(size: 17, weight: .medium))
+                    BDText(
+                        text: conversation.title,
+                        style: .H1_B_130
+                    )
                         .foregroundStyle(Color.GR8)
                     
-                    Text(conversation.createdAt.convertToDate())
-                        .foregroundStyle(Color.GR4)
-                        .font(.system(size: 15, weight: .medium))
+                    BDText(
+                        text:conversation.createdAt.convertToDate(),
+                        style: .H2_M_135
+                    )
+                    .foregroundColor(.GR4)
                 }
                 
                 Spacer()

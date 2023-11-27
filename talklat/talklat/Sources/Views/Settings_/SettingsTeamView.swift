@@ -98,8 +98,6 @@ struct SettingsTeamView: View {
                 
             }
         }
-        .navigationTitle("만든 사람들")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -109,11 +107,22 @@ struct SettingsTeamView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "만든 사람들",
+                    style: .H1_B_130
+                )
             }
         }
     }

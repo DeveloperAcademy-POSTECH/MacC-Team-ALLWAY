@@ -53,23 +53,44 @@ struct TKTextReplacementAddView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("텍스트 대치 추가")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("취소") {
-                    presentationMode.wrappedValue.dismiss()
-                },
-                trailing: Button(action: {
-                    if isInputValid {
-                        dataStore.createTextReplacement(phrase: phrase, replacement: replacement)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
                         presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        BDText(
+                            text: "취소",
+                            style: .H1_B_130
+                        )
                     }
-                }) {
-                    Text("완료")
                 }
+                
+                ToolbarItem(placement: .principal) {
+                    BDText(
+                        text: "텍스트 대치 추가",
+                        style: .H1_B_130
+                    )
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if isInputValid {
+                            dataStore.createTextReplacement(
+                                phrase: phrase,
+                                replacement: replacement
+                            )
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        BDText(
+                            text: "완료",
+                            style: .H1_B_130
+                        )
+                    }
                     .disabled(!isInputValid)
                     .foregroundColor(isInputValid ? .OR6 : .GR4)
-            )
+                }
+            }
             .background(Color.SheetBGWhite)
         }
     }
