@@ -32,6 +32,10 @@ class TKDraggableListViewStore: TKReducer {
         )
     }
     
+    public func onConversationFullScreenDismissed() {
+        reduce(\.isShowingConversationView, into: false)
+    }
+    
     public func onTapDraggableListItem(_ conversation: TKConversation) {
         self.reduce(\.isShowingConversationView, into: true)
     }
