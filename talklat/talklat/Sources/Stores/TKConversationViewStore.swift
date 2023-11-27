@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 final class TKConversationViewStore {
     enum ConversationStatus: Equatable {
@@ -43,6 +44,8 @@ final class TKConversationViewStore {
         var isNewConversationSaved: Bool = false
         
         var currentConversationCount: Int = 0
+        var allConversationTitles: [String] = []
+        var hasCurrentConversationTitlePrevious: Bool = false
         
         // scroll container related - TODO: ScrollStore 분리?
         var historyScrollViewHeight: CGFloat = 0
@@ -131,14 +134,52 @@ final class TKConversationViewStore {
 
 extension TKConversationViewStore {
     public func resetConversationState() {
-        self.reduce(\ViewState.self, into: ViewState(conversationStatus: .writing))
+        let newViewState = ViewState(conversationStatus: .writing)
+        self.reduce(\ViewState.self, into: newViewState)
     }
     
     public func onDeleteConversationTitleButtonTapped() {
         self.reduce(\.conversationTitle, into: "")
     }
     
-    public func onMakeNewConversationData() {
+    public func makeNewConversation<TKPersistentModel: PersistentModel>(
+        with transcript: String,
+        at location: TKLocation
+    ) -> TKPersistentModel? {
+        if self(\.previousConversation) == nil,
+           self(\.allConversationTitles).contains(where: { str in
+               self(\.conversationTitle) == str
+           }) {
+            reduce(
+                \.hasCurrentConversationTitlePrevious,
+                 into: true
+            )
+            
+            return nil
+        }
+        
+        onSpeechTransicriptionUpdated(transcript)
+        makeCurrentConversationContent()
+        
+        let newContents = self(\.historyItems).map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
+        
+        let newConversation = TKConversation(
+            title: self(\.conversationTitle),
+            createdAt: Date(),
+            content: newContents,
+            location: location
+        )
+        
+        return newConversation as? TKPersistentModel
+    }
+    
+    public func makeCurrentConversationContent() {
         reduce(
             \.historyItem,
              into: HistoryItem(
@@ -154,10 +195,29 @@ extension TKConversationViewStore {
         )
     }
     
+    public func onTKHistoryPreviewAppeared() {
+        if let previousConversation = self(\.previousConversation) {
+            let previousHistory = previousConversation.content.map { content in
+                return HistoryItem(
+                    id: UUID(),
+                    text: content.text,
+                    type: content.type == .answer ? .answer : .question,
+                    createdAt: content.createdAt
+                )
+            }
+            
+            reduce(\.historyItems, into: previousHistory)
+        }
+    }
+    
     public func onConversationDismissButtonTapped() {
         withAnimation {
             reduce(\.isConversationDismissAlertPresented, into: true)
         }
+    }
+    
+    public func onSaveConversationIntoPreviousButtonTapped() {
+        reduce(\.isConversationFullScreenDismissed, into: true)
     }
     
     public func onSaveNewConversationButtonTapped() {
@@ -214,9 +274,20 @@ extension TKConversationViewStore {
         completion()
     }
     
-    public func onSaveConversationSheetApeear(_ count: Int) {
-        reduce(\.currentConversationCount, into: count)
-        reduce(\.conversationTitle, into: self(\.conversationTitle) + "(\(self(\.currentConversationCount).description))")
+    public func onSaveConversationSheetAppear(
+        _ conversations: [TKConversation]
+    ) {
+        reduce(
+            \.allConversationTitles,
+             into: conversations.map(\.title)
+        )
+        
+        let currentConversationTitle = self(\.conversationTitle) + "(\(self(\.allConversationTitles).count.description))"
+        
+        reduce(
+            \.conversationTitle,
+             into: currentConversationTitle
+        )
     }
     
     public func onSaveConversationButtonTapped() {
