@@ -17,7 +17,7 @@ struct SettingsHapticView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 16)
             
-            TKListCell(label: "진동") {
+            BDListCell(label: "진동") {
                 } trailingUI: {
                     Toggle("", isOn: $isHapticEnabled)
                 }

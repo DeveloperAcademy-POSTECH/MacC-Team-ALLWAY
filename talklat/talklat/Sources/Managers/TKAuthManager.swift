@@ -16,9 +16,6 @@ public enum AuthStatus: String {
     case authCompleted
     case onboarding
     case requestAuthComplete
-    case microphoneAuthIncompleted = "마이크"
-    case speechRecognitionAuthIncompleted = "음성 인식"
-    case location = "위치"
     case authIncompleted
 }
 
@@ -54,7 +51,7 @@ public class TKAuthManager: NSObject, ObservableObject, CLLocationManagerDelegat
     }
 }
 
-// MARK: - Switch Authorization Status
+// MARK: - Get / Switch Authorization Status
 /// Microphone, SpeechRecognition, Location의 권한 요청을 보내고 / 권한 여부를 저장합니다.
 extension TKAuthManager {
     public func checkCurrentAuthorizedCondition() {
@@ -127,7 +124,6 @@ extension TKAuthManager {
         }
     }
     
-    @MainActor
     public func getSpeechRecognitionAuthStatus() async {
         if await SFSpeechRecognizer.hasAuthorizationToRecognize() == true {
             isSpeechRecognitionAuthorized = true
@@ -136,7 +132,6 @@ extension TKAuthManager {
         }
     }
     
-    @MainActor
     public func getLocationAuthStatus() async {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
