@@ -115,7 +115,7 @@ struct TKTextReplacementEditView: View {
                     store.onDismissRemoveAlert()
                 },
                 confirmButtonLabel: {
-                    Text("네, 삭제할래요")
+                    BDText(text: "네, 삭제할래요", style: .H2_SB_135)
                 }
             )
         }
@@ -183,59 +183,5 @@ struct TKTextReplacementEditView: View {
         }
         
         presentationMode.wrappedValue.dismiss()
-    }
-}
-
-struct TextReplacementCustomDialog: View {
-    
-    @ObservedObject var store: TextReplacementViewStore
-    
-    var onDelete: () -> Void
-    
-    var body: some View {
-        GroupBox {
-            VStack(spacing: 16) {
-                Image(systemName: "trash.fill")
-                    .foregroundColor(.RED)
-                    .font(.system(size: 20))
-                
-                BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
-                    .foregroundColor(.GR9)
-                
-                Text("현재 텍스트 대치가 삭제됩니다.")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.GR6)
-                    .font(.system(size: 15, weight: .medium))
-                
-                HStack {
-                    Button {
-                        store.onDismissRemoveAlert()
-                    } label: {
-                        Text("아니요, 취소할래요")
-                            .foregroundColor(.GR6)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.GR2)
-                            .cornerRadius(16)
-                    }
-                    
-                    Button {
-//                        onDelete()
-                        store.onDismissRemoveAlert()
-                    } label: {
-                        Text("네, 삭제할래요")
-                            .foregroundColor(.white)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.RED)
-                            .cornerRadius(16)
-                    }
-                }
-            }
-        }
-        .background(Color.BaseBGWhite)
-        .cornerRadius(22)
-        .frame(height: 240)
-        .frame(maxWidth: .infinity)
     }
 }

@@ -196,15 +196,13 @@ func authNoticeBuilder(noticeItem: AuthorizationType) -> some View {
                 .font(.system(size: 45))
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("\(noticeItem.rawValue) 권한이 꺼져있어요.")
+                BDText(text: "\(noticeItem.rawValue) 권한이 꺼져있어요.", style: .H1_B_130)
                     .foregroundColor(.white)
-                    .font(.system(size: 17, weight: .bold))
                 
                 HStack {
-                    Text("권한 허용하러 가기")
+                    BDText(text: "권한 허용하러 가기", style: .H1_B_130)
                         .foregroundColor(.white)
-                        .font(.system(size: 17, weight: .bold))
-                    
+                        
                     Image(systemName: "arrow.up.forward.app.fill")
                         .foregroundColor(.white)
                 }
