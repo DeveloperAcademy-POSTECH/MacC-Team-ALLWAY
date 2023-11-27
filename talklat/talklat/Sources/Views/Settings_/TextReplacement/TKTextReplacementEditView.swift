@@ -27,7 +27,7 @@ struct TKTextReplacementEditView: View {
                     SettingTRTextField(
                         text: store.bindingPhraseTextField(),
                         focusState: _focusState,
-                        title: "단축어",
+                        allowSpace: false, title: "단축어",
                         placeholder: "아아",
                         limit: 20
                     )
@@ -51,71 +51,78 @@ struct TKTextReplacementEditView: View {
                     } label: {
                         BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
                             .foregroundColor(Color.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.RED)
-                            .cornerRadius(20)
+                            .cornerRadius(22)
                     }
+                    .padding(.vertical, 20)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 56)
+                    .background(Color.RED)
+                    .cornerRadius(22)
                 }
             }
-        }
-        .padding()
-        .padding(.top, 8)
-//        .onTapGesture {
-//            self.hideKeyboard()
-//        }
-        .navigationBarBackButtonHidden()
-        .disabled(store(\.isDialogShowing))
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .bold()
-                       
-                        BDText(
-                            text: "목록",
-                            style: .H1_B_130
-                        )
+            .padding()
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .bold()
+                            
+                            BDText(
+                                text: "목록",
+                                style: .H1_B_130
+                            )
+                        }
                     }
-                    .tint(Color.OR5)
+                    .tint(Color.OR6)
                 }
-            }
-            
-            // Navigation Title
-            ToolbarItem(placement: .principal) {
-                BDText(
-                    text: "편집",
-                    style: .H1_B_130
-                )
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    updateTextReplacement()
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
+                
+                // Navigation Title
+                ToolbarItem(placement: .principal) {
                     BDText(
-                        text: "저장",
+                        text: "편집",
                         style: .H1_B_130
                     )
                 }
-                .disabled(store.isSaveButtonDisabled)
-                .foregroundColor(store.isSaveButtonDisabled ? Color.GR4 : Color.OR6)
-            }
-        }
-        .overlay {
-            ZStack {
-                if store(\.isDialogShowing) {
-                    Color.black.opacity(0.4).ignoresSafeArea(.all)
-                    TextReplacementCustomDialog(store: store, onDelete: { deleteTKTextReplacement() })
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        updateTextReplacement()
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        BDText(
+                            text: "저장",
+                            style: .H1_B_130
+                        )
+                    }
+                    .disabled(store.isSaveButtonDisabled)
+                    .foregroundColor(
+                        store.isSaveButtonDisabled
+                        ? Color.GR4
+                        : Color.OR6
+                    )
                 }
             }
+            .showTKAlert(
+                isPresented: store.bindingShowTKAlert(),
+                style: .removeTextReplacement(title: "텍스트 대치 삭제"),
+                confirmButtonAction: {
+                    deleteTKTextReplacement()
+                    store.onDismissRemoveAlert()
+                },
+                confirmButtonLabel: {
+                    Text("네, 삭제할래요")
+                }
+            )
         }
+//        .onTapGesture {
+//            self.hideKeyboard()
+//        }
+        
     }
     
     private func updateTextReplacement() {
@@ -213,7 +220,7 @@ struct TextReplacementCustomDialog: View {
                     }
                     
                     Button {
-                        onDelete()
+//                        onDelete()
                         store.onDismissRemoveAlert()
                     } label: {
                         Text("네, 삭제할래요")

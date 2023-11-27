@@ -19,7 +19,7 @@ struct SettingsGestureView: View {
             .foregroundColor(.GR5)
             .padding(.leading, 16)
             
-            TKListCell(label: "플립 제스처") {
+            BDListCell(label: "플립 제스처") {
                 } trailingUI: {
                     Toggle("", isOn: $isGestureEnabled)
                 }
@@ -33,8 +33,17 @@ struct SettingsGestureView: View {
                 BDText(text: "진동", style: .H1_B_130)
             }
         }
-
-
+        .onAppear {
+            isGestureEnabled = UserDefaults.standard.bool(
+                forKey: "isGestureEnabled"
+            )
+        }
+        .onChange(of: isGestureEnabled) { _, _ in
+            UserDefaults.standard.setValue(
+                isGestureEnabled,
+                forKey: "isGestureEnabled"
+            )
+        }
     }
 }
 

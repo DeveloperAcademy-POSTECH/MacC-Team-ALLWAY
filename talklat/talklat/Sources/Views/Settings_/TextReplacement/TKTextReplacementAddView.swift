@@ -52,6 +52,7 @@ struct TKTextReplacementAddView: View {
                 
                 Spacer()
             }
+            .background { Color.yellow }
             .padding()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -72,7 +73,7 @@ struct TKTextReplacementAddView: View {
                     )
                 }
                 
-                ToolbarItem(placement: .automatic) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         if isInputValid {
                             dataStore.createTextReplacement(

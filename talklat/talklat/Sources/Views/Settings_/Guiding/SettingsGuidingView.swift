@@ -12,7 +12,7 @@ struct SettingsGuidingView: View {
     
     var body: some View {
         VStack {
-            TKListCell(label: "대화 시작 시 안내 문구 사용") {
+            BDListCell(label: "대화 시작 시 안내 문구 사용") {
                 } trailingUI: {
                     Toggle(
                         "",
@@ -33,7 +33,7 @@ struct SettingsGuidingView: View {
                 SettingsGuidingEditView()
                 
             } label: {
-                TKListCell(label: "안내 문구 편집") {
+                BDListCell(label: "안내 문구 편집") {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
                             .foregroundColor(

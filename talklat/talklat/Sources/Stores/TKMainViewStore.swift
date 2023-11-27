@@ -14,6 +14,7 @@ final class TKMainViewStore {
         var isBottomSheetMaxed: Bool = false
         var isSpeechAuthAlertPresented: Bool = false
         var isTKToastPresented: Bool = false
+        var isTKMainViewAppeared: Bool = false
         
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
@@ -45,6 +46,14 @@ final class TKMainViewStore {
     
     public func onConversationFullscreenDismissed() {
         reduce(\.isConversationFullScreenCoverDisplayed, into: false)
+    }
+    
+    @MainActor
+    public func onTKMainViewAppeared() async {
+        try? await Task.sleep(for: .seconds(0.5))
+        withAnimation {
+            reduce(\.isTKMainViewAppeared, into: true)
+        }
     }
     
     public func onNewConversationHasSaved() {
