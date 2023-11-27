@@ -11,12 +11,12 @@ import SwiftData
 struct TKTypingView: View {
     // TextReplacement
     @Environment(\.modelContext) private var context
-    @ObservedObject var store: TKConversationViewStore
-    @FocusState var focusState: Bool
-    
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
+    
+    @ObservedObject var store: TKConversationViewStore
+    @FocusState var focusState: Bool
     
     let namespaceID: Namespace.ID
     
@@ -34,7 +34,7 @@ struct TKTypingView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .top).animation(.easeInOut(duration: 1.0)),
-                        removal: .move(edge: .top)
+                        removal: .push(from: .bottom).animation(.easeInOut(duration: 1.0))
                     )
                 )
                 
@@ -116,13 +116,23 @@ struct TKTypingView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .onTapGesture {
+            focusState = false
+        }
         .task {
-            focusState = true
+            if !focusState {
+                focusState = true
+            }
         }
         .overlay(alignment: .bottom) {
-            customToolbar()
-                .padding(.bottom, 16)
+            if !store(\.isTopViewShown) {
+                customToolbar()
+                    .padding(.bottom, 16)
+            }
         }
     }
     
@@ -178,6 +188,7 @@ struct TKTypingView: View {
                 ZStack {
                     Group {
                         Button {
+                            focusState = false
                             store.onShowPreviewChevronButtonTapped()
                             
                         } label: {

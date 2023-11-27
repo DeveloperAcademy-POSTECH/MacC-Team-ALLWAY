@@ -71,11 +71,19 @@ struct TKMainView: View {
                 }
             }
             .frame(
+                maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
             
-            TKDraggableList(store: store)
+            // MARK: BottomSheet
+            if store(\.isTKMainViewAppeared) {
+                TKDraggableList(store: store)
+                    .transition(.move(edge: .bottom))
+            }
+        }
+        .task {
+           await store.onTKMainViewAppeared()
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)

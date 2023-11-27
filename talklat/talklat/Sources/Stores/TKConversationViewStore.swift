@@ -61,7 +61,7 @@ final class TKConversationViewStore {
     
     public var isAnswerCardDisplayable: Bool {
         if let recentHistoryItem = self(\.historyItem) {
-            return recentHistoryItem.text != "" && recentHistoryItem.type == .answer && self(\.conversationStatus) == .writing
+            return recentHistoryItem.type == .answer && self(\.conversationStatus) == .writing
         } else {
             return false
         }

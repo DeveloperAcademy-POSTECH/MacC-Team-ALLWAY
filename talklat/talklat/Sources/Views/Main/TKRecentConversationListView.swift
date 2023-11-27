@@ -117,4 +117,5 @@ struct TKRecentConversationListView: View {
 
 #Preview {
     TKRecentConversationListView(conversations: .constant([TKConversation]()))
+        .environmentObject(TKLocationStore())
 }
