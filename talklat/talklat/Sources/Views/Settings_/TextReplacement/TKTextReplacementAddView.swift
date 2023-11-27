@@ -52,7 +52,6 @@ struct TKTextReplacementAddView: View {
                 
                 Spacer()
             }
-            .background { Color.yellow }
             .padding()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
