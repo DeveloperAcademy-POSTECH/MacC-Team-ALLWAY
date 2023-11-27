@@ -288,12 +288,12 @@ struct TKTypingView: View {
                     
                 } label: {
                     Image(systemName: "eraser.fill")
-                        .font(.system(size: 22))
-                        .foregroundColor(!store(\.questionText).isEmpty ? Color.BaseBGWhite : Color.GR3)
-                        .padding(10)
-                        .background(!store(\.questionText).isEmpty ? Color.GR4 : Color.GR2)
-                        .clipShape(Circle())
+                        .font(.system(size: 23))
+                        .foregroundColor(Color.GR1)
+                        .padding(13)
+                        .background(!store(\.questionText).isEmpty ? Color.GR3 : Color.GR2)
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 40))
                 .accessibilityLabel(Text("Clear text"))
                 
                 if focusState {
@@ -312,24 +312,23 @@ struct TKTypingView: View {
                             )
                             
                         } label: {
-                            Text(firstReplacement)
-                                .font(.subheadline)
-                                .foregroundColor(Color.BaseBGWhite)
+                            BDText(text: firstReplacement, style: .H2_SB_135)
+                                .foregroundColor(Color.GR7)
                                 .padding(.horizontal, 16)
-                                .padding(.vertical, 10)
+                                .padding(.vertical, 8)
                                 .lineLimit(1)
                                 .background {
                                     RoundedRectangle(cornerRadius: 24)
-                                        .fill(Color.GR4)
+                                        .fill(Color.GR1)
                                 }
                         }
                         .padding(.vertical, 4)
-                        .padding(.trailing, 4)
+                        .padding(.trailing, 6)
                     }
                 }
             }
             .background(focusState ? Color.GR2 : Color.clear)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .clipShape(RoundedRectangle(cornerRadius: 40))
             .padding(.leading, 16)
             .frame(
                 maxWidth: 275,
@@ -401,22 +400,20 @@ struct TKTypingView: View {
 
 // MARK: 텍스트 대치 검사
 extension TKTypingView {
-    // 마지막 단어가 key와 일치하는 지 검사(띄어쓰기 없이 저장해야됨)
+    // 마지막 단어 또는 부분 문자열이 key와 일치하는 지 검사
     func replacementKeyForCurrentText() -> String? {
-        guard
-            let lastWord = store(\.questionText)
-                .split(separator: " ")
-                .last?
-                .lowercased() else {
-            return nil
+        let currentText = store(\.questionText).lowercased()
+        let sortedKeys = lists.flatMap { list in
+            list.wordDictionary.keys
+        }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+
+        // 문자열의 끝에서부터 시작하여 가장 긴 일치하는 부분 문자열을 찾음
+        for key in sortedKeys {
+            if currentText.hasSuffix(key.lowercased()) {
+                return key
+            }
         }
-        
-        let sortedKeys = lists
-            .flatMap { list in
-                list.wordDictionary.keys
-            }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
-        
-        return sortedKeys.first { $0.lowercased() == lastWord }
+        return nil
     }
 }
 

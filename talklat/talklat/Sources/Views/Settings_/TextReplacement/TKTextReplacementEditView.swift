@@ -27,7 +27,7 @@ struct TKTextReplacementEditView: View {
                     SettingTRTextField(
                         text: store.bindingPhraseTextField(),
                         focusState: _focusState,
-                        title: "단축어",
+                        allowSpace: false, title: "단축어",
                         placeholder: "아아",
                         limit: 20
                     )
@@ -49,16 +49,16 @@ struct TKTextReplacementEditView: View {
                     Button {
                         store.onShowDialogButtonTapped()
                     } label: {
-                        Text("텍스트 대치 삭제")
-                            .font(.system(size: 17, weight: .bold))
+                        BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
                             .foregroundColor(Color.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.RED)
-                            .cornerRadius(20)
+                            .cornerRadius(22)
                     }
+                    .padding(.vertical, 20)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 56)
+                    .background(Color.RED)
+                    .cornerRadius(22)
                 }
             }
         }
