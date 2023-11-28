@@ -34,6 +34,9 @@ class CustomTableViewController: UITableViewController {
         tableView.backgroundColor = .clear
         tableView.canCancelContentTouches = false
         tableView.estimatedSectionHeaderHeight = 0 // section header로 잡힌 높이만큼 안내려가던 거였음
+//        tableView.sectionHeaderTopPadding = 0.0
+        tableView.automaticallyAdjustsScrollIndicatorInsets = false
+        tableView.sectionHeaderTopPadding = 0
     }
     
     // section 갯수 메서드

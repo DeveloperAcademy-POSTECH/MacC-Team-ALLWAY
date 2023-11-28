@@ -89,17 +89,72 @@ class TKHistoryInfoStore: TKReducer {
     }
     
     public func updateTextLimitMessage() {
-        if self(\.text).count >= 30 {
-            self.reduce(\.text, into: String(self(\.text).prefix(30)))
-            self.reduce(\.textLimitMessage, into: "30/30")
+        if self(\.text).count >= 20 {
+            self.reduce(\.text, into: String(self(\.text).prefix(20)))
+            self.reduce(\.textLimitMessage, into: "20/20")
         } else if self(\.text).count == 0 {
             self.reduce(\.textLimitMessage, into: "한 글자 이상 입력해주세요.")
         } else {
-            self.reduce(\.textLimitMessage, into: "\(self(\.text).count)/30")
+            self.reduce(\.textLimitMessage, into: "\(self(\.text).count)/20")
         }
     }
     
-    func plantFlag(_ coordinate: MKCoordinateRegion) {
+    public func saveButtonDisabled(_ conversation: TKConversation) -> Bool {
+        let textStatus = self.hasTextChanged(conversation.title)
+        let locationStatus = self.hasLocationChanged(conversation.location)
+        
+        guard textStatus != .textEmpty else { return true }
+        
+        // 총 4가지 경우가 있음
+        // 1. text 안바뀜, location 안바뀜 -> 저장 x
+        // 2. text 안바뀜, location 바뀜 -> 저장
+        // 3. text 바뀜, location 안바뀜 -> 저장
+        // 4. text 바뀜, location 바뀜 -> 저장
+        if textStatus == .textNotChanged && locationStatus == .locationNotChanged {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func hasTextChanged(_ title: String) -> HistoryInfoTextStatus {
+        if title != self(\.text) {
+            if self(\.text).isEmpty {
+                return .textEmpty
+            } else {
+                return .textChanged
+            }
+        } else {
+            return .textNotChanged
+        }
+    }
+    
+    private func hasLocationChanged(_ location: TKLocation?) -> HistoryInfoLocationStatus {
+        // conversation location은 있음
+        if let latitude = location?.latitude, let longitude = location?.longitude {
+            let conversationCoordinate = CLLocationCoordinate2D(
+                latitude: latitude,
+                longitude: longitude
+            )
+            
+            // 근데 infoCoordinate가 없음
+            guard let infoCoordinate = self(\.infoCoordinateRegion)?.center else { return .locationChanged }
+            
+            if !conversationCoordinate.latitude.isDoubleEqual(infoCoordinate.latitude) || !conversationCoordinate.longitude.isDoubleEqual(infoCoordinate.longitude) {
+                return .locationChanged
+            } else {
+                return .locationNotChanged
+            }
+        } else { // 만약 conversation.location은 nil인데
+            if self(\.infoCoordinateRegion) != nil { // self(\.location이 있음)
+                return .locationChanged
+            } else { // 둘 다 nil
+                return .locationNotChanged
+            }
+        }
+    }
+    
+    public func plantFlag(_ coordinate: MKCoordinateRegion) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             var newAnnotation = [CustomAnnotationInfo]()
             newAnnotation.append(CustomAnnotationInfo(
@@ -111,6 +166,13 @@ class TKHistoryInfoStore: TKReducer {
             
             self.reduce(\.annotationItems, into: newAnnotation)
         }
+    }
+    
+    public func bindingAlert() -> Binding<Bool> {
+        return Binding(
+            get: { self(\.isShowingAlert) },
+            set: { self.reduce(\.isShowingAlert, into: $0) }
+        )
     }
     
     func callAsFunction<Value: Equatable> (_ path: KeyPath<ViewState, Value>) -> Value {

@@ -15,4 +15,10 @@ extension Double {
     func toRadians() -> Double {
         return self * Double.pi / 180
     }
+    
+    func isDoubleEqual(_ a: Double) -> Bool {
+        guard let newSelf = Double(String(format: "%.5f", self)) else { return false }
+        guard let newDouble = Double(String(format: "%.5f", a)) else { return false}
+        return fabs(newSelf - newDouble) < Double.ulpOfOne
+    }
 }
