@@ -29,7 +29,7 @@ struct HistoryListView: View {
     
     // not in store
     @FocusState internal var isSearchFocused: Bool
-   
+    
     var body: some View {
         VStack {
             // Search Bar
@@ -38,88 +38,85 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
-            .navigationBarBackButtonHidden(
-                isSearching ? true : false
-            )
+            .navigationBarBackButtonHidden(true)
             .disabled(isEditing ? true : false)
             
             Spacer()
             
             // MARK: - History List
             if !isSearching {
-                // Unavailable View
-                if dataStore.conversations.isEmpty {
-                    TKUnavailableViewBuilder(
-                        icon: "bubble.left.and.bubble.right.fill",
-                        description: "아직 대화 기록이 없어요"
-                    )
-                } else {
-                    ScrollView {
-                        ForEach(
-                            dataStore.filterDuplicatedBlockNames(
-                                locations: dataStore.locations
-                            )
-                        ) { location in
-                            LocationList(
-                                dataStore: dataStore,
-                                location: location,
-                                selectedConversation: $selectedConversation,
-                                isEditing: $isEditing,
-                                isDialogShowing: $isDialogShowing
-                            )
-                            .padding(.bottom, 24)
-                        }
-                        .padding(.top, 24)
-                    }
-                    .scrollIndicators(.hidden)
-                    .navigationBarBackButtonHidden(true)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            // Back Button
-                            Button {
-                                dismiss()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "chevron.left")
-                                        .bold()
-                                 
-                                    BDText(
-                                        text: "홈",
-                                        style: .H1_B_130
-                                    )
-                                }
-                                .fontWeight(.medium)
+                Group {
+                    // Unavailable View
+                    if dataStore.conversations.isEmpty {
+                        TKUnavailableViewBuilder(
+                            icon: "bubble.left.and.bubble.right.fill",
+                            description: "아직 대화 기록이 없어요"
+                        )
+                    } else {
+                        ScrollView {
+                            ForEach(
+                                dataStore.filterDuplicatedBlockNames(
+                                    locations: dataStore.locations
+                                )
+                            ) { location in
+                                LocationList(
+                                    dataStore: dataStore,
+                                    location: location,
+                                    selectedConversation: $selectedConversation,
+                                    isEditing: $isEditing,
+                                    isDialogShowing: $isDialogShowing
+                                )
+                                .padding(.bottom, 24)
                             }
-                            .tint(Color.OR6)
+                            .padding(.top, 24)
                         }
-                        
-                        // Navigation Title
-                        ToolbarItem(placement: .principal) {
-                            BDText(
-                                text: "히스토리",
-                                style: .H1_B_130
-                            )
-                        }
-                        
-                        ToolbarItem(placement: .topBarTrailing) {
-                            // Edit Button
-                            Button {
-                                withAnimation(
-                                    .spring(
-                                        dampingFraction: 0.7,
-                                        blendDuration: 0.4
-                                    )
-                                ) {
-                                    withAnimation {
-                                        isEditing.toggle()
-                                    }
-                                }
-                            } label: {
+                        .scrollIndicators(.hidden)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        // Back Button
+                        Button {
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .bold()
+                                
                                 BDText(
-                                    text: isEditing ? "완료" : "편집",
+                                    text: "홈",
                                     style: .H1_B_130
                                 )
                             }
+                            .fontWeight(.medium)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .principal) {
+                        BDText(
+                            text: "히스토리",
+                            style: .H1_B_130
+                        )
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        // Edit Button
+                        Button {
+                            withAnimation(
+                                .spring(
+                                    dampingFraction: 0.7,
+                                    blendDuration: 0.4
+                                )
+                            ) {
+                                withAnimation {
+                                    isEditing.toggle()
+                                }
+                            }
+                        } label: {
+                            BDText(
+                                text: isEditing ? "완료" : "편집",
+                                style: .H1_B_130
+                            )
                         }
                     }
                 }
@@ -130,6 +127,7 @@ struct HistoryListView: View {
                     isSearching: $isSearching,
                     searchText: $searchText
                 )
+                .navigationBarBackButtonHidden(true)
             }
         }
         .padding(.horizontal, 20)
@@ -329,7 +327,7 @@ struct CellItem: View {
                         text: conversation.title,
                         style: .H1_B_130
                     )
-                        .foregroundStyle(Color.GR8)
+                    .foregroundStyle(Color.GR8)
                     
                     BDText(
                         text:conversation.createdAt.convertToDate(),
@@ -367,7 +365,7 @@ struct CellItem: View {
                     }
                 }
             }
-
+            
             // TrashBin Appear
             if isRemoving && isEditing {
                 Button {
