@@ -32,6 +32,7 @@ struct SettingsGuidingView: View {
             
             NavigationLink {
                 SettingsGuidingEditView()
+                    .navigationBarBackButtonHidden()
                 
             } label: {
                 BDListCell(label: "안내 문구 편집") {

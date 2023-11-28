@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsGuidingEditView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var hasContentChanged: Bool = false
     @State private var isTextEmpty: Bool = false
     @State private var guidingMessage: String = UserDefaults.standard.string(
@@ -82,6 +83,22 @@ struct SettingsGuidingEditView: View {
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "안내 문구",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
             ToolbarItem(placement: .principal) {
                 BDText(text: "안내 문구 편집", style: .H1_B_130)
             }

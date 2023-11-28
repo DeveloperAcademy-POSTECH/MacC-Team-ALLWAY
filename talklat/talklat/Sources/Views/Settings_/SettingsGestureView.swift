@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsGestureView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isGestureEnabled: Bool = true
 
     var body: some View {
@@ -29,6 +30,22 @@ struct SettingsGestureView: View {
         .padding(.top, 24)
         .padding(.horizontal, 16)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
             ToolbarItem(placement: .principal) {
                 BDText(text: "진동", style: .H1_B_130)
             }

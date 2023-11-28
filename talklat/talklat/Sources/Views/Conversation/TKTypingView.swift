@@ -18,7 +18,7 @@ struct TKTypingView: View {
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
-    
+    let dataStore = TKSwiftDataStore()
     let namespaceID: Namespace.ID
     
     var body: some View {
@@ -31,6 +31,9 @@ struct TKTypingView: View {
                             ? .infinity
                             : 0
                         )
+                        .onAppear() {
+                            store.onTKHistoryPreviewAppeared()
+                        }
                 }
                 .transition(
                     .asymmetric(
@@ -137,6 +140,25 @@ struct TKTypingView: View {
         }
     }
     
+    private var hasQuestionTextReachedMaximumCount: Bool {
+        store(\.questionText).count == store.questionTextLimit
+    }
+            
+    private func isSaveButtonDisabled() -> Bool {
+        // historyItems가 비어있고 questionText가 비어 있을 때 -> true
+        // historyItems는 비어있지 않고 questionText만 비어있을 때 -> false
+        if store(\.questionText).isEmpty && store(\.historyItems).isEmpty {
+            return true
+        } else if store(\.questionText).isEmpty && !store(\.historyItems).isEmpty {
+            return false
+        } else {
+            return false
+        }
+    }
+}
+
+// MARK: View Builders
+extension TKTypingView {
     private func characterLimitViewBuilder() -> some View {
         BDText(text: "\(store(\.questionText).count)/\(store.questionTextLimit)", style: .C1_SB_130)
             .monospacedDigit()
@@ -145,10 +167,6 @@ struct TKTypingView: View {
                 ? .red
                 : .gray
             )
-    }
-    
-    private var hasQuestionTextReachedMaximumCount: Bool {
-        store(\.questionText).count == store.questionTextLimit
     }
     
     private func startRecordingButtonBuilder() -> some View {
@@ -220,19 +238,16 @@ struct TKTypingView: View {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
-                if let _ = store(\.previousConversation) {
-                    dismiss()
-                } else {
-                    store.onConversationDismissButtonTapped()
-                }
+                store.onConversationDismissButtonTapped()
+                
             } label: {
                 BDText(text: "취소", style: .H1_B_130)
                     .padding(.horizontal, 6)
-                    .foregroundStyle(Color.GR6)
+                    .foregroundStyle(cancelButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .tint(Color.OR6)
+            .tint(cancelButtonTintColor())
             
             Spacer()
             
@@ -244,17 +259,24 @@ struct TKTypingView: View {
                 )
                 .font(.headline)
                 .foregroundStyle(Color.GR9)
+                .lineLimit(1)
             }
             
             Spacer()
             
             Button {
                 store.blockButtonDoubleTap {
+                    // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
+                    // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
                     if let previousConversation = store(\.previousConversation) {
-                        let res = makeNewContent()
-                        previousConversation.content.append(contentsOf: res)
+                        store.makeCurrentConversationContent()
+                        dataStore.onSaveOnPreviousConversation(
+                            from: store(\.historyItems),
+                            into: previousConversation
+                        )
                         
-                        dismiss()
+                        store.onSaveConversationIntoPreviousButtonTapped()
+                        
                     } else {
                         store.onSaveConversationButtonTapped()
                     }
@@ -267,14 +289,11 @@ struct TKTypingView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .frame(height: 34)
             .tint(saveButtonTintColor())
-            .disabled(store(\.questionText).isEmpty ? true : false)
+            .disabled(isSaveButtonDisabled())
             .disabled(store(\.blockButtonDoubleTap))
-            .disabled(store(\.historyItems).isEmpty)
         }
-        .frame(height: 44)
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 20)
     }
     
     private func customToolbar() -> some View {
@@ -343,8 +362,7 @@ struct TKTypingView: View {
     }
     
     private func saveButtonTextColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.OR6
         } else if store(\.questionText).isEmpty {
             return Color.GR3
@@ -354,8 +372,7 @@ struct TKTypingView: View {
     }
     
     private func saveButtonTintColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.white
         } else if store(\.questionText).isEmpty {
             return Color.GR2
@@ -365,8 +382,7 @@ struct TKTypingView: View {
     }
     
     private func cancelButtonTextColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.white
         } else {
             return Color.GR6
@@ -374,25 +390,11 @@ struct TKTypingView: View {
     }
     
     private func cancelButtonTintColor() -> Color {
-        if let last = store(\.historyItems).last,
-           last.type == .answer {
+        if store.isAnswerCardDisplayable {
             return Color.OR6
         } else {
-
             return Color.GR1
         }
-    }
-    
-    private func makeNewContent() -> [TKContent] {
-        let newContents = store(\.historyItems).map {
-            TKContent(
-                text: $0.text,
-                type: $0.type == .answer ? .answer : .question,
-                createdAt: $0.createdAt
-            )
-        }
-        
-        return newContents
     }
 }
 

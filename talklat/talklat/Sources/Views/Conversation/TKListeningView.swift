@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct TKListeningView: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var store: TKConversationViewStore
+    let dataStore = TKSwiftDataStore()
     let namespaceID: Namespace.ID
     
     var body: some View {
@@ -189,6 +191,7 @@ struct TKListeningView: View {
         HStack {
             Button {
                 store.onConversationDismissButtonTapped()
+                
             } label: {
                 BDText(text: "취소", style: .H1_B_130)
                     .padding(.horizontal, 6)
@@ -196,14 +199,27 @@ struct TKListeningView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .frame(height: 34)
             .tint(Color.GR1)
             
             Spacer()
             
             Button {
                 store.blockButtonDoubleTap {
-                    store.onSaveConversationButtonTapped()
+                    // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
+                    // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
+                    
+                    if let previousConversation = store(\.previousConversation) {
+                        store.makeCurrentConversationContent()
+                        dataStore.onSaveOnPreviousConversation(
+                            from: store(\.historyItems),
+                            into: previousConversation
+                        )
+                        
+                        store.onSaveConversationIntoPreviousButtonTapped()
+                        
+                    } else {
+                        store.onSaveConversationButtonTapped()
+                    }
                 }
             } label: {
                 BDText(text: "저장", style: .H1_B_130)
@@ -212,13 +228,10 @@ struct TKListeningView: View {
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .frame(height: 34)
             .tint(Color.OR5)
-            .disabled(store(\.questionText).isEmpty ? true : false)
             .disabled(store(\.blockButtonDoubleTap))
         }
-        .frame(height: 44)
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 20)
     }
 }
 

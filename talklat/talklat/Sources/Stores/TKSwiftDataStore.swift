@@ -82,6 +82,21 @@ extension TKSwiftDataStore {
     public func getAllConversation() -> [TKConversation] {
         dataManager.getAllConversations()
     }
+    
+    public func onSaveOnPreviousConversation(
+        from previousHistory: [HistoryItem],
+        into previousConversation: TKConversation
+    ) {
+        let newContents = previousHistory.map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
+        
+        previousConversation.content.append(contentsOf: newContents)
+    }
 }
 
 // MARK: - TextReplacement Related

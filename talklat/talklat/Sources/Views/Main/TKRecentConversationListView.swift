@@ -47,6 +47,7 @@ struct TKRecentConversationListView: View {
                             Button {
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
+                                
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -93,17 +94,17 @@ struct TKRecentConversationListView: View {
                                 alignment: .leading
                             )
                             .padding(.bottom, 32)
-                            .padding(.leading, 32)
+                            .padding(.horizontal, 32)
                     }
                 } else {
-                    BDText(text: "근처 대화목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", style: .H2_SB_135)
+                    BDText(text: "근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", style: .H2_SB_135)
                         .foregroundStyle(Color.GR3)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .leading
                         )
                         .padding(.bottom, 32)
-                        .padding(.leading, 32)
+                        .padding(.horizontal, 32)
                 }
             }
             .refreshable {
@@ -118,6 +119,20 @@ struct TKRecentConversationListView: View {
         }
         .fullScreenCover(isPresented: draggableListViewStore.bindingIsShowingConversationView()) {
             TKConversationView(store: conversationViewStore)
+                .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
+                    if !old, new {
+                        draggableListViewStore.onConversationFullScreenDismissed()
+                    }
+                }
+                .showTKAlert(
+                    isPresented: conversationViewStore.bindingTKAlertFlag(),
+                    style: .conversationCancellation
+                ) {
+                    draggableListViewStore.onConversationFullScreenDismissed()
+                    
+                } confirmButtonLabel: {
+                    Text("네, 그만 할래요")
+                }
                 .onDisappear {
                     conversationViewStore.resetConversationState()
                 }

@@ -214,31 +214,17 @@ struct LocationList: View {
                         isCollapsed.toggle()
                     }
                 } label: {
-                    if isCollapsed {
-                        Image(systemName: "chevron.forward")
-                            .font(
-                                .system(
-                                    size: 17,
-                                    weight: .bold,
-                                    design: .rounded
-                                )
+                    Image(systemName: "chevron.forward")
+                        .rotationEffect(isCollapsed ? .degrees(90) : .degrees(0))
+                        .font(
+                            .system(
+                                size: 17,
+                                weight: .bold,
+                                design: .rounded
                             )
-                    } else {
-                        Image(systemName: "chevron.down")
-                            .font(
-                                .system(
-                                    size: 17,
-                                    weight: .bold,
-                                    design: .rounded
-                                )
-                            )
-                            .transition(
-                                .asymmetric(
-                                    insertion: .opacity,
-                                    removal: .identity
-                                )
-                            )
-                    }
+                        )
+                        .padding(.trailing, 4)
+                        .animation(.easeInOut, value: isCollapsed)
                 }
                 .disabled(isEditing)
             }
