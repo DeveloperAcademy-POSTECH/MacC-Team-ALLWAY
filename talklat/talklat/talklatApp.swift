@@ -63,11 +63,20 @@ struct talklatApp: App {
             .environmentObject(authManager)
             .environmentObject(colorSchemeManager)
             .onAppear {
+                // ColorScheme UserDefault
                 UserDefaults.standard.setValue(
                     false,
                     forKey: "_UIConstraintBasedLayoutLogUnsatisfiable"
                 )
                 colorSchemeManager.applyColorScheme()
+                
+                // GuideMessage UserDefault
+                if !isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
+                    UserDefaults.standard.setValue(
+                        true,
+                        forKey: "isGuidingEnabled"
+                    )
+                }
             }
         }
         .modelContainer(container)

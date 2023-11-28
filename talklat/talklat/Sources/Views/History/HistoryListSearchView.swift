@@ -93,6 +93,9 @@ struct HistoryListSearchView: View {
                 }
             }
         }
+        .onDisappear {
+            searchText = ""
+        }
     }
 }
 
