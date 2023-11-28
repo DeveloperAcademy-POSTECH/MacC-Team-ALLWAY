@@ -43,11 +43,7 @@ struct SettingsGuidingView: View {
                             )
                     }
             }
-            .disabled(
-                isGuidingEnabled
-                ? false
-                : true
-            )
+            .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
         }
