@@ -231,7 +231,10 @@ extension TKConversationViewStore {
     
     public func onSaveToPreviousButtonTapped(_ newContents: [TKContent]) {
         if let _ = self(\.previousConversation) {
-            self(\.previousConversation)?.content.append(contentsOf: newContents)
+            if var content = self(\.previousConversation)?.content {
+                content.append(contentsOf: newContents)
+            }
+//            self(\.previousConversation)?.content.append(contentsOf: newContents)
         }
         
         withAnimation {
@@ -491,14 +494,13 @@ extension TKConversationViewStore {
     private func switchConverstaionStatus() {
         switch self(\.conversationStatus) {
         case .writing:
-            if !self(\.hasGuidingMessageShown) {
+            if !self(\.hasGuidingMessageShown) && UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
                 reduce(\.conversationStatus, into: .guiding)
-                reduce(\.hasGuidingMessageShown, into: true)
-                
             } else {
+                reduce(\.hasGuidingMessageShown, into: true)
                 reduce(\.conversationStatus, into: .recording)
             }
-        
+            
         case .guiding:
             reduce(\.conversationStatus, into: .recording)
             

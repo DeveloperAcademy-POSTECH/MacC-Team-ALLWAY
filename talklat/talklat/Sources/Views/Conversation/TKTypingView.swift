@@ -160,8 +160,7 @@ struct TKTypingView: View {
 // MARK: View Builders
 extension TKTypingView {
     private func characterLimitViewBuilder() -> some View {
-        Text("\(store(\.questionText).count)/\(store.questionTextLimit)")
-            .font(.system(size: 12, weight: .regular))
+        BDText(text: "\(store(\.questionText).count)/\(store.questionTextLimit)", style: .C1_SB_130)
             .monospacedDigit()
             .foregroundColor(
                 hasQuestionTextReachedMaximumCount
@@ -242,9 +241,7 @@ extension TKTypingView {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                Text("취소")
-                    .font(.headline)
-                    .fontWeight(.bold)
+                BDText(text: "취소", style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(cancelButtonTextColor())
             }

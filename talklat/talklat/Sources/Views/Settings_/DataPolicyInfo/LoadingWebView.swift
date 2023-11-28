@@ -35,7 +35,27 @@ struct LoadingWebView: View {
             }
  
         }
-        .navigationTitle("개인정보 처리방침")
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(text: "개인정보 처리방침", style: .H1_B_130)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {

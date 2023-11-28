@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsGuidingView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isGuidingEnabled: Bool = true
     
     var body: some View {
@@ -43,22 +44,39 @@ struct SettingsGuidingView: View {
                             )
                     }
             }
-            .disabled(
-                isGuidingEnabled
-                ? false
-                : true
-            )
+            .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .navigationTitle("안내 문구")
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(text: "안내 문구", style: .H1_B_130)
+            }
+        }
         .onAppear {
-            isGuidingEnabled = UserDefaults.standard.bool(
-                forKey: "isGuidingEnabled"
-            )
+            if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
+                isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")
+            } else {
+                isGuidingEnabled = true
+            }
         }
         .onChange(of: isGuidingEnabled) { _, _ in
             UserDefaults.standard.setValue(
@@ -67,6 +85,10 @@ struct SettingsGuidingView: View {
             )
         }
     }
+}
+
+public func isKeyPresentInUserDefaults(key: String) -> Bool {
+    return UserDefaults.standard.object(forKey: key) != nil
 }
 
 #Preview {

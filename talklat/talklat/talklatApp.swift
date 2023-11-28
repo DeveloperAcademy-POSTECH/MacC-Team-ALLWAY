@@ -22,7 +22,10 @@ struct talklatApp: App {
     init() {
         do {
             container = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
+                for: TKConversation.self,
+                TKContent.self,
+                TKLocation.self,
+                TKTextReplacement.self
             )
         } catch {
             fatalError("Failed to configure SwiftData container.")
@@ -65,11 +68,20 @@ struct talklatApp: App {
             .environmentObject(authManager)
             .environmentObject(colorSchemeManager)
             .onAppear {
+                // ColorScheme UserDefault
                 UserDefaults.standard.setValue(
                     false,
                     forKey: "_UIConstraintBasedLayoutLogUnsatisfiable"
                 )
                 colorSchemeManager.applyColorScheme()
+                
+                // GuideMessage UserDefault
+                if !isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
+                    UserDefaults.standard.setValue(
+                        true,
+                        forKey: "isGuidingEnabled"
+                    )
+                }
             }
         }
         .modelContainer(container)

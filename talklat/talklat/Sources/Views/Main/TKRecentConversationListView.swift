@@ -28,10 +28,8 @@ struct TKRecentConversationListView: View {
                             .padding(.trailing, 7)
                     }
                     
-                    Text("내 주변 대화 목록")
+                    BDText(text: "내 주변 대화 목록", style: .T2_B_125)
                         .foregroundStyle(Color.GR7)
-                        .font(.title3)
-                        .bold()
                 }
                 .foregroundStyle(Color.GR5)
             }
@@ -53,25 +51,22 @@ struct TKRecentConversationListView: View {
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text(conversation.title)
+                                        BDText(text: conversation.title, style: .H1_SB_130)
                                             .foregroundStyle(Color.GR8)
-                                            .bold()
                                         
-                                        Text(locationStore.calculateDistance(conversation.location).toStringDistance())
-                                            .font(.footnote)
+                                        BDText(text: locationStore.calculateDistance(conversation.location).toStringDistance(), style: .FN_SB_135)
                                             .foregroundStyle(Color.OR6)
                                     }
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        Text((conversation.createdAt).convertToDate())
-                                            .font(.footnote)
+                                        BDText(text: (conversation.createdAt).convertToDate(), style: .FN_SB_135)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()
                                         
                                         Group {
-                                            Text("대화하기")
+                                            BDText(text: "대화하기", style: .H2_SB_135)
                                                 .foregroundStyle(Color.GR7)
                                             
                                             Image(systemName: "chevron.right")
@@ -92,7 +87,7 @@ struct TKRecentConversationListView: View {
                         }
                         //                    .padding(.bottom, 32)
                     } else {
-                        Text("근처에서 나눈 대화가 없어요.")
+                        BDText(text: "근처에서 나눈 대화가 없어요.", style: .H2_SB_135)
                             .foregroundStyle(Color.GR3)
                             .frame(
                                 maxWidth: .infinity,
@@ -102,7 +97,7 @@ struct TKRecentConversationListView: View {
                             .padding(.horizontal, 32)
                     }
                 } else {
-                    Text("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.")
+                    BDText(text: "근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", style: .H2_SB_135)
                         .foregroundStyle(Color.GR3)
                         .frame(
                             maxWidth: .infinity,

@@ -33,7 +33,7 @@ struct SettingsGuidingPreView: View {
             
             Spacer()
         }
-        .foregroundColor(.BaseBGWhite)
+        .foregroundColor(.white)
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity

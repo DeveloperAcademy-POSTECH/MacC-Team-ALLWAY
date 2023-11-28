@@ -36,16 +36,12 @@ struct TKMainView: View {
                             default:
                                 Image(systemName: "location.slash.fill")
                             }
-                            
-                            Text("\(locationStore(\.mainPlaceName))")
+                            BDText(text: "\(locationStore(\.mainPlaceName))", style: .H1_B_130)
                         }
                     }
                     .foregroundStyle(Color.GR4)
 
-                    
-                    Text("새 대화 시작하기")
-                        .font(.title2)
-                        .bold()
+                    BDText(text: "새 대화 시작하기", style: .T2_B_125)
                         .foregroundStyle(Color.OR5)
                 }
                 .padding(.bottom, 60)
@@ -112,7 +108,7 @@ struct TKMainView: View {
                     store.onConversationFullscreenDismissed()
                     
                 } confirmButtonLabel: {
-                    Text("네, 그만 할래요")
+                    BDText(text: "네, 그만 할래요", style: .H2_SB_135)
                 }
         }
         .toolbar {
@@ -153,7 +149,7 @@ struct TKMainView: View {
             
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                Text("설정으로 이동")
+                BDText(text: "설정으로 이동", style: .H2_SB_135)
                 
                 Image(systemName: "arrow.up.right.square.fill")
             }
