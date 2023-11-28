@@ -117,7 +117,7 @@ struct TKSavingView: View {
         .task {
             let allConversations = swiftDataStore.getAllConversation()
             store.onSaveConversationSheetApeear(allConversations.count)
-            focusState = true
+//            focusState = true
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
@@ -128,13 +128,13 @@ struct TKSavingView: View {
         store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
         store.onMakeNewConversationData()
         
-        let newContents = store(\.historyItems).map {
+        let newContents: [TKContent] = Array(store(\.historyItems).map {
             TKContent(
                 text: $0.text,
                 type: $0.type == .answer ? .answer : .question,
                 createdAt: $0.createdAt
             )
-        }
+        })
         
         let newConversation = TKConversation(
             title: store(\.conversationTitle),
@@ -146,6 +146,7 @@ struct TKSavingView: View {
                 blockName: locationStore(\.mainPlaceName)
         ))
         
+//        print("new conversation: ", newConversation.content)
         return newConversation
     }
 }
