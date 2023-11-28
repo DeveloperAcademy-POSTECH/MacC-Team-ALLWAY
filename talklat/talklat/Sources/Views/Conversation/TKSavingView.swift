@@ -64,7 +64,7 @@ struct TKSavingView: View {
                         style: .H1_B_130
                     )
                 }
-                .disabled(store(\.historyItems).isEmpty || store(\.conversationTitle).isEmpty)
+                .disabled(store(\.conversationTitle).isEmpty)
             }
             .font(.headline)
             .bold()
@@ -117,7 +117,7 @@ struct TKSavingView: View {
                     .transition(.opacity.animation(.easeInOut))
                 
             } else if store(\.hasCurrentConversationTitlePrevious) {
-                Text("이미 있는 제목이다 아이가?")
+                Text("이미 있는 제목이에요")
                     .font(.footnote)
                     .foregroundStyle(Color.RED)
                     .padding(.leading, 32)

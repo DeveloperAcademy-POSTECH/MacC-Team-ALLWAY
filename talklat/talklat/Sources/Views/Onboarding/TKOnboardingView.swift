@@ -60,10 +60,12 @@ struct TKOnboardingView: View {
                     // MARK: CONDITION
                     if authManager.hasAllAuthBeenObtained {
                         BDText(text: Constants.Onboarding.ALL_AUTH, style: .LT_B_160)
+                            .fixedSize()
                             .foregroundStyle(Color.OR6)
                         
                     } else {
                         BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: .LT_B_160)
+                            .fixedSize()
                             .foregroundStyle(Color.OR6)
                     }
                     
@@ -71,14 +73,16 @@ struct TKOnboardingView: View {
                 }
                 .frame(
                     maxWidth: .infinity,
-                    maxHeight: .infinity,
                     alignment: .topLeading
                 )
             }
         }
         .padding(.top, 32)
         .padding(.horizontal, 24)
-        .frame(maxHeight: .infinity)
+        .frame(
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
         .safeAreaInset(edge: .bottom) {
             onboardingBottomFooter(info: onboardInfo)
         }

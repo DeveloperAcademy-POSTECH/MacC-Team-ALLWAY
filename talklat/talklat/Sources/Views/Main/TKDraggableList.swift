@@ -23,19 +23,22 @@ struct TKDraggableList: View {
                 .foregroundStyle(Color.SheetBGWhite)
             
             VStack(spacing: 0) {
-                if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
-                    Capsule()
-                        .fill(Color.GR3)
-                        .frame(width: 36, height: 5)
-                        .padding(.top, 6)
-                }
+                Capsule()
+                    .fill(Color.GR3)
+                    .frame(width: 36, height: 5)
+                    .padding(.top, 6)
+                    .opacity(
+                        locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty
+                        ? 1.0
+                        : 0.0
+                    )
                 
                 // MARK: - RECENT CONVERSATION LIST
                 TKRecentConversationListView(
                     conversationViewStore: conversationViewStore,
                     draggableListViewStore: draggableListViewStore
                 )
-                .padding(.top, 20)
+                .padding(.top, 32)
                 .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
                 .scrollIndicators(.hidden)
             }
