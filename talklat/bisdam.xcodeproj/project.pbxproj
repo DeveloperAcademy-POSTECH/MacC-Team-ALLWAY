@@ -118,6 +118,7 @@
 		7EBD31782B0B2B1300D5514D /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
+		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
@@ -234,6 +235,7 @@
 		CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
 		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
+		CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+Equatble.swift"; sourceTree = "<group>"; };
 		CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionalInt+Distance.swift"; sourceTree = "<group>"; };
 		CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableListViewStore.swift; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				572A82032B03300B00753516 /* Character+Consonant.swift */,
 				CE0CBF252B011EF70048C784 /* Date+Formatter.swift */,
 				7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */,
+				CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */,
 				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
 				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
@@ -890,6 +893,7 @@
 				7EBD31582B0B2B1300D5514D /* TKConversationView.swift in Sources */,
 				7EBD31592B0B2B1300D5514D /* TKHistoryView.swift in Sources */,
 				7EBD315A2B0B2B1300D5514D /* TKTypingView.swift in Sources */,
+				CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */,
 				7EBD315B2B0B2B1300D5514D /* TKGuidingView.swift in Sources */,
 				7EBD315C2B0B2B1300D5514D /* TKListeningView.swift in Sources */,
 				7EBD315D2B0B2B1300D5514D /* TKSavingView.swift in Sources */,
@@ -1068,6 +1072,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1110,6 +1115,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2311222320;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
