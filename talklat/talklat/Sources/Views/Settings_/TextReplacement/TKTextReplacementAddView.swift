@@ -23,38 +23,42 @@ struct TKTextReplacementAddView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 10) {
-                SettingTRTextField (
-                    text: $phrase,
-                    focusState: _focusState,
-                    title: "단축 문구",
-                    placeholder: "아아",
-                    limit: 20
-                )
-                .onChange(of: phrase) { newValue in
-                    if newValue.hasPrefix(" ") {
-                        phrase = String(newValue.dropFirst())
-                    }
+        VStack {
+            SettingTRTextField(
+                text: $phrase,
+                focusState: _focusState,
+                title: "단축어",
+                placeholder: "아아",
+                limit: 20
+            )
+            .onChange(of: phrase) { newValue in
+                if newValue.hasPrefix(" ") {
+                    phrase = String(newValue.dropFirst())
                 }
-                
-                SettingTRTextField (
-                    text: $replacement, title: "변환 문구",
-                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                    limit: 160
-                )
-                .padding(.top, 36)
-                .onChange(of: replacement) { newValue in
-                    if newValue.hasPrefix(" ") {
-                        replacement = String(newValue.dropFirst())
-                    }
-                }
-                
-                Spacer()
             }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+            
+            SettingTRTextField(
+                text: $replacement, title: "변환 문구",
+                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                limit: 160
+            )
+            .padding(.top, 24)
+            .onChange(of: replacement) { newValue in
+                if newValue.hasPrefix(" ") {
+                    replacement = String(newValue.dropFirst())
+                }
+            }
+            
+            Spacer()
+        }
+        .safeAreaInset(edge: .top) {
+            VStack(spacing: 10) {
+                Capsule()
+                    .fill(Color.GR3)
+                    .frame(width: 36, height: 5)
+                    .padding(.vertical, 6)
+                
+                HStack {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
@@ -63,16 +67,16 @@ struct TKTextReplacementAddView: View {
                             style: .H1_B_130
                         )
                     }
-                }
-                
-                ToolbarItem(placement: .principal) {
+                    
+                    Spacer()
+                    
                     BDText(
                         text: "텍스트 대치 추가",
                         style: .H1_B_130
                     )
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
+                    
+                    Spacer()
+                    
                     Button {
                         if isInputValid {
                             dataStore.createTextReplacement(
@@ -90,9 +94,11 @@ struct TKTextReplacementAddView: View {
                     .disabled(!isInputValid)
                     .foregroundColor(isInputValid ? .OR6 : .GR4)
                 }
+                .padding(.bottom, 24)
             }
-            .background(Color.SheetBGWhite)
         }
+        .background(Color.SheetBGWhite)
+        .padding(.horizontal, 16)
     }
 }
 
@@ -100,6 +106,11 @@ struct TKTextReplacementAddView_Previews: PreviewProvider {
     @State static var isPresented = true
     
     static var previews: some View {
-        TKTextReplacementAddView()
+        ZStack {
+            
+        }
+        .sheet(isPresented: .constant(true), content: {
+            TKTextReplacementAddView()
+        })
     }
 }
