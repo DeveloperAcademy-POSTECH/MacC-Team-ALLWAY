@@ -35,7 +35,7 @@ struct SettingsGuidingEditView: View {
                     : "안내 문구 미리보기",
                     style: .H1_B_130
                 )
-                .foregroundColor(.BaseBGWhite)
+                .foregroundColor(.white)
                 .padding(.vertical, 17)
                 .frame(maxWidth: .infinity)
                 .background(
