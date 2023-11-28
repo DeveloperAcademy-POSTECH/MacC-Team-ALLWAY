@@ -62,9 +62,9 @@ struct TLTextField<Button: View>: View {
             text: $text,
             axis: .vertical
         )
-        .font(.title3)
+        .font(.custom("Pretendard", size: 20))
+        .lineSpacing(20 * 1.6 - 20)
         .bold()
-        .lineSpacing(12)
         .lineLimit(5, reservesSpace: true)
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)

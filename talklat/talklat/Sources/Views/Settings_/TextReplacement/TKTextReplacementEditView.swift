@@ -21,107 +21,103 @@ struct TKTextReplacementEditView: View {
     
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 10) {
-                VStack {
-                    SettingTRTextField(
-                        text: store.bindingPhraseTextField(),
-                        focusState: _focusState,
-                        allowSpace: false, title: "단축어",
-                        placeholder: "아아",
-                        limit: 20
-                    )
-                    .focused($focusState)
-                    
-                    SettingTRTextField(
-                        text: store.bindingReplacementTextField(),
-                        title: "변환 문구",
-                        placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
-                        limit: 160
-                    )
-                    .focused($focusState)
-                    .padding(.top, 36)
-                }
+        VStack(spacing: 10) {
+            VStack {
+                SettingTRTextField(
+                    text: store.bindingPhraseTextField(),
+                    focusState: _focusState,
+                    allowSpace: false, title: "단축어",
+                    placeholder: "아아",
+                    limit: 20
+                )
+                .focused($focusState)
                 
-                Spacer()
-                
-                if !focusState {
-                    Button {
-                        store.onShowDialogButtonTapped()
-                    } label: {
-                        BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(22)
-                    }
-                    .padding(.vertical, 20)
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 56)
-                    .background(Color.RED)
-                    .cornerRadius(22)
-                }
+                SettingTRTextField(
+                    text: store.bindingReplacementTextField(),
+                    title: "변환 문구",
+                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                    limit: 160
+                )
+                .focused($focusState)
+                .padding(.top, 36)
             }
-            .padding()
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .bold()
-                            
-                            BDText(
-                                text: "목록",
-                                style: .H1_B_130
-                            )
-                        }
-                    }
-                    .tint(Color.OR6)
+            
+            Spacer()
+            
+            if !focusState {
+                Button {
+                    store.onShowDialogButtonTapped()
+                } label: {
+                    BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(22)
                 }
-                
-                // Navigation Title
-                ToolbarItem(placement: .principal) {
-                    BDText(
-                        text: "편집",
-                        style: .H1_B_130
-                    )
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        updateTextReplacement()
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
+                .padding(.vertical, 20)
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(Color.RED)
+                .cornerRadius(22)
+            }
+        }
+        .padding()
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
                         BDText(
-                            text: "저장",
+                            text: "목록",
                             style: .H1_B_130
                         )
                     }
-                    .disabled(store.isSaveButtonDisabled)
-                    .foregroundColor(
-                        store.isSaveButtonDisabled
-                        ? Color.GR4
-                        : Color.OR6
+                }
+                .tint(Color.OR6)
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "편집",
+                    style: .H1_B_130
+                )
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    updateTextReplacement()
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    BDText(
+                        text: "저장",
+                        style: .H1_B_130
                     )
                 }
+                .disabled(store.isSaveButtonDisabled)
+                .foregroundColor(
+                    store.isSaveButtonDisabled
+                    ? Color.GR4
+                    : Color.OR6
+                )
             }
-            .showTKAlert(
-                isPresented: store.bindingShowTKAlert(),
-                style: .removeTextReplacement(title: "텍스트 대치 삭제"),
-                confirmButtonAction: {
-                    deleteTKTextReplacement()
-                    store.onDismissRemoveAlert()
-                },
-                confirmButtonLabel: {
-                    Text("네, 삭제할래요")
-                }
-            )
         }
-//        .onTapGesture {
-//            self.hideKeyboard()
-//        }
+        .showTKAlert(
+            isPresented: store.bindingShowTKAlert(),
+            style: .removeTextReplacement(title: "텍스트 대치 삭제"),
+            confirmButtonAction: {
+                deleteTKTextReplacement()
+                store.onDismissRemoveAlert()
+            },
+            confirmButtonLabel: {
+                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
+            }
+        )
+        
         
     }
     
@@ -183,59 +179,5 @@ struct TKTextReplacementEditView: View {
         }
         
         presentationMode.wrappedValue.dismiss()
-    }
-}
-
-struct TextReplacementCustomDialog: View {
-    
-    @ObservedObject var store: TextReplacementViewStore
-    
-    var onDelete: () -> Void
-    
-    var body: some View {
-        GroupBox {
-            VStack(spacing: 16) {
-                Image(systemName: "trash.fill")
-                    .foregroundColor(.RED)
-                    .font(.system(size: 20))
-                
-                BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
-                    .foregroundColor(.GR9)
-                
-                Text("현재 텍스트 대치가 삭제됩니다.")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.GR6)
-                    .font(.system(size: 15, weight: .medium))
-                
-                HStack {
-                    Button {
-                        store.onDismissRemoveAlert()
-                    } label: {
-                        Text("아니요, 취소할래요")
-                            .foregroundColor(.GR6)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.GR2)
-                            .cornerRadius(16)
-                    }
-                    
-                    Button {
-//                        onDelete()
-                        store.onDismissRemoveAlert()
-                    } label: {
-                        Text("네, 삭제할래요")
-                            .foregroundColor(.white)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.RED)
-                            .cornerRadius(16)
-                    }
-                }
-            }
-        }
-        .background(Color.BaseBGWhite)
-        .cornerRadius(22)
-        .frame(height: 240)
-        .frame(maxWidth: .infinity)
     }
 }
