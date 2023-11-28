@@ -52,9 +52,11 @@ struct SettingsGuidingView: View {
         .navigationTitle("안내 문구")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            isGuidingEnabled = UserDefaults.standard.bool(
-                forKey: "isGuidingEnabled"
-            )
+            if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
+                isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")
+            } else {
+                isGuidingEnabled = true
+            }
         }
         .onChange(of: isGuidingEnabled) { _, _ in
             UserDefaults.standard.setValue(
@@ -62,6 +64,10 @@ struct SettingsGuidingView: View {
                 forKey: "isGuidingEnabled"
             )
         }
+    }
+    
+    private func isKeyPresentInUserDefaults(key: String) -> Bool {
+        return UserDefaults.standard.object(forKey: key) != nil
     }
 }
 
