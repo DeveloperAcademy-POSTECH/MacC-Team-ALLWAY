@@ -194,7 +194,7 @@ struct TKListeningView: View {
                 
             } label: {
                 BDText(text: "취소", style: .H1_B_130)
-                    .padding(.vertical, 6)
+                    .padding(.horizontal, 6)
                     .foregroundStyle(Color.GR6)
             }
             .buttonStyle(.borderedProminent)
