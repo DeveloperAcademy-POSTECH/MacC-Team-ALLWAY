@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsHapticView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isHapticEnabled: Bool = true
     
     var body: some View {
@@ -26,9 +27,27 @@ struct SettingsHapticView: View {
         }
         .padding(.top, 24)
         .padding(.horizontal, 16)
-        .navigationTitle("진동")
-        .navigationBarTitleDisplayMode(.inline)
-
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(text: "진동", style: .H1_B_130)
+            }
+        }
     }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsGuidingView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isGuidingEnabled: Bool = true
     
     var body: some View {
@@ -49,8 +50,27 @@ struct SettingsGuidingView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .navigationTitle("안내 문구")
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(text: "안내 문구", style: .H1_B_130)
+            }
+        }
         .onAppear {
             if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
                 isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")

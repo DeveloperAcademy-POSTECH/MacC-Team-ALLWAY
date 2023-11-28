@@ -22,6 +22,7 @@ private enum ColorSchemeType: String, CaseIterable {
 }
 
 struct SettingsDisplayView: View {
+    @Environment(\.dismiss) private var dismiss
     @AppStorage("BDColorScheme") var BDColorScheme = ColorScheme.unspecified
     @EnvironmentObject var colorSchemeManager: ColorSchemeManager
     @State private var selectedTheme: ColorScheme = .dark
@@ -49,6 +50,22 @@ struct SettingsDisplayView: View {
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
             ToolbarItem(placement: .principal) {
                 BDText(text: "화면 모드", style: .H1_B_130)
             }
