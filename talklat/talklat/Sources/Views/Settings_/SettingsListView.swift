@@ -12,7 +12,7 @@ private enum SectionType: String, CaseIterable {
     case guidingMessage = "안내 문구"
     case displayMode = "화면 모드"
     // case haptics = "진동"
-    case gesture = "제스처"
+//    case gesture = "제스처"
     case dataPolicyInfo = "개인정보 처리방침"
     case creators = "만든 사람들"
     case needHelp = "도움이 필요하신가요?"
@@ -22,7 +22,7 @@ private enum SectionType: String, CaseIterable {
         case .textReplacement, .guidingMessage: return "대화"
         case .displayMode: return "접근성"
         // case .haptics: return "일반"
-        case .gesture: return "실험실"
+//        case .gesture: return "실험실"
         case .dataPolicyInfo, .creators: return "정보"
         case .needHelp: return "지원"
         }
@@ -34,7 +34,7 @@ private enum SectionType: String, CaseIterable {
         case .guidingMessage: return "quote.opening"
         case .displayMode: return "sun.max.fill"
         // case .haptics: return "water.waves"
-        case .gesture: return "hands.and.sparkles.fill"
+//        case .gesture: return "hands.and.sparkles.fill"
         case .dataPolicyInfo: return "app.badge.fill"
         case .creators: return "person.2.fill"
         case .needHelp: return "person.crop.circle.fill.badge.questionmark"
@@ -60,7 +60,7 @@ struct SettingsListView: View {
     @EnvironmentObject private var locationStore: TKLocationStore
     
     private let sectionCategories: [String] = [
-        "대화", "접근성", "실험실", "정보", "지원" // TODO: "일반" 추가
+        "대화", "접근성", /* "실험실", */ "정보", "지원" // TODO: "일반" 추가
     ]
     
     var body: some View {
@@ -120,9 +120,9 @@ struct SettingsListView: View {
                                          SettingsHapticView()
                                      */
                                     
-                                case .gesture:
-                                    SettingsGestureView()
-                                        .navigationBarBackButtonHidden()
+//                                case .gesture:
+//                                    SettingsGestureView()
+//                                        .navigationBarBackButtonHidden()
                                     
                                 case .dataPolicyInfo:
                                     LoadingWebView()
@@ -159,15 +159,14 @@ struct SettingsListView: View {
                 authManager.isLocationAuthorized = false
             }
         }
-        .onChange(of: locationStore(\.authorizationStatus), { oldValue, newValue in
-            print(#function, oldValue, newValue)
+        .onChange(of: locationStore(\.authorizationStatus)) { _, newValue in
             switch newValue {
             case .authorizedAlways, .authorizedWhenInUse:
                 authManager.isLocationAuthorized = true
             default:
                 authManager.isLocationAuthorized = false
             }
-        })
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -195,42 +194,42 @@ struct SettingsListView: View {
         }
         .scrollIndicators(.hidden)
     }
-}
-
-@ViewBuilder
-func authNoticeBuilder(noticeItem: AuthorizationType) -> some View {
-    Button {
-        if let url = URL(
-            string: UIApplication.openSettingsURLString
-        ) {
-            UIApplication.shared.open(url)
-        }
-    } label: {
-        HStack {
-            Image(systemName: noticeItem.icon)
-                .foregroundColor(.white)
-                .font(.system(size: 45))
-            
-            VStack(alignment: .leading, spacing: 8) {
-                BDText(text: "\(noticeItem.rawValue) 권한이 꺼져있어요.", style: .H1_B_130)
-                    .foregroundColor(.white)
-                
-                HStack {
-                    BDText(text: "권한 허용하러 가기", style: .H1_B_130)
-                        .foregroundColor(.white)
-                        
-                    Image(systemName: "arrow.up.forward.app.fill")
-                        .foregroundColor(.white)
-                }
+    
+    @ViewBuilder
+    private func authNoticeBuilder(noticeItem: AuthorizationType) -> some View {
+        Button {
+            if let url = URL(
+                string: UIApplication.openSettingsURLString
+            ) {
+                UIApplication.shared.open(url)
             }
-            
-            Spacer()
+        } label: {
+            HStack {
+                Image(systemName: noticeItem.icon)
+                    .foregroundColor(.white)
+                    .font(.system(size: 45))
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    BDText(text: "\(noticeItem.rawValue) 권한이 꺼져있어요.", style: .H1_B_130)
+                        .foregroundColor(.white)
+                    
+                    HStack {
+                        BDText(text: "권한 허용하러 가기", style: .H1_B_130)
+                            .foregroundColor(.white)
+                        
+                        Image(systemName: "arrow.up.forward.app.fill")
+                            .foregroundColor(.white)
+                    }
+                }
+                
+                Spacer()
+            }
+            .foregroundColor(Color.BaseBGWhite)
+            .frame(maxWidth: .infinity)
+            .padding(16)
+            .background(Color.OR5)
+            .cornerRadius(22)
         }
-        .foregroundColor(Color.BaseBGWhite)
-        .frame(maxWidth: .infinity)
-        .padding(16)
-        .background(Color.OR5)
-        .cornerRadius(22)
     }
 }
 
