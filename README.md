@@ -1,4 +1,4 @@
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/8e773511-3ce0-416d-b63c-02a46b967c97" width="300">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/c04376c9-a5af-45d4-aaef-af1eac024f96" width="250">
 
 > 청각장애인과 청인 사이, 필담을 이용한 자연스러운 대화를 잇다 ‘비스담’
 ---
