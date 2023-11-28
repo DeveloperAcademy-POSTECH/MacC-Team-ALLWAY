@@ -161,13 +161,15 @@ extension TKConversationViewStore {
         onSpeechTransicriptionUpdated(transcript)
         makeCurrentConversationContent()
         
-        let newContents = self(\.historyItems).map {
-            TKContent(
-                text: $0.text,
-                type: $0.type == .answer ? .answer : .question,
-                createdAt: $0.createdAt
-            )
-        }
+        let newContents = self(\.historyItems)
+            .map {
+                TKContent(
+                    text: $0.text,
+                    type: $0.type == .answer ? .answer : .question,
+                    createdAt: $0.createdAt
+                )
+            }
+            .filter { $0.text != "" }
         
         let newConversation = TKConversation(
             title: self(\.conversationTitle),
