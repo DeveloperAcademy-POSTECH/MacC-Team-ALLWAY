@@ -14,7 +14,8 @@ struct HistoryInfoItemView: View {
     @EnvironmentObject private var locationStore: TKLocationStore
     @StateObject  var historyInfoStore: TKHistoryInfoStore = TKHistoryInfoStore()
     @FocusState var isTextfieldFocused: Bool
-    @State private var coordinateRegion = initialCoordinateRegion
+    @State private var coordinateRegion: MKCoordinateRegion = initialCoordinateRegion
+    @State private var isShowingAlert: Bool = false
     var conversation: TKConversation
     
     var body: some View {
@@ -97,8 +98,12 @@ struct HistoryInfoItemView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
-                            isTextfieldFocused = false
-                            dismiss()
+                            if historyInfoStore.saveButtonDisabled(conversation) {
+                                isTextfieldFocused = false
+                                dismiss()
+                            } else {
+                                historyInfoStore.reduce(\.isShowingAlert, into: true)
+                            }
                         } label: {
                             HStack {
                                 Image(systemName: "chevron.left")
@@ -131,10 +136,21 @@ struct HistoryInfoItemView: View {
                             Text("저장")
                         }
                         .tint(Color.OR5)
-                        .disabled(historyInfoStore(\.text).isEmpty)
-                        .disabled(historyInfoStore(\.isNotChanged))
+                        .disabled(historyInfoStore.saveButtonDisabled(conversation))
                     }
                 }
+                .fontWeight(.bold)
+                .showTKAlert(
+                    isPresented: historyInfoStore.bindingAlert(),
+                    style: .editCancellation(title: "변경 사항 취소"),
+                    confirmButtonAction: ({
+                        historyInfoStore.reduce(\.isShowingAlert, into: false)
+                        dismiss()
+                    }),
+                    confirmButtonLabel: {
+                        BDText(text: "네, 취소할래요.", style: .H2_SB_135)
+                    }
+                )
     }
     
     private var textFieldView: some View {
@@ -147,6 +163,7 @@ struct HistoryInfoItemView: View {
             
             
             TextField("", text: historyInfoStore.bindingText())
+                .frame(height: 22)
                 .onChange(of: historyInfoStore(\.text)) {
                     historyInfoStore.updateTextLimitMessage()
                 }
@@ -157,8 +174,8 @@ struct HistoryInfoItemView: View {
                         .fill(
                             Color.GR1
                         )
+                        .frame(height: 44)
                 }
-                .frame(height: 44)
                 .overlay {
                     HStack {
                         Spacer()
@@ -174,7 +191,6 @@ struct HistoryInfoItemView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
                 .padding(.bottom, 8)
             
             Text(historyInfoStore(\.textLimitMessage))
@@ -188,7 +204,7 @@ struct HistoryInfoItemView: View {
             Text("위치")
                 .font(.headline)
                 .padding(.leading, 10)
-                .padding(.bottom, 4)
+                .padding(.bottom, 8)
                 .foregroundStyle(Color.GR5)
             
             if conversation.location == nil {
@@ -210,7 +226,7 @@ struct HistoryInfoItemView: View {
                 .tint(Color.OR5)
             } else {
                 Map(coordinateRegion: historyInfoStore.bindingInfoCoordinate(),
-                    showsUserLocation: true,
+                    showsUserLocation: false,
                     annotationItems: historyInfoStore(\.annotationItems)
                 ) { item in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)) {
@@ -233,7 +249,6 @@ struct HistoryInfoItemView: View {
                             Spacer()
                             
                             Button {
-                                //MARK: 현재 위치 사용자 친화적인 주소로 바꿔주기
                                 isTextfieldFocused = false
                                 historyInfoStore.reduce(\.isShowingSheet, into: true)
                             } label: {
@@ -244,17 +259,11 @@ struct HistoryInfoItemView: View {
                         .padding()
                         .background {
                             Rectangle()
-                                .fill(Color(uiColor: UIColor.systemGray3))
+                                .fill(Color.GR1)
                         }
                     }
                 }
             }
-        }
-        .onChange(of: historyInfoStore(\.infoCoordinateRegion)) { _ in
-            historyInfoStore.reduce(\.isNotChanged, into: false)
-        }
-        .onChange(of: historyInfoStore(\.text)) { _ in
-            historyInfoStore.reduce(\.isNotChanged, into: false)
         }
     }
     
@@ -274,20 +283,6 @@ struct HistoryInfoItemView: View {
                 conversation.location?.longitude = coordinate.longitude
                 conversation.location?.blockName = locationStore(\.infoPlaceName)
             }
-        }
-    }
-}
-
-
-extension MKCoordinateRegion: Equatable {
-    public static func == (lhs: MKCoordinateRegion, rhs: MKCoordinateRegion) -> Bool {
-        if lhs.center.latitude == rhs.center.latitude,
-           lhs.center.longitude ==  rhs.center.longitude,
-           lhs.span.latitudeDelta == rhs.span.latitudeDelta,
-           lhs.span.longitudeDelta == rhs.span.longitudeDelta {
-            return true
-        } else {
-            return false
         }
     }
 }
