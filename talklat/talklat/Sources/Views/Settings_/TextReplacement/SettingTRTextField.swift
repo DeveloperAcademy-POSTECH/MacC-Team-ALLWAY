@@ -20,10 +20,8 @@ struct SettingTRTextField: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Text(title)
+                BDText(text: title, style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
-                    .font(.system(size: 15))
-                    .fontWeight(.semibold)
                     .padding(.horizontal, 16)
                 Spacer()
             }
@@ -72,24 +70,18 @@ struct SettingTRTextField: View {
         isTextEmpty: Bool
     ) -> some View {
         if !allowSpace && text.contains(" ") {
-            return Text("단축어에는 띄어쓰기를 사용할 수 없어요")
-                .font(.system(size: 13, weight: .medium))
+            return BDText(text: "단축어에는 띄어쓰기를 사용할 수 없어요", style: .FN_SB_135)
                 .foregroundColor(Color.RED)
         }
         if currentCount == 0 {
-            return Text("한 글자 이상 입력해 주세요")
-                .font(.system(size: 13, weight: .medium))
+            return BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
                 .foregroundColor(Color.RED)
         } else {
             let displayCount = min(currentCount, limit)
-            return Text("\(displayCount)/\(limit)")
-                .font(.system(size: 13, weight: .medium))
-                .monospacedDigit()
-                .foregroundColor(
-                    currentCount >= limit
-                    ? Color.RED
-                    : Color.GR4
-                )
+            let countText = "\(displayCount)/\(limit)"
+            let textColor: Color = currentCount >= limit ? Color.RED : Color.GR4
+            return BDText(text: countText, style: .FN_SB_135)
+                .foregroundColor(textColor)
         }
     }
 

@@ -18,7 +18,7 @@ struct CustomHistoryView: View {
     var conversation: TKConversation
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             CustomHistoryViewControllerRepresentable(conversation: conversation)
                 .onReceive(NotificationCenter.default.publisher(for: swipeDetectNotification)) { _ in
                     //MARK: swipe down action
@@ -47,8 +47,8 @@ struct CustomHistoryView: View {
                     //MARK: Swipe down action
                 } label: {
                     VStack {
-                        Text("작성화면으로 돌아가기")
-                            .font(.footnote)
+                        BDText(text: "작성화면으로 돌아가기", style: .FN_SB_135)
+                        
                         Image(systemName: "chevron.down")
                             .resizable()
                             .frame(width: 32, height: 10)
@@ -60,7 +60,7 @@ struct CustomHistoryView: View {
                 // TODO: ver 1.1
                 EmptyView()
 //                Button {
-//                    
+//                    // MARK: Start Conversation From This Location
 //                } label: {
 //                    Text("이 위치에서 대화 시작하기")
 //                        .foregroundStyle(Color.OR6)
@@ -71,10 +71,11 @@ struct CustomHistoryView: View {
 //                .background {
 //                    RoundedRectangle(cornerRadius: 22)
 //                        .fill(Color.GR1)
+//                        
 //                }
+//                .padding(.horizontal, 10)
             }
         }
-        .padding()
         .toolbar {
             if historyViewType == .item {
                 ToolbarItem(placement: .topBarLeading) {
@@ -114,6 +115,8 @@ struct CustomHistoryView: View {
                 }
             }
         }
+        .fontWeight(.bold)
+        .navigationTitle(historyViewType == .item ? conversation.title : "대화 내용")
         .navigationBarBackButtonHidden(true)
     }
     

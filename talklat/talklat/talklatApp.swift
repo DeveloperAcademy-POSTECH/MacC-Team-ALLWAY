@@ -5,6 +5,7 @@
 //  Created by Celan on 2023/10/05.
 //
 
+import Lottie
 import SwiftUI
 import SwiftData
 
@@ -14,6 +15,7 @@ struct talklatApp: App {
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @StateObject private var authManager: TKAuthManager = TKAuthManager()
     @StateObject private var colorSchemeManager = ColorSchemeManager()
+    @State private var lottiePlaybackMode: LottiePlaybackMode = LottiePlaybackMode.paused
     
     private var container: ModelContainer
     
@@ -37,10 +39,13 @@ struct talklatApp: App {
         WindowGroup {
             Group {
                 if case .splash = authManager.authStatus {
-                    TKSplashView()
-                        .task {
-                            try? await Task.sleep(for: .seconds(3.0))
-                            authManager.checkOnboardingCompletion()
+                    TKSplashView(playbackMode: $lottiePlaybackMode)
+                        .transition(.opacity.animation(.easeInOut))
+                        .onChange(of: lottiePlaybackMode) { _, newValue in
+                            if newValue == .paused {
+                                Task { try? await Task.sleep(for: .seconds(0.3)) }
+                                authManager.checkOnboardingCompletion()
+                            }
                         }
                 }
                 

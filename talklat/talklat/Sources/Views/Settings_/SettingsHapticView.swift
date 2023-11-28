@@ -13,9 +13,8 @@ struct SettingsHapticView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("기본") // TODO: 섹션 타이틀 TKListCell로 이동
+            BDText(text: "기본", style: .H2_SB_135) // TODO: 섹션 타이틀 TKListCell로 이동
                 .foregroundColor(.GR5)
-                .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 16)
             
             BDListCell(label: "진동") {

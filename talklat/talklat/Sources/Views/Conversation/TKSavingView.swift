@@ -63,9 +63,7 @@ struct TKSavingView: View {
             .padding(.bottom, 24)
             
             HStack {
-                Text("제목")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                BDText(text: "제목", style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
                 
                 Spacer()
@@ -104,15 +102,13 @@ struct TKSavingView: View {
             .padding(.bottom, 8)
             
             if store(\.conversationTitle).isEmpty {
-                Text("한 글자 이상 입력해 주세요")
-                    .font(.footnote)
+                BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
                     .foregroundStyle(Color.RED)
                     .padding(.leading, 32)
                     .transition(.opacity.animation(.easeInOut))
                 
             } else {
-                Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
-                    .font(.footnote)
+                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: .FN_SB_135)
                     .padding(.leading, 32)
                     .foregroundStyle(Color.GR4)
                     .animation(.none, value: store(\.conversationTitle))

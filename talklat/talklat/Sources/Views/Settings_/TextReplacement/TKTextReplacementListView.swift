@@ -77,14 +77,12 @@ struct TKTextReplacementListView: View {
                                 // MARK: 리스트의 Header
                                 Section(
                                     header:
-                                        Text(groupKey)
+                                        BDText(text: groupKey, style: .H2_SB_135)
                                         .id(groupKey)
-                                        .font(.subheadline)
                                         .foregroundColor(.GR5)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.leading, 32)
                                         .padding(.top, 24)
-                                        .lineSpacing(15 * 1.35 - 15)
                                 ) {
                                     listSection(groupKey)
                                         .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
@@ -279,6 +277,6 @@ extension Character {
 
 #Preview {
     NavigationStack {
-        SettingsListView()
+        TKTextReplacementListView()
     }
 }

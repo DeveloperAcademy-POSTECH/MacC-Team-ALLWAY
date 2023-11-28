@@ -13,23 +13,19 @@ struct TextReplacementRow: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text(key)
-                .font(.system(size: 17, weight: .bold))
+            BDText(text: key, style: .H1_B_130)
                 .foregroundStyle(Color.GR9)
                 .foregroundStyle(Color.GR7)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .lineSpacing(17 * 1.3 - 17)
                 .padding(.vertical, 11)
                 .padding(.leading, 16)
             
             Divider()
                 .padding(.leading, 16)
             
-            Text(value)
-                .font(.system(size: 15, weight: .medium))
+            BDText(text: value, style: .H2_SB_135)
                 .foregroundStyle(Color.GR5)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .lineSpacing(15 * 1.35 - 15)
                 .padding(.vertical, 12)
                 .padding(.leading, 16)
         }
