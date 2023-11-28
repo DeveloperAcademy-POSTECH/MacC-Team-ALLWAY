@@ -104,12 +104,15 @@ struct SettingsListView: View {
                                 switch item {
                                 case .textReplacement:
                                     TKTextReplacementListView()
+                                        .navigationBarBackButtonHidden()
                                
                                 case .guidingMessage:
                                     SettingsGuidingView()
+                                        .navigationBarBackButtonHidden()
                                 
                                 case .displayMode:
                                     SettingsDisplayView()
+                                        .navigationBarBackButtonHidden()
                                     // SettingsDisplayTestingView()
                                    
                                     /*
@@ -119,15 +122,19 @@ struct SettingsListView: View {
                                     
                                 case .gesture:
                                     SettingsGestureView()
+                                        .navigationBarBackButtonHidden()
                                     
                                 case .dataPolicyInfo:
                                     LoadingWebView()
+                                        .navigationBarBackButtonHidden()
                                     
                                 case .creators:
                                     SettingsTeamView()
+                                        .navigationBarBackButtonHidden()
                                
                                 case .needHelp:
                                     SettingsHelpView()
+                                        .navigationBarBackButtonHidden()
                                 }
                             } label: {
                                 BDListCell(label: item.rawValue) {
@@ -144,7 +151,16 @@ struct SettingsListView: View {
         }
         .padding(.horizontal, 16)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            switch locationStore(\.authorizationStatus) {
+            case .authorizedAlways, .authorizedWhenInUse:
+                authManager.isLocationAuthorized = true
+            default:
+                authManager.isLocationAuthorized = false
+            }
+        }
         .onChange(of: locationStore(\.authorizationStatus), { oldValue, newValue in
+            print(#function, oldValue, newValue)
             switch newValue {
             case .authorizedAlways, .authorizedWhenInUse:
                 authManager.isLocationAuthorized = true

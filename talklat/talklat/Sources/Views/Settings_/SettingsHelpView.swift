@@ -28,7 +28,6 @@ struct SettingsHelpView: View {
             
             Spacer()
         }
-        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {

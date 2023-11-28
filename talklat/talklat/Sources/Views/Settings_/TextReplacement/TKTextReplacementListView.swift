@@ -103,7 +103,6 @@ struct TKTextReplacementListView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -118,7 +117,6 @@ struct TKTextReplacementListView: View {
                             style: .H1_B_130
                         )
                     }
-                    .tint(Color.OR5)
                 }
             }
             
