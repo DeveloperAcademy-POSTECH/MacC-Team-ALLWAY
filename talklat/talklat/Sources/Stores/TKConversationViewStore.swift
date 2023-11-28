@@ -428,7 +428,7 @@ extension TKConversationViewStore {
     
     public func onGuideTimeEnded() {
         withAnimation {
-            reduce(\.conversationStatus, into: .recording)
+            switchConverstaionStatus()
         }
         
         HapticManager.sharedInstance.generateHaptic(.success)
@@ -496,10 +496,10 @@ extension TKConversationViewStore {
     private func switchConverstaionStatus() {
         switch self(\.conversationStatus) {
         case .writing:
+            defer { reduce(\.hasGuidingMessageShown, into: true) }
             if !self(\.hasGuidingMessageShown) && UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
                 reduce(\.conversationStatus, into: .guiding)
-            } else {
-                reduce(\.hasGuidingMessageShown, into: true)
+            } else if self(\.hasGuidingMessageShown) || !UserDefaults.standard.bool(forKey: "isGuidingEnabled") {
                 reduce(\.conversationStatus, into: .recording)
             }
             
