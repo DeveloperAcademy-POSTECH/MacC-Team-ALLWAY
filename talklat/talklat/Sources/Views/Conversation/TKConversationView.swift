@@ -102,23 +102,25 @@ struct TKConversationView: View {
                 speechRecognizeManager.startTranscribing()
             }
         }
-        // MARK: - Flip Gesture OnChange (Toggled from Settings)
-        .onAppear {
-            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
-                gyroScopeStore.detectDeviceMotion()
-            }
-        }
-        .onChange(of: gyroScopeStore.faced) { facedStatus in
-            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
-                #warning("Conversation 쪽 로직 확인 필요")
-                switch facedStatus {
-                case .myself:
-                    store.onBackToWritingChevronTapped() // to .writing
-                case .opponent:
-                    store.onStartRecordingButtonTapped() // to .recording
-                }
-            }
-        }
+        // TODO: - Flip Gesture OnChange (Toggled from Settings)
+//        .onAppear {
+//            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+//                gyroScopeStore.detectDeviceMotion()
+//            }
+//        }
+//        .onChange(of: gyroScopeStore.faced) { _, newStatus in
+//            if UserDefaults.standard.bool(forKey: "isGestureEnabled") {
+//                #warning("Conversation 쪽 로직 확인 필요")
+//                switch newStatus {
+//                case .myself:
+//                    store.onStopRecordingButtonTapped() // to .writing
+//                    
+//                case .opponent:
+//                    store.onStartRecordingButtonTapped() // to .recording
+//                    
+//                }
+//            }
+//        }
     }
 }
 
