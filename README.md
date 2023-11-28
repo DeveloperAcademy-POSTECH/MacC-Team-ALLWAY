@@ -50,12 +50,13 @@
 
 ---
 
+
 ### 🟠 앱 이미지
 <table>
 <tr>
 <td>
 [메인 화면]
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/88757043/5d3454a2-b865-49d2-a77c-a765db0c595b" height="400">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/81c46820-070f-4889-9537-f241d57f6b08" height="400">
 
 </td>
 <td>
