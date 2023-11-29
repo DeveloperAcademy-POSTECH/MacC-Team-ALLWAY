@@ -1,8 +1,7 @@
-<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/c04376c9-a5af-45d4-aaef-af1eac024f96" width="250">
+<img src="https://github.com/DeveloperAcademy-POSTECH/MacC-Team-ALLWAY/assets/89244357/76d5cc77-18c8-4f35-8d60-c06e67beba4d" width="250">
 
 > 청각장애인과 청인 사이, 필담을 이용한 자연스러운 대화를 잇다 ‘비스담’
 ---
-
 ### 비스담 (BISDAM)
 #### 청각장애인과 낯선 청인 사이 자연스러운 대화를 돕는 앱 비스담(BISDAM)입니다.
 
