@@ -18,8 +18,10 @@
 		577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */; };
 		577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */; };
 		577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */; };
+		7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */; };
+		7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */; };
+		7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */; };
 		7E806A422B15A931009FBB51 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E806A412B15A931009FBB51 /* Lottie */; };
-		7E806A442B15AA54009FBB51 /* BDSplash.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E806A432B15AA54009FBB51 /* BDSplash.json */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -174,6 +176,9 @@
 		57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTKSettingView.swift; sourceTree = "<group>"; };
 		7E0188D82B05F230005AA4D0 /* TKOnboardingAuthReqeustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingAuthReqeustView.swift; sourceTree = "<group>"; };
 		7E0313802B04F8BB0090A704 /* TKSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSplashView.swift; sourceTree = "<group>"; };
+		7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Dark.json; sourceTree = "<group>"; };
+		7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Light.json; sourceTree = "<group>"; };
+		7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDMain_Circle.json; sourceTree = "<group>"; };
 		7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
 		7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainView.swift; sourceTree = "<group>"; };
 		7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainViewStore.swift; sourceTree = "<group>"; };
@@ -182,7 +187,6 @@
 		7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecentConversationListView.swift; sourceTree = "<group>"; };
 		7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKBreathingCircles.swift; sourceTree = "<group>"; };
 		7E6641252B03C03F00CDC6AB /* TKConversationViewStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
-		7E806A432B15AA54009FBB51 /* BDSplash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash.json; sourceTree = "<group>"; };
 		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
@@ -440,7 +444,9 @@
 		7E8D17EE2ACE8B1400E904E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7E806A432B15AA54009FBB51 /* BDSplash.json */,
+				7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */,
+				7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */,
+				7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */,
 				7E8D17CA2ACE8AED00E904E5 /* Preview Content */,
 				7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */,
 			);
@@ -766,10 +772,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */,
 				577B45242B0DE76500DA010E /* Pretendard-ExtraLight.otf in Resources */,
 				577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */,
-				7E806A442B15AA54009FBB51 /* BDSplash.json in Resources */,
 				577B45252B0DE76500DA010E /* Pretendard-Light.otf in Resources */,
+				7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */,
 				577B45202B0DE76500DA010E /* Pretendard-Thin.otf in Resources */,
 				7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */,
 				577B45232B0DE76500DA010E /* Pretendard-ExtraBold.otf in Resources */,
@@ -777,6 +784,7 @@
 				577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */,
 				577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */,
 				7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */,
+				7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */,
 				577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
