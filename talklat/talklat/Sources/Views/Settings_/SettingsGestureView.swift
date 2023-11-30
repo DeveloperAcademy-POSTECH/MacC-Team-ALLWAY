@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct SettingsGestureView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var isGestureEnabled: Bool = true
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("대화 전환") // TODO: 섹션 타이틀 TKListCell로 이동
-                .foregroundColor(.GR5)
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.leading, 16)
+            BDText( // TODO: 섹션 타이틀 TKListCell로 이동
+                text: "대화 전환",
+                style: .H2_SB_135
+            )
+            .foregroundColor(.GR5)
+            .padding(.leading, 16)
             
-            TKListCell(label: "플립 제스처") {
+            BDListCell(label: "플립 제스처") {
                 } trailingUI: {
                     Toggle("", isOn: $isGestureEnabled)
                 }
@@ -26,9 +29,38 @@ struct SettingsGestureView: View {
         }
         .padding(.top, 24)
         .padding(.horizontal, 16)
-        .navigationTitle("진동")
-        .navigationBarTitleDisplayMode(.inline)
-
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                BDText(text: "진동", style: .H1_B_130)
+            }
+        }
+        .onAppear {
+            isGestureEnabled = UserDefaults.standard.bool(
+                forKey: "isGestureEnabled"
+            )
+        }
+        .onChange(of: isGestureEnabled) { _, _ in
+            UserDefaults.standard.setValue(
+                isGestureEnabled,
+                forKey: "isGestureEnabled"
+            )
+        }
     }
 }
 

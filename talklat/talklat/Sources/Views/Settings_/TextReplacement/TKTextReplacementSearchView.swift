@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: 텍스트 대치 검색 결과 화면
 struct TKTextReplacementSearchView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
@@ -34,34 +35,53 @@ struct TKTextReplacementSearchView: View {
     }
 
     var body: some View {
-        ScrollView {
+        if filteredLists.isEmpty {
+            emptySearchResultView
+        } else {
+            ScrollView {
+                searchResultList
+            }
+        }
+    }
+    
+    private var emptySearchResultView: some View {
+        VStack {
+            Spacer()
+            Image(colorScheme == .light ? "search.result.none.light" : "search.result.none.dark")
+                .padding(.bottom, 40)
+            BDText(text: "검색 결과가 없어요", style: .H1_B_130)
+                .foregroundColor(Color.GR3)
+            Spacer()
+        }
+    }
+    
+    private var searchResultList: some View {
+        ForEach(
+            filteredLists,
+            id: \.self
+        ) { list in
             ForEach(
-                filteredLists,
-                id: \.self
-            ) { list in
-                ForEach(
-                    list.wordDictionary.sorted { $0.key < $1.key },
-                    id: \.key
-                ) { key, values in
-                    if let firstValue = values.first {
-                        NavigationLink {
-                            TKTextReplacementEditView(store: store)
-                                .onAppear {
-                                    selectedList = list
-                                    
-                                    store.selectTextReplacement(
-                                        phrase: key,
-                                        replacement: firstValue
-                                    )
-                                }
-                            
-                        } label: {
-                            ReplacementSearchResultCell(
-                                store: store,
-                                key: key,
-                                firstReplacement: firstValue
-                            )
-                        }
+                list.wordDictionary.sorted { $0.key < $1.key },
+                id: \.key
+            ) { key, values in
+                if let firstValue = values.first {
+                    NavigationLink {
+                        TKTextReplacementEditView(store: store)
+                            .onAppear {
+                                selectedList = list
+                                
+                                store.selectTextReplacement(
+                                    phrase: key,
+                                    replacement: firstValue
+                                )
+                            }
+                        
+                    } label: {
+                        ReplacementSearchResultCell(
+                            store: store,
+                            key: key,
+                            firstReplacement: firstValue
+                        )
                     }
                 }
             }

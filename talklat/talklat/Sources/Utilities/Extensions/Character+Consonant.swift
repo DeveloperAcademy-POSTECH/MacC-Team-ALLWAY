@@ -18,13 +18,20 @@ extension Character {
 
         guard let scalarValue = UnicodeScalar(String(self))?.value else { return nil }
 
+        // 단일 자음 처리
+        if scalarValue >= consonantStart, scalarValue <= consonantEnd {
+            let index = Int(scalarValue - consonantStart)
+            if index < initialConsonants.count {
+                return initialConsonants[index]
+            }
+        }
+        
+        // 완성형 한글 범위 내의 처리
         if scalarValue >= hangulStart, scalarValue <= 0xD7A3 {
             let index = Int((scalarValue - hangulStart) / 588)
             return initialConsonants[min(index, initialConsonants.count - 1)]
-        } else if scalarValue >= consonantStart, scalarValue <= consonantEnd {
-            let index = Int(scalarValue - consonantStart)
-            return initialConsonants[min(index, initialConsonants.count - 1)]
         }
+
         return nil
     }
 }

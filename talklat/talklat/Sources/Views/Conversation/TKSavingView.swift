@@ -10,12 +10,13 @@ import SwiftUI
 
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var store: TKConversationViewStore
     @ObservedObject var speechRecognizeManager: SpeechRecognizer
-    @Environment(\.dismiss) private var dismiss
     @FocusState var focusState: Bool
-    let swiftDataStore = TKSwiftDataStore()
+    @State private var allConversationTitles: [String] = []
+    private let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         VStack(
@@ -27,24 +28,43 @@ struct TKSavingView: View {
                     store.onDismissSavingViewButtonTapped()
                     
                 } label: {
-                    Text("취소")
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 
                 Spacer()
                 
-                Text("새 대화 저장")
+                HStack(spacing: 5) {
+                    Image(systemName: "location.fill")
+                    
+                    BDText(text: locationStore(\.mainPlaceName), style: .H1_B_130)
+                }
+                .foregroundStyle(Color.GR7)
                 
                 Spacer()
                 
                 Button {
-                    let res = makeNewConversation()
-                    swiftDataStore.appendItem(res)
-                    store.onSaveNewConversationButtonTapped()
+                    if let res: TKConversation = store.makeNewConversation(
+                        with: speechRecognizeManager.transcript,
+                        at: TKLocation(
+                            latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude,
+                            longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,
+                            blockName: locationStore(\.mainPlaceName)
+                        )
+                    ) {
+                        swiftDataStore.appendItem(res)
+                        store.onSaveNewConversationButtonTapped()
+                    }
                     
                 } label: {
-                    Text("저장")
+                    BDText(
+                        text: "저장",
+                        style: .H1_B_130
+                    )
                 }
-                .disabled(store(\.historyItems).isEmpty || store(\.conversationTitle).isEmpty)
+                .disabled(store(\.conversationTitle).isEmpty)
             }
             .font(.headline)
             .bold()
@@ -52,22 +72,11 @@ struct TKSavingView: View {
             .padding(.bottom, 24)
             
             HStack {
-                Text("제목")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                BDText(text: "제목", style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
                 
                 Spacer()
-                
-                HStack(spacing: 5) {
-                    Image(systemName: "location.fill")
-                    
-                    Text(locationStore(\.mainPlaceName))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundStyle(Color.GR7)
-                
+
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 8)
@@ -102,53 +111,35 @@ struct TKSavingView: View {
             .padding(.bottom, 8)
             
             if store(\.conversationTitle).isEmpty {
-                Text("한 글자 이상 입력해 주세요")
-                    .font(.footnote)
+                BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
                     .foregroundStyle(Color.RED)
                     .padding(.leading, 32)
                     .transition(.opacity.animation(.easeInOut))
                 
-            } else {
-                Text("\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)")
+            } else if store(\.hasCurrentConversationTitlePrevious) {
+                Text("이미 있는 제목이에요")
                     .font(.footnote)
+                    .foregroundStyle(Color.RED)
+                    .padding(.leading, 32)
+                
+            } else {
+                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: .FN_SB_135)
                     .padding(.leading, 32)
                     .foregroundStyle(Color.GR4)
                     .animation(.none, value: store(\.conversationTitle))
             }
         }
         .task {
-            let allConversations = swiftDataStore.getAllConversation()
-            store.onSaveConversationSheetApeear(allConversations.count)
+            if !swiftDataStore.conversations.isEmpty {
+                let allConversations = swiftDataStore.getAllConversation()
+                store.onSaveConversationSheetAppear(allConversations)
+            }
+            
             focusState = true
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.top, 26)
-    }
-    
-    private func makeNewConversation() -> some PersistentModel {
-        store.onSpeechTransicriptionUpdated(speechRecognizeManager.transcript)
-        store.onMakeNewConversationData()
-        
-        let newContents = store(\.historyItems).map {
-            TKContent(
-                text: $0.text,
-                type: $0.type == .answer ? .answer : .question,
-                createdAt: $0.createdAt
-            )
-        }
-        
-        let newConversation = TKConversation(
-            title: store(\.conversationTitle),
-            createdAt: Date(),
-            content: newContents,
-            location: TKLocation(
-                latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude ,
-                longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,
-                blockName: locationStore(\.mainPlaceName)
-        ))
-        
-        return newConversation
     }
 }
 

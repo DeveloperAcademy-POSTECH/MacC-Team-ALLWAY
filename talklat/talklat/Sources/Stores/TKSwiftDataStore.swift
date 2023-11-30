@@ -43,16 +43,16 @@ final class TKSwiftDataStore {
         dataManager.removeItem(item)
         refreshData()
     }
-
-//    public func updateItem(_ item: ) {
-//    }
 }
 
-// MARK: - Additional Methods
+// MARK: - HistoryListView Related
 extension TKSwiftDataStore {
     // HistoryListView에서 쓰이는 specific fetch (TKLocation -> TKConversation)
     public func getLocationBasedConversations(location: TKLocation) -> [TKConversation] {
-        let conversations = dataManager.getLocationMatchingConversations(location: location)
+        var conversations = dataManager.getLocationMatchingConversations(location: location)
+        conversations.sort(
+            by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
+        )
         return conversations
     }
     
@@ -68,7 +68,9 @@ extension TKSwiftDataStore {
     // 중복되는 blockName을 제거한 [TKLocation]
     public func filterDuplicatedBlockNames(locations: [TKLocation]) -> [TKLocation] {
         let groupedLocations = Dictionary(grouping: locations, by: { $0.blockName })
-        let uniqueLocations = groupedLocations.compactMap { $0.value.first }
+        var uniqueLocations = groupedLocations.compactMap { $0.value.first }
+        // TODO: sorting이 잘 되는지 다른 동에서 테스트 해봐야 함
+        uniqueLocations.sort(by: { $0.blockName.compare($1.blockName) == .orderedAscending })
         return uniqueLocations
     }
     
@@ -81,17 +83,23 @@ extension TKSwiftDataStore {
         dataManager.getAllConversations()
     }
     
-    // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
-//    public func getContentBasedConversations(content: [TKContent]) -> [TKConversation] {
-//        var conversations: [TKConversation] = []
-//        contents.forEach { content in
-//            conversations = dataManager.getContentMatchingConversations(content: content)
-//        }
-//        return conversations
-//    }
+    public func onSaveOnPreviousConversation(
+        from previousHistory: [HistoryItem],
+        into previousConversation: TKConversation
+    ) {
+        let newContents = previousHistory.map {
+            TKContent(
+                text: $0.text,
+                type: $0.type == .answer ? .answer : .question,
+                createdAt: $0.createdAt
+            )
+        }
+        
+        previousConversation.content.append(contentsOf: newContents)
+    }
 }
 
-// MARK: TextReplacement Related
+// MARK: - TextReplacement Related
 extension TKSwiftDataStore {
     
     // MARK: 기본 Create
@@ -113,14 +121,12 @@ extension TKSwiftDataStore {
     }
 }
 
-// MARK: CustomHistoryView Related
+// MARK: - CustomHistoryView Related
 extension TKSwiftDataStore {
     public func getConversationBasedContent(_ conversation: TKConversation) -> [[TKContent]] {
         
         // 1. conversation에 맞는 contents를 전부 불러옴
         let contents = dataManager.getConversationMatchingContents(conversation: conversation)
-        
-        print(#function, contents)
         
         // 2. contents의 날짜별 분류를 위한 contentDict와 return을 위한 targetContents
         var contentDict = [String: [TKContent]]()
@@ -138,10 +144,11 @@ extension TKSwiftDataStore {
         }
         
         let dateKeys = contentDict.keys.sorted(by: { $0 < $1} )
-        print(#function, dateKeys)
         
         dateKeys.forEach { key in
-            targetContents.append(contentDict[key] ?? [TKContent]())
+            if let contents = contentDict[key] {
+                targetContents.append(contents.sorted(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending }))
+            }
         }
         
         return targetContents

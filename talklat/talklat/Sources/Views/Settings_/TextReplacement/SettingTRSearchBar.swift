@@ -22,7 +22,7 @@ struct SettingTRSearchBar: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
-                if store(\.isSearching) {
+                if !store.viewState.searchText.isEmpty {
                     Button {
                         store.onSearchTextRemoveButtonTapped()
                         
@@ -34,11 +34,6 @@ struct SettingTRSearchBar: View {
             }
             .padding(.vertical, 7)
             .focused($isTextFieldFocused)
-            .onChange(of: store(\.searchText)) { newValue in
-                if !newValue.isEmpty {
-                    store.onSearchingText()
-                }
-            }
             
             if isTextFieldFocused {
                 Button {
@@ -46,8 +41,10 @@ struct SettingTRSearchBar: View {
                     store.cancelSearchAndHideKeyboard()
                     
                 } label: {
-                    Text("취소")
-                        .font(.system(size: 17))
+                    BDText(
+                        text: "취소",
+                        style: .H1_B_130
+                    )
                 }
                 .padding(.leading, 8)
             }

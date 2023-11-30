@@ -38,7 +38,7 @@ enum BDTextStyle {
 struct BDText: View {
     let text: String
     private var style: BDTextStyle
-
+    
     init(
         text: String,
         style: BDTextStyle
@@ -48,9 +48,9 @@ struct BDText: View {
     }
     
     var body: some View {
-        let (font, weight, lineHeightMultiplier) = propertiesForStyle(style)
-        let lineSpacing = calculateLineSpacing(for: font, with: lineHeightMultiplier)
-        let verticalPadding = calculateVerticalPadding(for: font, with: lineHeightMultiplier)
+        let (font, weight, lineHeightMultiplier, fontSize) = propertiesForStyle(style)
+        let lineSpacing = calculateLineSpacing(for: fontSize, with: lineHeightMultiplier)
+        let verticalPadding = calculateVerticalPadding(for: fontSize, with: lineHeightMultiplier)
         
         Text(text)
             .font(font)
@@ -59,132 +59,105 @@ struct BDText: View {
             .padding(.vertical, verticalPadding)
     }
     
-    private func propertiesForStyle(_ style: BDTextStyle) -> (Font, Font.Weight, CGFloat) {
+    private func propertiesForStyle(_ style: BDTextStyle) -> (Font, Font.Weight, CGFloat, CGFloat) {
         switch style {
-        // Large Title Styles
+            // Large Title Styles
         case .LT_B_120:
-            return (.largeTitle, .bold, 1.2)
+            return (Font.custom("Pretendard-Bold", size: 34), .bold, 1.2, 34)
         case .LT_SB_120:
-            return (.largeTitle, .semibold, 1.2)
+            return (Font.custom("Pretendard-SemiBold", size: 34), .semibold, 1.2, 34)
         case .LT_M_120:
-            return (.largeTitle, .medium, 1.2)
-
-        // Title Styles
+            return (Font.custom("Pretendard-Medium", size: 34), .medium, 1.2, 34)
+            
+            // Title Styles
         case .T1_B_120:
-            return (.title, .bold, 1.2)
+            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.2, 28)
         case .T1_SB_120:
-            return (.title, .semibold, 1.2)
+            return (Font.custom("Pretendard-SemiBold", size: 28), .semibold, 1.2, 28)
         case .T1_M_120:
-            return (.title, .medium, 1.2)
+            return (Font.custom("Pretendard-Medium", size: 28), .medium, 1.2, 28)
         case .T2_B_125:
-            return (.title2, .bold, 1.25)
+            return (Font.custom("Pretendard-Bold", size: 22), .bold, 1.25, 22)
         case .T2_SB_125:
-            return (.title2, .semibold, 1.25)
+            return (Font.custom("Pretendard-SemiBold", size: 22), .semibold, 1.25, 22)
         case .T2_M_125:
-            return (.title2, .medium, 1.25)
+            return (Font.custom("Pretendard-Medium", size: 22), .medium, 1.25, 22)
         case .T3_B_125:
-            return (.title3, .bold, 1.25)
+            return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.25, 20)
         case .T3_SB_125:
-            return (.title3, .semibold, 1.25)
+            return (Font.custom("Pretendard-SemiBold", size: 20), .semibold, 1.25, 20)
         case .T3_M_125:
-            return (.title3, .medium, 1.25)
-
-        // Headline Styles
+            return (Font.custom("Pretendard-Medium", size: 20), .medium, 1.25, 20)
+            
+            // Headline Styles
         case .H1_B_130:
-            return (.headline, .bold, 1.3)
+            return (Font.custom("Pretendard-Bold", size: 17), .bold, 1.3, 17)
         case .H1_SB_130:
-            return (.headline, .semibold, 1.3)
+            return (Font.custom("Pretendard-SemiBold", size: 17), .semibold, 1.3, 17)
         case .H1_M_130:
-            return (.headline, .medium, 1.3)
+            return (Font.custom("Pretendard-Medium", size: 17), .medium, 1.3, 17)
         case .H2_SB_135:
-            return (.subheadline, .semibold, 1.35)
+            return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.35, 15)
         case .H2_M_135:
-            return (.subheadline, .medium, 1.35)
-
-        // Footnote Styles
+            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.35, 15)
+            
+            // Footnote Styles
         case .FN_SB_135:
-            return (.footnote, .semibold, 1.35)
+            return (Font.custom("Pretendard-SemiBold", size: 13), .semibold, 1.35, 13)
         case .FN_M_135:
-            return (.footnote, .medium, 1.35)
-
-        // Caption Styles
+            return (Font.custom("Pretendard-Medium", size: 13), .medium, 1.35, 13)
+            
+            // Caption Styles
         case .C1_SB_130:
-            return (.caption, .semibold, 1.3)
+            return (Font.custom("Pretendard-SemiBold", size: 12), .semibold, 1.3, 12)
         case .C1_M_130:
-            return (.caption, .medium, 1.3)
+            return (Font.custom("Pretendard-Medium", size: 12), .medium, 1.3, 12)
         case .C2_SB_120:
-            return (.caption2, .semibold, 1.2)
-
-        // Conversation+HistoryBubble Type (for C)
-        // Large Title Styles
+            return (Font.custom("Pretendard-SemiBold", size: 11), .semibold, 1.2, 11)
+            
+            // Conversation+HistoryBubble Type (for C)
+            // Large Title Styles
         case .LT_B_160:
-            return (.largeTitle, .bold, 1.6)
+            return (Font.custom("Pretendard-Bold", size: 34), .bold, 1.6, 34)
         case .LT_M_160:
-            return (.largeTitle, .medium, 1.6)
-
-        // Title Styles
+            return (Font.custom("Pretendard-Medium", size: 34), .medium, 1.6, 34)
+            
+            
+            // Title Styles
         case .T1_B_170:
-            return (.title, .bold, 1.7)
+            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.7, 28)
         case .T1_M_170:
-            return (.title, .medium, 1.7)
+            return (Font.custom("Pretendard-Medium", size: 28), .medium, 1.7, 28)
         case .T2_B_160:
-            return (.title2, .bold, 1.6)
+            return (Font.custom("Pretendard-Bold", size: 22), .bold, 1.6, 22)
         case .T2_M_160:
-            return (.title2, .medium, 1.6)
+            return (Font.custom("Pretendard-Medium", size: 22), .medium, 1.6, 22)
         case .T3_B_160:
-            return (.title3, .bold, 1.6)
+            return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.6, 20)
         case .T3_M_160:
-            return (.title3, .medium, 1.6)
-
-        // Headline Styles
+            return (Font.custom("Pretendard-Medium", size: 20), .medium, 1.6, 20)
+            
+            // Headline Styles
         case .H1_B_160:
-            return (.headline, .bold, 1.6)
+            return (Font.custom("Pretendard-Bold", size: 17), .bold, 1.6, 17)
         case .H1_M_160:
-            return (.headline, .medium, 1.6)
+            return (Font.custom("Pretendard-Medium", size: 17), .medium, 1.6, 17)
         case .H2_SB_160:
-            return (.subheadline, .semibold, 1.6)
+            return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.6, 15)
         case .H2_M_160:
-            return (.subheadline, .medium, 1.6)
+            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.6, 15)
+            
         }
     }
-
-
+    
     // 피그마 기준 LineHeight 계산
-    private func calculateLineSpacing(for font: Font, with lineHeightMultiplier: CGFloat) -> CGFloat {
-        let fontHeight = fontHeight(for: font)
-        return fontHeight * lineHeightMultiplier - fontHeight
+    private func calculateLineSpacing(for fontSize: CGFloat, with lineHeightMultiplier: CGFloat) -> CGFloat {
+        return fontSize * lineHeightMultiplier - fontSize
     }
-
-    private func calculateVerticalPadding(for font: Font, with lineHeightMultiplier: CGFloat) -> CGFloat {
-        let fontHeight = fontHeight(for: font)
-        return (fontHeight * lineHeightMultiplier - fontHeight) / 2
+    
+    private func calculateVerticalPadding(for fontSize: CGFloat, with lineHeightMultiplier: CGFloat) -> CGFloat {
+        return (fontSize * lineHeightMultiplier - fontSize) / 2
     }
-
-    private func fontHeight(for font: Font) -> CGFloat {
-        switch font {
-        case .largeTitle:
-            return 34
-        case .title:
-            return 28
-        case .title2:
-            return 22
-        case .title3:
-            return 20
-        case .headline:
-            return 17
-        case .subheadline:
-            return 15
-        case .footnote:
-            return 13
-        case .caption:
-            return 12
-        case .caption2:
-            return 11
-        default:
-            return 17
-        }
-    }
-
 }
 
 // Test View
@@ -192,6 +165,7 @@ struct BDTextTestView: View {
     var body: some View {
         VStack {
             BDText(text: "H1_B_130", style: .H1_B_130)
+            BDText(text: "LT_B_120", style: .LT_B_120)
             BDText(text: "FN_SB_135", style: .FN_SB_135)
             BDText(text: "C1_M_130", style: .C1_M_130)
         }

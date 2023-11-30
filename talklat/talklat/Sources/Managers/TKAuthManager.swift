@@ -14,25 +14,106 @@ import SwiftUI
 public enum AuthStatus: String {
     case splash
     case authCompleted
-    case microphoneAuthIncompleted = "마이크"
-    case speechRecognitionAuthIncompleted = "음성 인식"
-    case location = "위치"
+    case onboarding
+    case requestAuthComplete
     case authIncompleted
 }
 
-public class TKAuthManager: ObservableObject {
+public class TKAuthManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var authStatus: AuthStatus = .splash
     
-    @Published public var isMicrophoneAuthorized: Bool = false
-    @Published public var isSpeechRecognitionAuthorized: Bool = false
-    @Published public var isLocationAuthorized: Bool = false
+    @Published public var isMicrophoneAuthorized: Bool?
+    @Published public var isSpeechRecognitionAuthorized: Bool?
+    @Published public var isLocationAuthorized: Bool?
     
-    init() { }
+    private let isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "ONBOARDING")
+    private let locationManager: CLLocationManager = CLLocationManager()
+    
+    private var hasAuthBeenRequested: Bool {
+        self.isMicrophoneAuthorized != nil &&
+        self.isLocationAuthorized != nil &&
+        self.isSpeechRecognitionAuthorized != nil
+    }
+    
+    public var hasAllAuthBeenObtained: Bool {
+        if let isMicrophoneAuthorized, isMicrophoneAuthorized,
+           let isSpeechRecognitionAuthorized, isSpeechRecognitionAuthorized,
+           let isLocationAuthorized, isLocationAuthorized {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override init() {
+        super.init()
+        checkCurrentAuthorizedCondition()
+    }
 }
 
-// MARK: - Switch Authorization Status
+// MARK: - Get / Switch Authorization Status
 /// Microphone, SpeechRecognition, Location의 권한 요청을 보내고 / 권한 여부를 저장합니다.
 extension TKAuthManager {
+    public func checkCurrentAuthorizedCondition() {
+        switch AVAudioApplication.shared.recordPermission {
+        case .granted:
+            isMicrophoneAuthorized = true
+            
+        case .denied:
+            isMicrophoneAuthorized = false
+            
+        default:
+            break
+        }
+        
+        switch SFSpeechRecognizer.authorizationStatus() {
+        case .authorized:
+            isSpeechRecognitionAuthorized = true
+            
+        case .denied, .restricted:
+            isSpeechRecognitionAuthorized = false
+            
+        default:
+            break
+        }
+        
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            isLocationAuthorized = true
+            
+        case .denied, .restricted:
+            isLocationAuthorized = false
+            
+        default:
+            break
+        }
+    }
+    
+    // 온보딩이 진행되었니?
+    public func checkOnboardingCompletion() {
+        if isOnboardingCompleted {
+            // 온보딩이 되었다면, 권한 상태를 가져온다.
+            print("온보딩이 되었다면, 권한 상태를 가져온다.")
+            checkCurrentAuthorizedCondition()
+            authStatus = .requestAuthComplete
+            
+        } else if hasAuthBeenRequested {
+            // 기기에 각 권한이 모두 한 번 이상 요청된 흔적이 남아있다면 onboarding이 끝난 것으로 분기 처리 한다.
+            print("기기에 권한이 요청된 흔적이 남아있다면 onboarding이 끝난 것으로 분기 처리 한다.")
+            onOnboardingCompleted()
+        } else {
+            // 온보딩 한 적도, 권한 요청 흔적도 없다면 온보딩을 시작한다.
+            print("온보딩 한 적도, 권한 요청 흔적도 없다면 온보딩을 시작한다.")
+            withAnimation {
+                authStatus = .onboarding
+            }
+        }
+    }
+    
+    public func onOnboardingCompleted() {
+        UserDefaults.standard.setValue(true, forKey: "ONBOARDING")
+        authStatus = .requestAuthComplete
+    }
     
     @MainActor
     public func getMicrophoneAuthStatus() async {
@@ -52,14 +133,22 @@ extension TKAuthManager {
         }
     }
     
-    @MainActor
     public func getLocationAuthStatus() async {
-        let status = await CLLocationManager.requestAlwaysAuthorization()
-        switch status {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    @MainActor
+    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             isLocationAuthorized = true
-        default:
+        case .denied, .restricted:
             isLocationAuthorized = false
+        case .notDetermined:
+            break
+        default:
+            break
         }
     }
 }

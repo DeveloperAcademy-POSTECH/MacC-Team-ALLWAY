@@ -14,6 +14,7 @@ final class TKMainViewStore {
         var isBottomSheetMaxed: Bool = false
         var isSpeechAuthAlertPresented: Bool = false
         var isTKToastPresented: Bool = false
+        var isTKMainViewAppeared: Bool = false
         
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
@@ -47,6 +48,14 @@ final class TKMainViewStore {
         reduce(\.isConversationFullScreenCoverDisplayed, into: false)
     }
     
+    @MainActor
+    public func onTKMainViewAppeared() async {
+        try? await Task.sleep(for: .seconds(0.5))
+        withAnimation {
+            reduce(\.isTKMainViewAppeared, into: true)
+        }
+    }
+    
     public func onNewConversationHasSaved() {
         self.reduce(
             \.isConversationFullScreenCoverDisplayed,
@@ -60,13 +69,11 @@ final class TKMainViewStore {
         }
     }
     
-    public func onChangeOfSpeechAuth(_ status: AuthStatus) {
-        switch status {
-        case .authCompleted:
-            self.reduce(\.authStatus, into: .authCompleted)
+    public func onChangeOfSpeechAuth(_ authorized: Bool) {
+        if authorized {
             self.reduce(\.isSpeechAuthAlertPresented, into: false)
             
-        default:
+        } else {
             self.reduce(\.isSpeechAuthAlertPresented, into: true)
         }
     }

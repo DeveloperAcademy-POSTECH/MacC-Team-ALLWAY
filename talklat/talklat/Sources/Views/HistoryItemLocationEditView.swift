@@ -50,8 +50,10 @@ struct HistoryItemLocationEditView: View {
             .frame(maxHeight: .infinity)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("위치 정보 편집")
-                        .font(.headline)
+                    BDText(
+                        text: "위치 정보 편집",
+                        style: .H1_B_130
+                    )
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -77,8 +79,10 @@ struct HistoryItemLocationEditView: View {
     
     private var mapHeaderView: some View {
         HStack {
-            Text("위치 정보 편집")
-                .font(.headline)
+            BDText(
+                text: "위치 정보 편집",
+                style: .H1_B_130
+            )
             
             Button {
                 historyInfoStore.reduce(
@@ -105,7 +109,7 @@ struct HistoryItemLocationEditView: View {
                     Button {
                         moveToUserLocation()
                         
-                        if let location = historyInfoStore(\.editCoordinateRegion) {
+                        if let _ = historyInfoStore(\.editCoordinateRegion) {
                             locationStore.fetchCityName(
                                 historyInfoStore(\.editCoordinateRegion),
                                 cityNameType: .long,
@@ -203,7 +207,6 @@ struct HistoryItemLocationEditView: View {
     }
     
     private func moveToUserLocation() {
-//        let _ = locationStore.trackUserCoordinate()
         
         guard let coordinateRegion = locationStore(\.currentUserCoordinate) else {
             return

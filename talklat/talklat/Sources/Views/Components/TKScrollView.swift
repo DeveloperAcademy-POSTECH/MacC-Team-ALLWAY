@@ -29,28 +29,28 @@ struct TKScrollView: View {
         switch style {
         case let .question(question, answer, align):
             ScrollView {
-                Text(question)
-                    .font(
-                        answer.isEmpty
-                        ? .title
-                        : .title3
-                    )
-                    .lineSpacing(
-                        answer.isEmpty
-                        ? 10
-                        : 14
-                    )
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .topLeading
-                    )
-                    .padding(.horizontal, 24)
-                    .animation(
-                        .easeInOut,
-                        value: answer.isEmpty
-                    )
+                if question.isEmpty {
+                    BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)
+                        .foregroundColor(Color.GR4) // GR4 색상
+                        .multilineTextAlignment(.leading)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .topLeading
+                        )
+                        .padding(.horizontal, 24)
+                } else {
+                    BDText(text: question, style: answer.isEmpty ? .T1_B_170 : .T3_B_160)
+                        .multilineTextAlignment(.leading)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .topLeading
+                        )
+                        .padding(.horizontal, 24)
+                        .animation(
+                            .easeInOut,
+                            value: answer.isEmpty
+                        )
+                }
             }
             .scrollIndicators(.hidden)
             .frame(maxHeight: 250)
@@ -62,10 +62,7 @@ struct TKScrollView: View {
         case let .answer(answer, align):
             ScrollViewReader { proxy in
                 ScrollView {
-                    Text(answer)
-                        .font(.title)
-                        .bold()
-                        .lineSpacing(14)
+                    BDText(text: answer, style: .T1_B_170)
                         .foregroundStyle(Color.white)
                         .frame(
                             maxWidth: .infinity,
@@ -104,9 +101,7 @@ struct TKScrollView: View {
             
         case let .answerCard(answer, align):
             ScrollView {
-                Text(answer)
-                    .font(.title3)
-                    .fontWeight(.heavy)
+                BDText(text: answer, style: .T3_B_160)
                     .foregroundStyle(Color.white)
                     .lineSpacing(8)
                     .padding(.horizontal, 24)

@@ -8,64 +8,45 @@
 import SwiftUI
 
 struct TKListeningView: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var store: TKConversationViewStore
+    let dataStore = TKSwiftDataStore()
     let namespaceID: Namespace.ID
     
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    store.blockButtonDoubleTap {
-                        store.onBackToWritingChevronTapped()
-                    }
-                    
-                } label: {
-                    Rectangle()
-                        .foregroundStyle(.clear)
-                        .frame(width: 44, height: 44)
-                        .overlay {
-                            Image(systemName: "chevron.left")
-                                .fontWeight(.black)
+                if store(\.answeredText).isEmpty {
+                    Button {
+                        store.blockButtonDoubleTap {
+                            store.onBackToWritingChevronTapped()
                         }
+                        
+                    } label: {
+                        Rectangle()
+                            .foregroundStyle(.clear)
+                            .frame(width: 44, height: 44)
+                            .overlay {
+                                Image(systemName: "chevron.left")
+                                    .fontWeight(.black)
+                            }
+                    }
+                    .animation(
+                        .easeInOut,
+                        value: store(\.answeredText).isEmpty
+                    )
+                    .disabled(store(\.blockButtonDoubleTap))
+                    .padding(.leading, 12)
+                    .padding(.trailing, 24)
+                    .padding(.bottom, 24)
+                    
+                    Spacer()
+                } else {
+                    endConversationButtonBuilder()
+                        .padding(.bottom, 20)
                 }
-                .opacity(
-                    store(\.answeredText).isEmpty
-                    ? 1.0
-                    : 0.0
-                )
-                .animation(
-                    .easeInOut,
-                    value: store(\.answeredText).isEmpty
-                )
-                .disabled(store(\.blockButtonDoubleTap))
-                
-                Spacer()
-                
-                Button {
-                    store.onSaveConversationButtonTapped()
-                } label: {
-                    Text("종료")
-                        .font(.headline)
-                        .foregroundStyle(Color.GR7)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
-                .tint(Color.GR2)
-                .opacity(
-                    store(\.answeredText).isEmpty
-                    ? 0.0
-                    : 1.0
-                )
-                .animation(
-                    .easeInOut,
-                    value: store(\.answeredText).isEmpty
-                )
             }
-            .padding(.leading, 12)
-            .padding(.trailing, 24)
-            .padding(.bottom, 24)
+            
             
             if store(\.conversationStatus) == .recording {
                 TKScrollView(
@@ -141,12 +122,11 @@ struct TKListeningView: View {
             Spacer()
             
             if store(\.answeredText).isEmpty {
-                Text("듣고 있어요")
-                    .font(.headline)
-                    .fontWeight(.black)
+                BDText(text: "듣고 있어요", style: .H1_B_130)
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
-                    .frame(minWidth: 110, minHeight: 50)
+                    .padding(.vertical, 10)
+                    .frame(minWidth: 110, minHeight: 42)
                     .background {
                         ZStack(alignment: .trailing) {
                             RoundedRectangle(
@@ -181,6 +161,7 @@ struct TKListeningView: View {
                     ? Color.OR5
                     : Color.white
                 )
+                .task { store.triggerAnimation(true) }
                 .frame(height: 64)
                 .overlay {
                     Circle()
@@ -204,6 +185,53 @@ struct TKListeningView: View {
             }
             .disabled(store(\.blockButtonDoubleTap))
         }
+    }
+    
+    private func endConversationButtonBuilder() -> some View {
+        HStack {
+            Button {
+                store.onConversationDismissButtonTapped()
+                
+            } label: {
+                BDText(text: "취소", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.GR6)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(Color.GR1)
+            
+            Spacer()
+            
+            Button {
+                store.blockButtonDoubleTap {
+                    // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
+                    // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
+                    
+                    if let previousConversation = store(\.previousConversation) {
+                        store.makeCurrentConversationContent()
+                        dataStore.onSaveOnPreviousConversation(
+                            from: store(\.historyItems),
+                            into: previousConversation
+                        )
+                        
+                        store.onSaveConversationIntoPreviousButtonTapped()
+                        
+                    } else {
+                        store.onSaveConversationButtonTapped()
+                    }
+                }
+            } label: {
+                BDText(text: "저장", style: .H1_B_130)
+                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.white)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(Color.OR5)
+            .disabled(store(\.blockButtonDoubleTap))
+        }
+        .padding(.horizontal, 20)
     }
 }
 

@@ -29,7 +29,7 @@ struct HistoryListView: View {
     
     // not in store
     @FocusState internal var isSearchFocused: Bool
-   
+    
     var body: some View {
         VStack {
             // Search Bar
@@ -38,76 +38,85 @@ struct HistoryListView: View {
                 searchText: $searchText
             )
             .focused($isSearchFocused)
-            .navigationBarBackButtonHidden(
-                isSearching ? true : false
-            )
+            .navigationBarBackButtonHidden(true)
+            .disabled(isEditing ? true : false)
             
             Spacer()
             
             // MARK: - History List
             if !isSearching {
-                // Unavailable View
-                if dataStore.conversations.isEmpty {
-                    TKUnavailableViewBuilder(
-                        icon: "bubble.left.and.bubble.right.fill",
-                        description: "아직 대화 기록이 없어요"
-                    )
-                } else {
-                    ScrollView {
-                        ForEach(
-                            dataStore.filterDuplicatedBlockNames(
-                                locations: dataStore.locations
-                            )
-                        ) { location in
-                            LocationList(
-                                dataStore: dataStore,
-                                location: location,
-                                selectedConversation: $selectedConversation,
-                                isEditing: $isEditing,
-                                isDialogShowing: $isDialogShowing
-                            )
-                            .padding(.bottom, 24)
+                Group {
+                    // Unavailable View
+                    if dataStore.conversations.isEmpty {
+                        TKUnavailableViewBuilder(
+                            icon: "bubble.left.and.bubble.right.fill",
+                            description: "아직 대화 기록이 없어요"
+                        )
+                    } else {
+                        ScrollView {
+                            ForEach(
+                                dataStore.filterDuplicatedBlockNames(
+                                    locations: dataStore.locations
+                                )
+                            ) { location in
+                                LocationList(
+                                    dataStore: dataStore,
+                                    location: location,
+                                    selectedConversation: $selectedConversation,
+                                    isEditing: $isEditing,
+                                    isDialogShowing: $isDialogShowing
+                                )
+                                .padding(.bottom, 24)
+                            }
+                            .padding(.top, 24)
                         }
-                        .padding(.top, 24)
+                        .scrollIndicators(.hidden)
                     }
-                    .scrollIndicators(.hidden)
-                    .navigationTitle("히스토리")
-                    .navigationBarBackButtonHidden(true)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button {
-                                dismiss()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "chevron.left")
-                                    Text("홈")
-                                }
-                                .foregroundColor(Color.OR6)
-                                .fontWeight(.medium)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        // Back Button
+                        Button {
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .bold()
+                                
+                                BDText(
+                                    text: "홈",
+                                    style: .H1_B_130
+                                )
                             }
+                            .fontWeight(.medium)
                         }
-                        
-                        ToolbarItem(placement: .topBarTrailing) {
-                            // Edit Button
-                            ZStack {
-                                Button {
-                                    withAnimation(
-                                        .spring(
-                                            dampingFraction: 0.7,
-                                            blendDuration: 0.4
-                                        )
-                                    ) {
-                                        withAnimation {
-                                            isEditing.toggle()
-                                        }
-                                    }
-                                } label: {
-                                    Text("편집")
-                                        .foregroundColor(.accentColor)
-                                        .fontWeight(.medium)
+                    }
+                    
+                    ToolbarItem(placement: .principal) {
+                        BDText(
+                            text: "히스토리",
+                            style: .H1_B_130
+                        )
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        // Edit Button
+                        Button {
+                            withAnimation(
+                                .spring(
+                                    dampingFraction: 0.7,
+                                    blendDuration: 0.4
+                                )
+                            ) {
+                                withAnimation {
+                                    isEditing.toggle()
                                 }
                             }
+                        } label: {
+                            BDText(
+                                text: isEditing ? "완료" : "편집",
+                                style: .H1_B_130
+                            )
                         }
                     }
                 }
@@ -118,22 +127,34 @@ struct HistoryListView: View {
                     isSearching: $isSearching,
                     searchText: $searchText
                 )
+                .navigationBarBackButtonHidden(true)
             }
         }
-        .onAppear {
-            
-        }
         .padding(.horizontal, 20)
-        .overlay {
-            if isDialogShowing {
-                Color.black.opacity(0.5)
-                    .ignoresSafeArea()
-                CustomDialog(
-                    dataStore: dataStore,
-                    selectedConversation: $selectedConversation,
-                    isDialogShowing: $isDialogShowing,
-                    isEditing: $isEditing
-                )
+        .showTKAlert(
+            isPresented: $isDialogShowing,
+            style: .removeConversation(title: selectedConversation.title)
+        ) {
+            isDialogShowing = false
+            
+        } confirmButtonAction: {
+            withAnimation {
+                // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
+                // Delete Content
+                selectedConversation.content.forEach { content in
+                    dataStore.removeItem(content)
+                }
+                // Delete Location
+                if let location = selectedConversation.location {
+                    dataStore.removeItem(location)
+                }
+                // Delete Conversation
+                dataStore.removeItem(selectedConversation)
+                isDialogShowing = false // TODO: 이거 필요한가? 중복된 코드 아닌가
+            }
+        } confirmButtonLabel: {
+            HStack(spacing: 8) {
+                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
             }
         }
         .onChange(of: isSearchFocused) { _, _ in
@@ -170,17 +191,20 @@ struct LocationList: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "location.fill")
-                Text(location.blockName)
+                if location.blockName != "위치정보없음" { // TODO: nil 값 확인 필요
+                    Image(systemName: "location.fill")
+                } else {
+                    Image(systemName: "location.slash.fill")
+                }
+                
+                BDText(text: location.blockName, style: .T3_B_125)
                     .foregroundColor(.GR8)
-                    .font(.system(size: 20, weight: .bold))
                     .padding(.leading, -5)
                 
                 Spacer()
                 
                 // Collapse Button
                 Button {
-                    print("--> persistentID: ", location.persistentModelID)
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -190,31 +214,17 @@ struct LocationList: View {
                         isCollapsed.toggle()
                     }
                 } label: {
-                    if isCollapsed {
-                        Image(systemName: "chevron.forward")
-                            .font(
-                                .system(
-                                    size: 17,
-                                    weight: .bold,
-                                    design: .rounded
-                                )
+                    Image(systemName: "chevron.forward")
+                        .rotationEffect(isCollapsed ? .degrees(90) : .degrees(0))
+                        .font(
+                            .system(
+                                size: 17,
+                                weight: .bold,
+                                design: .rounded
                             )
-                    } else {
-                        Image(systemName: "chevron.down")
-                            .font(
-                                .system(
-                                    size: 17,
-                                    weight: .bold,
-                                    design: .rounded
-                                )
-                            )
-                            .transition(
-                                .asymmetric(
-                                    insertion: .opacity,
-                                    removal: .identity
-                                )
-                            )
-                    }
+                        )
+                        .padding(.trailing, 4)
+                        .animation(.easeInOut, value: isCollapsed)
                 }
                 .disabled(isEditing)
             }
@@ -222,7 +232,10 @@ struct LocationList: View {
             // Each List Cell
             if !isCollapsed {
                 ForEach(
-                    dataStore.getLocationBasedConversations(location: location),
+                    dataStore.getLocationBasedConversations(
+                        location: location
+                    )
+                    .sorted { $0.createdAt > $1.createdAt },
                     id: \.self
                 ) { conversation in
                     NavigationLink {
@@ -277,7 +290,7 @@ struct CellItem: View {
                     } label: {
                         if !isRemoving {
                             Image(systemName: "minus.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundStyle(.white, .red)
                                 .font(.system(size: 20))
                                 .padding(.trailing, 5)
                                 .transition(
@@ -295,19 +308,18 @@ struct CellItem: View {
                     )
                 }
                 
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(conversation.title)
-                        .font(.system(size: 17, weight: .medium))
-                        .foregroundStyle(Color.GR8)
+                VStack(alignment: .leading, spacing: -3) {
+                    BDText(
+                        text: conversation.title,
+                        style: .H1_B_130
+                    )
+                    .foregroundStyle(Color.GR8)
                     
-                    Text(
-                        conversation.createdAt.formatted( // TODO: format
-                            date: .abbreviated,
-                            time: .omitted
-                        )
+                    BDText(
+                        text:conversation.createdAt.convertToDate(),
+                        style: .H2_M_135
                     )
                     .foregroundColor(.GR4)
-                    .font(.system(size: 15, weight: .medium))
                 }
                 
                 Spacer()
@@ -323,10 +335,10 @@ struct CellItem: View {
                         )
                     )
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+            .frame(height: 60)
+            .padding(.horizontal)
             .background(Color.GR1)
-            .cornerRadius(22)
+            .cornerRadius(16)
             .onTapGesture {
                 if isRemoving && isEditing {
                     withAnimation(
@@ -339,7 +351,7 @@ struct CellItem: View {
                     }
                 }
             }
-
+            
             // TrashBin Appear
             if isRemoving && isEditing {
                 Button {
@@ -350,12 +362,13 @@ struct CellItem: View {
                 } label: {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 25))
-                        .foregroundColor(.BaseBGWhite)
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 20)
-                        .background(.red)
-                        .cornerRadius(22)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 25)
+                        .padding(.vertical, 14)
+                        .background(Color.RED)
+                        .cornerRadius(16)
                 }
+                .frame(height: 60)
                 .transition(.move(edge: .trailing))
             }
         }
@@ -364,67 +377,6 @@ struct CellItem: View {
                 isRemoving = false
             }
         }
-    }
-}
-
-// TODO: 히스토리뷰 스토어 생성 후 TKDialogBuilder로 분리
-/// enum case .destruction (빨간색), .cancel (주황색) 필요
-struct CustomDialog: View {
-    var dataStore: TKSwiftDataStore
-    
-    @Binding internal var selectedConversation: TKConversation
-    @Binding internal var isDialogShowing: Bool
-    @Binding internal var isEditing: Bool
-    
-    var body: some View {
-        GroupBox {
-            VStack(spacing: 16) {
-                Image(systemName: "trash.fill")
-                    .foregroundColor(.red)
-                    .font(.system(size: 20))
-                
-                Text("대화 삭제")
-                    .foregroundColor(.GR9)
-                    .font(.system(size: 17, weight: .bold))
-                
-                Text("\"\(selectedConversation.title)\"에서 저장된\n모든 데이터가 삭제됩니다.")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.GR6)
-                    .font(.system(size: 15, weight: .medium))
-                
-                HStack {
-                    Button {
-                        isDialogShowing = false
-                        isEditing = false
-                        
-                    } label: {
-                        Text("아니요, 취소할래요")
-                            .foregroundColor(.GR6)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.GR2)
-                            .cornerRadius(16)
-                    }
-                    
-                    Button {
-                        // Delete
-                        dataStore.removeItem(selectedConversation)
-                        isDialogShowing = false
-                        isEditing = false
-                    } label: {
-                        Text("네, 삭제할래요")
-                            .foregroundColor(.BaseBGWhite)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding()
-                            .background(Color.red)
-                            .cornerRadius(16)
-                    }
-                }
-            }
-        }
-        .cornerRadius(22)
-        .frame(height: 240)
-        .frame(maxWidth: .infinity)
     }
 }
 

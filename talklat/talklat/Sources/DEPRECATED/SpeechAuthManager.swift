@@ -22,19 +22,19 @@ public class SpeechAuthManager {
 /// 시스템 마이크, 음성인식 권한 허용에 맞게 뷰를 반영합니다.
 @MainActor
 extension SpeechAuthManager {
-    static func switchAuthStatus() async -> AuthStatus{
-        await getAuthStatus()
-        
-        if isSpeechRecognitionAuthorized && isMicrophoneAuthorized == true {
-            return .authCompleted
-        } else if isSpeechRecognitionAuthorized == false && isMicrophoneAuthorized == true {
-            return .speechRecognitionAuthIncompleted
-        } else if isSpeechRecognitionAuthorized == true && isMicrophoneAuthorized == false {
-            return .microphoneAuthIncompleted
-        } else {
-            return .authIncompleted
-        }
-    }
+//    static func switchAuthStatus() async -> AuthStatus{
+//        await getAuthStatus()
+//        
+//        if isSpeechRecognitionAuthorized && isMicrophoneAuthorized == true {
+//            return .authCompleted
+//        } else if isSpeechRecognitionAuthorized == false && isMicrophoneAuthorized == true {
+//            return .speechRecognitionAuthIncompleted
+//        } else if isSpeechRecognitionAuthorized == true && isMicrophoneAuthorized == false {
+//            return .microphoneAuthIncompleted
+//        } else {
+//            return .authIncompleted
+//        }
+//    }
     
     static private func getAuthStatus() async {
         if await SFSpeechRecognizer.hasAuthorizationToRecognize() == true {

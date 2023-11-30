@@ -27,7 +27,10 @@ struct TKDataManager {
     private init() {
         do {
             self.modelContainer = try ModelContainer(
-                for: TKConversation.self, TKTextReplacement.self
+                for: TKConversation.self,
+                TKContent.self,
+                TKLocation.self,
+                TKTextReplacement.self
             )
             self.modelContext = modelContainer.mainContext
         } catch {

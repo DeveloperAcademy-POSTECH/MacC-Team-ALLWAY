@@ -9,22 +9,21 @@ import SwiftUI
 
 struct SettingsTeamView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         ScrollView {
             VStack {
                 HStack {
-                    Image("TeamLogo")
+                    Image(colorScheme == .light ? "TeamLogo" : "TeamLogo_Dark")
                     Spacer()
                 }
                 .padding(.leading, 24)
                 .padding(.top, 24)
                 .padding(.bottom, 16)
                 HStack {
-                    Text("애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다.")
-                        .font(.system(size: 17, weight: .bold))
-                        .lineSpacing(17 * 1.6 - 17)
-                        .padding(.vertical, (17 * 1.6 - 17) / 2)
+                    BDText(text: "애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다.", style: .H1_B_160)
+                        .foregroundStyle(Color.GR9)
                     
                     Spacer()
                 }
@@ -37,31 +36,25 @@ struct SettingsTeamView: View {
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.BaseBGWhite)
+                        .foregroundColor(.AlertBGWhite)
                         .overlay {
                             Text("🙃")
                                 .font(.largeTitle)
                         }
                     VStack {
                         HStack {
-                            Text("레츠 Lets")
-                                .font(.headline)
-                                .bold()
+                            BDText(text: "레츠 Lets", style: .H1_B_130)
                                 .foregroundStyle(Color.GR9)
                             Spacer()
                         }
                         HStack {
-                            Text("iOS Developer")
-                                .font(.footnote)
-                                .fontWeight(.medium)
+                            BDText(text: "iOS Developer", style: .FN_SB_135)
                                 .foregroundStyle(Color.GR5)
                             Spacer()
                         }
                         HStack {
-                            Text("안녕하세요 천재 개(발자) 레츠입니다 :)")
+                            BDText(text: "안녕하세요 천재 개(발자) 레츠입니다 :)", style: .FN_SB_135)
                                 .rotationEffect(Angle(degrees: 180))
-                                .font(.footnote)
-                                .fontWeight(.semibold)
                                 .foregroundStyle(Color.GR5)
                             Spacer()
                         }
@@ -97,9 +90,6 @@ struct SettingsTeamView: View {
                 
             }
         }
-        .navigationTitle("만든 사람들")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -108,11 +98,22 @@ struct SettingsTeamView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .bold()
-                        Text("설정")
-                            .font(.system(size: 17))
+                        
+                        BDText(
+                            text: "설정",
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
+            }
+            
+            // Navigation Title
+            ToolbarItem(placement: .principal) {
+                BDText(
+                    text: "만든 사람들",
+                    style: .H1_B_130
+                )
             }
         }
     }
@@ -128,36 +129,32 @@ struct TeamOneView: View {
         HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.BaseBGWhite)
+                .foregroundColor(.AlertBGWhite)
                 .overlay {
                     Text(emoji)
                         .font(.largeTitle)
                 }
             VStack {
                 HStack {
-                    Text(name)
-                        .font(.headline)
-                        .bold()
+                    BDText(text: name, style: .H1_B_130)
                         .foregroundStyle(Color.GR9)
                     Spacer()
                 }
                 HStack {
-                    Text(jobTitle)
-                        .font(.footnote)
-                        .fontWeight(.medium)
+                    BDText(text: jobTitle, style: .FN_SB_135)
                         .foregroundStyle(Color.GR5)
                     Spacer()
                 }
                 HStack {
-                    Text(customMessage)
-                        .font(.footnote)
-                        .fontWeight(.semibold)
+                    BDText(text: customMessage, style: .FN_SB_135)
                         .foregroundStyle(Color.GR5)
                     Spacer()
                 }
             }
             .padding(.leading, 12)
+            
             Spacer()
+            
         }
         .padding(.vertical, 16)
         .padding(.leading, 16)
