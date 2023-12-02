@@ -28,20 +28,81 @@ extension TKReducer where Self.ViewState: TKAnimatable {
     }
 }
 
+extension TKReducer where Self.ViewState: ChildState & Equatable {
+    var listenState: Self.ViewState {
+        self(\ViewState.self)
+    }
+}
+
+extension TKReducer where Self.ViewState: ChildState & Equatable {
+    func comprehenseChild() {
+        
+    }
+}
+
 protocol TKAnimatable {
     var animationFlag: Bool { get set }
 }
 
+protocol ChildState: Equatable { }
+protocol ParentState: Equatable { }
+
+extension View {
+    func listenTo(
+        child: ChildReducer,
+        reduce: @escaping (
+            _ oldValue: ChildReducer.ViewState,
+            _ newValue: ChildReducer.ViewState
+        ) -> Void
+    ) -> some View {
+        onChange(of: child.listenState) { oldValue, newValue in
+            reduce(oldValue, newValue)
+        }
+    }
+}
+
+///
+
+final class BDMediator {
+    func notify(
+        from: some TKReducer,
+        to: some TKReducer
+    ) {
+        
+    }
+}
+
+///
+
 // MARK: - USAGE EXAMPLE
-final class MyStore: TKReducer {
+final class ParentReducer: TKReducer {
     struct ViewState {
-        var name: String = ""
+        var parentName: String = "Parent"
+    }
+    
+    @Published private var viewState: ViewState = ViewState()
+        
+    func reduce<Value: Equatable>(
+        _ path: WritableKeyPath<ViewState, Value>,
+        into newValue: Value)
+    {
+        self.viewState[keyPath: path] = newValue
+    }
+    
+    func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
+        self.viewState[keyPath: path]
+    }
+}
+
+final class ChildReducer: TKReducer {
+    struct ViewState: ChildState, Equatable {
+        var childName: String = "Child"
     }
     
     @Published private var viewState: ViewState = ViewState()
     
     func onUpdateName(with str: String) {
-        reduce(\.name, into: str)
+        reduce(\.childName, into: str)
     }
     
     func reduce<Value: Equatable>(
@@ -56,14 +117,47 @@ final class MyStore: TKReducer {
     }
 }
 
-struct MyStruct {
-    @StateObject private var store = MyStore()
+struct ParentView: View {
+    @StateObject private var store = ParentReducer()
+    @StateObject private var childStore: ChildReducer = ChildReducer()
     
-    func getName() -> String {
-        store(\.name)
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Text(store(\.parentName))
+                
+                NavigationLink {
+                    ChildView()
+                    
+                } label: {
+                    Text("Go child")
+                }
+            }
+            .listenTo(child: childStore) { oldValue, newValue in
+                
+            }
+        }
     }
+}
+
+struct ChildView: View {
+    @StateObject private var store = ChildReducer()
     
-    func updateName() {
-        store.onUpdateName(with: "NewName")
+    var body: some View {
+        VStack {
+            Text(store(\.childName))
+            
+            Button {
+                store.onUpdateName(with: "Updated Name")
+            } label: {
+                Text("Update")
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ParentView()
     }
 }
