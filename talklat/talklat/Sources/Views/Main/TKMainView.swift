@@ -5,6 +5,7 @@
 //  Created by Celan on 11/8/23.
 //
 
+import Lottie
 import MapKit
 import SwiftUI
 
@@ -44,34 +45,29 @@ struct TKMainView: View {
                     BDText(text: "새 대화 시작하기", style: .T2_B_125)
                         .foregroundStyle(Color.OR5)
                 }
-                .padding(.bottom, 60)
-
-                TKOrbitCircles(
-                    store: store,
-                    circleRenderInfos: [
-                        CircleRenderInfo(x: -25, y: -15),
-                        CircleRenderInfo(x: 0, y: 27),
-                        CircleRenderInfo(x: 25, y: -15),
-                    ],
-                    circleColor: Color.OR6
-                )
-                .task { store.triggerAnimation(true) }
-                .frame(maxHeight: 200)
-                .overlay {
-                    Circle()
-                        .fill(Color.OR6)
-                        .opacity(0.5)
-                        .frame(width: 200, height: 200)
-                }
-                .overlay {
-                    startConversationButtonBuilder()
-                }
             }
             .frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
+            
+            LottieView(animation: .named("BDMain_Circle"))
+                .playing(loopMode: .loop)
+                .aspectRatio(0.4, contentMode: .fit)
+                .overlay {
+                    Circle()
+                        .fill(Color.OR6)
+                        .opacity(0.5)
+                        .scaleEffect(0.65)
+                }
+                .overlay {
+                    startConversationButtonBuilder()
+                }
+                .position(
+                    x: UIScreen.main.bounds.width * 0.5,
+                    y: UIScreen.main.bounds.height * 0.4
+                )
             
             // MARK: BottomSheet
             if store(\.isTKMainViewAppeared) {
@@ -183,23 +179,20 @@ struct TKMainView: View {
             ZStack {
                 Circle()
                     .fill(Color.OR6)
-                    .opacity(0.3)
-                    .frame(width: 120, height: 120)
+                    .opacity(0.5)
+                    .scaleEffect(0.42)
                 
                 Circle()
                     .fill(Color.OR6)
-                    .frame(width: 100, height: 100)
+                    .scaleEffect(0.35)
                 
                 Image("TALKLAT_BUBBLE_WHITE")
-                    .resizable()
                     .renderingMode(.template)
                     .foregroundStyle(Color.white)
-                    .frame(width: 59, height: 70)
                     .padding(.top, 12)
                 
                 Image(systemName: "plus")
-                    .resizable()
-                    .frame(width: 20, height: 20)
+                    .scaleEffect(1.2)
                     .bold()
                     .foregroundStyle(Color.OR6)
             }
