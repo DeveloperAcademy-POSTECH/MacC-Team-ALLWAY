@@ -28,14 +28,15 @@ extension TKReducer where Self.ViewState: TKAnimatable {
     }
 }
 
-extension TKReducer where Self.ViewState: ChildState & Equatable {
-    var listenState: Self.ViewState {
-        self(\ViewState.self)
+extension TKReducer where Self.ViewState: RootState & Equatable {
+    func listen<Value: Equatable>
+    (_ path: KeyPath<some ChildState, Value>) {
+        
     }
 }
 
 extension TKReducer where Self.ViewState: ChildState & Equatable {
-    func comprehenseChild() {
+    func notify() {
         
     }
 }
@@ -44,30 +45,20 @@ protocol TKAnimatable {
     var animationFlag: Bool { get set }
 }
 
-protocol ChildState: Equatable { }
-protocol ParentState: Equatable { }
-
-extension View {
-    func listenTo(
-        child: ChildReducer,
-        reduce: @escaping (
-            _ oldValue: ChildReducer.ViewState,
-            _ newValue: ChildReducer.ViewState
-        ) -> Void
-    ) -> some View {
-        onChange(of: child.listenState) { oldValue, newValue in
-            reduce(oldValue, newValue)
-        }
-    }
+protocol ChildState: Equatable {
+    // 자기 자신이 어떻게 변했는지 알려주는 didChange
+    func didChange<Value: Equatable>(path: KeyPath<ChildReducer.ViewState, Value>) -> Value
 }
 
-///
+protocol RootState: Equatable { }
 
-final class BDMediator {
-    func notify(
-        from: some TKReducer,
-        to: some TKReducer
-    ) {
+/// Child의 변화를 Parent에 알려주는 Mediator
+struct BDMediator {
+    static func notified<ChildStore: TKReducer, Value: Equatable> (
+        from child: ChildStore,
+        path: KeyPath<some ChildState, Value>
+    ) where ChildStore.ViewState: ChildState
+    {
         
     }
 }
@@ -75,7 +66,10 @@ final class BDMediator {
 ///
 
 // MARK: - USAGE EXAMPLE
-final class ParentReducer: TKReducer {
+final class ParentReducer<Delegate: TKReducer>: TKReducer {
+    // 1. child가 있다면 delegate를 선언해준다.
+    var delegate: Delegate!
+    
     struct ViewState {
         var parentName: String = "Parent"
     }
@@ -92,11 +86,21 @@ final class ParentReducer: TKReducer {
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
     }
+    
+    // 2. 자동으로 listen한다.
+    func listen() {
+        // 3. delegate에서 무엇이 변했는지 받아온다.
+        
+    }
 }
 
 final class ChildReducer: TKReducer {
     struct ViewState: ChildState, Equatable {
+        
         var childName: String = "Child"
+        func didChange<Value: Equatable>(path: KeyPath<ChildReducer.ViewState, Value>) -> Value {
+            self[keyPath: path]
+        }
     }
     
     @Published private var viewState: ViewState = ViewState()
@@ -110,6 +114,7 @@ final class ChildReducer: TKReducer {
         into newValue: Value)
     {
         self.viewState[keyPath: path] = newValue
+        self.viewState.didChange(path: path)
     }
     
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
@@ -118,7 +123,7 @@ final class ChildReducer: TKReducer {
 }
 
 struct ParentView: View {
-    @StateObject private var store = ParentReducer()
+    @StateObject private var store = ParentReducer<ChildReducer>()
     @StateObject private var childStore: ChildReducer = ChildReducer()
     
     var body: some View {
@@ -127,21 +132,18 @@ struct ParentView: View {
                 Text(store(\.parentName))
                 
                 NavigationLink {
-                    ChildView()
+                    ChildView(store: childStore)
                     
                 } label: {
                     Text("Go child")
                 }
-            }
-            .listenTo(child: childStore) { oldValue, newValue in
-                
             }
         }
     }
 }
 
 struct ChildView: View {
-    @StateObject private var store = ChildReducer()
+    @ObservedObject var store: ChildReducer
     
     var body: some View {
         VStack {
@@ -161,3 +163,17 @@ struct ChildView: View {
         ParentView()
     }
 }
+
+//extension View {
+//    func listenTo(
+//        child: ChildReducer,
+//        reduce: @escaping (
+//            _ oldValue: ChildReducer.ViewState,
+//            _ newValue: ChildReducer.ViewState
+//        ) -> Void
+//    ) -> some View {
+//        onChange(of: child.listenState) { oldValue, newValue in
+//            reduce(oldValue, newValue)
+//        }
+//    }
+//}
