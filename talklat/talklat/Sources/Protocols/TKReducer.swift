@@ -22,54 +22,31 @@ protocol TKReducer<ViewState>: AnyObject, ObservableObject {
      into newValue: Value)
 }
 
+protocol ReduceDelegate<Reducer> {
+    associatedtype Reducer: TKReducer
+    
+    func listen(to: Reducer)
+    
+    func notify(to: Reducer)
+}
+
 extension TKReducer where Self.ViewState: TKAnimatable {
     func triggerAnimation(_ flag: Bool) {
         self.reduce(\.animationFlag, into: flag)
     }
 }
 
-extension TKReducer where Self.ViewState: RootState & Equatable {
-    func listen<Value: Equatable>
-    (_ path: KeyPath<some ChildState, Value>) {
-        
-    }
-}
-
-extension TKReducer where Self.ViewState: ChildState & Equatable {
-    func notify() {
-        
-    }
-}
+protocol RootState: Equatable { }
 
 protocol TKAnimatable {
     var animationFlag: Bool { get set }
 }
 
-protocol ChildState: Equatable {
-    // 자기 자신이 어떻게 변했는지 알려주는 didChange
-    func didChange<Value: Equatable>(path: KeyPath<ChildReducer.ViewState, Value>) -> Value
-}
-
-protocol RootState: Equatable { }
-
-/// Child의 변화를 Parent에 알려주는 Mediator
-struct BDMediator {
-    static func notified<ChildStore: TKReducer, Value: Equatable> (
-        from child: ChildStore,
-        path: KeyPath<some ChildState, Value>
-    ) where ChildStore.ViewState: ChildState
-    {
-        
-    }
-}
-
-///
+// Parent의 delegate 를 child가 self로 받아와서 일을 한다.
+// child는 자기 자신의 로직을 수행한 후, 필요할 때 delegate의 메소드를 호출하여 Parent에 변화를 알린다.
 
 // MARK: - USAGE EXAMPLE
-final class ParentReducer<Delegate: TKReducer>: TKReducer {
-    // 1. child가 있다면 delegate를 선언해준다.
-    var delegate: Delegate!
-    
+final class ParentReducer: TKReducer {
     struct ViewState {
         var parentName: String = "Parent"
     }
@@ -86,27 +63,19 @@ final class ParentReducer<Delegate: TKReducer>: TKReducer {
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
     }
-    
-    // 2. 자동으로 listen한다.
-    func listen() {
-        // 3. delegate에서 무엇이 변했는지 받아온다.
-        
-    }
 }
 
 final class ChildReducer: TKReducer {
-    struct ViewState: ChildState, Equatable {
-        
+    struct ViewState {
         var childName: String = "Child"
-        func didChange<Value: Equatable>(path: KeyPath<ChildReducer.ViewState, Value>) -> Value {
-            self[keyPath: path]
-        }
     }
     
     @Published private var viewState: ViewState = ViewState()
     
     func onUpdateName(with str: String) {
         reduce(\.childName, into: str)
+//        guard let parent else { return }
+        
     }
     
     func reduce<Value: Equatable>(
@@ -114,16 +83,20 @@ final class ChildReducer: TKReducer {
         into newValue: Value)
     {
         self.viewState[keyPath: path] = newValue
-        self.viewState.didChange(path: path)
     }
     
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
     }
+    
+    func notify<Value: Equatable>
+    (path: KeyPath<ViewState, Value>) {
+        
+    }
 }
 
 struct ParentView: View {
-    @StateObject private var store = ParentReducer<ChildReducer>()
+    @StateObject private var store = ParentReducer()
     @StateObject private var childStore: ChildReducer = ChildReducer()
     
     var body: some View {
