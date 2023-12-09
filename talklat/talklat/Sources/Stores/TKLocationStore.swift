@@ -12,7 +12,7 @@ import SwiftUI
 
 class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
-    struct ViewState {
+    struct ViewState: Equatable {
         var currentUserCoordinate: MKCoordinateRegion? = nil
         var currentUserPlaceName: String? = nil
         

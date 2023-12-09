@@ -10,7 +10,7 @@ import MapKit
 import SwiftUI
 
 class TKHistoryInfoStore: TKReducer {
-    struct ViewState {
+    struct ViewState: Equatable {
         var isShowingSheet: Bool = false
         var isShowingAlert: Bool = false
         var text: String = ""

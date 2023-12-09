@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class TKDraggableListViewStore: TKReducer {
-    struct ViewState {
+    struct ViewState: Equatable {
         var isShowingConversationView: Bool = false
         var conversations: [TKConversation] = [TKConversation]()
     }
