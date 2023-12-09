@@ -12,7 +12,7 @@ import SwiftUI
 /// ViewState 타입 구조체, ``reduce(_:into:)`` 구현을 요구
 /// store 역할을 수행할 class 타입에서 채택
 protocol TKReducer<ViewState>: AnyObject, ObservableObject {
-    associatedtype ViewState
+    associatedtype ViewState: Equatable
     
     func callAsFunction<Value: Equatable>
     (_ path: KeyPath<ViewState, Value>) -> Value
@@ -22,12 +22,12 @@ protocol TKReducer<ViewState>: AnyObject, ObservableObject {
      into newValue: Value)
 }
 
-protocol ReduceDelegate<Reducer> {
-    associatedtype Reducer: TKReducer
-    
-    func listen(to: Reducer)
-    
-    func notify(to: Reducer)
+extension TKReducer {
+    // child가 notify하고 parent가 reduce 한다.
+    func notify<Parent: TKReducer, Value: Equatable>
+    (to parent: Parent, path: WritableKeyPath<Parent.ViewState, Value>, into value: Value) {
+        parent.reduce(path, into: value)
+    }
 }
 
 extension TKReducer where Self.ViewState: TKAnimatable {
@@ -36,23 +36,18 @@ extension TKReducer where Self.ViewState: TKAnimatable {
     }
 }
 
-protocol RootState: Equatable { }
-
-protocol TKAnimatable {
+protocol TKAnimatable: Equatable {
     var animationFlag: Bool { get set }
 }
 
-// Parent의 delegate 를 child가 self로 받아와서 일을 한다.
-// child는 자기 자신의 로직을 수행한 후, 필요할 때 delegate의 메소드를 호출하여 Parent에 변화를 알린다.
-
 // MARK: - USAGE EXAMPLE
 final class ParentReducer: TKReducer {
-    struct ViewState {
+    struct ViewState: Equatable {
         var parentName: String = "Parent"
     }
     
     @Published private var viewState: ViewState = ViewState()
-        
+    
     func reduce<Value: Equatable>(
         _ path: WritableKeyPath<ViewState, Value>,
         into newValue: Value)
@@ -66,7 +61,9 @@ final class ParentReducer: TKReducer {
 }
 
 final class ChildReducer: TKReducer {
-    struct ViewState {
+    var parent: (any TKReducer)?
+    
+    struct ViewState: Equatable {
         var childName: String = "Child"
     }
     
@@ -74,8 +71,8 @@ final class ChildReducer: TKReducer {
     
     func onUpdateName(with str: String) {
         reduce(\.childName, into: str)
-//        guard let parent else { return }
-        
+        guard let parent = parent as? ParentReducer else { return }
+        notify(to: parent, path: \.parentName, into: str)
     }
     
     func reduce<Value: Equatable>(
@@ -87,11 +84,6 @@ final class ChildReducer: TKReducer {
     
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
-    }
-    
-    func notify<Value: Equatable>
-    (path: KeyPath<ViewState, Value>) {
-        
     }
 }
 
@@ -109,6 +101,11 @@ struct ParentView: View {
                     
                 } label: {
                     Text("Go child")
+                }
+            }
+            .onAppear {
+                if childStore.parent == nil {
+                    childStore.parent = store
                 }
             }
         }
