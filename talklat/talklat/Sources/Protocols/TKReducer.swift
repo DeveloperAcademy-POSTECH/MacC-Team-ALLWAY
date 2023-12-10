@@ -20,13 +20,18 @@ protocol TKReducer<ViewState>: AnyObject, ObservableObject {
     func reduce<Value: Equatable>
     (_ path: WritableKeyPath<ViewState, Value>,
      into newValue: Value)
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value)
 }
 
+
 extension TKReducer {
-    // child가 notify하고 parent가 reduce 한다.
-    func notify<Parent: TKReducer, Value: Equatable>
-    (to parent: Parent, path: WritableKeyPath<Parent.ViewState, Value>, into value: Value) {
-        parent.reduce(path, into: value)
+    // 진짜 이러기 싫다
+    // 개망한 Open Close 는 이렇게 되는구나
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
     }
 }
 
@@ -36,17 +41,46 @@ extension TKReducer where Self.ViewState: TKAnimatable {
     }
 }
 
+extension TKReducer {
+    /// notify 메소드는 Child에서 호출한다.
+    /// - Parameters:
+    ///   - parent: 변경된 사항을 받기 위한 Parent
+    ///   - path: 변경된 path를 전달
+    ///   - value: 변경된 값을 전달
+    func notify<Parent: TKReducer, Value: Equatable>
+    (to parent: Parent, path: KeyPath<ViewState, Value>, value: Value) {
+        parent.listen(to: self, path, value: value)
+    }
+}
+
 protocol TKAnimatable: Equatable {
     var animationFlag: Bool { get set }
 }
 
 // MARK: - USAGE EXAMPLE
-final class ParentReducer: TKReducer {
+final class ParentReducer {
     struct ViewState: Equatable {
         var parentName: String = "Parent"
+        var booo: Bool = false
     }
     
     @Published private var viewState: ViewState = ViewState()
+}
+
+extension ParentReducer: TKReducer {
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        typealias ChildState = ChildReducer.ViewState
+        
+        switch path {
+        case \ChildState.childName:
+            reduce(\.parentName, into: value as! String)
+        case \ChildState.booleann:
+            reduce(\.booo, into: value as! Bool)
+        default:
+            break
+        }
+    }
     
     func reduce<Value: Equatable>(
         _ path: WritableKeyPath<ViewState, Value>,
@@ -61,18 +95,19 @@ final class ParentReducer: TKReducer {
 }
 
 final class ChildReducer: TKReducer {
-    var parent: (any TKReducer)?
+    weak var parent: (any TKReducer)?
     
     struct ViewState: Equatable {
         var childName: String = "Child"
+        var booleann: Bool = true
     }
     
     @Published private var viewState: ViewState = ViewState()
     
     func onUpdateName(with str: String) {
         reduce(\.childName, into: str)
-        guard let parent = parent as? ParentReducer else { return }
-        notify(to: parent, path: \.parentName, into: str)
+        guard let parent else { return }
+        notify(to: parent, path: \.childName, value: str)
     }
     
     func reduce<Value: Equatable>(
@@ -86,6 +121,7 @@ final class ChildReducer: TKReducer {
         self.viewState[keyPath: path]
     }
 }
+
 
 struct ParentView: View {
     @StateObject private var store = ParentReducer()
