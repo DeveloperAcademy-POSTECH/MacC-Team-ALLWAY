@@ -16,6 +16,9 @@ struct TKConversationView: View {
     
     @Namespace var TKTransitionNamespace
     
+    @State private var cancellableSet = Set<AnyCancellable>()
+    @State private var currentTranscript = CurrentValueSubject<String, Never>("")
+    
     let manager = TKTextReplacementManager()
     
     // MARK: Body
@@ -41,9 +44,16 @@ struct TKConversationView: View {
                     namespaceID: TKTransitionNamespace
                 )
                 .onChange(of: speechRecognizeManager.transcript) { old, transcript in
-                    withAnimation {
-                        store.onSpeechTransicriptionUpdated(transcript)
-                    }
+                    currentTranscript.send(transcript)
+                }
+                .task { @MainActor [weak store] in
+                    currentTranscript
+                        .debounce(
+                            for: .milliseconds(300),
+                            scheduler: RunLoop.main
+                        )
+                        .sink { store?.onSpeechTransicriptionUpdated($0) }
+                        .store(in: &cancellableSet)
                 }
                 .toolbar {
                     if store(\.answeredText).isEmpty {
