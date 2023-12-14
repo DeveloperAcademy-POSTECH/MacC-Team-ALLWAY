@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 final class TKConversationViewStore {
+    weak var parent: (any TKReducer)?
+    
     enum ConversationStatus: Equatable {
         case recording
         case guiding
@@ -220,15 +222,16 @@ extension TKConversationViewStore {
     
     public func onSaveConversationIntoPreviousButtonTapped() {
         reduce(\.isConversationFullScreenDismissed, into: true)
+        guard let parent else { return }
+        notify(to: parent, path: \.isConversationFullScreenDismissed, value: true)
     }
     
     public func onSaveNewConversationButtonTapped() {
         withAnimation {
-            reduce(
-                \.isNewConversationSaved,
-                 into: true
-            )
+            reduce(\.isNewConversationSaved, into: true)
         }
+        guard let parent else { return }
+        notify(to: parent, path: \.isNewConversationSaved, value: true)
     }
     
     public func onSaveToPreviousButtonTapped(_ newContents: [TKContent]) {
