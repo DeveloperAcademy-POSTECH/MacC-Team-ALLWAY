@@ -87,18 +87,17 @@ struct TKMainView: View {
         }
         .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
             TKConversationView(store: conversationViewStore)
+                .onAppear {
+                    if conversationViewStore.parent == nil {
+                        conversationViewStore.parent = store
+                    }
+                }
                 .onDisappear {
                     conversationViewStore.resetConversationState()
-                }
-                .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
-                    if !old, new {
-                        store.onConversationFullscreenDismissed()
-                    }
                 }
                 .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
                     if isSaved {
                         self.recentConversation = swiftDataStore.getRecentConversation()
-                        store.onNewConversationHasSaved()
                     }
                 }
                 .showTKAlert(
