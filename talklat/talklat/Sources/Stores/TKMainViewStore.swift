@@ -141,4 +141,23 @@ extension TKMainViewStore: TKReducer {
     ) {
         viewState[keyPath: path] = newValue
     }
+    
+    func listen<Child, Value>(to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) where Child : TKReducer, Value : Equatable {
+        typealias ChildState = TKConversationViewStore.ViewState
+        
+        switch path {
+        case \ChildState.isConversationFullScreenDismissed:
+            guard value as! Bool else { break }
+            onConversationFullscreenDismissed()
+            break
+            
+        case \ChildState.isNewConversationSaved:
+            guard value as! Bool else { break }
+            onNewConversationHasSaved()
+            break
+        
+        default:
+            break
+        }
+    }
 }
