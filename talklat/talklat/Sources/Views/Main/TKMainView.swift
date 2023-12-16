@@ -93,6 +93,9 @@ struct TKMainView: View {
                     }
                 }
                 .onDisappear {
+                    if conversationViewStore.parent != nil {
+                        conversationViewStore.parent = nil
+                    }
                     conversationViewStore.resetConversationState()
                 }
                 .onChange(of: conversationViewStore(\.isNewConversationSaved)) { _, isSaved in
