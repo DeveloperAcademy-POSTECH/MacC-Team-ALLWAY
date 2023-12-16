@@ -25,16 +25,6 @@ protocol TKReducer<ViewState>: AnyObject, ObservableObject {
     (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value)
 }
 
-
-extension TKReducer {
-    // 진짜 이러기 싫다
-    // 개망한 Open Close 는 이렇게 되는구나
-    func listen<Child: TKReducer, Value: Equatable>
-    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
-        
-    }
-}
-
 extension TKReducer where Self.ViewState: TKAnimatable {
     func triggerAnimation(_ flag: Bool) {
         self.reduce(\.animationFlag, into: flag)
@@ -119,6 +109,11 @@ final class ChildReducer: TKReducer {
     
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
+    }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
     }
 }
 
