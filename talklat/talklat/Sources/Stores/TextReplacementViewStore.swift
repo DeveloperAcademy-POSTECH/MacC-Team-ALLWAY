@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 // TODO: Reducer 생성 및 연결
-final class TextReplacementViewStore: TKReducer {
-    
+final class TextReplacementViewStore {
     struct ViewState: Equatable {
         var showingTextReplacementEditView: Bool = false
         var showingTextReplacementAddView: Bool = false
@@ -37,15 +36,6 @@ final class TextReplacementViewStore: TKReducer {
     
     init(viewState: ViewState) {
         self.viewState = viewState
-    }
-    
-    // MARK: HELPERS
-    func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
-        self.viewState[keyPath: path]
-    }
-    
-    func reduce<Value>(_ path: WritableKeyPath<ViewState, Value>, into newValue: Value) where Value : Equatable {
-        self.viewState[keyPath: path] = newValue
     }
     
     public func bindingSearchText() -> Binding<String> {
@@ -140,5 +130,20 @@ final class TextReplacementViewStore: TKReducer {
     
     func showTextReplacementAddView() {
         viewState.showingTextReplacementAddView = true
+    }
+}
+
+extension TextReplacementViewStore: TKReducer {
+    func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
+        self.viewState[keyPath: path]
+    }
+    
+    func reduce<Value>(_ path: WritableKeyPath<ViewState, Value>, into newValue: Value) where Value : Equatable {
+        self.viewState[keyPath: path] = newValue
+    }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
     }
 }

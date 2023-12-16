@@ -31,16 +31,7 @@ final class TKConversationViewStore {
         var hasGuidingMessageShown: Bool = false
         var hasSavingViewDisplayed: Bool = false
         var hasChevronButtonTapped: Bool = false
-        var historyItems: [HistoryItem] = [
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
-//            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
-        ]
+        var historyItems: [HistoryItem] = []
         var historyItem: HistoryItem?
         var blockButtonDoubleTap: Bool = false
         var isNewConversationSaved: Bool = false
@@ -49,12 +40,6 @@ final class TKConversationViewStore {
         var allConversationTitles: [String] = []
         var hasCurrentConversationTitlePrevious: Bool = false
         
-        // scroll container related - TODO: ScrollStore 분리?
-        var historyScrollViewHeight: CGFloat = 0
-        var historyScrollOffset: CGPoint = CGPoint(x: -0.0, y: 940.0)
-        var deviceHeight: CGFloat = 0
-        var topInset: CGFloat = 0
-        var bottomInset: CGFloat = 0
         var isTopViewShown: Bool = false
         var isHistoryViewShownWithTransition: Bool = false
         var previousConversation: TKConversation? = nil
@@ -109,13 +94,6 @@ final class TKConversationViewStore {
                     )
                 }
             }
-        )
-    }
-    
-    public func bindingHistoryScrollOffset() -> Binding<CGPoint> {
-        Binding(
-            get: { self(\.historyScrollOffset) },
-            set: { _ in }
         )
     }
     
@@ -312,19 +290,6 @@ extension TKConversationViewStore {
         )
     }
     
-    public func onScrollContainerAppear(
-        geo: GeometryProxy,
-        insets: UIEdgeInsets
-    ) {
-        reduce(\.deviceHeight, into: geo.size.height)
-        reduce(\.topInset, into: insets.top)
-        reduce(\.bottomInset, into: insets.bottom)
-    }
-    
-    public func onHistoryViewAppear(geo: GeometryProxy) {
-        reduce(\.historyScrollViewHeight, into: geo.size.height)
-    }
-    
     public func onStartRecordingButtonTapped() {
         withAnimation {
             switchConverstaionStatus()
@@ -492,9 +457,14 @@ extension TKConversationViewStore: TKReducer {
     func callAsFunction<Value>(_ path: KeyPath<ConversationState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
     }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
+    }
 }
 
-// MARK: Helper
+// MARK: Internal Helper
 extension TKConversationViewStore {
     private func switchConverstaionStatus() {
         switch self(\.conversationStatus) {
