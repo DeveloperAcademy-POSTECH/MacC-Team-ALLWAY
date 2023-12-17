@@ -7,6 +7,7 @@
 
 import Accelerate
 import AVFoundation
+import Combine
 import Foundation
 import Speech
 import SwiftUI
@@ -28,12 +29,13 @@ final class SpeechRecognizer: ObservableObject {
         }
     }
     
-    @Published var transcript: String = ""
+    public var cancellableSet = Set<AnyCancellable>()
+    public var currentTranscript = CurrentValueSubject<String, Never>("")
     
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
-    private let recognizer: SFSpeechRecognizer?
+    private var recognizer: SFSpeechRecognizer?
     
     private var audioBuffers: [AVAudioPCMBuffer] = []
     private let signalExtractor = SignalExtractor()
@@ -48,32 +50,17 @@ final class SpeechRecognizer: ObservableObject {
             transcribeFailed(RecognizerError.nilRecognizer)
             return
         }
-        
-        Task {
-            do {
-                guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
-                    throw RecognizerError.notAuthorizedToRecognize
-                }
-                guard await AVAudioSession.sharedInstance().hasPermissionToRecord() else {
-                    throw RecognizerError.notPermittedToRecord
-                }
-            } catch {
-                transcribeFailed(error)
-            }
-        }
     }
     
-    @MainActor
     public func startTranscribing() {
-        Task {
-            beginTranscribe()
+        Task { @MainActor [weak self] in
+            self?.beginTranscribe()
         }
     }
     
-    @MainActor
     public func stopAndResetTranscribing() {
-        Task {
-            stopAndResetTranscribe()
+        Task { @MainActor [weak self] in
+            self?.stopAndResetTranscribe()
         }
     }
     
@@ -108,7 +95,7 @@ final class SpeechRecognizer: ObservableObject {
         request?.endAudio()
         task?.cancel()
         audioEngine?.stop()
-        transcript.removeAll(keepingCapacity: true)
+        currentTranscript.value.removeAll(keepingCapacity: true)
         audioEngine = nil
         request = nil
         task = nil
@@ -141,10 +128,7 @@ final class SpeechRecognizer: ObservableObject {
             onBus: 0,
             bufferSize: 1024,
             format: recordingFormat
-        ) { [weak self] (
-            buffer: AVAudioPCMBuffer,
-            when: AVAudioTime
-        ) in
+        ) { [weak self] (buffer, audioTime) in
             request.append(buffer)
             self?.audioBuffers.append(buffer)
         }
@@ -197,9 +181,7 @@ final class SpeechRecognizer: ObservableObject {
         var modifiedTranscript = transcript
         var searchStartIndex = modifiedTranscript.startIndex
         
-        for pattern in conversationPatterns.questionPatterns {
-            var searchStartIndex = modifiedTranscript.startIndex
-            
+        for pattern in ConversationPatterns.questionPatterns {
             while let range = modifiedTranscript.range(
                 of: pattern,
                 options: [],
@@ -218,9 +200,10 @@ final class SpeechRecognizer: ObservableObject {
     }
 
     nonisolated private func transcribe(_ message: String) {
-        Task { @MainActor in
-            let res = addPunctuation(message)
-            transcript = res
+        Task { @MainActor [weak self] in
+            if let res = self?.addPunctuation(message) {
+                self?.currentTranscript.value = res
+            }
         }
     }
     
@@ -231,14 +214,15 @@ final class SpeechRecognizer: ObservableObject {
         } else {
             errorMessage += error.localizedDescription
         }
-        // MARK: Answered Text에 에러 메시지가 쌓이지 않도록 후속 작업 각주 처리
-//        Task { @MainActor _ in
-//            transcript = "<< \(errorMessage) >>"
-//        }
+        
+        print("Faile..d?")
     }
     
     // 음성 인식 정확도를 측정하는 함수1
-    private func levenshteinDistanceBetween(_ a: String, and b: String) -> Int {
+    private func levenshteinDistanceBetween(
+        _ a: String,
+        and b: String
+    ) -> Int {
         if a.count == 0 {
             return b.count
         }
@@ -271,7 +255,10 @@ final class SpeechRecognizer: ObservableObject {
     }
     
     // 음성 인식 정확도를 측정하는 함수2
-    private func calculateRecognitionAccuracy(originalText: String, recognizedText: String) -> Double {
+    private func calculateRecognitionAccuracy(
+        originalText: String,
+        recognizedText: String
+    ) -> Double {
         let distance = levenshteinDistanceBetween(originalText, and: recognizedText)
         let maxLength = max(originalText.count, recognizedText.count)
         
@@ -305,11 +292,16 @@ extension Array where Element == Float {
     func toBuffer() -> AVAudioPCMBuffer? {
         // TODO: Sample rate와 channel에 맞게 조정 필요
         let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(self.count)) else { return nil }
+        guard let buffer = AVAudioPCMBuffer(
+            pcmFormat: format,
+            frameCapacity: AVAudioFrameCount(self.count)
+        ) else { return nil }
+        
         buffer.frameLength = AVAudioFrameCount(self.count)
         for i in 0..<self.count {
             buffer.floatChannelData?.pointee[i] = self[i]
         }
+        
         return buffer
     }
 }
