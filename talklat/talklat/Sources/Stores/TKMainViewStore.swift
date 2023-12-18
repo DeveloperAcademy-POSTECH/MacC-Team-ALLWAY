@@ -23,27 +23,6 @@ final class TKMainViewStore {
     
     @Published var viewState: ViewState = ViewState()
     
-    public func bindingConversationFullScreenCover() -> Binding<Bool> {
-        Binding(
-            get: { self(\.isConversationFullScreenCoverDisplayed) },
-            set: { self.reduce(\.isConversationFullScreenCoverDisplayed, into: $0) }
-        )
-    }
-    
-    public func bindingTKToast() -> Binding<Bool> {
-        Binding(
-            get: { self(\.isTKToastPresented) },
-            set: { self.reduce(\.isTKToastPresented, into: $0) }
-        )
-    }
-    
-    public func bindingSpeechAuthAlert() -> Binding<Bool> {
-        Binding(
-            get: { self(\.isSpeechAuthAlertPresented) },
-            set: { self.reduce(\.isSpeechAuthAlertPresented, into: $0) }
-        )
-    }
-    
     public func onConversationFullscreenDismissed() {
         reduce(\.isConversationFullScreenCoverDisplayed, into: false)
     }
@@ -140,5 +119,14 @@ extension TKMainViewStore: TKReducer {
         into newValue: Value
     ) {
         viewState[keyPath: path] = newValue
+    }
+    
+    subscript <BindingState: Equatable>
+    (_ path: WritableKeyPath<ViewState, BindingState>)
+    -> Binding<BindingState> {
+        return Binding(
+            get: { self.viewState[keyPath: path] },
+            set: { self.reduce(path, into: $0) }
+        )
     }
 }
