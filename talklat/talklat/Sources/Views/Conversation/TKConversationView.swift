@@ -11,8 +11,8 @@ import SwiftUI
 
 struct TKConversationView: View {
     @ObservedObject var store: TKConversationViewStore
-    @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
+    private let speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     
     @Namespace var TKTransitionNamespace
 

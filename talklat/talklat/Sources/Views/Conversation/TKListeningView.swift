@@ -5,12 +5,14 @@
 //  Created by Celan on 11/11/23.
 //
 
+import Observation
 import SwiftUI
 
 struct TKListeningView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(TKSwiftDataStore.self) private var dataStore
+    
     @ObservedObject var store: TKConversationViewStore
-    let dataStore = TKSwiftDataStore()
     let namespaceID: Namespace.ID
     
     var body: some View {
