@@ -433,7 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				7E0188D72B05F20D005AA4D0 /* Onboarding */,
-				EF7BB3202B0396DA00F8FEC9 /* Settings_ */,
+				EF7BB3202B0396DA00F8FEC9 /* Settings */,
 				7E4A6CD72AFB2C030014DDB8 /* Main */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */,
@@ -604,7 +604,7 @@
 			path = History;
 			sourceTree = "<group>";
 		};
-		EF7BB3202B0396DA00F8FEC9 /* Settings_ */ = {
+		EF7BB3202B0396DA00F8FEC9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				EF4799DA2B0EF5A7005C2B0E /* DataPolicyInfo */,
@@ -621,7 +621,7 @@
 				EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */,
 				EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */,
 			);
-			path = Settings_;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
