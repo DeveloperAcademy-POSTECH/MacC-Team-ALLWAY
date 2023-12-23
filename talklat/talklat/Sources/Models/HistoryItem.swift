@@ -16,4 +16,17 @@ struct HistoryItem: Identifiable, Equatable {
     let text: String
     let type: MessageType
     let createdAt: Date
+    
+    static func getHistoryItemArray() -> [HistoryItem] {
+        [
+            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+            .init(id: .init(), text: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+            .init(id: .init(), text: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+            .init(id: .init(), text: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+            .init(id: .init(), text: "(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .question, createdAt: .now),
+            .init(id: .init(), text: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠(난청인질문) 일이삼사오육칠팔구십일이삼사오육칠팔구십", type: .answer, createdAt: .now),
+        ]
+    }
 }

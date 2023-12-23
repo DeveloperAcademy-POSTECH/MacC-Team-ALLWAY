@@ -9,8 +9,8 @@ import Foundation
 import MapKit
 import SwiftUI
 
-class TKHistoryInfoStore: TKReducer {
-    struct ViewState {
+final class TKHistoryInfoStore {
+    struct ViewState: Equatable {
         var isShowingSheet: Bool = false
         var isShowingAlert: Bool = false
         var text: String = ""
@@ -174,13 +174,21 @@ class TKHistoryInfoStore: TKReducer {
             set: { self.reduce(\.isShowingAlert, into: $0) }
         )
     }
-    
-    func callAsFunction<Value: Equatable> (_ path: KeyPath<ViewState, Value>) -> Value {
+}
+
+extension TKHistoryInfoStore: TKReducer {
+    public func callAsFunction<Value: Equatable> (_ path: KeyPath<ViewState, Value>) -> Value {
         self.viewState[keyPath: path]
     }
     
-    func reduce<Value: Equatable>(_ path: WritableKeyPath<ViewState, Value>,
-                                  into newValue: Value) {
+    func reduce<Value: Equatable>
+    (_ path: WritableKeyPath<ViewState, Value>,
+     into newValue: Value) {
         self.viewState[keyPath: path] = newValue
+    }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
     }
 }

@@ -8,22 +8,13 @@
 import Foundation
 import SwiftUI
 
-class TKDraggableListViewStore: TKReducer {
-    struct ViewState {
+final class TKDraggableListViewStore {
+    struct ViewState: Equatable {
         var isShowingConversationView: Bool = false
         var conversations: [TKConversation] = [TKConversation]()
     }
     
     @Published private var viewState: ViewState = ViewState()
-    
-    func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
-        return self.viewState[keyPath: path]
-    }
-    
-    func reduce<Value>(_ path: WritableKeyPath<ViewState, Value>, into newValue: Value) where Value : Equatable {
-        self.viewState[keyPath: path] = newValue
-    }
-    
     
     public func bindingIsShowingConversationView() -> Binding<Bool> {
         return Binding(
@@ -38,5 +29,21 @@ class TKDraggableListViewStore: TKReducer {
     
     public func onTapDraggableListItem(_ conversation: TKConversation) {
         self.reduce(\.isShowingConversationView, into: true)
+    }
+}
+
+extension TKDraggableListViewStore: TKReducer {
+    func callAsFunction<Value: Equatable> (_ path: KeyPath<ViewState, Value>) -> Value {
+        self.viewState[keyPath: path]
+    }
+    
+    func reduce<Value: Equatable>(_ path: WritableKeyPath<ViewState, Value>,
+                                  into newValue: Value) {
+        self.viewState[keyPath: path] = newValue
+    }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
     }
 }

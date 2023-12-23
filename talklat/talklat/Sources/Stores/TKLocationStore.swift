@@ -10,9 +10,9 @@ import Foundation
 import MapKit
 import SwiftUI
 
-class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
+class TKLocationStore: NSObject, CLLocationManagerDelegate {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
-    struct ViewState {
+    struct ViewState: Equatable {
         var currentUserCoordinate: MKCoordinateRegion? = nil
         var currentUserPlaceName: String? = nil
         
@@ -76,25 +76,6 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
             \.authorizationStatus,
              into: self.locationManager.authorizationStatus
         )
-    }
-    
-    public func callAsFunction<Value: Equatable>(_ keyPath: KeyPath<ViewState, Value>) -> Value {
-        self.locationState[keyPath: keyPath]
-    }
-    
-    func reduce<Value: Equatable>
-    (
-        _ state: WritableKeyPath<ViewState, Value>,
-        into newValue: Value
-    ) {
-        switch state {
-        case \.currentUserCoordinate:
-            withAnimation {
-                self.locationState[keyPath: state] = newValue
-            }
-        default:
-            self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
-        }
     }
     
     func stopLocationTracking() {
@@ -351,6 +332,31 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     }
 }
 
+extension TKLocationStore: TKReducer {
+    public func callAsFunction<Value: Equatable>(_ keyPath: KeyPath<ViewState, Value>) -> Value {
+        self.locationState[keyPath: keyPath]
+    }
+    
+    func reduce<Value: Equatable>
+    (
+        _ state: WritableKeyPath<ViewState, Value>,
+        into newValue: Value
+    ) {
+        switch state {
+        case \.currentUserCoordinate:
+            withAnimation {
+                self.locationState[keyPath: state] = newValue
+            }
+        default:
+            self.locationState[keyPath: state] = newValue // 해당하는 state에 맞는 newValue를 할당해주고
+        }
+    }
+    
+    func listen<Child: TKReducer, Value: Equatable>
+    (to: Child, _ path: KeyPath<Child.ViewState, Value>, value: Value) {
+        
+    }
+}
 
 public enum LocationFetchType {
     case current
