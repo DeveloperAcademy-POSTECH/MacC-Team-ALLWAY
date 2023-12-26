@@ -152,8 +152,7 @@ struct TKMainView: View {
         .overlay(alignment: .top) {
             if let recent = recentConversation,
                let location = recent.location,
-               store(\.isTKToastPresented)
-            {
+               store(\.isTKToastPresented) {
                 TKToast(
                     isPresented: store[\.isTKToastPresented],
                     title: recent.title,

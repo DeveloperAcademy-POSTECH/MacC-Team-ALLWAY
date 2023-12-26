@@ -356,9 +356,7 @@ extension TKConversationViewStore {
                 \.historyItem,
                  into: HistoryItem(
                     id: .init(),
-                    text: self(
-                        \.answeredText
-                    ),
+                    text: self(\.answeredText),
                     type: .answer,
                     createdAt: Date()
                  )
