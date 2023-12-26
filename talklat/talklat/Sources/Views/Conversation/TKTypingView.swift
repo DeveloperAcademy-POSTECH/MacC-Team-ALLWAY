@@ -187,7 +187,7 @@ extension TKTypingView {
                 ],
                 circleColor: Color.OR5
             )
-            .task { store.triggerAnimation(false) }
+            .animation(.none, value: store(\.animationFlag))
             .frame(height: 64)
             .overlay {
                 Circle()
