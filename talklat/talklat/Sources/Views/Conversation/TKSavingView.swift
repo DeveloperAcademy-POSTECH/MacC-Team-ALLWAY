@@ -48,7 +48,7 @@ struct TKSavingView: View {
                 
                 Button {
                     if let res: TKConversation = store.makeNewConversation(
-                        with: speechRecognizeManager.currentTranscript.value,
+                        with: speechRecognizeManager.currentTranscript,
                         at: TKLocation(
                             latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude,
                             longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,

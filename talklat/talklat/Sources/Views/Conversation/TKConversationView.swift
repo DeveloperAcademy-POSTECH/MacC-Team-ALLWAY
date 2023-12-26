@@ -12,7 +12,7 @@ import SwiftUI
 struct TKConversationView: View {
     @ObservedObject var store: TKConversationViewStore
     @StateObject private var gyroScopeStore: GyroScopeStore = GyroScopeStore()
-    private let speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
+    @StateObject private var speechRecognizeManager: SpeechRecognizer = SpeechRecognizer()
     
     @Namespace var TKTransitionNamespace
 
@@ -38,15 +38,13 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-                .task { @MainActor [weak speechRecognizeManager] in
-                    if let speechRecognizeManager {
-                        speechRecognizeManager.currentTranscript
-                            .debounce(
-                                for: .milliseconds(300),
-                                scheduler: RunLoop.main
-                            )
-                            .sink { [weak store] in store?.onSpeechTransicriptionUpdated($0) }
-                            .store(in: &speechRecognizeManager.cancellableSet)
+                .onChange(of: speechRecognizeManager.currentTranscript) { oldValue, newValue in
+                    if oldValue.isEmpty, !newValue.isEmpty {
+                        withAnimation {
+                            store.onSpeechTranscriptUpdated(newValue)
+                        }
+                    } else {
+                        store.onSpeechTranscriptUpdated(newValue)
                     }
                 }
                 .toolbar {
@@ -90,7 +88,6 @@ struct TKConversationView: View {
             switch newStatus {
             case .writing:
                 speechRecognizeManager.stopAndResetTranscribing()
-                speechRecognizeManager.cancellableSet.removeAll()
                 break
                 
             case .guiding:
