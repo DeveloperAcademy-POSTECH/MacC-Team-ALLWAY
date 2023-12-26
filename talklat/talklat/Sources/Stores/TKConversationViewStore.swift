@@ -158,7 +158,7 @@ extension TKConversationViewStore {
             return nil
         }
         
-        onSpeechTransicriptionUpdated(transcript)
+        onSpeechTranscriptUpdated(transcript)
         makeCurrentConversationContent()
         
         let newContents = self(\.historyItems)
@@ -438,11 +438,9 @@ extension TKConversationViewStore {
         }
     }
     
-    public func onSpeechTransicriptionUpdated(_ str: String) {
-        if !str.isEmpty {
-            reduce(\.answeredText, into: str)
-            HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
-        }
+    public func onSpeechTranscriptUpdated(_ str: String) {
+        reduce(\.answeredText, into: str)
+        HapticManager.sharedInstance.generateHaptic(.light(times: countLastWord(str)))
     }
 }
 
