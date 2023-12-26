@@ -73,15 +73,13 @@ final class SpeechRecognizer: ObservableObject {
     }
     
     public func startTranscribing() {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
+        Task {
             self.beginTranscribe()
         }
     }
     
     public func stopAndResetTranscribing() {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
+        Task {
             self.stopAndResetTranscribe()
         }
     }
@@ -166,7 +164,7 @@ final class SpeechRecognizer: ObservableObject {
         task?.cancel()
         self.request = nil
         self.task = nil
-        currentTranscript.value.removeAll(keepingCapacity: true)
+        currentTranscript.value.removeAll()
     }
     
     public func processAudioData() {
