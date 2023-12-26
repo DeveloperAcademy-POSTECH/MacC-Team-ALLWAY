@@ -29,8 +29,7 @@ final class SpeechRecognizer: ObservableObject {
         }
     }
     
-    public var cancellableSet = Set<AnyCancellable>()
-    public var currentTranscript = CurrentValueSubject<String, Never>("")
+    @Published public var currentTranscript = ""
     
     private var recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))!
     private var audioEngine: AVAudioEngine = AVAudioEngine()
@@ -73,13 +72,13 @@ final class SpeechRecognizer: ObservableObject {
     }
     
     public func startTranscribing() {
-        Task {
-            self.beginTranscribe()
+        Task { @MainActor in
+           self.beginTranscribe()
         }
     }
     
     public func stopAndResetTranscribing() {
-        Task {
+        Task { @MainActor in
             self.stopAndResetTranscribe()
         }
     }
@@ -118,7 +117,6 @@ final class SpeechRecognizer: ObservableObject {
         }
     }
     
-    // text 전환을 시작합니다.
     private func beginTranscribe() {
         stopAndResetTranscribe()
         guard recognizer.isAvailable else {
@@ -127,7 +125,6 @@ final class SpeechRecognizer: ObservableObject {
         }
         
         guard let request = prepareSpeechRequest() else { return }
-
         let inputNode = prepareInputNode()
         startAudioEngine()
 
@@ -164,7 +161,7 @@ final class SpeechRecognizer: ObservableObject {
         task?.cancel()
         self.request = nil
         self.task = nil
-        currentTranscript.value.removeAll()
+        currentTranscript = ""
     }
     
     public func processAudioData() {
@@ -206,16 +203,15 @@ final class SpeechRecognizer: ObservableObject {
     }
 
     nonisolated private func transcribe(_ message: String) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            currentTranscript.value = addPunctuation(message)
+        Task { @MainActor in
+            currentTranscript = addPunctuation(message)
         }
     }
     
     nonisolated private func transcribeFailed(_ error: Error) {
         var errorMessage = ""
         if let error = error as? RecognizerError {
-            errorMessage += error.message
+            errorMessage += error.localizedDescription
         } else {
             errorMessage += error.localizedDescription
         }
