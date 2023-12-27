@@ -7,7 +7,6 @@
 
 import Accelerate
 import AVFoundation
-import Combine
 import Foundation
 import Speech
 import SwiftUI
@@ -31,14 +30,13 @@ final class SpeechRecognizer: ObservableObject {
     
     @Published public var currentTranscript = ""
     
-    private var recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))!
-    private var audioEngine: AVAudioEngine = AVAudioEngine()
+    private let recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))!
+    private let audioEngine: AVAudioEngine = AVAudioEngine()
+    private let signalExtractor = SignalExtractor()
     
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
-    
     private var audioBuffers: [AVAudioPCMBuffer] = []
-    private let signalExtractor = SignalExtractor()
     
     init() {
         initRecognizer()
