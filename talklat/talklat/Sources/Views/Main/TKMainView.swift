@@ -12,6 +12,8 @@ import SwiftUI
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
+    
     @EnvironmentObject private var locationStore: TKLocationStore
     @EnvironmentObject private var authManager: TKAuthManager
     
@@ -19,7 +21,6 @@ struct TKMainView: View {
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
-    let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         ZStack {
@@ -81,11 +82,8 @@ struct TKMainView: View {
         .task {
            await store.onTKMainViewAppeared()
         }
-        .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
+        .fullScreenCover(isPresented: store[\.isConversationFullScreenCoverDisplayed]) {
             TKConversationView(store: conversationViewStore)
-                .onDisappear {
-                    conversationViewStore.resetConversationState()
-                }
                 .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
                     if !old, new {
                         store.onConversationFullscreenDismissed()
@@ -117,6 +115,7 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
+                    #warning("MEMORY LEAKS IN TKCONVERSATION/TKCONTENT")
                     HistoryListView()
                 } label: {
                     Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
@@ -138,7 +137,7 @@ struct TKMainView: View {
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
         .showTKAlert(
-            isPresented: store.bindingSpeechAuthAlert(),
+            isPresented: store[\.isSpeechAuthAlertPresented],
             style: .conversation
         ) {
             store.onGoSettingScreenButtonTapped()
@@ -153,10 +152,9 @@ struct TKMainView: View {
         .overlay(alignment: .top) {
             if let recent = recentConversation,
                let location = recent.location,
-               store(\.isTKToastPresented)
-            {
+               store(\.isTKToastPresented) {
                 TKToast(
-                    isPresented: store.bindingTKToast(),
+                    isPresented: store[\.isTKToastPresented],
                     title: recent.title,
                     locationInfo: location.blockName
                 )

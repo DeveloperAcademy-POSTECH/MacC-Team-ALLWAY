@@ -12,13 +12,14 @@ struct TKTypingView: View {
     // TextReplacement
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(TKSwiftDataStore.self) private var dataStore
+    
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     
     @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let manager = TKTextReplacementManager()
-    let dataStore = TKSwiftDataStore()
     let namespaceID: Namespace.ID
     
     var body: some View {
@@ -186,7 +187,7 @@ extension TKTypingView {
                 ],
                 circleColor: Color.OR5
             )
-            .task { store.triggerAnimation(false) }
+            .animation(.none, value: store(\.animationFlag))
             .frame(height: 64)
             .overlay {
                 Circle()

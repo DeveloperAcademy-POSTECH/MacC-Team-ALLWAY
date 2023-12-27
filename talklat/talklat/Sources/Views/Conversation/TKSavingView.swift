@@ -11,12 +11,13 @@ import SwiftUI
 struct TKSavingView: View {
     // MARK: - TKLocation Manager, TKConversation Manager Here
     @Environment(\.dismiss) private var dismiss
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
     @EnvironmentObject var locationStore: TKLocationStore
+    
     @ObservedObject var store: TKConversationViewStore
-    @ObservedObject var speechRecognizeManager: SpeechRecognizer
     @FocusState var focusState: Bool
     @State private var allConversationTitles: [String] = []
-    private let swiftDataStore = TKSwiftDataStore()
+    var speechRecognizeManager: SpeechRecognizer
     
     var body: some View {
         VStack(
@@ -47,7 +48,7 @@ struct TKSavingView: View {
                 
                 Button {
                     if let res: TKConversation = store.makeNewConversation(
-                        with: speechRecognizeManager.transcript,
+                        with: speechRecognizeManager.currentTranscript,
                         at: TKLocation(
                             latitude: locationStore(\.currentUserCoordinate?.center.latitude) ?? initialLatitude,
                             longitude: locationStore(\.currentUserCoordinate?.center.longitude) ?? initialLongitude,

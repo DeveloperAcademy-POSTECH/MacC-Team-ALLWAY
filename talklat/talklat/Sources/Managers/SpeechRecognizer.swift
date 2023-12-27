@@ -28,130 +28,138 @@ final class SpeechRecognizer: ObservableObject {
         }
     }
     
-    @Published var transcript: String = ""
+    @Published public var currentTranscript = ""
     
-    private var audioEngine: AVAudioEngine?
-    private var request: SFSpeechAudioBufferRecognitionRequest?
-    private var task: SFSpeechRecognitionTask?
-    private let recognizer: SFSpeechRecognizer?
-    
-    private var audioBuffers: [AVAudioPCMBuffer] = []
+    private let recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))!
+    private let audioEngine: AVAudioEngine = AVAudioEngine()
     private let signalExtractor = SignalExtractor()
     
-    // 이 클래스를 처음 사용할 때, 마이크랑 음성 접근을 요청합니다.
+    private var request: SFSpeechAudioBufferRecognitionRequest?
+    private var task: SFSpeechRecognitionTask?
+    private var audioBuffers: [AVAudioPCMBuffer] = []
+    
     init() {
-        recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))
-        recognizer?.defaultTaskHint = .unspecified
-        recognizer?.supportsOnDeviceRecognition = false
-        
-        guard recognizer != nil else {
-            transcribeFailed(RecognizerError.nilRecognizer)
-            return
-        }
-        
-        Task {
-            do {
-                guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
-                    throw RecognizerError.notAuthorizedToRecognize
-                }
-                guard await AVAudioSession.sharedInstance().hasPermissionToRecord() else {
-                    throw RecognizerError.notPermittedToRecord
-                }
-            } catch {
-                transcribeFailed(error)
-            }
-        }
+        initRecognizer()
+        initAudioSession()
     }
     
-    @MainActor
-    public func startTranscribing() {
-        Task {
-            beginTranscribe()
-        }
+    private func initRecognizer() {
+        recognizer.defaultTaskHint = .unspecified
+        recognizer.supportsOnDeviceRecognition = false
     }
     
-    @MainActor
-    public func stopAndResetTranscribing() {
-        Task {
-            stopAndResetTranscribe()
-        }
-    }
-    
-    // text 전환을 시작합니다.
-    private func beginTranscribe() {
-        stopAndResetTranscribe()
-        
-        guard let recognizer = recognizer,
-              recognizer.isAvailable else {
-            self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
-            return
-        }
+    private func initAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
         
         do {
-            let (audioEngine, request) = try prepareEngine()
-            self.audioEngine = audioEngine
-            self.request = request
-            self.task = recognizer.recognitionTask(with: request) { [weak self] result, error in
-                self?.recognitionHandler(
-                    audioEngine: audioEngine,
-                    result: result,
-                    error: error
-                )
-            }
+            try audioSession.setCategory(
+                .playAndRecord,
+                mode: .measurement,
+                options: .defaultToSpeaker
+            )
+            try audioSession.setActive(
+                true,
+                options: .notifyOthersOnDeactivation
+            )
+            
+            try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
         } catch {
             self.stopAndResetTranscribe()
             self.transcribeFailed(error)
         }
     }
     
-    private func stopAndResetTranscribe() {
-        request?.endAudio()
-        task?.cancel()
-        audioEngine?.stop()
-        transcript.removeAll(keepingCapacity: true)
-        audioEngine = nil
-        request = nil
-        task = nil
+    public func startTranscribing() {
+        Task { @MainActor in
+           self.beginTranscribe()
+        }
     }
     
-    private func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
-        let audioEngine = AVAudioEngine()
-        
-        let request = SFSpeechAudioBufferRecognitionRequest()
+    public func stopAndResetTranscribing() {
+        Task { @MainActor in
+            self.stopAndResetTranscribe()
+        }
+    }
+    
+    private func prepareSpeechRequest() -> SFSpeechAudioBufferRecognitionRequest? {
+        request = SFSpeechAudioBufferRecognitionRequest()
+        guard let request else { return nil }
         
         request.addsPunctuation = true
         request.shouldReportPartialResults = true
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(
-            .playAndRecord,
-            mode: .measurement,
-            options: .defaultToSpeaker
-        )
-        try audioSession.setActive(
-            true,
-            options: .notifyOthersOnDeactivation
-        )
-        
-        try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
-        
+        return request
+    }
+    
+    private func prepareInputNode() -> AVAudioInputNode {
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.removeTap(onBus: 0)
         inputNode.installTap(
             onBus: 0,
             bufferSize: 1024,
             format: recordingFormat
-        ) { [weak self] (
-            buffer: AVAudioPCMBuffer,
-            when: AVAudioTime
-        ) in
-            request.append(buffer)
-            self?.audioBuffers.append(buffer)
+        ) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+            self.request?.append(buffer)
         }
-        audioEngine.prepare()
-        try audioEngine.start()
         
-        return (audioEngine, request)
+        return inputNode
+    }
+    
+    private func startAudioEngine() {
+        do {
+            audioEngine.prepare()
+            try audioEngine.start()
+        } catch {
+            self.stopAndResetTranscribe()
+            self.transcribeFailed(error)
+        }
+    }
+    
+    private func beginTranscribe() {
+        stopAndResetTranscribe()
+        guard recognizer.isAvailable else {
+            self.transcribeFailed(RecognizerError.recognizerIsUnavailable)
+            return
+        }
+        
+        guard let request = prepareSpeechRequest() else { return }
+        let inputNode = prepareInputNode()
+        startAudioEngine()
+
+        task = recognizer.recognitionTask(with: request) { result, error in
+            guard let result else { return }
+            self.recognitionTaskHandler(
+                result: result,
+                error: error,
+                inputNode: inputNode
+            )
+        }
+    }
+    
+    private func recognitionTaskHandler(
+        result: SFSpeechRecognitionResult,
+        error: Error?,
+        inputNode: AVAudioInputNode
+    ) {
+        var isFinal = false
+        self.transcribe(result.bestTranscription.formattedString)
+        isFinal = result.isFinal
+        
+        if error != nil || isFinal {
+            self.audioEngine.stop()
+            inputNode.removeTap(onBus: 0)
+            
+            self.request = nil
+            self.task = nil
+        }
+    }
+    
+    private func stopAndResetTranscribe() {
+        request?.endAudio()
+        task?.cancel()
+        self.request = nil
+        self.task = nil
+        currentTranscript = ""
     }
     
     public func processAudioData() {
@@ -169,37 +177,12 @@ final class SpeechRecognizer: ObservableObject {
         }
         audioBuffers.removeAll()
     }
-    
-    private func recognitionHandler(
-         audioEngine: AVAudioEngine,
-         result: SFSpeechRecognitionResult?,
-         error: Error?
-    ) {
-        var isFinal = false
         
-        if let result = result {
-            let recognizedText = result.bestTranscription.formattedString
-            transcribe(recognizedText)
-            
-            isFinal = result.isFinal
-        } else if let error {
-            print(error.localizedDescription)
-        }
-        
-        if isFinal || error != nil {
-            audioBuffers = []
-            audioEngine.stop()
-            audioEngine.inputNode.removeTap(onBus: 0)
-        }
-    }
-    
-    public func addPunctuation(_ transcript: String) -> String {
+    private func addPunctuation(_ transcript: String) -> String {
         var modifiedTranscript = transcript
         var searchStartIndex = modifiedTranscript.startIndex
         
-        for pattern in conversationPatterns.questionPatterns {
-            var searchStartIndex = modifiedTranscript.startIndex
-            
+        for pattern in ConversationPatterns.questionPatterns {
             while let range = modifiedTranscript.range(
                 of: pattern,
                 options: [],
@@ -219,26 +202,65 @@ final class SpeechRecognizer: ObservableObject {
 
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
-            let res = addPunctuation(message)
-            transcript = res
+            currentTranscript = addPunctuation(message)
         }
     }
     
     nonisolated private func transcribeFailed(_ error: Error) {
         var errorMessage = ""
         if let error = error as? RecognizerError {
-            errorMessage += error.message
+            errorMessage += error.localizedDescription
         } else {
             errorMessage += error.localizedDescription
         }
-        // MARK: Answered Text에 에러 메시지가 쌓이지 않도록 후속 작업 각주 처리
-//        Task { @MainActor _ in
-//            transcript = "<< \(errorMessage) >>"
-//        }
     }
-    
+}
+
+extension SFSpeechRecognizer {
+    static func hasAuthorizationToRecognize() async -> Bool {
+        await withCheckedContinuation { continuation in
+            requestAuthorization { status in
+                continuation.resume(returning: status == .authorized)
+            }
+        }
+    }
+}
+
+extension AVAudioSession {
+    public func hasPermissionToRecord() async -> Bool {
+        await withCheckedContinuation { continuation in
+            requestRecordPermission { authorized in
+                continuation.resume(returning: authorized)
+            }
+        }
+    }
+}
+
+// 노이즈 제거할 때, 라이브 오디오 데이터 -> 버퍼 변환
+extension Array where Element == Float {
+    func toBuffer() -> AVAudioPCMBuffer? {
+        // TODO: Sample rate와 channel에 맞게 조정 필요
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        guard let buffer = AVAudioPCMBuffer(
+            pcmFormat: format,
+            frameCapacity: AVAudioFrameCount(self.count)
+        ) else { return nil }
+        
+        buffer.frameLength = AVAudioFrameCount(self.count)
+        for i in 0..<self.count {
+            buffer.floatChannelData?.pointee[i] = self[i]
+        }
+        
+        return buffer
+    }
+}
+
+extension SpeechRecognizer {
     // 음성 인식 정확도를 측정하는 함수1
-    private func levenshteinDistanceBetween(_ a: String, and b: String) -> Int {
+    private func levenshteinDistanceBetween(
+        _ a: String,
+        and b: String
+    ) -> Int {
         if a.count == 0 {
             return b.count
         }
@@ -271,45 +293,18 @@ final class SpeechRecognizer: ObservableObject {
     }
     
     // 음성 인식 정확도를 측정하는 함수2
-    private func calculateRecognitionAccuracy(originalText: String, recognizedText: String) -> Double {
+    private func calculateRecognitionAccuracy(
+        originalText: String,
+        recognizedText: String
+    ) -> Double {
         let distance = levenshteinDistanceBetween(originalText, and: recognizedText)
         let maxLength = max(originalText.count, recognizedText.count)
         
         let accuracy = ((Double(maxLength) - Double(distance)) / Double(maxLength)) * 100.0
         return accuracy
     }
-}
-
-extension SFSpeechRecognizer {
-    static func hasAuthorizationToRecognize() async -> Bool {
-        await withCheckedContinuation { continuation in
-            requestAuthorization { status in
-                continuation.resume(returning: status == .authorized)
-            }
-        }
-    }
-}
-
-extension AVAudioSession {
-    public func hasPermissionToRecord() async -> Bool {
-        await withCheckedContinuation { continuation in
-            requestRecordPermission { authorized in
-                continuation.resume(returning: authorized)
-            }
-        }
-    }
-}
-
-// 노이즈 제거할 때, 라이브 오디오 데이터 -> 버퍼 변환
-extension Array where Element == Float {
-    func toBuffer() -> AVAudioPCMBuffer? {
-        // TODO: Sample rate와 channel에 맞게 조정 필요
-        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(self.count)) else { return nil }
-        buffer.frameLength = AVAudioFrameCount(self.count)
-        for i in 0..<self.count {
-            buffer.floatChannelData?.pointee[i] = self[i]
-        }
-        return buffer
+    
+    enum EngineError: Error {
+        case NoRequestAvailble
     }
 }

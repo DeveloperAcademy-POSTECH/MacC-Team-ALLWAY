@@ -70,7 +70,7 @@ struct TLTextField<Button: View>: View {
         .frame(maxWidth: .infinity)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
-        .onChange(of: text) { _ in
+        .onChange(of: text) { _, _ in
             if text.count > textLimit {
                 text = String(text.prefix(textLimit))
             }
