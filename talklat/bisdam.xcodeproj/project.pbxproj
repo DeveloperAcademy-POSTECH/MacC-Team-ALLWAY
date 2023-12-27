@@ -26,14 +26,6 @@
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
 		7EBD31142B0B2B1300D5514D /* talklatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */; };
-		7EBD31152B0B2B1300D5514D /* LocationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */; };
-		7EBD31162B0B2B1300D5514D /* DataTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */; };
-		7EBD31172B0B2B1300D5514D /* SettingTRTextFieldToBeReplaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BB33B2B03E6DA00F8FEC9 /* SettingTRTextFieldToBeReplaced.swift */; };
-		7EBD31182B0B2B1300D5514D /* AuthorizationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */; };
-		7EBD31192B0B2B1300D5514D /* StaffSpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */; };
-		7EBD311A2B0B2B1300D5514D /* TestTKSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */; };
-		7EBD311B2B0B2B1300D5514D /* TKTransitionTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */; };
-		7EBD311C2B0B2B1300D5514D /* TKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737962AD43EE000FCBA21 /* TKTextField.swift */; };
 		7EBD311D2B0B2B1300D5514D /* TKReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */; };
 		7EBD311E2B0B2B1300D5514D /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */; };
 		7EBD311F2B0B2B1300D5514D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF272B0122F70048C784 /* ChatMessage.swift */; };
@@ -58,7 +50,6 @@
 		7EBD31332B0B2B1300D5514D /* TKLocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */; };
 		7EBD31342B0B2B1300D5514D /* TKHistoryInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF4F2B04D8BA0048C784 /* TKHistoryInfoStore.swift */; };
 		7EBD31352B0B2B1300D5514D /* TKDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */; };
-		7EBD31362B0B2B1300D5514D /* SpeechAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */; };
 		7EBD31372B0B2B1300D5514D /* SignalExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575677DE2AD6BE47002E01BE /* SignalExtractor.swift */; };
 		7EBD31382B0B2B1300D5514D /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */; };
 		7EBD31392B0B2B1300D5514D /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */; };
@@ -126,7 +117,6 @@
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
-		EF4799D22B0EF585005C2B0E /* SettingsAppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D12B0EF585005C2B0E /* SettingsAppInfoView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
 		EF4799D82B0EF59E005C2B0E /* SettingsGuidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D52B0EF59E005C2B0E /* SettingsGuidingView.swift */; };
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
@@ -172,8 +162,6 @@
 		577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		577B45292B0DE78E00DA010E /* bisdam-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "bisdam-Info.plist"; sourceTree = "<group>"; };
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
-		57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffSpeechView.swift; sourceTree = "<group>"; };
-		57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTKSettingView.swift; sourceTree = "<group>"; };
 		7E0188D82B05F230005AA4D0 /* TKOnboardingAuthReqeustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingAuthReqeustView.swift; sourceTree = "<group>"; };
 		7E0313802B04F8BB0090A704 /* TKSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSplashView.swift; sourceTree = "<group>"; };
 		7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Dark.json; sourceTree = "<group>"; };
@@ -218,10 +206,8 @@
 		7EC585392B05BB9F00EDB171 /* TKOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingView.swift; sourceTree = "<group>"; };
 		7ED6BB132B00B2F5006D02DC /* TKScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKScrollView.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
-		7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTransitionTestView.swift; sourceTree = "<group>"; };
 		7EEEFB612B0F360E0003763A /* View+TKAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+TKAlert.swift"; sourceTree = "<group>"; };
 		7EF737932AD3DE5600FCBA21 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		7EF737962AD43EE000FCBA21 /* TKTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextField.swift; sourceTree = "<group>"; };
 		7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
@@ -236,7 +222,6 @@
 		CE0CBF272B0122F70048C784 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CE0CBF292B0287E50048C784 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		CE0CBF4F2B04D8BA0048C784 /* TKHistoryInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryInfoStore.swift; sourceTree = "<group>"; };
-		CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		CE2744002AFBE08B006C2645 /* HistoryInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoItemView.swift; sourceTree = "<group>"; };
 		CE2744022AFBE0D3006C2645 /* HistoryItemLocationEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemLocationEditView.swift; sourceTree = "<group>"; };
 		CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionalInt+Distance.swift"; sourceTree = "<group>"; };
@@ -252,19 +237,15 @@
 		EF3B16C42B00C5C200CDB484 /* TKLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocation.swift; sourceTree = "<group>"; };
 		EF3B16C62B00C5DD00CDB484 /* TKDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDataManager.swift; sourceTree = "<group>"; };
 		EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSwiftDataStore.swift; sourceTree = "<group>"; };
-		EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTestingView.swift; sourceTree = "<group>"; };
 		EF3F439D2AF7FF4700DFC98B /* TKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversation.swift; sourceTree = "<group>"; };
 		EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
 		EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayTestingView.swift; sourceTree = "<group>"; };
-		EF4799D12B0EF585005C2B0E /* SettingsAppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAppInfoView.swift; sourceTree = "<group>"; };
 		EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGuidingEditView.swift; sourceTree = "<group>"; };
 		EF4799D52B0EF59E005C2B0E /* SettingsGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGuidingView.swift; sourceTree = "<group>"; };
 		EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGuidingPreView.swift; sourceTree = "<group>"; };
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
-		EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAuthManager.swift; sourceTree = "<group>"; };
-		EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestView.swift; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
@@ -273,7 +254,6 @@
 		EF7BB32A2B03BB4100F8FEC9 /* SettingsGestureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGestureView.swift; sourceTree = "<group>"; };
 		EF7BB3302B03CFC100F8FEC9 /* SettingsHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelpView.swift; sourceTree = "<group>"; };
 		EF7BB3352B03D68400F8FEC9 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
-		EF7BB33B2B03E6DA00F8FEC9 /* SettingTRTextFieldToBeReplaced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTRTextFieldToBeReplaced.swift; sourceTree = "<group>"; };
 		EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTextField.swift; sourceTree = "<group>"; };
 		EF80674F2AF7ECF4004E8955 /* TKTextReplacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKTextReplacement.swift; sourceTree = "<group>"; };
 		EF90C51E2AE0B39B00A95BD7 /* ScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContainer.swift; sourceTree = "<group>"; };
@@ -368,23 +348,6 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		7E6641242B03BB3800CDC6AB /* DEPRECATED */ = {
-			isa = PBXGroup;
-			children = (
-				EF4799D12B0EF585005C2B0E /* SettingsAppInfoView.swift */,
-				CE1C43302AF8DB7700EC46C8 /* LocationDataManager.swift */,
-				EF3B16CA2B00C61E00CDB484 /* DataTestingView.swift */,
-				EF7BB33B2B03E6DA00F8FEC9 /* SettingTRTextFieldToBeReplaced.swift */,
-				EF67C6562AD1414300C1074E /* AuthorizationRequestView.swift */,
-				57E76EB62ACEC91A00D79553 /* StaffSpeechView.swift */,
-				57E985AD2AFA1AA400716B90 /* TestTKSettingView.swift */,
-				7EE71BAE2AF0F28E001C0A28 /* TKTransitionTestView.swift */,
-				7EF737962AD43EE000FCBA21 /* TKTextField.swift */,
-				EF67C6522AD13BF700C1074E /* SpeechAuthManager.swift */,
-			);
-			path = DEPRECATED;
-			sourceTree = "<group>";
-		};
 		7E8D17B82ACE8AEC00E904E5 = {
 			isa = PBXGroup;
 			children = (
@@ -456,7 +419,6 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				7E6641242B03BB3800CDC6AB /* DEPRECATED */,
 				7EE909BE2AFA6B6A0048AF77 /* Protocols */,
 				57806D7E2AE28E85003A7B19 /* Models */,
 				7EF737922AD3DE4C00FCBA21 /* Utilities */,
@@ -471,7 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				7E0188D72B05F20D005AA4D0 /* Onboarding */,
-				EF7BB3202B0396DA00F8FEC9 /* Settings_ */,
+				EF7BB3202B0396DA00F8FEC9 /* Settings */,
 				7E4A6CD72AFB2C030014DDB8 /* Main */,
 				7EE71BAC2AF0E175001C0A28 /* Conversation */,
 				CE0CBF242B011BBA0048C784 /* CustomHistoryViewController */,
@@ -642,7 +604,7 @@
 			path = History;
 			sourceTree = "<group>";
 		};
-		EF7BB3202B0396DA00F8FEC9 /* Settings_ */ = {
+		EF7BB3202B0396DA00F8FEC9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				EF4799DA2B0EF5A7005C2B0E /* DataPolicyInfo */,
@@ -659,7 +621,7 @@
 				EF7BB33F2B05A13000F8FEC9 /* SettingTextField.swift */,
 				EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */,
 			);
-			path = Settings_;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -828,15 +790,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EBD31142B0B2B1300D5514D /* talklatApp.swift in Sources */,
-				7EBD31152B0B2B1300D5514D /* LocationDataManager.swift in Sources */,
-				7EBD31162B0B2B1300D5514D /* DataTestingView.swift in Sources */,
-				7EBD31172B0B2B1300D5514D /* SettingTRTextFieldToBeReplaced.swift in Sources */,
-				7EBD31182B0B2B1300D5514D /* AuthorizationRequestView.swift in Sources */,
-				7EBD31192B0B2B1300D5514D /* StaffSpeechView.swift in Sources */,
 				EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */,
-				7EBD311A2B0B2B1300D5514D /* TestTKSettingView.swift in Sources */,
-				7EBD311B2B0B2B1300D5514D /* TKTransitionTestView.swift in Sources */,
-				7EBD311C2B0B2B1300D5514D /* TKTextField.swift in Sources */,
 				7EBD311D2B0B2B1300D5514D /* TKReducer.swift in Sources */,
 				7EBD311E2B0B2B1300D5514D /* HistoryItem.swift in Sources */,
 				7EBD311F2B0B2B1300D5514D /* ChatMessage.swift in Sources */,
@@ -866,7 +820,6 @@
 				7EBD31342B0B2B1300D5514D /* TKHistoryInfoStore.swift in Sources */,
 				7EBD31352B0B2B1300D5514D /* TKDataManager.swift in Sources */,
 				7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */,
-				7EBD31362B0B2B1300D5514D /* SpeechAuthManager.swift in Sources */,
 				5713DC4C2B0B3BC600ECF34B /* BDText.swift in Sources */,
 				7EBD31372B0B2B1300D5514D /* SignalExtractor.swift in Sources */,
 				7EBD31382B0B2B1300D5514D /* SpeechRecognizer.swift in Sources */,
@@ -874,7 +827,6 @@
 				7EBD313A2B0B2B1300D5514D /* TKTextReplacementManager.swift in Sources */,
 				7EBD313B2B0B2B1300D5514D /* TKAuthManager.swift in Sources */,
 				7EBD313C2B0B2B1300D5514D /* TKOnboardingView.swift in Sources */,
-				EF4799D22B0EF585005C2B0E /* SettingsAppInfoView.swift in Sources */,
 				7EBD313D2B0B2B1300D5514D /* TKOnboardingAuthReqeustView.swift in Sources */,
 				7EBD313E2B0B2B1300D5514D /* TKTextReplacementListView.swift in Sources */,
 				7EBD313F2B0B2B1300D5514D /* SectionIndexTitles.swift in Sources */,
