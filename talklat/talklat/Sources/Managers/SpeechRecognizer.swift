@@ -54,7 +54,6 @@ final class SpeechRecognizer: ObservableObject {
         let audioSession = AVAudioSession.sharedInstance()
         
         do {
-            try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
             try audioSession.setCategory(
                 .playAndRecord,
                 mode: .measurement,
@@ -65,6 +64,7 @@ final class SpeechRecognizer: ObservableObject {
                 options: .notifyOthersOnDeactivation
             )
             
+            try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
         } catch {
             self.stopAndResetTranscribe()
             self.transcribeFailed(error)
