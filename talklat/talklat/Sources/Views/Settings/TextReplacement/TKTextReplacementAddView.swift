@@ -97,8 +97,8 @@ struct TKTextReplacementAddView: View {
                 .padding(.bottom, 24)
             }
         }
-        .background(Color.SheetBGWhite)
         .padding(.horizontal, 16)
+        .background(Color.SheetBGWhite)
     }
 }
 
