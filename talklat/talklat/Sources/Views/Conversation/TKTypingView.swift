@@ -10,16 +10,13 @@ import SwiftData
 
 struct TKTypingView: View {
     // TextReplacement
-    @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
     
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     
-    @Query private var lists: [TKTextReplacement]
     @State private var matchedTextReplacement: TKTextReplacement? = nil
-    let manager = TKTextReplacementManager()
     let namespaceID: Namespace.ID
     
     var body: some View {
@@ -318,7 +315,7 @@ extension TKTypingView {
                     // MARK: TextReplacement Button
                     if
                         let key = replacementKeyForCurrentText(),
-                        let replacements = lists.first(where: {
+                        let replacements = dataStore.textReplacements.first(where: {
                             $0.wordDictionary[key] != nil
                         })?.wordDictionary[key],
                         let firstReplacement = replacements.first { // 첫 번째 요소를 사용
@@ -404,7 +401,7 @@ extension TKTypingView {
     // 마지막 단어 또는 부분 문자열이 key와 일치하는 지 검사
     func replacementKeyForCurrentText() -> String? {
         let currentText = store(\.questionText).lowercased()
-        let sortedKeys = lists.flatMap { list in
+        let sortedKeys = dataStore.textReplacements.flatMap { list in
             list.wordDictionary.keys
         }.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
 

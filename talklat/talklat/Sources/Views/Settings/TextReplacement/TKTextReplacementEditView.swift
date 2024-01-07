@@ -9,16 +9,14 @@ import SwiftData
 import SwiftUI
 
 struct TKTextReplacementEditView: View {
-    @Environment(\.modelContext) private var context
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var store: TextReplacementViewStore
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
-    @Query var textReplacements: [TKTextReplacement]
+    @ObservedObject var store: TextReplacementViewStore
     
     @FocusState var focusState: Bool
     
-    let dataStore = TKSwiftDataStore()
-    
+    var selectedTextReplacement: TKTextReplacement
     
     var body: some View {
         VStack(spacing: 10) {
@@ -59,6 +57,9 @@ struct TKTextReplacementEditView: View {
                 .background(Color.RED)
                 .cornerRadius(22)
             }
+        }
+        .onAppear {
+            print("editView - selectedTextReplacement >>>>> !!!!!", selectedTextReplacement.wordDictionary.keys)
         }
         .padding()
         .navigationBarBackButtonHidden()
@@ -110,7 +111,21 @@ struct TKTextReplacementEditView: View {
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
             confirmButtonAction: {
-                deleteTKTextReplacement()
+                // TODO: selectedTextReplacement를 ViewStore에 옮기기
+                // 저장소의 TKTextReplacement에서 선택된 항목과 일치하는 인스턴스 탐색
+                var identicalTextReplacement: TKTextReplacement = TKTextReplacement(
+                    wordDictionary: [:]
+                )
+                swiftDataStore.textReplacements.forEach { textReplacement in
+                    textReplacement.wordDictionary.forEach { word in
+                        if selectedTextReplacement.wordDictionary.keys.contains(word.key) {
+                            identicalTextReplacement = textReplacement
+                        }
+                    }
+                }
+                
+                swiftDataStore.removeItem(identicalTextReplacement)
+                presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()
             },
             confirmButtonLabel: {
@@ -129,12 +144,17 @@ struct TKTextReplacementEditView: View {
         let existingItem = fetchTKTextReplacement()
         
         // 새로운 TKTextReplacement를 생성하고 저장
-        dataStore.createTextReplacement(phrase: selectedPhrase, replacement: selectedReplacement)
+        swiftDataStore.createTextReplacement(
+            phrase: selectedPhrase,
+            replacement: selectedReplacement
+        )
         
         // 기존에 존재하는 데이터가 있으면, 새 데이터를 저장한 후에 삭제
         if let existing = existingItem {
-            context.delete(existing)
+            swiftDataStore.removeItem(existing)
         }
+        
+        print(">>> 저장된 텍대: ", swiftDataStore.textReplacements)
     }
     
     private func fetchTKTextReplacement() -> TKTextReplacement? {
@@ -142,20 +162,29 @@ struct TKTextReplacementEditView: View {
         let selectedPhrase = store(\.selectedPhrase)
         let selectedReplacement = store(\.selectedReplacement)
         
+        print(">> selectedPhrase: ", selectedPhrase)
+        print(">> selectedReplacement: ", selectedReplacement)
+        
         // selectedPhrase가 새로운 경우
-        if !textReplacements.contains(where: { $0.wordDictionary.keys.contains(selectedPhrase) }) {
+        if !swiftDataStore.textReplacements.contains(where: {
+            $0.wordDictionary.keys.contains(selectedPhrase)
+        }) {
             // 새로운 단축어, 변환 문구 모두 새로운 경우
-            if textReplacements.contains(where: { $0.wordDictionary.values.contains { $0.contains(selectedReplacement) } }) {
-                return textReplacements.first(where: { $0.wordDictionary.values.contains { $0.contains(selectedReplacement) } })
+            if swiftDataStore.textReplacements.contains(where: {
+                $0.wordDictionary.values.contains { $0.contains(selectedReplacement) }
+            }) {
+                return swiftDataStore.textReplacements.first(where: {
+                    $0.wordDictionary.values.contains { $0.contains(selectedReplacement) }
+                })
             }
             
             // 새로운 단축어, 기존 변환 문구 사용 경우
-            else if textReplacements.contains(where: { replacement in
+            else if swiftDataStore.textReplacements.contains(where: { replacement in
                 replacement.wordDictionary.values.contains(where: { phrases in
                     phrases.contains(selectedReplacement)
                 })
             }) {
-                return textReplacements.first(where: { replacement in
+                return swiftDataStore.textReplacements.first(where: { replacement in
                     replacement.wordDictionary.values.contains(where: { phrases in
                         phrases.contains(selectedReplacement)
                     })
@@ -165,19 +194,23 @@ struct TKTextReplacementEditView: View {
         }
         // 기존 단축어, 새로운 변환 문구 사용 경우
         else {
-            return textReplacements.first(where: { $0.wordDictionary.keys.contains(selectedPhrase) })
+            return swiftDataStore.textReplacements.first(where: {
+                $0.wordDictionary.keys.contains(selectedPhrase)
+            })
         }
         
-        let fetchedItems = textReplacements.filter { $0.wordDictionary.keys.contains(selectedPhrase) }
+        let fetchedItems = swiftDataStore.textReplacements.filter {
+            $0.wordDictionary.keys.contains(selectedPhrase)
+        }
         
         return fetchedItems.last
     }
     
-    private func deleteTKTextReplacement() {
-        if let existingItem = fetchTKTextReplacement() {
-            context.delete(existingItem)
-        }
-        
-        presentationMode.wrappedValue.dismiss()
-    }
+//    private func deleteTKTextReplacement() {
+//        if let existingItem = fetchTKTextReplacement() {
+//            swiftDataStore.removeItem(existingItem)
+//        }
+//        
+//        presentationMode.wrappedValue.dismiss()
+//    }
 }

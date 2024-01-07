@@ -11,11 +11,11 @@ import SwiftUI
 // MARK: 텍스트 대치 검색 결과 화면
 struct TKTextReplacementSearchView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
     @ObservedObject var store: TextReplacementViewStore
     @Binding var selectedList: TKTextReplacement?
     
     var lists: [TKTextReplacement]
-    var textReplacementManager = TKTextReplacementManager()
 
     var filteredLists: [TKTextReplacement] {
         if store(\.searchText).isEmpty {
@@ -66,15 +66,20 @@ struct TKTextReplacementSearchView: View {
             ) { key, values in
                 if let firstValue = values.first {
                     NavigationLink {
-                        TKTextReplacementEditView(store: store)
-                            .onAppear {
-                                selectedList = list
-                                
-                                store.selectTextReplacement(
-                                    phrase: key,
-                                    replacement: firstValue
-                                )
-                            }
+                        TKTextReplacementEditView(
+                            store: store,
+                            selectedTextReplacement: TKTextReplacement(
+                                wordDictionary: [key : [firstValue]]
+                            )
+                        )
+                        .onAppear {
+                            selectedList = list
+                            
+                            store.selectTextReplacement(
+                                phrase: key,
+                                replacement: firstValue
+                            )
+                        }
                         
                     } label: {
                         ReplacementSearchResultCell(

@@ -10,17 +10,15 @@ import SwiftUI
 
 struct TKTextReplacementListView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var store = TextReplacementViewStore(viewState: .init())
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
-    @Query private var lists: [TKTextReplacement]
+    @StateObject private var store = TextReplacementViewStore(viewState: .init())
     
     @State private var selectedList: TKTextReplacement? = nil
     @FocusState private var isTextFieldFocused: Bool
-    
-    var textReplacementManager = TKTextReplacementManager()
 
     var groupedLists: [String: [TKTextReplacement]] {
-        Dictionary(grouping: lists) { entry in
+        Dictionary(grouping: swiftDataStore.textReplacements) { entry in
             if let firstChar = entry.wordDictionary.keys.first?.first {
                 // 한글 첫 자음 또는 단일 자음을 추출하여 그룹화 기준으로 사용
                 if let consonant = firstChar.koreanFirstConsonant {
@@ -45,9 +43,8 @@ struct TKTextReplacementListView: View {
                 TKTextReplacementSearchView(
                     store: store,
                     selectedList: $selectedList,
-                    lists: lists
+                    lists: swiftDataStore.textReplacements
                 )
-                
             } else {
                 // MARK: - 대체어 없음
                 if sortedGroupKeys.isEmpty {
@@ -179,14 +176,18 @@ struct TKTextReplacementListView: View {
             ) { key, values in
                 if let firstValue = values.first {
                     NavigationLink {
-                        TKTextReplacementEditView(store: store)
-                            .onAppear {
-                                store.selectTextReplacement(
-                                    phrase: key,
-                                    replacement: firstValue
-                                )
-                            }
-                        
+                        TKTextReplacementEditView(
+                            store: store,
+                            selectedTextReplacement: TKTextReplacement(
+                                wordDictionary: [key : [firstValue]]
+                            )
+                        )
+                        .onAppear {
+                            store.selectTextReplacement(
+                                phrase: key,
+                                replacement: firstValue
+                            )
+                        }
                     } label: {
                         // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
                         let displayValue = firstValue.count > 40
