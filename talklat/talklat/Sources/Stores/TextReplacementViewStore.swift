@@ -44,7 +44,7 @@ final class TextReplacementViewStore: TKReducer {
     
     // MARK: - View용 함수
     // 기본 Create
-    public func createTextReplacement<TKPersistentModel: PersistentModel>(
+    public func makeNewTextReplacement<TKPersistentModel: PersistentModel>(
         phrase: String,
         replacement: String
     ) -> TKPersistentModel? {

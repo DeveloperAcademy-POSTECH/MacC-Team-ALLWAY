@@ -79,7 +79,7 @@ struct TKTextReplacementAddView: View {
                     
                     Button {
                         if isInputValid {
-                            if let item: TKTextReplacement = store.createTextReplacement(
+                            if let item: TKTextReplacement = store.makeNewTextReplacement(
                                 phrase: phrase,
                                 replacement: replacement
                             ) {

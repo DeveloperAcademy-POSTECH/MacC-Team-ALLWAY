@@ -124,7 +124,7 @@ struct TKTextReplacementEditView: View {
         )
         
         // selectedPhrase, selectedReplacement를 사용하기 용이한 TKTextReplacement 형태로 감싸기
-        if let selectedItem: TKTextReplacement = store.createTextReplacement(
+        if let selectedItem: TKTextReplacement = store.makeNewTextReplacement(
             phrase: store(\.selectedPhrase),
             replacement: store(\.selectedReplacement)
         ) {
@@ -150,7 +150,7 @@ struct TKTextReplacementEditView: View {
         let existingItem = fetchTKTextReplacement()
         
         // 새로운 TKTextReplacement를 생성하고 저장
-        if let item: TKTextReplacement = store.createTextReplacement(
+        if let item: TKTextReplacement = store.makeNewTextReplacement(
             phrase: selectedPhrase,
             replacement: selectedReplacement
         ) {
