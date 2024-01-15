@@ -124,15 +124,16 @@ struct TKTextReplacementEditView: View {
         )
         
         // selectedPhrase, selectedReplacement를 사용하기 용이한 TKTextReplacement 형태로 감싸기
-        let selectedTextReplacement = TKTextReplacement(
-            wordDictionary: [store(\.selectedPhrase) : [store(\.selectedReplacement)]]
-        )
-        
-        // SwiftData 저장소에서 선택된 항목과 일치하는 인스턴스 탐색
-        swiftDataStore.textReplacements.forEach { textReplacement in
-            textReplacement.wordDictionary.forEach { word in
-                if selectedTextReplacement.wordDictionary.keys.contains(word.key) {
-                    identicalTextReplacement = textReplacement
+        if let selectedItem: TKTextReplacement = store.createTextReplacement(
+            phrase: store(\.selectedPhrase),
+            replacement: store(\.selectedReplacement)
+        ) {
+            // SwiftData 저장소에서 선택된 항목과 일치하는 인스턴스 탐색
+            swiftDataStore.textReplacements.forEach { textReplacement in
+                textReplacement.wordDictionary.forEach { word in
+                    if selectedItem.wordDictionary.keys.contains(word.key) {
+                        identicalTextReplacement = textReplacement
+                    }
                 }
             }
         }
