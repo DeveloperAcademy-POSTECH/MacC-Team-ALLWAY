@@ -18,26 +18,6 @@ final class TKSwiftDataStore {
     var locations: [TKLocation] = []
     var textReplacements: [TKTextReplacement] = []
     
-    // TODO: - ...
-    var groupedLists: [String: [TKTextReplacement]] {
-        Dictionary(grouping: textReplacements) { entry in
-            if let firstChar = entry.wordDictionary.keys.first?.first {
-                // 한글 첫 자음 또는 단일 자음을 추출하여 그룹화 기준으로 사용
-                if let consonant = firstChar.koreanFirstConsonant {
-                    return consonant
-                } else {
-                    // 한글 또는 영어가 아닌 경우 기본값으로 "#"
-                    return firstChar.isCharacterKorean || firstChar.isCharacterEnglish 
-                    ? String(firstChar)
-                    : "#"
-                }
-            } else {
-                // 첫 글자가 없는 경우 기본값으로 "#"
-                return "#"
-            }
-        }
-    }
-    
     init(dataSource: TKDataManager = TKDataManager.shared) {
         self.dataManager = dataSource
         refreshData()

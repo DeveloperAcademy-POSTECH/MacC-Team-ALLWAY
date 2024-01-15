@@ -18,6 +18,25 @@ struct TKTextReplacementListView: View {
     
     @FocusState private var isTextFieldFocused: Bool
     
+    var groupedLists: [String: [TKTextReplacement]] {
+        Dictionary(grouping: swiftDataStore.textReplacements) { entry in
+            if let firstChar = entry.wordDictionary.keys.first?.first {
+                // 한글 첫 자음 또는 단일 자음을 추출하여 그룹화 기준으로 사용
+                if let consonant = firstChar.koreanFirstConsonant {
+                    return consonant
+                } else {
+                    // 한글 또는 영어가 아닌 경우 기본값으로 "#"
+                    return firstChar.isCharacterKorean || firstChar.isCharacterEnglish
+                    ? String(firstChar)
+                    : "#"
+                }
+            } else {
+                // 첫 글자가 없는 경우 기본값으로 "#"
+                return "#"
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             searchBarBuilder()
@@ -123,7 +142,7 @@ struct TKTextReplacementListView: View {
     
     // MARK: 리스트 정렬
     var sortedGroupKeys: [String] {
-        return swiftDataStore.groupedLists.keys.sorted { key1, key2 in
+        return groupedLists.keys.sorted { key1, key2 in
             let firstCharKey1 = key1.first
             let firstCharKey2 = key2.first
 
@@ -151,7 +170,7 @@ struct TKTextReplacementListView: View {
     // MARK: List 항목들 Header - list 항목
     func listSection(_ groupKey: String) -> some View {
         ForEach(
-            swiftDataStore.groupedLists[groupKey] ?? [],
+            groupedLists[groupKey] ?? [],
             id: \.self
         ) { list in
             ForEach(
