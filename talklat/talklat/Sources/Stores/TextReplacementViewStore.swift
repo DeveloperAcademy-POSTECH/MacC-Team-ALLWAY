@@ -24,8 +24,6 @@ final class TextReplacementViewStore: TKReducer {
         
         var originalPhrase: String = ""
         var originalReplacement: String = ""
-        
-//        var selectedTextReplacement: TKTextReplacement? = nil
     }
     
     @Published var viewState: ViewState = ViewState()
