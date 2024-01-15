@@ -67,10 +67,7 @@ struct TKTextReplacementSearchView: View {
                 if let firstValue = values.first {
                     NavigationLink {
                         TKTextReplacementEditView(
-                            store: store,
-                            selectedTextReplacement: TKTextReplacement(
-                                wordDictionary: [key : [firstValue]]
-                            )
+                            store: store
                         )
                         .onAppear {
                             selectedList = list

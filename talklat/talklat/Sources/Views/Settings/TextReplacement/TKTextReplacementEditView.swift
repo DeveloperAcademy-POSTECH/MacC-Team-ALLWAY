@@ -16,8 +16,6 @@ struct TKTextReplacementEditView: View {
     
     @FocusState var focusState: Bool
     
-    var selectedTextReplacement: TKTextReplacement
-    
     var body: some View {
         VStack(spacing: 10) {
             VStack {
@@ -108,30 +106,40 @@ struct TKTextReplacementEditView: View {
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
             confirmButtonAction: {
-                // TODO: selectedTextReplacement ViewStore에 옮기기
-                // 저장소의 TKTextReplacement에서 선택된 항목과 일치하는 인스턴스 탐색
-                var identicalTextReplacement: TKTextReplacement = TKTextReplacement(
-                    wordDictionary: [:]
-                )
-                swiftDataStore.textReplacements.forEach { textReplacement in
-                    textReplacement.wordDictionary.forEach { word in
-                        if selectedTextReplacement.wordDictionary.keys.contains(word.key) {
-                            identicalTextReplacement = textReplacement
-                        }
-                    }
-                }
-                
-                swiftDataStore.removeItem(identicalTextReplacement)
+                swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()
+                
             },
             confirmButtonLabel: {
                 BDText(text: "네, 삭제할래요", style: .H2_SB_135)
             }
         )
-        
-        
     }
+    
+    private func identifyTextReplacement() -> TKTextReplacement {
+        // 선택된 항목과 일치하는 TKTextReplacement를 담아줄 변수
+        var identicalTextReplacement: TKTextReplacement = TKTextReplacement(
+            wordDictionary: [:]
+        )
+        
+        // selectedPhrase, selectedReplacement를 사용하기 용이한 TKTextReplacement 형태로 감싸기
+        let selectedTextReplacement = TKTextReplacement(
+            wordDictionary: [store(\.selectedPhrase) : [store(\.selectedReplacement)]]
+        )
+        
+        // SwiftData 저장소에서 선택된 항목과 일치하는 인스턴스 탐색
+        swiftDataStore.textReplacements.forEach { textReplacement in
+            textReplacement.wordDictionary.forEach { word in
+                if selectedTextReplacement.wordDictionary.keys.contains(word.key) {
+                    identicalTextReplacement = textReplacement
+                }
+            }
+        }
+        
+        return identicalTextReplacement
+    }
+    
     
     private func updateTextReplacement() {
         let selectedPhrase = store(\.selectedPhrase)
