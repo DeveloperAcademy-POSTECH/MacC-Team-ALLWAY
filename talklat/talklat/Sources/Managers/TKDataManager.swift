@@ -132,25 +132,4 @@ extension TKDataManager {
             return [TKContent]()
         }
     }
-    
-    // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKConversation)
-//    internal func getContentMatchingConversations(
-//        content: TKContent
-//    ) -> [TKConversation] {
-//        do {
-//            var descriptor: FetchDescriptor = FetchDescriptor<TKConversation>()
-//            
-//            if let contentIndicator = content.conversation?.persistentModelID {
-//                let predicate = #Predicate<TKConversation> { conversation in
-//                    conversation.persistentModelID == contentIndicator
-//                }
-//                
-//                let descriptorCreated = FetchDescriptor<TKConversation>(predicate: predicate)
-//                descriptor = descriptorCreated
-//            }
-//            return try modelContext.fetch(descriptor)
-//        } catch {
-//            fatalError(error.localizedDescription)
-//        }
-//    }
 }

@@ -18,6 +18,26 @@ final class TKSwiftDataStore {
     var locations: [TKLocation] = []
     var textReplacements: [TKTextReplacement] = []
     
+    // TODO: - ...
+    var groupedLists: [String: [TKTextReplacement]] {
+        Dictionary(grouping: textReplacements) { entry in
+            if let firstChar = entry.wordDictionary.keys.first?.first {
+                // 한글 첫 자음 또는 단일 자음을 추출하여 그룹화 기준으로 사용
+                if let consonant = firstChar.koreanFirstConsonant {
+                    return consonant
+                } else {
+                    // 한글 또는 영어가 아닌 경우 기본값으로 "#"
+                    return firstChar.isCharacterKorean || firstChar.isCharacterEnglish 
+                    ? String(firstChar)
+                    : "#"
+                }
+            } else {
+                // 첫 글자가 없는 경우 기본값으로 "#"
+                return "#"
+            }
+        }
+    }
+    
     init(dataSource: TKDataManager = TKDataManager.shared) {
         self.dataManager = dataSource
         refreshData()
@@ -101,20 +121,18 @@ extension TKSwiftDataStore {
 
 // MARK: - TextReplacement Related
 extension TKSwiftDataStore {
-    
-    // MARK: 기본 Create
-    public func createTextReplacement(phrase: String, replacement: String) {
-        let newTextReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
-        dataManager.appendItem(newTextReplacement)
-        refreshData()
-    }
-
+    /** Deprecated: - TextReplacementViewStore로 옮겨짐
+     public func createTextReplacement(phrase: String, replacement: String) {
+         let newTextReplacement = TKTextReplacement(wordDictionary: [phrase: [replacement]])
+         dataManager.appendItem(newTextReplacement)
+         refreshData()
+     }
+     */
     public func updateTextReplacement(
         oldTextReplacement: TKTextReplacement,
         newPhrase: String,
         newReplacement: String
     ) {
-        print(#function, newPhrase, newReplacement)
         oldTextReplacement.wordDictionary = [newPhrase: [newReplacement]]
         dataManager.appendItem(oldTextReplacement)
         refreshData()

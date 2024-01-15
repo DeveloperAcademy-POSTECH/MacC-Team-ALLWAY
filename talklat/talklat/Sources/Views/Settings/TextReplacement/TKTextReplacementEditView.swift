@@ -58,9 +58,6 @@ struct TKTextReplacementEditView: View {
                 .cornerRadius(22)
             }
         }
-        .onAppear {
-            print("editView - selectedTextReplacement >>>>> !!!!!", selectedTextReplacement.wordDictionary.keys)
-        }
         .padding()
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -111,7 +108,7 @@ struct TKTextReplacementEditView: View {
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
             confirmButtonAction: {
-                // TODO: selectedTextReplacement를 ViewStore에 옮기기
+                // TODO: selectedTextReplacement ViewStore에 옮기기
                 // 저장소의 TKTextReplacement에서 선택된 항목과 일치하는 인스턴스 탐색
                 var identicalTextReplacement: TKTextReplacement = TKTextReplacement(
                     wordDictionary: [:]
@@ -144,26 +141,23 @@ struct TKTextReplacementEditView: View {
         let existingItem = fetchTKTextReplacement()
         
         // 새로운 TKTextReplacement를 생성하고 저장
-        swiftDataStore.createTextReplacement(
+        if let item: TKTextReplacement = store.createTextReplacement(
             phrase: selectedPhrase,
             replacement: selectedReplacement
-        )
+        ) {
+            swiftDataStore.appendItem(item)
+        }
         
         // 기존에 존재하는 데이터가 있으면, 새 데이터를 저장한 후에 삭제
         if let existing = existingItem {
             swiftDataStore.removeItem(existing)
         }
-        
-        print(">>> 저장된 텍대: ", swiftDataStore.textReplacements)
     }
     
     private func fetchTKTextReplacement() -> TKTextReplacement? {
         
         let selectedPhrase = store(\.selectedPhrase)
         let selectedReplacement = store(\.selectedReplacement)
-        
-        print(">> selectedPhrase: ", selectedPhrase)
-        print(">> selectedReplacement: ", selectedReplacement)
         
         // selectedPhrase가 새로운 경우
         if !swiftDataStore.textReplacements.contains(where: {
