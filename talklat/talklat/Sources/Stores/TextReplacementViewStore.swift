@@ -7,8 +7,8 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
-// TODO: Reducer 생성 및 연결
 final class TextReplacementViewStore: TKReducer {
     
     struct ViewState: Equatable {
@@ -28,24 +28,31 @@ final class TextReplacementViewStore: TKReducer {
     
     @Published var viewState: ViewState = ViewState()
     
-    var selectedTextReplacement: TKTextReplacement? = nil
-    
     var isSaveButtonDisabled: Bool {
         self(\.selectedPhrase).isEmpty || self(\.selectedReplacement).isEmpty ||
         (self(\.originalPhrase) == self(\.selectedPhrase) && self(\.originalReplacement) == self(\.selectedReplacement))
     }
     
-    init(viewState: ViewState) {
-        self.viewState = viewState
-    }
-    
-    // MARK: HELPERS
+    // MARK: - HELPERS
     func callAsFunction<Value>(_ path: KeyPath<ViewState, Value>) -> Value where Value : Equatable {
         self.viewState[keyPath: path]
     }
     
     func reduce<Value>(_ path: WritableKeyPath<ViewState, Value>, into newValue: Value) where Value : Equatable {
         self.viewState[keyPath: path] = newValue
+    }
+    
+    // MARK: - View용 함수
+    // 기본 Create
+    public func makeNewTextReplacement<TKPersistentModel: PersistentModel>(
+        phrase: String,
+        replacement: String
+    ) -> TKPersistentModel? {
+        let newTextReplacement = TKTextReplacement(
+            wordDictionary: [phrase: [replacement]]
+        )
+        
+        return newTextReplacement as? TKPersistentModel
     }
     
     public func bindingSearchText() -> Binding<String> {
@@ -142,3 +149,4 @@ final class TextReplacementViewStore: TKReducer {
         viewState.showingTextReplacementAddView = true
     }
 }
+
