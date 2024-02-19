@@ -15,25 +15,9 @@ struct talklatApp: App {
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @StateObject private var authManager: TKAuthManager = TKAuthManager()
     @StateObject private var colorSchemeManager = ColorSchemeManager()
+    
+    @State private var swiftDataManager: TKSwiftDataStore = TKSwiftDataStore()
     @State private var lottiePlaybackMode: LottiePlaybackMode = LottiePlaybackMode.paused
-    
-    private var container: ModelContainer
-    
-    init() {
-        do {
-            container = try ModelContainer(
-                for: TKConversation.self,
-                TKContent.self,
-                TKLocation.self,
-                TKTextReplacement.self
-            )
-        } catch {
-            fatalError("Failed to configure SwiftData container.")
-        }
-        
-        // DB 파일이 저장된 경로
-        print(URL.applicationSupportDirectory.path(percentEncoded: false))
-    }
     
     var body: some Scene {
         WindowGroup {
@@ -67,6 +51,7 @@ struct talklatApp: App {
             .environmentObject(locationStore)
             .environmentObject(authManager)
             .environmentObject(colorSchemeManager)
+            .environment(swiftDataManager)
             .onAppear {
                 // ColorScheme UserDefault
                 UserDefaults.standard.setValue(
@@ -84,6 +69,5 @@ struct talklatApp: App {
                 }
             }
         }
-        .modelContainer(container)
     }
 }

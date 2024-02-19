@@ -9,14 +9,14 @@ import SwiftData
 import SwiftUI
 
 struct TKTextReplacementAddView: View {
-    @Environment(\.modelContext) var context
     @Environment(\.presentationMode) var presentationMode
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
-    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    @ObservedObject var store: TextReplacementViewStore
     
     @FocusState var focusState: Bool
-    @State private var phrase: String = ""
-    @State private var replacement: String = ""
+    @State var phrase: String = ""
+    @State var replacement: String = ""
     
     var isInputValid: Bool {
         !phrase.isEmpty && !replacement.isEmpty
@@ -79,10 +79,13 @@ struct TKTextReplacementAddView: View {
                     
                     Button {
                         if isInputValid {
-                            dataStore.createTextReplacement(
+                            if let item: TKTextReplacement = store.makeNewTextReplacement(
                                 phrase: phrase,
                                 replacement: replacement
-                            )
+                            ) {
+                                swiftDataStore.appendItem(item)
+                            }
+                            
                             presentationMode.wrappedValue.dismiss()
                         }
                     } label: {
@@ -97,20 +100,20 @@ struct TKTextReplacementAddView: View {
                 .padding(.bottom, 24)
             }
         }
-        .background(Color.SheetBGWhite)
         .padding(.horizontal, 16)
+        .background(Color.SheetBGWhite)
     }
 }
 
-struct TKTextReplacementAddView_Previews: PreviewProvider {
-    @State static var isPresented = true
-    
-    static var previews: some View {
-        ZStack {
-            
-        }
-        .sheet(isPresented: .constant(true), content: {
-            TKTextReplacementAddView()
-        })
-    }
-}
+//struct TKTextReplacementAddView_Previews: PreviewProvider {
+//    @State static var isPresented = true
+//    
+//    static var previews: some View {
+//        ZStack {
+//            
+//        }
+//        .sheet(isPresented: .constant(true), content: {
+//            TKTextReplacementAddView()
+//        })
+//    }
+//}

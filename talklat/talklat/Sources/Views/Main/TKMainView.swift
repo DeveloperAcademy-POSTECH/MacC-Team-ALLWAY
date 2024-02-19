@@ -5,12 +5,15 @@
 //  Created by Celan on 11/8/23.
 //
 
+import Lottie
 import MapKit
 import SwiftUI
 
 struct TKMainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(TKSwiftDataStore.self) private var swiftDataStore
+    
     @EnvironmentObject private var locationStore: TKLocationStore
     @EnvironmentObject private var authManager: TKAuthManager
     
@@ -18,7 +21,6 @@ struct TKMainView: View {
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
-    let swiftDataStore = TKSwiftDataStore()
     
     var body: some View {
         ZStack {
@@ -44,34 +46,29 @@ struct TKMainView: View {
                     BDText(text: "새 대화 시작하기", style: .T2_B_125)
                         .foregroundStyle(Color.OR5)
                 }
-                .padding(.bottom, 60)
-
-                TKOrbitCircles(
-                    store: store,
-                    circleRenderInfos: [
-                        CircleRenderInfo(x: -25, y: -15),
-                        CircleRenderInfo(x: 0, y: 27),
-                        CircleRenderInfo(x: 25, y: -15),
-                    ],
-                    circleColor: Color.OR6
-                )
-                .task { store.triggerAnimation(true) }
-                .frame(maxHeight: 200)
-                .overlay {
-                    Circle()
-                        .fill(Color.OR6)
-                        .opacity(0.5)
-                        .frame(width: 200, height: 200)
-                }
-                .overlay {
-                    startConversationButtonBuilder()
-                }
             }
             .frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .top
             )
+            
+            LottieView(animation: .named("BDMain_Circle"))
+                .playing(loopMode: .loop)
+                .aspectRatio(0.4, contentMode: .fit)
+                .overlay {
+                    Circle()
+                        .fill(Color.OR6)
+                        .opacity(0.5)
+                        .scaleEffect(0.65)
+                }
+                .overlay {
+                    startConversationButtonBuilder()
+                }
+                .position(
+                    x: UIScreen.main.bounds.width * 0.5,
+                    y: UIScreen.main.bounds.height * 0.4
+                )
             
             // MARK: BottomSheet
             if store(\.isTKMainViewAppeared) {
@@ -85,11 +82,8 @@ struct TKMainView: View {
         .task {
            await store.onTKMainViewAppeared()
         }
-        .fullScreenCover(isPresented: store.bindingConversationFullScreenCover()) {
+        .fullScreenCover(isPresented: store[\.isConversationFullScreenCoverDisplayed]) {
             TKConversationView(store: conversationViewStore)
-                .onDisappear {
-                    conversationViewStore.resetConversationState()
-                }
                 .onChange(of: conversationViewStore(\.isConversationFullScreenDismissed)) { old, new in
                     if !old, new {
                         store.onConversationFullscreenDismissed()
@@ -121,6 +115,7 @@ struct TKMainView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
+                    #warning("MEMORY LEAKS IN TKCONVERSATION/TKCONTENT")
                     HistoryListView()
                 } label: {
                     Image(colorScheme == .light ? "history_symbol_light" : "history_symbol_dark")
@@ -142,7 +137,7 @@ struct TKMainView: View {
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
         .showTKAlert(
-            isPresented: store.bindingSpeechAuthAlert(),
+            isPresented: store[\.isSpeechAuthAlertPresented],
             style: .conversation
         ) {
             store.onGoSettingScreenButtonTapped()
@@ -157,10 +152,9 @@ struct TKMainView: View {
         .overlay(alignment: .top) {
             if let recent = recentConversation,
                let location = recent.location,
-               store(\.isTKToastPresented)
-            {
+               store(\.isTKToastPresented) {
                 TKToast(
-                    isPresented: store.bindingTKToast(),
+                    isPresented: store[\.isTKToastPresented],
                     title: recent.title,
                     locationInfo: location.blockName
                 )
@@ -183,23 +177,20 @@ struct TKMainView: View {
             ZStack {
                 Circle()
                     .fill(Color.OR6)
-                    .opacity(0.3)
-                    .frame(width: 120, height: 120)
+                    .opacity(0.5)
+                    .scaleEffect(0.42)
                 
                 Circle()
                     .fill(Color.OR6)
-                    .frame(width: 100, height: 100)
+                    .scaleEffect(0.35)
                 
                 Image("TALKLAT_BUBBLE_WHITE")
-                    .resizable()
                     .renderingMode(.template)
                     .foregroundStyle(Color.white)
-                    .frame(width: 59, height: 70)
                     .padding(.top, 12)
                 
                 Image(systemName: "plus")
-                    .resizable()
-                    .frame(width: 20, height: 20)
+                    .scaleEffect(1.2)
                     .bold()
                     .foregroundStyle(Color.OR6)
             }

@@ -9,10 +9,16 @@ import Lottie
 import SwiftUI
 
 struct TKSplashView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var playbackMode: LottiePlaybackMode
     
     var body: some View {
-        LottieView(animation: .named("BDSplash.json"))
+        LottieView(
+            animation:
+                colorScheme == .light
+            ? .named("BDSplash_Light")
+            : .named("BDSplash_Dark")
+        )
             .playbackMode(playbackMode)
             .animationDidFinish { _ in
                 playbackMode = .paused

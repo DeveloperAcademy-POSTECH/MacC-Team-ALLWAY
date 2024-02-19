@@ -9,7 +9,7 @@ import Foundation
 import Accelerate
 import AVFAudio
 
-class SignalExtractor {
+struct SignalExtractor {
     
     static let sampleCount = 1024
     
@@ -50,6 +50,7 @@ class SignalExtractor {
 }
 
 // 라이브 음성 처리
+#warning("사용하지 않는 class")
 class LiveAudioProcessor {
     let audioEngine = AVAudioEngine()
     var audioBuffers: [AVAudioPCMBuffer] = []

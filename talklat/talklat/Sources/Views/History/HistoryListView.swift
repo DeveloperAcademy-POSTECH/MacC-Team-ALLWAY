@@ -10,8 +10,7 @@ import SwiftData
 
 struct HistoryListView: View {
     @Environment(\.dismiss) var dismiss
-    
-    private var dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    @Environment(TKSwiftDataStore.self) private var dataStore
     
     @State private var selectedConversation: TKConversation = TKConversation(
         title: "",
