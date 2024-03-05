@@ -5,12 +5,15 @@
 //  Created by Celan on 2023/10/05.
 //
 
+import Firebase
 import Lottie
-import SwiftUI
 import SwiftData
+import SwiftUI
+
 
 @main
 struct talklatApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var locationStore: TKLocationStore = TKLocationStore()
     @StateObject private var authManager: TKAuthManager = TKAuthManager()
@@ -69,5 +72,14 @@ struct talklatApp: App {
                 }
             }
         }
+    }
+}
+
+
+// For Firebase Configuration
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
     }
 }
