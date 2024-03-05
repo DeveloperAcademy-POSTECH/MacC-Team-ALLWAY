@@ -115,6 +115,7 @@
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
+		CE4AB08C2B97604D0044C29E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -227,6 +228,7 @@
 		CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OptionalInt+Distance.swift"; sourceTree = "<group>"; };
 		CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+Equatble.swift"; sourceTree = "<group>"; };
 		CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableListViewStore.swift; sourceTree = "<group>"; };
+		CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
+				CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
@@ -736,6 +739,7 @@
 			files = (
 				7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */,
 				577B45242B0DE76500DA010E /* Pretendard-ExtraLight.otf in Resources */,
+				CE4AB08C2B97604D0044C29E /* GoogleService-Info.plist in Resources */,
 				577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */,
 				577B45252B0DE76500DA010E /* Pretendard-Light.otf in Resources */,
 				7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */,
