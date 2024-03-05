@@ -116,6 +116,9 @@
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
 		CE4AB08C2B97604D0044C29E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */; };
+		CE4AB08F2B9761EB0044C29E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB08E2B9761EB0044C29E /* FirebaseAnalytics */; };
+		CE4AB0912B9761EB0044C29E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB0902B9761EB0044C29E /* FirebaseAnalyticsSwift */; };
+		CE4AB0932B9761EB0044C29E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB0922B9761EB0044C29E /* FirebaseCrashlytics */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -271,6 +274,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4AB0912B9761EB0044C29E /* FirebaseAnalyticsSwift in Frameworks */,
+				CE4AB0932B9761EB0044C29E /* FirebaseCrashlytics in Frameworks */,
+				CE4AB08F2B9761EB0044C29E /* FirebaseAnalytics in Frameworks */,
 				7E806A422B15A931009FBB51 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,6 +651,9 @@
 			name = bisdam;
 			packageProductDependencies = (
 				7E806A412B15A931009FBB51 /* Lottie */,
+				CE4AB08E2B9761EB0044C29E /* FirebaseAnalytics */,
+				CE4AB0902B9761EB0044C29E /* FirebaseAnalyticsSwift */,
+				CE4AB0922B9761EB0044C29E /* FirebaseCrashlytics */,
 			);
 			productName = talklat;
 			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
@@ -720,6 +729,7 @@
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
 				7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				CE4AB08D2B9761EB0044C29E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
 			projectDirPath = "";
@@ -1237,6 +1247,14 @@
 				minimumVersion = 4.3.3;
 			};
 		};
+		CE4AB08D2B9761EB0044C29E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.22.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1244,6 +1262,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		CE4AB08E2B9761EB0044C29E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE4AB08D2B9761EB0044C29E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		CE4AB0902B9761EB0044C29E /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE4AB08D2B9761EB0044C29E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		CE4AB0922B9761EB0044C29E /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE4AB08D2B9761EB0044C29E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
