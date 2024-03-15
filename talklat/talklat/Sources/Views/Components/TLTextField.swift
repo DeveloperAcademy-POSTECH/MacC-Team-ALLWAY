@@ -65,9 +65,9 @@ struct TLTextField<Button: View>: View {
         .font(.custom("Pretendard", size: 20))
         .lineSpacing(20 * 1.6 - 20)
         .bold()
-        .lineLimit(5, reservesSpace: true)
+        .lineLimit(10, reservesSpace: true)
         .padding(.horizontal, 24)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .onChange(of: text) { _, _ in

@@ -53,11 +53,13 @@ struct TKScrollView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            .frame(maxHeight: 250)
+            .frame(maxHeight: .infinity)
             .overlay(alignment: align) {
                 curtain()
                     .frame(height: 50)
+                    .edgesIgnoringSafeArea(.bottom)
             }
+            .edgesIgnoringSafeArea(.bottom)
             
         case let .answer(answer, align):
             ScrollViewReader { proxy in

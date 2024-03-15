@@ -108,7 +108,7 @@ struct TKTypingView: View {
                         ) {
                             EmptyView()
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .focused($focusState)
                         .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
                         

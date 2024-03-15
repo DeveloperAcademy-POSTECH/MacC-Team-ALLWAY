@@ -133,7 +133,7 @@ struct BDText: View {
         case .T2_M_160:
             return (Font.custom("Pretendard-Medium", size: 22), .medium, 1.6, 22)
         case .T3_B_160:
-            return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.6, 20)
+            return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.4, 20)
         case .T3_M_160:
             return (Font.custom("Pretendard-Medium", size: 20), .medium, 1.6, 20)
             
@@ -168,6 +168,7 @@ struct BDTextTestView: View {
             BDText(text: "LT_B_120", style: .LT_B_120)
             BDText(text: "FN_SB_135", style: .FN_SB_135)
             BDText(text: "C1_M_130", style: .C1_M_130)
+            BDText(text: "라 ㄴ링ㄹ ㄴㅇ라 ㄴ일ㄴ알ㄴㅇ; ㅣㄹㅇ나;ㅣㄹ자ㅣㄹㅈ디ㅏ ㅈ리ㅏㅇ니 ㄷㄹ딪; ㅏㅣ;ㄹㅇ나ㅣ라 ㅣㄴㄹ디ㅏㄹ 니ㅏ;ㅇㄹㄴ;ㅣ아리 안리;ㅏㅣ;리;ㅏ디ㅏ; ㅣ", style: .T3_B_160)
         }
     }
 }

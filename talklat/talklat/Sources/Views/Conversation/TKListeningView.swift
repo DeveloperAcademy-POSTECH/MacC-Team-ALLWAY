@@ -65,6 +65,11 @@ struct TKListeningView: View {
                     }
                 )
                 .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+                .frame(
+                    maxHeight: store(\.answeredText).isEmpty
+                    ? .infinity
+                    : 312
+                )
             }
             
             if !store(\.answeredText).isEmpty {
@@ -81,7 +86,7 @@ struct TKListeningView: View {
                             )
                         }
                     )
-                    .frame(maxHeight: 300)
+                    .frame(maxHeight: 312)
                 }
                 .frame(
                     maxHeight: UIScreen.main.bounds.height * 0.55,
