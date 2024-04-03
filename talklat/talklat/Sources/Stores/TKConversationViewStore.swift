@@ -252,20 +252,20 @@ extension TKConversationViewStore {
             switchConverstaionStatus()
         }
     }
-    
+
     public func onTextReplaceButtonTapped(
-        with firstReplacement: String,
+        with replacement: String,
         key: String
     ) {
-        let newText = self(\.questionText)
-            .replacingOccurrences(
-                of: "\(key)",
-                with: firstReplacement,
-                options: [.caseInsensitive],
-                range: nil
-            )
+        let currentText = self(\.questionText)
+        var words = currentText.split(separator: " ", omittingEmptySubsequences: false).map(String.init)
         
-        reduce(\.questionText, into: newText)
+        if let lastWord = words.last, lastWord.lowercased() == key.lowercased() {
+            words[words.count - 1] = replacement
+            let updatedText = words.joined(separator: " ")
+            
+            reduce(\.questionText, into: updatedText)
+        }
     }
     
     public func blockButtonDoubleTap(completion: () -> Void) {
