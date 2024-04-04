@@ -29,7 +29,7 @@ struct TKScrollView: View {
         switch style {
         case let .question(question, answer, align):
             ScrollView {
-                if question.isEmpty {
+                if question.isEmpty && answer.isEmpty {
                     BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)
                         .foregroundColor(Color.GR4) // GR4 색상
                         .multilineTextAlignment(.leading)

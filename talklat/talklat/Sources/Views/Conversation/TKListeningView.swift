@@ -46,9 +46,18 @@ struct TKListeningView: View {
                 } else {
                     endConversationButtonBuilder()
                         .padding(.bottom, 20)
+                        .matchedGeometryEffect(
+                            id: "END_BUILDER",
+                            in: namespaceID,
+                            properties: .position
+                        )
+                        .transition(
+                            .offset().animation(
+                                .easeInOut(duration: 0.2)
+                            )
+                        )
                 }
             }
-            
             
             if store(\.conversationStatus) == .recording {
                 TKScrollView(
@@ -64,11 +73,17 @@ struct TKListeningView: View {
                         )
                     }
                 )
-                .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+//                .matchedGeometryEffect(
+//                    id: "QUESTION_TEXT",
+//                    in: namespaceID,
+//                    properties: .position
+//                )
+                .transition(.identity)
+                .padding(.top, -15)
                 .frame(
                     maxHeight: store(\.answeredText).isEmpty
                     ? .infinity
-                    : 312
+                    : 250
                 )
             }
             
@@ -86,7 +101,6 @@ struct TKListeningView: View {
                             )
                         }
                     )
-                    .frame(maxHeight: 312)
                 }
                 .frame(
                     maxHeight: UIScreen.main.bounds.height * 0.55,
@@ -97,13 +111,14 @@ struct TKListeningView: View {
                         .ignoresSafeArea(edges: .bottom)
                         .matchedGeometryEffect(
                             id: "ORANGE_BACKGROUND",
-                            in: namespaceID
+                            in: namespaceID,
+                            properties: .position
                         )
                 }
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .opacity
+                        removal: .move(edge: .top)
                     )
                 )
             }
@@ -249,6 +264,7 @@ struct TKListeningView: View {
     return TKListeningView(
         store: store, namespaceID: namespace
     )
+    .environment(TKSwiftDataStore())
     .frame(maxHeight: .infinity)
     .onAppear {
         store.reduce(\.conversationStatus, into: .recording)

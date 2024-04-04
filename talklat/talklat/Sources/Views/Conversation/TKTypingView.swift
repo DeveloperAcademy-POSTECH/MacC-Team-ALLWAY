@@ -29,7 +29,7 @@ struct TKTypingView: View {
                             ? .infinity
                             : 0
                         )
-                        .onAppear() {
+                        .onAppear {
                             store.onTKHistoryPreviewAppeared()
                         }
                 }
@@ -42,6 +42,9 @@ struct TKTypingView: View {
                 
             } else {
                 VStack(spacing: 0) {
+                    Spacer()
+                        .background { Color.OR5 }
+                    
                     if store.isAnswerCardDisplayable {
                         VStack(alignment: .leading) {
                             conversationPreviewChevronBuilder()
@@ -61,11 +64,11 @@ struct TKTypingView: View {
                                         )
                                     }
                                 )
+                                .frame(maxHeight: 220)
                             }
                         }
                         .frame(
                             maxWidth: .infinity,
-                            maxHeight: 250,
                             alignment: .top
                         )
                         .padding(.bottom, 24)
@@ -73,17 +76,27 @@ struct TKTypingView: View {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
-                                    in: namespaceID
+                                    in: namespaceID,
+                                    properties: .position
                                 )
                                 .ignoresSafeArea()
                         }
-                        
                     } else {
                         endConversationButtonBuilder()
+                            .matchedGeometryEffect(
+                                id: "END_BUILDER",
+                                in: namespaceID,
+                                properties: .position
+                            )
+                            .transition(
+                                .offset().animation(
+                                    .easeInOut(duration: 0.2)
+                                )
+                            )
                     }
                     
                     Spacer()
-                        .frame(maxHeight: 32)
+                        .frame(maxHeight: 10)
                     
                     characterLimitViewBuilder()
                         .opacity(focusState ? 1.0 : 0.0)
@@ -110,8 +123,12 @@ struct TKTypingView: View {
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .focused($focusState)
-                        .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
-                        
+//                        .matchedGeometryEffect(
+//                            id: "QUESTION_TEXT",
+//                            in: namespaceID,
+//                            properties: .position
+//                        )
+                        .transition(.identity)
                     }
                     
                     Spacer()
@@ -134,6 +151,12 @@ struct TKTypingView: View {
             if !store(\.isTopViewShown) {
                 customToolbar()
                     .padding(.bottom, 16)
+                    .matchedGeometryEffect(
+                        id: "CUSTOM_TOOLBAR",
+                        in: namespaceID,
+                        properties: .position
+                    )
+                    .transition(.offset())
             }
         }
     }
@@ -417,4 +440,5 @@ extension TKTypingView {
 
 #Preview {
     TKConversationView(store: TKConversationViewStore())
+        .environment(TKSwiftDataStore())
 }
