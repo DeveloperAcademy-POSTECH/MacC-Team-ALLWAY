@@ -29,7 +29,7 @@ struct TKTypingView: View {
                             ? .infinity
                             : 0
                         )
-                        .onAppear() {
+                        .onAppear {
                             store.onTKHistoryPreviewAppeared()
                         }
                 }
@@ -61,11 +61,12 @@ struct TKTypingView: View {
                                         )
                                     }
                                 )
+                                .frame(height: 200)
                             }
                         }
                         .frame(
                             maxWidth: .infinity,
-                            maxHeight: 250,
+                            maxHeight: 300,
                             alignment: .top
                         )
                         .padding(.bottom, 24)
@@ -73,7 +74,8 @@ struct TKTypingView: View {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
-                                    in: namespaceID
+                                    in: namespaceID,
+                                    properties: .position
                                 )
                                 .ignoresSafeArea()
                         }
@@ -83,7 +85,7 @@ struct TKTypingView: View {
                     }
                     
                     Spacer()
-                        .frame(maxHeight: 32)
+                        .frame(maxHeight: 15)
                     
                     characterLimitViewBuilder()
                         .opacity(focusState ? 1.0 : 0.0)
@@ -417,4 +419,5 @@ extension TKTypingView {
 
 #Preview {
     TKConversationView(store: TKConversationViewStore())
+        .environment(TKSwiftDataStore())
 }

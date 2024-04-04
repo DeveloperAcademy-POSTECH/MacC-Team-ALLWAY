@@ -16,7 +16,7 @@ struct TKListeningView: View {
     let namespaceID: Namespace.ID
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
@@ -49,7 +49,6 @@ struct TKListeningView: View {
                 }
             }
             
-            
             if store(\.conversationStatus) == .recording {
                 TKScrollView(
                     style: .question(
@@ -81,7 +80,7 @@ struct TKListeningView: View {
                             )
                         }
                     )
-                    .frame(maxHeight: 300)
+                    .frame(height: 400)
                 }
                 .frame(
                     maxHeight: UIScreen.main.bounds.height * 0.55,
@@ -92,13 +91,14 @@ struct TKListeningView: View {
                         .ignoresSafeArea(edges: .bottom)
                         .matchedGeometryEffect(
                             id: "ORANGE_BACKGROUND",
-                            in: namespaceID
+                            in: namespaceID,
+                            properties: .position
                         )
                 }
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .opacity
+                        removal: .identity
                     )
                 )
             }
@@ -244,6 +244,7 @@ struct TKListeningView: View {
     return TKListeningView(
         store: store, namespaceID: namespace
     )
+    .environment(TKSwiftDataStore())
     .frame(maxHeight: .infinity)
     .onAppear {
         store.reduce(\.conversationStatus, into: .recording)
