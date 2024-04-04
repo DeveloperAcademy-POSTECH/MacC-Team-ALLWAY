@@ -28,7 +28,7 @@ struct TKScrollView: View {
     var body: some View {
         switch style {
         case let .question(question, answer, align):
-            ScrollView {
+            VStack {
                 if question.isEmpty && answer.isEmpty {
                     BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)
                         .foregroundColor(Color.GR4) // GR4 색상
@@ -51,15 +51,10 @@ struct TKScrollView: View {
                             value: answer.isEmpty
                         )
                 }
+                
+                Spacer()
             }
-            .scrollIndicators(.hidden)
             .frame(maxHeight: .infinity)
-            .overlay(alignment: align) {
-                curtain()
-                    .frame(height: 50)
-                    .edgesIgnoringSafeArea(.bottom)
-            }
-            .edgesIgnoringSafeArea(.bottom)
             
         case let .answer(answer, align):
             ScrollViewReader { proxy in
@@ -93,7 +88,7 @@ struct TKScrollView: View {
                         }
                     }
                 }
-                .padding(.top, 16)
+                .padding(.top, 14)
                 .overlay(alignment: align) {
                     curtain()
                         .frame(height: 50)

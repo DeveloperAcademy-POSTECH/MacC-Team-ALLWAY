@@ -125,7 +125,7 @@ struct BDText: View {
             
             // Title Styles
         case .T1_B_170:
-            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.7, 28)
+            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.45, 28) // 피그마에 비해 행간 1.7 너무 넓어요ㅠㅠ
         case .T1_M_170:
             return (Font.custom("Pretendard-Medium", size: 28), .medium, 1.7, 28)
         case .T2_B_160:
@@ -168,7 +168,7 @@ struct BDTextTestView: View {
             BDText(text: "LT_B_120", style: .LT_B_120)
             BDText(text: "FN_SB_135", style: .FN_SB_135)
             BDText(text: "C1_M_130", style: .C1_M_130)
-            BDText(text: "라 ㄴ링ㄹ ㄴㅇ라 ㄴ일ㄴ알ㄴㅇ; ㅣㄹㅇ나;ㅣㄹ자ㅣㄹㅈ디ㅏ ㅈ리ㅏㅇ니 ㄷㄹ딪; ㅏㅣ;ㄹㅇ나ㅣ라 ㅣㄴㄹ디ㅏㄹ 니ㅏ;ㅇㄹㄴ;ㅣ아리 안리;ㅏㅣ;리;ㅏ디ㅏ; ㅣ", style: .T3_B_160)
+            BDText(text: "라 ㄴ링ㄹ ㄴㅇ라 ㄴ일ㄴ알ㄴㅇ; ㅣㄹㅇ나;ㅣㄹ자ㅣㄹㅈ디ㅏ ㅈ리ㅏㅇ니 ㄷㄹ딪; ㅏㅣ;ㄹㅇ나ㅣ라 ㅣㄴㄹ디ㅏㄹ 니ㅏ;ㅇㄹㄴ;ㅣ아리 안리;ㅏㅣ;리;ㅏ디ㅏ; ㅣ", style: .T1_B_170)
         }
     }
 }

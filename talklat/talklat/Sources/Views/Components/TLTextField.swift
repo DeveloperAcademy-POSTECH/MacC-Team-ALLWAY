@@ -63,11 +63,11 @@ struct TLTextField<Button: View>: View {
             axis: .vertical
         )
         .font(.custom("Pretendard", size: 20))
-        .lineSpacing(20 * 1.6 - 25) // 피그마보다 행간이 너무 넓어서 -20에서 -25으로 변경했어요
+        .lineSpacing(20 * 1.6 - 25) // 피그마보다 행간이 넓어서 -20에서 -25으로 변경했어요
         .bold()
-        .lineLimit(10, reservesSpace: true)
+//        .lineLimit(10, reservesSpace: true)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.horizontal, 24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .onChange(of: text) { _, _ in

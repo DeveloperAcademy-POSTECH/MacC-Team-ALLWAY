@@ -16,7 +16,7 @@ struct TKListeningView: View {
     let namespaceID: Namespace.ID
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
@@ -46,16 +46,6 @@ struct TKListeningView: View {
                 } else {
                     endConversationButtonBuilder()
                         .padding(.bottom, 20)
-                        .matchedGeometryEffect(
-                            id: "END_BUILDER",
-                            in: namespaceID,
-                            properties: .position
-                        )
-                        .transition(
-                            .offset().animation(
-                                .easeInOut(duration: 0.2)
-                            )
-                        )
                 }
             }
             
@@ -73,18 +63,7 @@ struct TKListeningView: View {
                         )
                     }
                 )
-//                .matchedGeometryEffect(
-//                    id: "QUESTION_TEXT",
-//                    in: namespaceID,
-//                    properties: .position
-//                )
-                .transition(.identity)
-                .padding(.top, -15)
-                .frame(
-                    maxHeight: store(\.answeredText).isEmpty
-                    ? .infinity
-                    : 250
-                )
+                .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
             }
             
             if !store(\.answeredText).isEmpty {
@@ -101,6 +80,7 @@ struct TKListeningView: View {
                             )
                         }
                     )
+                    .frame(height: 400)
                 }
                 .frame(
                     maxHeight: UIScreen.main.bounds.height * 0.55,
@@ -118,7 +98,7 @@ struct TKListeningView: View {
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .move(edge: .top)
+                        removal: .identity
                     )
                 )
             }
