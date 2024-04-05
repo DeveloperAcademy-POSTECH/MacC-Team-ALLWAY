@@ -21,7 +21,6 @@
 		7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */; };
 		7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */; };
 		7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */; };
-		7E806A422B15A931009FBB51 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E806A412B15A931009FBB51 /* Lottie */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -113,6 +112,7 @@
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
 		C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */; };
+		C1D627F92BC05FFD00EEB771 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C1D627F82BC05FFD00EEB771 /* Lottie */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
@@ -271,7 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E806A422B15A931009FBB51 /* Lottie in Frameworks */,
+				C1D627F92BC05FFD00EEB771 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +644,7 @@
 			);
 			name = bisdam;
 			packageProductDependencies = (
-				7E806A412B15A931009FBB51 /* Lottie */,
+				C1D627F82BC05FFD00EEB771 /* Lottie */,
 			);
 			productName = talklat;
 			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
@@ -720,7 +720,7 @@
 			);
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
-				7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
 			projectDirPath = "";
@@ -1232,20 +1232,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.3;
+				minimumVersion = 4.4.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7E806A412B15A931009FBB51 /* Lottie */ = {
+		C1D627F82BC05FFD00EEB771 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			package = C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
