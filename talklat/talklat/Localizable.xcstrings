@@ -106,6 +106,12 @@
             "state" : "translated",
             "value" : "Cancel"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아니요, 취소할래요"
+          }
         }
       }
     },
@@ -253,6 +259,12 @@
             "state" : "translated",
             "value" : "I have a hearing impairment. Your voice will be recognized through speech recognition and converted into text."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서\n텍스트로 변환됩니다."
+          }
         }
       }
     },
@@ -286,6 +298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I have a hearing impairment. Your voice will be recognized through speech recognition and converted into text."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서\n텍스트로 변환됩니다."
           }
         }
       }
@@ -323,9 +341,6 @@
           }
         }
       }
-    },
-    "Key" : {
-      "extractionState" : "manual"
     },
     "light" : {
       "localizations" : {
@@ -578,6 +593,192 @@
         }
       }
     },
+    "settings.guide.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The guidance can be used to show the opponent the instructions they need when starting a conversation."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요."
+          }
+        }
+      }
+    },
+    "settings.guide.toggleLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Guidance when starting conversation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "대화 시작 시 안내 문구 사용"
+          }
+        }
+      }
+    },
+    "settings.guiding.edit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Guiding Text"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안내 문구 편집"
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.defaultGuidingMessage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi, I have a hearing impairment."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안녕하세요. \\n저는 청각장애를 \\n가지고 있습니다."
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.fixedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voice recognition will start after this screen is closed.\\nPlease read my text and speak clearly."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "해당 화면이 종료되면 음성인식이 시작됩니다.\\n제 글을 읽고 또박또박 말씀해 주세요."
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.fixedMessage.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fixed Message"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "고정 문구"
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the guiding message."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구를 입력해주세요."
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.previewButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구 미리보기"
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.previewButton.changed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview Changes"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구 적용화면 미리보기"
+          }
+        }
+      }
+    },
+    "settings.guiding.edit.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Guiding Text"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구 편집"
+          }
+        }
+      }
+    },
+    "settings.guiding.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guiding Message"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안내 문구"
+          }
+        }
+      }
+    },
     "showingViewGuidingMessage" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -596,7 +797,20 @@
       }
     },
     "Sorry, we could not load this url." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry, we could not load this url."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "죄송합니다, 사이트를 연결할 수 없습니다."
+          }
+        }
+      }
     },
     "speechRecognitionPermission" : {
       "comment" : "Speech recognition permission",
@@ -669,6 +883,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "내용을 작성해 주세요."
+          }
+        }
+      }
+    },
+    "개인정보 처리방침" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "개인정보 처리방침"
           }
         }
       }
@@ -830,6 +1061,12 @@
             "state" : "translated",
             "value" : "Conversation"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대화하기"
+          }
         }
       }
     },
@@ -897,6 +1134,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "새 대화 시작하기"
+          }
+        }
+      }
+    },
+    "설정" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
           }
         }
       }
@@ -973,9 +1227,15 @@
     "위치 정보 없음" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "No Location Found"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "No Location Found"
           }
         }
@@ -1037,6 +1297,12 @@
             "state" : "translated",
             "value" : "The title already exists"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미 있는 제목이에요"
+          }
         }
       }
     },
@@ -1046,6 +1312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장"
           }
         }
       }
@@ -1072,6 +1344,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Title"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제목"
           }
         }
       }
@@ -1108,6 +1386,23 @@
         }
       }
     },
+    "취소" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "취소"
+          }
+        }
+      }
+    },
     "텍스트 대치 삭제" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1132,6 +1427,12 @@
             "state" : "translated",
             "value" : "Go back to Message Typing"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스트 작성 페이지로 돌아가기"
+          }
         }
       }
     },
@@ -1154,9 +1455,15 @@
     },
     "허용하러 가기" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Allow Access"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "허용하러 가기"
           }
         }
@@ -1168,6 +1475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Current Location"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현위치"
           }
         }
       }
