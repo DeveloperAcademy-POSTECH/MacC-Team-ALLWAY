@@ -86,6 +86,13 @@ public enum Constants {
         앱 설정에서 모든 권한을 허용해 주세요.
         """
     }
+  
+    enum Conversation {
+      static let NO_RESPONSE: String =
+      """
+      (기록된 답변이 없어요.)
+      """
+    }
     
     static let START_CONVERSATION_MESSAGE: String =
     """
