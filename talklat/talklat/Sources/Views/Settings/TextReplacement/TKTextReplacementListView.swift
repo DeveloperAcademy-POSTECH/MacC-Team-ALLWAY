@@ -178,6 +178,12 @@ struct TKTextReplacementListView: View {
                 id: \.key
             ) { key, values in
                 if let firstValue = values.first {
+                    
+                    let processedValue = firstValue
+                        .split(separator: "\n")
+                        .map { String($0).trimmingCharacters(in: .whitespaces) }
+                        .joined(separator: "\n")
+                    
                     NavigationLink {
                         TKTextReplacementEditView(
                             store: store
@@ -190,13 +196,14 @@ struct TKTextReplacementListView: View {
                         }
                     } label: {
                         // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
-                        let displayValue = firstValue.count > 40
-                        ? String(firstValue.prefix(17)) + "..."
-                        : firstValue
+//                        let displayValue = firstValue.count > 40
+//                        ? String(firstValue.prefix(17)) + "..."
+//                        : firstValue
                         
                         TextReplacementRow(
                             key: key,
-                            value: displayValue
+                            value: processedValue,
+                            lineLimit: 2
                         )
                         .cornerRadius(16)
                     }
