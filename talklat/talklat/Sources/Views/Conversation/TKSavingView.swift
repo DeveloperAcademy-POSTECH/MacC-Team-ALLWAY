@@ -61,7 +61,7 @@ struct TKSavingView: View {
                     
                 } label: {
                     BDText(
-                        text: "저장",
+                        text: NSLocalizedString("저장", comment: ""),
                         style: .H1_B_130
                     )
                 }

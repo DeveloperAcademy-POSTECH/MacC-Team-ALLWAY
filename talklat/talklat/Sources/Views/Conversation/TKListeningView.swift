@@ -224,7 +224,7 @@ struct TKListeningView: View {
                     }
                 }
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(Color.white)
             }

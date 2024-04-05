@@ -342,6 +342,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "light" : {
       "localizations" : {
         "ko" : {
@@ -399,6 +402,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다음"
+          }
+        }
+      }
+    },
+    "noSearchResult" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Result Found"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "검색 결과가 없어요"
           }
         }
       }
@@ -569,6 +589,74 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "저런:( 허용하지 않은 권한이 있군요."
+          }
+        }
+      }
+    },
+    "phrase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phrase"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변환 문구"
+          }
+        }
+      }
+    },
+    "phrase.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you so much!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "아이스 아메리카노 한 잔 주시겠어요?"
+          }
+        }
+      }
+    },
+    "replacement" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "단축어"
+          }
+        }
+      }
+    },
+    "replacement.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "thx"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "아아"
           }
         }
       }
@@ -779,6 +867,57 @@
         }
       }
     },
+    "settings.textReplacement.edit.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Text Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "텍스트 대치 편집"
+          }
+        }
+      }
+    },
+    "settings.textReplacement.list.noItems" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No text replacements have been set yet."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "아직 설정한 텍스트 대치가 없어요"
+          }
+        }
+      }
+    },
+    "settings.textReplacement.search.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "검색"
+          }
+        }
+      }
+    },
     "showingViewGuidingMessage" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -883,6 +1022,91 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "내용을 작성해 주세요."
+          }
+        }
+      }
+    },
+    "textReplacement.add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Text Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "텍스트 대치 추가"
+          }
+        }
+      }
+    },
+    "textReplacement.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Text Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스트 대치 삭제"
+          }
+        }
+      }
+    },
+    "textReplacement.morethanone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter at least one character."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "한 글자 이상 입력해 주세요"
+          }
+        }
+      }
+    },
+    "textReplacement.noWhiteSpace" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replacement words cannot contain spaces"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "단축어에는 띄어쓰기를 사용할 수 없어요"
+          }
+        }
+      }
+    },
+    "textReplacement.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "텍스트 대치"
           }
         }
       }
@@ -1208,6 +1432,23 @@
     "에 대화가 저장되었어요." : {
 
     },
+    "완료" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "완료"
+          }
+        }
+      }
+    },
     "위치" : {
       "localizations" : {
         "en" : {
@@ -1399,23 +1640,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "취소"
-          }
-        }
-      }
-    },
-    "텍스트 대치 삭제" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text Replacement Delete"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "텍스트 대치 삭제"
           }
         }
       }

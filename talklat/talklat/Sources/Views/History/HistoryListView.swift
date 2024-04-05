@@ -113,7 +113,7 @@ struct HistoryListView: View {
                             }
                         } label: {
                             BDText(
-                                text: isEditing ? "완료" : "편집",
+                                text: isEditing ? NSLocalizedString("완료", comment: "") : NSLocalizedString("편집", comment: ""),
                                 style: .H1_B_130
                             )
                         }
@@ -153,7 +153,7 @@ struct HistoryListView: View {
             }
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
+                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)
             }
         }
         .onChange(of: isSearchFocused) { _, _ in

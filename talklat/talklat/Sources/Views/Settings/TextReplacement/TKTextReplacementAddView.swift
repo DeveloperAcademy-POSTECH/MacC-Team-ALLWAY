@@ -27,7 +27,7 @@ struct TKTextReplacementAddView: View {
             SettingTRTextField(
                 text: $phrase,
                 focusState: _focusState,
-                title: "단축어",
+                title: NSLocalizedString("replacement", comment: ""),
                 placeholder: "아아",
                 limit: 20
             )
@@ -38,7 +38,7 @@ struct TKTextReplacementAddView: View {
             }
             
             SettingTRTextField(
-                text: $replacement, title: "변환 문구",
+                text: $replacement, title: NSLocalizedString("phrase", comment: ""),
                 placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
                 limit: 160
             )
@@ -63,7 +63,7 @@ struct TKTextReplacementAddView: View {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         BDText(
-                            text: "취소",
+                            text: NSLocalizedString("취소", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -71,7 +71,7 @@ struct TKTextReplacementAddView: View {
                     Spacer()
                     
                     BDText(
-                        text: "텍스트 대치 추가",
+                        text: NSLocalizedString("textReplacement.add", comment: ""),
                         style: .H1_B_130
                     )
                     
@@ -90,7 +90,7 @@ struct TKTextReplacementAddView: View {
                         }
                     } label: {
                         BDText(
-                            text: "완료",
+                            text: NSLocalizedString("완료", comment: ""),
                             style: .H1_B_130
                         )
                     }

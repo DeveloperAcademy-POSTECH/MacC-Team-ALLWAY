@@ -58,7 +58,7 @@ struct TKTextReplacementListView: View {
                             .foregroundColor(.GR2)
                             .padding(.bottom, 30)
                         
-                        BDText(text: "아직 설정한 텍스트 대치가 없어요", style: .H1_M_130)
+                        BDText(text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"), style: .H1_M_130)
                             .foregroundStyle(Color.GR3)
                     }
                     .frame(
@@ -113,7 +113,7 @@ struct TKTextReplacementListView: View {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -121,7 +121,7 @@ struct TKTextReplacementListView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "텍스트 대치", style: .H1_B_130)
+                BDText(text: NSLocalizedString("textReplacement.title", comment: ""), style: .H1_B_130)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -211,7 +211,7 @@ struct TKTextReplacementListView: View {
             AWTextField(
                 style: .search,
                 text: store.bindingSearchText(),
-                placeholder: "검색"
+                placeholder: NSLocalizedString("settings.textReplacement.search.placeholder", comment: "Search")
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
@@ -242,7 +242,7 @@ struct TKTextReplacementListView: View {
                     
                 } label: {
                     BDText(
-                        text: "취소",
+                        text: NSLocalizedString("취소", comment: ""),
                         style: .H1_B_130
                     )
                 }
