@@ -53,8 +53,7 @@ struct TKListeningView: View {
                 TKScrollView(
                     style: .question(
                         question: store(\.questionText),
-                        answer: store(\.answeredText),
-                        curtainAlignment: .bottom
+                        answer: store(\.answeredText)
                     ), curtain: {
                         LinearGradient(
                             colors: [.BaseBGWhite, .clear],
@@ -185,6 +184,7 @@ struct TKListeningView: View {
                         }
                 }
             }
+            .disabled(store(\.answeredText.isEmpty))
             .disabled(store(\.blockButtonDoubleTap))
         }
     }
