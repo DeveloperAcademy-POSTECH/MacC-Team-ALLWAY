@@ -113,7 +113,7 @@ struct TKOnboardingView: View {
             withAnimation {
                 onboardingStep = .conversation(
                     OnboardingInfo(
-                        title: "마이크와 음성 인식",
+                        title: NSLocalizedString("마이크와 음성 인식", comment: ""),
                         description: Constants.Onboarding.CONVERSATION,
                         highlightTarget: ["마이크 권한","음성 인식 권한"]
                     )
@@ -123,7 +123,7 @@ struct TKOnboardingView: View {
             withAnimation {
                 onboardingStep = .location(
                     OnboardingInfo(
-                        title: "위치",
+                        title: NSLocalizedString("위치", comment: ""),
                         description: Constants.Onboarding.LOCATION,
                         highlightTarget: ["위치 정보 권한","정확한 위치 켬"]
                     )
@@ -187,7 +187,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    BDText(text: "마이크 권한", style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("마이크 권한", comment: ""), style: .H2_SB_135)
                 }
                 
                 HStack {
@@ -202,7 +202,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    BDText(text: "음성 인식 권한", style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("음성 인식 권한", comment: ""), style: .H2_SB_135)
                 }
                 
                 HStack {
@@ -216,8 +216,7 @@ struct TKOnboardingView: View {
                         ? Color.green
                         : Color.RED
                     )
-                    
-                    BDText(text: "위치 정보 권한", style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("locationPermission", comment:""), style: .H2_SB_135)
                 }
                 
             }
@@ -248,7 +247,8 @@ struct TKOnboardingView: View {
         VStack(spacing: 24) {
             if onboardingStep != .complete,
                onboardingStep != .start {
-                BDText(text: "다음 버튼을 누르고\n\(info.title) 권한을 허용해 주세요.", style: .FN_SB_135)
+                let prompt = NSLocalizedString("onboarding.nextButtonPrompt", comment: "")
+                BDText(text: String(format: prompt, info.title), style: .FN_SB_135)
                     .foregroundStyle(Color.OR6)
                     .multilineTextAlignment(.center)
             }
@@ -272,8 +272,8 @@ struct TKOnboardingView: View {
             } label: {
                 BDText(
                     text: onboardingStep == .complete
-                       ? "시작하기"
-                       : "다음",
+                       ? NSLocalizedString("startButton", comment:"")
+                       : NSLocalizedString("nextButton", comment:""),
                     style: .H1_B_130
                 )
                 .foregroundStyle(
