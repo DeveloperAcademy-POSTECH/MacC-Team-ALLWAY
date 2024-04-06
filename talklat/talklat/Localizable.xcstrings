@@ -289,7 +289,20 @@
       }
     },
     "Conversation이 없어요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is no conversation!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "대화가 없어요!"
+          }
+        }
+      }
     },
     "creators.description" : {
       "extractionState" : "manual",
@@ -790,8 +803,8 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "\"나중에 설정에서 권한을 다시 변경할 수 있어요."
+            "state" : "translated",
+            "value" : "나중에 설정에서 권한을 다시 변경할 수 있어요."
           }
         }
       }
