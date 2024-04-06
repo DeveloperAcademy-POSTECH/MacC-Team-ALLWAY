@@ -52,6 +52,9 @@ struct TKToast: View {
                             Text("대화가 저장되었어요.")
                         }
                     }
+                    .onAppear {
+                        print("locale: ", userPreferredLanguage)
+                    }
                     .font(.caption2)
                     .foregroundStyle(colorScheme == .light ? Color.GR4 : Color.GR6)
                 }
