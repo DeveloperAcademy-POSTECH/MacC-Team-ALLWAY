@@ -94,10 +94,13 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                     
                     BDText(text: headerTitle, style: .H1_B_130)
                         .foregroundStyle(Color.GR9)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(0)
                     
                     BDText(text: description, style: .H2_SB_135)
                         .foregroundStyle(Color.GR6)
                         .multilineTextAlignment(.center)
+                        .lineLimit(3, reservesSpace: true)
                         .padding(.bottom, 16)
                     
                     alertBottomButtonBuilder()
@@ -299,6 +302,7 @@ extension TKAlert {
         }
     }
 }
+
 
 struct PreviewPro: PreviewProvider {
     @State static var flag = true

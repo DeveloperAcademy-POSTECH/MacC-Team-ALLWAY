@@ -112,7 +112,6 @@
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
 		C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */; };
-		C1D627F92BC05FFD00EEB771 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C1D627F82BC05FFD00EEB771 /* Lottie */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
@@ -123,6 +122,8 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
+		EF70BACB2BC0F3F600F91F5C /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = EF70BACA2BC0F3F600F91F5C /* Lottie */; };
+		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +249,7 @@
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
@@ -271,7 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1D627F92BC05FFD00EEB771 /* Lottie in Frameworks */,
+				EF70BACB2BC0F3F600F91F5C /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
+				EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
@@ -644,7 +647,7 @@
 			);
 			name = bisdam;
 			packageProductDependencies = (
-				C1D627F82BC05FFD00EEB771 /* Lottie */,
+				EF70BACA2BC0F3F600F91F5C /* Lottie */,
 			);
 			productName = talklat;
 			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
@@ -720,7 +723,7 @@
 			);
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
-				C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
 			projectDirPath = "";
@@ -752,6 +755,7 @@
 				577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */,
 				7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */,
 				7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */,
+				EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */,
 				577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1039,7 +1043,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1081,7 +1085,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
+				DEVELOPMENT_TEAM = 34U36L8239;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1232,7 +1236,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
@@ -1243,9 +1247,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C1D627F82BC05FFD00EEB771 /* Lottie */ = {
+		EF70BACA2BC0F3F600F91F5C /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1D627F72BC05FFD00EEB771 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			package = EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -53,7 +53,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The ongoing conversation will not be saved."
+            "value" : "The ongoing conversation\nwill not be saved."
           }
         },
         "ko" : {
@@ -87,7 +87,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Do you want to stop the conversation?"
+            "value" : "Do you want to stop\nthe conversation?"
           }
         },
         "ko" : {
@@ -1168,7 +1168,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My Nearby Conversation List"
+            "value" : "Nearby Conversation"
           }
         },
         "ko" : {
@@ -1213,6 +1213,7 @@
       }
     },
     "네, 취소할래요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1397,6 +1398,7 @@
       }
     },
     "아니오, 저장할래요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
