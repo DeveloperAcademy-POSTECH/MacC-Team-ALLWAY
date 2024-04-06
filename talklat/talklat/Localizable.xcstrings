@@ -36,12 +36,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To use Bisdam, please allow access to microphone and speech recognition."
+            "value" : "To use BISDAM,\nplease allow access to microphone and speech recognition."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "비스담을 이용하기 위해 마이크와 음성 인식 접근 권한을 모두 허용해 주세요."
           }
         }
@@ -240,7 +240,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To use BISDAM, please also allow voice recognition access."
+            "value" : "To use BISDAM,\nplease also allow voice recognition access."
           }
         },
         "ko" : {
@@ -291,6 +291,40 @@
     "Conversation이 없어요!" : {
 
     },
+    "creators.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The ALLWAY (Team of the Year) team is a group of Apple Developer Academy graduates who explore and analyze various social issues to plan and develop technology services for problem-solving purposes."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다."
+          }
+        }
+      }
+    },
+    "creators.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creators"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "만든 사람들"
+          }
+        }
+      }
+    },
     "CsecondguideMessage" : {
       "comment" : "청각장애 안내 메시지",
       "localizations" : {
@@ -325,6 +359,57 @@
         }
       }
     },
+    "darkMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark Mode"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어두운 모드"
+          }
+        }
+      }
+    },
+    "dataPolicyInfo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "개인정보 처리방침"
+          }
+        }
+      }
+    },
+    "displayMode.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display Mode"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 모드"
+          }
+        }
+      }
+    },
     "guideMessage" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -338,6 +423,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "저는 청각장애가 있어요. 말씀하신 내용은 음성인식되어서 텍스트로 변환됩니다."
+          }
+        }
+      }
+    },
+    "guidingMessage.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guiding Message"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "안내 문구"
           }
         }
       }
@@ -376,8 +478,93 @@
         }
       }
     },
+    "inquiry.bugReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inquiry / Bug Report"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "문의 및 오류 신고하기"
+          }
+        }
+      }
+    },
+    "jigu.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guys I've already summarized\nwhat we just talked about in Notion! :)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방금 얘기한 내용 노션에 정리되어있습니다~! :)"
+          }
+        }
+      }
+    },
     "Key" : {
       "extractionState" : "manual"
+    },
+    "koby.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Designer who wants to\nmake good products well"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "좋은 제품을 잘 만들고 싶은 디자이너"
+          }
+        }
+      }
+    },
+    "lets.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, I'm Lets, a genius developer :)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안녕하세요 천재 개(발자) 레츠입니다 :)"
+          }
+        }
+      }
+    },
+    "lianne.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Waiting for a job offer from Apple."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "버그를 잡았는데요, 안잡혔습니다."
+          }
+        }
+      }
     },
     "light" : {
       "localizations" : {
@@ -385,6 +572,23 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : ""
+          }
+        }
+      }
+    },
+    "lightMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light Mode"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "밝은 모드"
           }
         }
       }
@@ -423,6 +627,57 @@
         }
       }
     },
+    "madeline.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[\"working late\": true, \"team work\": true]\n.forEach { print(\"I love \\($0.key)\") }"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "do { try 행복 } catch { 야근 }"
+          }
+        }
+      }
+    },
+    "mic.permission.denied" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone permission is denied."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "마이크 접근 권한 없음"
+          }
+        }
+      }
+    },
+    "mic.speech.permission.denied" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone and Speech Recognition permissions are denied."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "마이크와 음성 인식 접근 권한 없음"
+          }
+        }
+      }
+    },
     "microphoneAccessPermission" : {
       "comment" : "Microphone access permission",
       "localizations" : {
@@ -436,6 +691,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마이크 접근 권한"
+          }
+        }
+      }
+    },
+    "moca.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The universe? Oh you mean\nwhat I'm stepping on right now?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "우주? 아~ 제가 발로 밟고 있는거요?"
+          }
+        }
+      }
+    },
+    "needHelp.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In need of assistance?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "도움이 필요하신가요?"
           }
         }
       }
@@ -519,7 +808,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "다음 버튼을 누르고\\n%@ 권한을 허용해 주세요."
+            "value" : "다음 버튼을 누르고\n%@ 권한을 허용해 주세요."
           }
         }
       }
@@ -536,7 +825,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "비스담은 인식한 상대방의 음성을\\n텍스트로 변환하기 위해 마이크와 함께\\n음성 인식 권한을 필요로 합니다."
+            "value" : "비스담은 인식한 상대방의 음성을\n텍스트로 변환하기 위해 마이크와 함께\n음성 인식 권한을 필요로 합니다."
           }
         }
       }
@@ -547,7 +836,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Great! \\n Now, shall we start \\n using Bisdam?"
+            "value" : "Great! \n Now, shall we start \n using Bisdam?"
           }
         },
         "ko" : {
@@ -633,13 +922,47 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oops:(\\nThere is an unauthorized permission."
+            "value" : "Oops:(\nThere is an unauthorized permission."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "저런:( 허용하지 않은 권한이 있군요."
+          }
+        }
+      }
+    },
+    "permission.denied" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "permission is denied."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "권한이 꺼져있어요."
+          }
+        }
+      }
+    },
+    "permission.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to permission settings"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "권한 허용하러 가기"
           }
         }
       }
@@ -674,6 +997,23 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "아이스 아메리카노 한 잔 주시겠어요?"
+          }
+        }
+      }
+    },
+    "reene.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A generous but dignified person\nin charge of foreign affairs"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "호방하지만 기품있는 외조담당"
           }
         }
       }
@@ -755,7 +1095,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use Guidance when starting conversation"
+            "value" : "Use Guidance\nwhen starting conversation"
           }
         },
         "ko" : {
@@ -794,7 +1134,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "안녕하세요. \\n저는 청각장애를 \\n가지고 있습니다."
+            "value" : "안녕하세요.\n저는 청각장애를\n가지고 있습니다."
           }
         }
       }
@@ -805,13 +1145,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voice recognition will start after this screen is closed.\\nPlease read my text and speak clearly."
+            "value" : "Voice recognition will start shortly.\nPlease speak clearly\nfor better recognition."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "해당 화면이 종료되면 음성인식이 시작됩니다.\\n제 글을 읽고 또박또박 말씀해 주세요."
+            "value" : "해당 화면이 종료되면 음성인식이 시작됩니다.\n제 글을 읽고 또박또박 말씀해 주세요."
           }
         }
       }
@@ -941,7 +1281,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No text replacements have been set yet."
+            "value" : "No text replacements\nhave been set yet."
           }
         },
         "ko" : {
@@ -1002,6 +1342,23 @@
         }
       }
     },
+    "speech.permission.denied" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech Recognition permission is denied."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "음성 인식 접근 권한 없음"
+          }
+        }
+      }
+    },
     "speechRecognitionPermission" : {
       "comment" : "Speech recognition permission",
       "localizations" : {
@@ -1055,6 +1412,23 @@
     },
     "success" : {
 
+    },
+    "systemMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Display Mode"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시스템 설정과 동일"
+          }
+        }
+      }
     },
     "TestingView.." : {
 
@@ -1326,6 +1700,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "닫기"
+          }
+        }
+      }
+    },
+    "대화" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "대화"
           }
         }
       }
@@ -1734,6 +2125,23 @@
         }
       }
     },
+    "접근성" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessibility"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "접근성"
+          }
+        }
+      }
+    },
     "정보" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1795,6 +2203,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지도를 움직여 위치를 설정 하세요"
+          }
+        }
+      }
+    },
+    "지원" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "지원"
           }
         }
       }

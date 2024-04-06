@@ -129,6 +129,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                 BDText(text: getConversationAuthDescription(), style: .H2_SB_135)
                     .foregroundStyle(Color.GR6)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(3, reservesSpace: true)
                     .padding(.bottom, 16)
                 
                 HStack {
@@ -209,9 +210,15 @@ extension TKAlert {
     private func getConversationAuthTitle() -> String {
         if let isMicrophoneAuthorized = authManager.isMicrophoneAuthorized,
            let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
-            if isMicrophoneAuthorized, !isSpeechAuthorized { return "음성 인식 접근 권한 없음" }
-            else if !isMicrophoneAuthorized, isSpeechAuthorized { return "마이크 접근 권한 없음" }
-            else if !isMicrophoneAuthorized, !isSpeechAuthorized { return "마이크와 음성 인식 접근 권한 없음" }
+            if isMicrophoneAuthorized, !isSpeechAuthorized {
+                return NSLocalizedString("speech.permission.denied", comment: "")
+            }
+            else if !isMicrophoneAuthorized, isSpeechAuthorized {
+                return NSLocalizedString("mic.permission.denied", comment: "")
+            }
+            else if !isMicrophoneAuthorized, !isSpeechAuthorized {
+                return NSLocalizedString("mic.speech.permission.denied", comment: "")
+            }
         }
         
         return ""
