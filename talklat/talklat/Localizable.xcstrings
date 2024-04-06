@@ -355,6 +355,23 @@
         }
       }
     },
+    "location.saved.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation has been saved at "
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "에 대화가 저장되었어요."
+          }
+        }
+      }
+    },
     "locationPermission" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1173,7 +1190,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "내 주변 대화 목록"
           }
         }
@@ -1262,6 +1279,23 @@
         }
       }
     },
+    "대화 내용" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation History"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "대화 내용"
+          }
+        }
+      }
+    },
     "대화 제목을 지어주세요" : {
       "localizations" : {
         "en" : {
@@ -1278,6 +1312,9 @@
         }
       }
     },
+    "대화가 저장되었어요." : {
+
+    },
     "대화하기" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1291,6 +1328,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "대화하기"
+          }
+        }
+      }
+    },
+    "듣고 있어요" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I'm listening."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "듣고 있어요."
           }
         }
       }
@@ -1363,6 +1417,23 @@
         }
       }
     },
+    "새로운 대화" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Conversation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "새로운 대화"
+          }
+        }
+      }
+    },
     "설정" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1431,9 +1502,6 @@
         }
       }
     },
-    "에 대화가 저장되었어요." : {
-
-    },
     "완료" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1478,8 +1546,8 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No Location Found"
+            "state" : "translated",
+            "value" : "위치 정보 없음"
           }
         }
       }
@@ -1545,6 +1613,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이미 있는 제목이에요"
+          }
+        }
+      }
+    },
+    "작성 화면으로 돌아가기" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return to Writing Screen"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "작성 화면으로 돌아가기"
           }
         }
       }
@@ -1640,7 +1725,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "취소"
           }
         }

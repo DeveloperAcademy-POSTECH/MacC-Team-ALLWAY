@@ -30,7 +30,7 @@ struct TKSavingView: View {
                     
                 } label: {
                     BDText(
-                        text: "취소",
+                        text: NSLocalizedString("취소", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -73,8 +73,11 @@ struct TKSavingView: View {
             .padding(.bottom, 24)
             
             HStack {
-                BDText(text: "제목", style: .H2_SB_135)
-                    .foregroundStyle(Color.GR5)
+                BDText(
+                    text: NSLocalizedString("제목", comment: ""),
+                    style: .H2_SB_135
+                )
+                .foregroundStyle(Color.GR5)
                 
                 Spacer()
 
@@ -84,7 +87,7 @@ struct TKSavingView: View {
             
             HStack {
                 TextField(
-                    "대화 제목을 지어주세요",
+                    NSLocalizedString("대화 제목을 지어주세요", comment: ""),
                     text: store.bindingConversationTitle()
                 )
                 .font(.headline)

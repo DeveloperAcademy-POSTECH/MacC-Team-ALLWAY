@@ -29,7 +29,10 @@ struct TKGuidingView: View {
             Button {
                 store.onGuideCancelButtonTapped()
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
             }
             .frame(width: 44, height: 44)
             .padding(.bottom, 20)

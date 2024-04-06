@@ -47,7 +47,7 @@ struct TKHistoryView: View {
             // Navigation Title
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "대화 내용",
+                    text: NSLocalizedString("대화 내용", comment: ""),
                     style: .H1_B_130
                 )
             }

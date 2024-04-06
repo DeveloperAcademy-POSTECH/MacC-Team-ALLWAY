@@ -241,9 +241,12 @@ extension TKTypingView {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(cancelButtonTextColor())
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(cancelButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
