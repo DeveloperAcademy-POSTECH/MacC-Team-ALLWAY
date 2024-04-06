@@ -18,7 +18,7 @@ struct SettingsHelpView: View {
     
     var body: some View {
         VStack {
-            BDListCell(label: "문의 및 오류 신고하기") {
+            BDListCell(label: NSLocalizedString("inquiry.bugReport", comment: "")) {
             } trailingUI: {
                 Image(systemName: "chevron.right")
             }
@@ -37,7 +37,10 @@ struct SettingsHelpView: View {
                         Image(systemName: "chevron.left")
                             .bold()
                         
-                        BDText(text: "설정", style: .H1_B_130)
+                        BDText(
+                            text: NSLocalizedString("설정", comment: ""),
+                            style: .H1_B_130
+                        )
                     }
                     .tint(Color.OR5)
                 }
@@ -46,7 +49,7 @@ struct SettingsHelpView: View {
             // Navigation Title
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "도움이 필요하신가요?",
+                    text: NSLocalizedString("needHelp.title", comment: ""),
                     style: .H1_B_130
                 )
             }

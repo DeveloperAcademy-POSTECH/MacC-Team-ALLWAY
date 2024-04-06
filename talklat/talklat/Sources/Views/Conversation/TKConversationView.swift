@@ -122,6 +122,8 @@ struct TKConversationView: View {
 
 #Preview {
     TKConversationView(store: .init())
+        .environment(TKSwiftDataStore())
+    
 }
 
 

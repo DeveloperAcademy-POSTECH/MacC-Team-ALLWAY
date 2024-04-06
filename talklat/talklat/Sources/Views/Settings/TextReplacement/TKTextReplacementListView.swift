@@ -58,8 +58,12 @@ struct TKTextReplacementListView: View {
                             .foregroundColor(.GR2)
                             .padding(.bottom, 30)
                         
-                        BDText(text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"), style: .H1_M_130)
-                            .foregroundStyle(Color.GR3)
+                        BDText(
+                            text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"),
+                            style: .H1_M_130
+                        )
+                        .foregroundStyle(Color.GR3)
+                        .multilineTextAlignment(.center)
                     }
                     .frame(
                         maxHeight: .infinity,

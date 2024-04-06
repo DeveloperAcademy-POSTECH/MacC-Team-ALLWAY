@@ -83,7 +83,7 @@ struct HistoryListView: View {
                                     .bold()
                                 
                                 BDText(
-                                    text: "홈",
+                                    text: NSLocalizedString("home.title", comment: ""),
                                     style: .H1_B_130
                                 )
                             }
@@ -93,7 +93,7 @@ struct HistoryListView: View {
                     
                     ToolbarItem(placement: .principal) {
                         BDText(
-                            text: "히스토리",
+                            text: NSLocalizedString("히스토리", comment: ""),
                             style: .H1_B_130
                         )
                     }

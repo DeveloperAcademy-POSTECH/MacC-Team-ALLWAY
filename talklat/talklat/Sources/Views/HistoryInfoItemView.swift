@@ -31,7 +31,10 @@ struct HistoryInfoItemView: View {
         }
         .onAppear {
             historyInfoStore.reduce(\.text, into: conversation.title)
-            locationStore.reduce(\.infoPlaceName, into: "위치 정보 없음")
+            locationStore.reduce(
+                \.infoPlaceName,
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
             if
                 let latitude = conversation.location?.latitude,
                 let longitude = conversation.location?.longitude {
@@ -121,7 +124,7 @@ struct HistoryInfoItemView: View {
                     // Navigation Title
                     ToolbarItem(placement: .principal) {
                         BDText(
-                            text: "정보",
+                            text: NSLocalizedString("정보", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -142,7 +145,9 @@ struct HistoryInfoItemView: View {
                 .fontWeight(.bold)
                 .showTKAlert(
                     isPresented: historyInfoStore.bindingAlert(),
-                    style: .editCancellation(title: "변경 사항 취소"),
+                    style: .editCancellation(
+                        title: NSLocalizedString("취소", comment: "")
+                    ),
                     confirmButtonAction: ({
                         historyInfoStore.reduce(\.isShowingAlert, into: false)
                         dismiss()
@@ -155,7 +160,7 @@ struct HistoryInfoItemView: View {
     
     private var textFieldView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("제목")
+            Text(NSLocalizedString("제목", comment: ""))
                 .font(.headline)
                 .padding(.leading, 10)
                 .padding(.bottom, 8)

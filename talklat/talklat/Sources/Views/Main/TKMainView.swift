@@ -198,10 +198,23 @@ struct TKMainView: View {
     }
 }
 
-#Preview {
+#Preview("EN") {
     NavigationStack {
         TKMainView()
+            .environment(\.locale, Locale(identifier: "en"))
+            .environment(TKSwiftDataStore())
             .environmentObject(TKLocationStore())
             .environmentObject(TKAuthManager())
     }
 }
+
+#Preview("KR") {
+    NavigationStack {
+        TKMainView()
+            .environment(\.locale, .init(identifier: "ko"))
+            .environment(TKSwiftDataStore())
+            .environmentObject(TKLocationStore())
+            .environmentObject(TKAuthManager())
+    }
+}
+

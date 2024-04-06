@@ -99,7 +99,7 @@ struct CustomHistoryView: View {
                     BDText(
                         text: historyViewType == .item
                         ? conversation.title
-                        : "대화 내용",
+                        : NSLocalizedString("대화 내용", comment: ""),
                         style: .H1_B_130
                     )
                 }
