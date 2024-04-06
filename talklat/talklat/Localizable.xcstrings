@@ -70,12 +70,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No"
+            "value" : "Cancel"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "아니요"
           }
         }
@@ -223,12 +223,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete Text Replacement"
+            "value" : "Delete"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "텍스트 대치 삭제"
           }
         }
@@ -457,6 +457,23 @@
         }
       }
     },
+    "history.noconversation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No conversation have been saved yet."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "아직 대화 기록이 없어요"
+          }
+        }
+      }
+    },
     "history.search.found" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -526,6 +543,9 @@
       }
     },
     "Key" : {
+      "extractionState" : "manual"
+    },
+    "Key 1" : {
       "extractionState" : "manual"
     },
     "koby.sentence" : {
@@ -1773,7 +1793,6 @@
       }
     },
     "네, 취소할래요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1873,7 +1892,14 @@
       }
     },
     "대화가 저장되었어요." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation is saved."
+          }
+        }
+      }
     },
     "대화하기" : {
       "extractionState" : "manual",
@@ -2046,7 +2072,6 @@
       }
     },
     "아니오, 저장할래요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2201,7 +2226,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add Marker to this poing"
+            "value" : "Add Marker to this point"
           }
         },
         "ko" : {

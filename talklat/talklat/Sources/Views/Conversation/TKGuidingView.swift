@@ -13,16 +13,16 @@ struct TKGuidingView: View {
     @State private var flag: Bool = false
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    let guide: String =
-    """
-    해당 화면이 종료되면
-    음성인식이 시작됩니다.
-    제 글을 읽고 또박또박 말씀해 주세요.
-    """
-    
+    let guide: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
+//    """
+//    해당 화면이 종료되면
+//    음성인식이 시작됩니다.
+//    제 글을 읽고 또박또박 말씀해 주세요.
+//    """
+//    
     var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
-    ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
+    ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
     
     var body: some View {
         VStack(alignment: .leading) {

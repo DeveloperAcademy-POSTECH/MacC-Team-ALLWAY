@@ -49,7 +49,7 @@ struct HistoryListView: View {
                     if dataStore.conversations.isEmpty {
                         TKUnavailableViewBuilder(
                             icon: "bubble.left.and.bubble.right.fill",
-                            description: "아직 대화 기록이 없어요"
+                            description:  NSLocalizedString("history.noconversation", comment: "")
                         )
                     } else {
                         ScrollView {

@@ -28,7 +28,7 @@ struct TKTextReplacementAddView: View {
                 text: $phrase,
                 focusState: _focusState,
                 title: NSLocalizedString("replacement", comment: ""),
-                placeholder: "아아",
+                placeholder: NSLocalizedString("replacement.placeholder", comment: ""),
                 limit: 20
             )
             .onChange(of: phrase) { newValue in
@@ -39,7 +39,7 @@ struct TKTextReplacementAddView: View {
             
             SettingTRTextField(
                 text: $replacement, title: NSLocalizedString("phrase", comment: ""),
-                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                placeholder: NSLocalizedString("phrase.placeholder", comment: ""),
                 limit: 160
             )
             .padding(.top, 24)

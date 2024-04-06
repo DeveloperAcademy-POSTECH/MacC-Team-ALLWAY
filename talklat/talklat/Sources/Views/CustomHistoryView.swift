@@ -87,7 +87,7 @@ struct CustomHistoryView: View {
                                 .bold()
                             
                             BDText(
-                                text: "목록",
+                                text: NSLocalizedString("목록", comment: ""),
                                 style: .H1_B_130
                             )
                         }
@@ -116,7 +116,7 @@ struct CustomHistoryView: View {
             }
         }
         .fontWeight(.bold)
-        .navigationTitle(historyViewType == .item ? conversation.title : "대화 내용")
+        .navigationTitle(historyViewType == .item ? conversation.title : NSLocalizedString("대화 내용", comment: ""))
         .navigationBarBackButtonHidden(true)
     }
     
