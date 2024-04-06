@@ -122,6 +122,7 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
+		EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +261,7 @@
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
 		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
 		EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetObserver.swift; sourceTree = "<group>"; };
+		EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Replacement.swift"; sourceTree = "<group>"; };
 		EFF347432B020DD900D2D1FB /* SettingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListView.swift; sourceTree = "<group>"; };
 		EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -543,6 +545,7 @@
 				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
 				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
+				EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				7EBD31372B0B2B1300D5514D /* SignalExtractor.swift in Sources */,
 				7EBD31382B0B2B1300D5514D /* SpeechRecognizer.swift in Sources */,
 				7EBD31392B0B2B1300D5514D /* HapticManager.swift in Sources */,
+				EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */,
 				7EBD313A2B0B2B1300D5514D /* TKTextReplacementManager.swift in Sources */,
 				7EBD313B2B0B2B1300D5514D /* TKAuthManager.swift in Sources */,
 				7EBD313C2B0B2B1300D5514D /* TKOnboardingView.swift in Sources */,
@@ -1033,8 +1037,6 @@
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 34U36L8239;
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1077,8 +1079,6 @@
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 34U36L8239;
-				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
