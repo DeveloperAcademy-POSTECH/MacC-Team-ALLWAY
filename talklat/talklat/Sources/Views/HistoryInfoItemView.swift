@@ -124,7 +124,7 @@ struct HistoryInfoItemView: View {
                     // Navigation Title
                     ToolbarItem(placement: .principal) {
                         BDText(
-                            text: "정보",
+                            text: NSLocalizedString("정보", comment: ""),
                             style: .H1_B_130
                         )
                     }

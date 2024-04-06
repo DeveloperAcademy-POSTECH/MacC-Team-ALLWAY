@@ -18,7 +18,7 @@ struct SearchBarView: View {
             AWTextField(
                 style: .search,
                 text: $searchText,
-                placeholder: "내용 검색"
+                placeholder: NSLocalizedString("내용 검색", comment: "")
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)

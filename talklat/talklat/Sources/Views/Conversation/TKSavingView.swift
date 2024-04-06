@@ -115,10 +115,12 @@ struct TKSavingView: View {
             .padding(.bottom, 8)
             
             if store(\.conversationTitle).isEmpty {
-                BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
-                    .foregroundStyle(Color.RED)
-                    .padding(.leading, 32)
-                    .transition(.opacity.animation(.easeInOut))
+                BDText(
+                    text: NSLocalizedString("textReplacement.morethanone", comment: ""),
+                    style: .FN_SB_135)
+                .foregroundStyle(Color.RED)
+                .padding(.leading, 32)
+                .transition(.opacity.animation(.easeInOut))
                 
             } else if store(\.hasCurrentConversationTitlePrevious) {
                 Text("이미 있는 제목이에요")

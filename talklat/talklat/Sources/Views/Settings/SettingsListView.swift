@@ -23,7 +23,7 @@ private enum SectionType: String, CaseIterable {
         case .displayMode: return "접근성"
         // case .haptics: return "일반"
 //        case .gesture: return "실험실"
-        case .dataPolicyInfo, .creators: return "정보"
+        case .dataPolicyInfo, .creators: return NSLocalizedString("정보", comment: "")
         case .needHelp: return "지원"
         }
     }
@@ -60,7 +60,7 @@ struct SettingsListView: View {
     @EnvironmentObject private var locationStore: TKLocationStore
     
     private let sectionCategories: [String] = [
-        "대화", "접근성", /* "실험실", */ "정보", "지원" // TODO: "일반" 추가
+        "대화", "접근성", /* "실험실", */ NSLocalizedString("정보", comment: ""), "지원" // TODO: "일반" 추가
     ]
     
     var body: some View {
@@ -177,7 +177,7 @@ struct SettingsListView: View {
                             .bold()
                         
                         BDText(
-                            text: "홈",
+                            text: NSLocalizedString("home.title", comment: ""),
                             style: .H1_B_130
                         )
                     }

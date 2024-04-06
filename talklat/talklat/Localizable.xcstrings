@@ -342,6 +342,40 @@
         }
       }
     },
+    "history.search.found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Result(s)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "개 발견 됨"
+          }
+        }
+      }
+    },
+    "home.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
+          }
+        }
+      }
+    },
     "Key" : {
       "extractionState" : "manual"
     },
@@ -1196,6 +1230,23 @@
         }
       }
     },
+    "내용 검색" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "내용 검색"
+          }
+        }
+      }
+    },
     "네, 그만 할래요" : {
       "localizations" : {
         "en" : {
@@ -1568,6 +1619,23 @@
         }
       }
     },
+    "위치 정보 편집" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Location"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "위치 정보 편집"
+          }
+        }
+      }
+    },
     "음성 인식 권한" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1662,6 +1730,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "전체 지우기"
+          }
+        }
+      }
+    },
+    "정보" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "정보"
           }
         }
       }
@@ -1792,6 +1877,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "현위치"
+          }
+        }
+      }
+    },
+    "히스토리" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "히스토리"
           }
         }
       }
