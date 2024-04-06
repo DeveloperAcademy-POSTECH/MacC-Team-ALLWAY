@@ -177,7 +177,7 @@ struct SettingsListView: View {
                             .bold()
                         
                         BDText(
-                            text: "홈",
+                            text: NSLocalizedString("홈", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -187,7 +187,7 @@ struct SettingsListView: View {
             
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "설정",
+                    text: NSLocalizedString("설정", comment: ""),
                     style: .H1_B_130
                 )
             }
@@ -214,7 +214,7 @@ struct SettingsListView: View {
                         .foregroundColor(.white)
                     
                     HStack {
-                        BDText(text: "권한 허용하러 가기", style: .H1_B_130)
+                        BDText(text: NSLocalizedString("권한 허용하러 가기", comment: ""), style: .H1_B_130)
                             .foregroundColor(.white)
                         
                         Image(systemName: "arrow.up.forward.app.fill")

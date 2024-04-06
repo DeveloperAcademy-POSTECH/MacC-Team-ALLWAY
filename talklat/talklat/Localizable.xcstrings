@@ -345,6 +345,17 @@
     "Key" : {
       "extractionState" : "manual"
     },
+    "Key 1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        }
+      }
+    },
     "light" : {
       "localizations" : {
         "ko" : {
@@ -681,6 +692,57 @@
         }
       }
     },
+    "settings.creators.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creators"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "만든 사람들"
+          }
+        }
+      }
+    },
+    "settings.dataPolicyInfo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "개인정보 처리방침"
+          }
+        }
+      }
+    },
+    "settings.displayMode.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display Mode"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 모드"
+          }
+        }
+      }
+    },
     "settings.guide.description" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -867,6 +929,40 @@
         }
       }
     },
+    "settings.guidingMessage.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guiding Message"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안내 문구"
+          }
+        }
+      }
+    },
+    "settings.needHelp.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Need Help?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도움이 필요하신가요?"
+          }
+        }
+      }
+    },
     "settings.textReplacement.edit.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -914,6 +1010,23 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "검색"
+          }
+        }
+      }
+    },
+    "settings.textReplacement.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Replacement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스트 대치"
           }
         }
       }
@@ -1112,18 +1225,21 @@
       }
     },
     "개인정보 처리방침" : {
+
+    },
+    "권한 허용하러 가기" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy Policy"
+            "value" : "Go to Allow Permission"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "개인정보 처리방침"
+            "state" : "translated",
+            "value" : "권한 허용하러 가기"
           }
         }
       }
@@ -1261,6 +1377,23 @@
         }
       }
     },
+    "대화" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대화"
+          }
+        }
+      }
+    },
     "대화 제목을 지어주세요" : {
       "localizations" : {
         "en" : {
@@ -1307,6 +1440,23 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "마이크 권한"
+          }
+        }
+      }
+    },
+    "마이크 및 음성인식 권한이 꺼져있어요." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mic and Speech Recognition permission is turned off."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "마이크 및 음성인식 권한이 꺼져있어요."
           }
         }
       }
@@ -1465,6 +1615,23 @@
         }
       }
     },
+    "위치 권한이 꺼져있어요." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location permission is turned off."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "위치 권한이 꺼져있어요."
+          }
+        }
+      }
+    },
     "위치 정보 없음" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1579,6 +1746,40 @@
         }
       }
     },
+    "접근성" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessibility"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "접근성"
+          }
+        }
+      }
+    },
+    "정보" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정보"
+          }
+        }
+      }
+    },
     "제목" : {
       "localizations" : {
         "en" : {
@@ -1623,6 +1824,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지도를 움직여 위치를 설정 하세요"
+          }
+        }
+      }
+    },
+    "지원" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지원"
           }
         }
       }
@@ -1705,6 +1923,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "현위치"
+          }
+        }
+      }
+    },
+    "홈" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
           }
         }
       }
