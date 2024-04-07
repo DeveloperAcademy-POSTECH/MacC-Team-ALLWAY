@@ -15,13 +15,6 @@ struct SettingsGuidingEditView: View {
         forKey: "guidingMessage"
     ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
     
-    private let fixedMessage: String =
-        """
-        해당 화면이 종료되면
-        음성인식이 시작됩니다.
-        제 글을 읽고 또박또박 말씀해 주세요.
-        """
-    
     var body: some View {
         VStack {
             // Show GuidingView Button
@@ -66,7 +59,7 @@ struct SettingsGuidingEditView: View {
                     .padding(.horizontal, 16)
                 
                 HStack {
-                    Text(fixedMessage)
+                    Text(Constants.CONVERSATION_GUIDINGMESSAGE)
                         .foregroundColor(.GR4)
                     
                     Spacer()

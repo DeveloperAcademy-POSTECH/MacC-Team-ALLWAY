@@ -13,12 +13,6 @@ struct TKGuidingView: View {
     @State private var flag: Bool = false
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    let guide: String =
-    """
-    해당 화면이 종료되면
-    음성인식이 시작됩니다.
-    제 글을 읽고 또박또박 말씀해 주세요.
-    """
     
     var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
@@ -41,7 +35,7 @@ struct TKGuidingView: View {
                 .frame(maxWidth: .infinity, maxHeight: 2)
                 .padding(.bottom, 32)
             
-            BDText(text: guide, style: .T2_B_160)
+            BDText(text: Constants.CONVERSATION_GUIDINGMESSAGE, style: .T2_B_160)
             
             Spacer()
         }
