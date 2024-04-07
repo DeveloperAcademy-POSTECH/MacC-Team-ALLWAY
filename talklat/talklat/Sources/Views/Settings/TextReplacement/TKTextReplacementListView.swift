@@ -60,7 +60,7 @@ struct TKTextReplacementListView: View {
                         
                         BDText(
                             text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"),
-                            style: .H1_M_130
+                            style: .H1_SB_130
                         )
                         .foregroundStyle(Color.GR3)
                         .multilineTextAlignment(.center)

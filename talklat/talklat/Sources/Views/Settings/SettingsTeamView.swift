@@ -30,7 +30,7 @@ struct SettingsTeamView: View {
                     
                     Spacer()
                 }
-                .padding(.leading, 24)
+                .padding(.horizontal, 24)
                 .padding(.bottom, 50)
                 
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")

@@ -310,7 +310,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The ALLWAY (Team of the Year) team is a group of Apple Developer Academy graduates who explore and analyze various social issues to plan and develop technology services for problem-solving purposes."
+            "value" : "The ALLWAY (Team of the Year) team is a group of Apple Developer Academy graduates in South Korea who explore and analyze various social issues with technology."
           }
         },
         "ko" : {
@@ -446,7 +446,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guiding Message"
+            "value" : "Guidance"
           }
         },
         "ko" : {
@@ -1196,12 +1196,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit Guiding Text"
+            "value" : "Edit Guidance"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "안내 문구 편집"
           }
         }
@@ -1212,7 +1212,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hi, I have a hearing impairment."
+            "value" : "Hi, I have a hearing difficulty."
           }
         },
         "ko" : {
@@ -1314,7 +1314,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit Guiding Text"
+            "value" : "Edit Guidance"
           }
         },
         "ko" : {
@@ -1331,12 +1331,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guiding Message"
+            "value" : "Guidance"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "안내 문구"
           }
         }
@@ -1348,12 +1348,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guiding Message"
+            "value" : "Guidance"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "안내 문구"
           }
         }
@@ -1764,7 +1764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yes, I will quit"
+            "value" : "Stop"
           }
         },
         "ko" : {
