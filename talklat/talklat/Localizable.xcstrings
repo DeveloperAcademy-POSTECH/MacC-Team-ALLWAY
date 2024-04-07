@@ -361,12 +361,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please write the content."
+            "value" : "Enter Text"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "내용을 작성해주세요."
           }
         }
@@ -463,7 +463,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No conversation have been saved yet."
+            "value" : "No conversation have been saved yet"
           }
         },
         "ko" : {
@@ -785,7 +785,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Result Found"
+            "value" : "No result found"
           }
         },
         "ko" : {
@@ -852,12 +852,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BISDAM uses voice recognition and microphone to convert the recognized opponent's voice into text."
+            "value" : "BISDAM uses voice recognition and microphone to convert the recognized the other person's voice into text."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "비스담은 인식한 상대방의 음성을\n텍스트로 변환하기 위해 마이크와 함께\n음성 인식 권한을 필요로 합니다."
           }
         }
@@ -903,7 +903,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BISDAM uses your microphone to recognize the voice of the opponent, and voice recognition to convert the recognized opponent's voice into text."
+            "value" : "BISDAM uses your microphone to recognize the voice of the opponent, and voice recognition to convert the recognized the other person's voice into text."
           }
         },
         "ko" : {
@@ -1162,7 +1162,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The guidance can be used to show the opponent the instructions they need when starting a conversation."
+            "value" : "The guidance can be used to show the other person the instructions they need when starting a conversation."
           }
         },
         "ko" : {
@@ -1399,7 +1399,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No text replacements\nhave been set yet."
+            "value" : "No text replacements\nhave been set yet"
           }
         },
         "ko" : {
@@ -1534,12 +1534,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start a new conversation"
+            "value" : "Start Conversation"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "새 대화 시작하기"
           }
         }
@@ -1575,12 +1575,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please write the content."
+            "value" : "Enter Text"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "내용을 작성해 주세요."
           }
         }
@@ -1697,7 +1697,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to retrieve nearby chat list. Please allow location permissions in settings."
+            "value" : "Unable to retrieve nearby conversation list. Please allow location permissions in settings."
           }
         },
         "ko" : {
@@ -1714,12 +1714,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Nearby Conversation Record Found"
+            "value" : "No nearby conversation record found"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "근처에서 나눈 대화가 없어요."
           }
         }
