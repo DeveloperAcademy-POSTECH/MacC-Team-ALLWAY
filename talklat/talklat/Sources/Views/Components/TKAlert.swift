@@ -129,7 +129,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                 BDText(text: getConversationAuthDescription(), style: .H2_SB_135)
                     .foregroundStyle(Color.GR6)
                     .multilineTextAlignment(.leading)
-                    .lineLimit(3, reservesSpace: true)
+                    .lineLimit(4, reservesSpace: true)
                     .padding(.bottom, 16)
                 
                 HStack {

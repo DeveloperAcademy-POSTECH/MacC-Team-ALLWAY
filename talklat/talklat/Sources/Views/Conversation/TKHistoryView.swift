@@ -58,7 +58,7 @@ struct TKHistoryView: View {
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {
-                        BDText(text: "작성 화면으로 돌아가기", style: .FN_SB_135)
+                        BDText(text: NSLocalizedString("작성 화면으로 돌아가기", comment: ""), style: .FN_SB_135)
                         
                         Image(systemName: "chevron.compact.down")
                             .resizable()

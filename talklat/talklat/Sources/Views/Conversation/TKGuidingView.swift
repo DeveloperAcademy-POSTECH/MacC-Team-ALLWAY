@@ -34,7 +34,6 @@ struct TKGuidingView: View {
                     style: .H1_B_130
                 )
             }
-            .frame(width: 44, height: 44)
             .padding(.bottom, 20)
             
             BDText(text: guidingMessage, style: .LT_B_120)

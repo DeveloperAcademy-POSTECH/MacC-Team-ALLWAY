@@ -683,7 +683,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microphone permission is denied."
+            "value" : "Microphone is not permitted."
           }
         },
         "ko" : {
@@ -700,12 +700,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microphone and Speech Recognition permissions are denied."
+            "value" : "Microphone and Speech Recognition permissions are not permitted."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "마이크와 음성 인식 접근 권한 없음"
           }
         }
@@ -972,7 +972,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "permission is denied."
+            "value" : "is not permitted."
           }
         },
         "ko" : {
@@ -989,12 +989,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go to permission settings"
+            "value" : "Open Settings"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "권한 허용하러 가기"
           }
         }
@@ -1483,7 +1483,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speech Recognition permission is denied."
+            "value" : "Speech Recognition is not permitted."
           }
         },
         "ko" : {
@@ -1680,12 +1680,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go to Allow Permission"
+            "value" : "Open Settings"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "권한 허용하러 가기"
           }
         }
@@ -2009,12 +2009,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start a new conversation"
+            "value" : "Start Conversation"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "새 대화 시작하기"
           }
         }
@@ -2060,7 +2060,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go To Settings"
+            "value" : "Open Settings"
           }
         },
         "ko" : {
@@ -2259,7 +2259,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Return to Writing Screen"
+            "value" : "Return to Conversation"
           }
         },
         "ko" : {
@@ -2423,12 +2423,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go back to Message Typing"
+            "value" : "Return to Conversation"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "텍스트 작성 페이지로 돌아가기"
           }
         }
