@@ -24,7 +24,6 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-//                .transition(.opacity)
             }
             
             if store(\.conversationStatus) == .guiding {
