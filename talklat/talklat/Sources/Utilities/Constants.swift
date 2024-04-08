@@ -127,17 +127,17 @@ public enum Constants {
 //    시작하기
 //    """
     
-    static let SHOWINGVIEW_GUIDINGMESSAGE: String =
-    """
-    음성인식이 되고 있어요.
-    또박또박 말씀해 주세요.
-    """
+    static let SHOWINGVIEW_GUIDINGMESSAGE: String = NSLocalizedString("showingViewGuidingMessage", comment: "")
+//    """
+//    음성인식이 되고 있어요.
+//    또박또박 말씀해 주세요.
+//    """
     
-    static let CONVERSATION_GUIDINGMESSAGE: String =
-    """
-    잠시 후에 음성인식이 시작됩니다.
-    제 글을 읽고 또박또박 말씀해 주세요.
-    """
+    static let CONVERSATION_GUIDINGMESSAGE: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
+//    """
+//    잠시 후에 음성인식이 시작됩니다.
+//    제 글을 읽고 또박또박 말씀해 주세요.
+//    """
 
 }
 

@@ -113,7 +113,7 @@ struct HistoryInfoItemView: View {
                                     .bold()
                                 
                                 BDText(
-                                    text: "대화",
+                                    text: NSLocalizedString("대화", comment: ""),
                                     style: .H1_B_130
                                 )
                             }

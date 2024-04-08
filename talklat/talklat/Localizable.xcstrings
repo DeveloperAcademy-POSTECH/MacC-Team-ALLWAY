@@ -1234,8 +1234,8 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "해당 화면이 종료되면 음성인식이 시작됩니다.\n제 글을 읽고 또박또박 말씀해 주세요."
+            "state" : "translated",
+            "value" : "잠시 후에 음성인식이 시작됩니다.\n제 글을 읽고 또박또박 말씀해 주세요."
           }
         }
       }
