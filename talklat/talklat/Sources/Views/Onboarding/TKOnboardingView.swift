@@ -292,6 +292,7 @@ struct TKOnboardingView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .padding(.horizontal, 16)
+            .padding(.bottom, 16)
         }
         .frame(
             maxWidth: .infinity,
