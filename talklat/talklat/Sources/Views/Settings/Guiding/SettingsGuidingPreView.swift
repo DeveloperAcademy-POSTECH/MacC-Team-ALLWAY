@@ -27,7 +27,7 @@ struct SettingsGuidingPreView: View {
                 .multilineTextAlignment(.leading)
             
             BDText(
-                text: NSLocalizedString("settings.guiding.edit.fixedMessage", comment: ""),
+              text: Constants.CONVERSATION_GUIDINGMESSAGE,
                 style: .T2_B_160
             )
             
