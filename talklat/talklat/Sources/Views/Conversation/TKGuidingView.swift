@@ -20,6 +20,7 @@ struct TKGuidingView: View {
 //    제 글을 읽고 또박또박 말씀해 주세요.
 //    """
 //    
+
     var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
     ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
@@ -43,7 +44,7 @@ struct TKGuidingView: View {
                 .frame(maxWidth: .infinity, maxHeight: 2)
                 .padding(.bottom, 32)
             
-            BDText(text: guide, style: .T2_B_160)
+            BDText(text: Constants.CONVERSATION_GUIDINGMESSAGE, style: .T2_B_160)
             
             Spacer()
         }

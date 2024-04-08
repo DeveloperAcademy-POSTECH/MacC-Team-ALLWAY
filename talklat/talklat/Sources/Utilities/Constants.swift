@@ -111,6 +111,13 @@ public enum Constants {
         //        앱 설정에서 모든 권한을 허용해 주세요.
         //        """
     }
+  
+    enum Conversation {
+      static let NO_RESPONSE: String =
+      """
+      (기록된 답변이 없어요.)
+      """
+    }
     
     static let START_CONVERSATION_MESSAGE: String = NSLocalizedString("startConversationMessage", comment: "")
    
@@ -120,13 +127,18 @@ public enum Constants {
 //    시작하기
 //    """
     
-    static let SHOWINGVIEW_GUIDINGMESSAGE: String = NSLocalizedString("showingViewGuidingMessage", comment: "")
+    static let SHOWINGVIEW_GUIDINGMESSAGE: String =
+    """
+    음성인식이 되고 있어요.
+    또박또박 말씀해 주세요.
+    """
+    
+    static let CONVERSATION_GUIDINGMESSAGE: String =
+    """
+    잠시 후에 음성인식이 시작됩니다.
+    제 글을 읽고 또박또박 말씀해 주세요.
+    """
 
-    //    static let SHOWINGVIEW_GUIDINGMESSAGE: String =
-//    """
-//    음성인식이 되고 있어요.
-//    또박또박 말씀해 주세요.
-//    """
 }
 
 public enum FlippedStatus: String {
