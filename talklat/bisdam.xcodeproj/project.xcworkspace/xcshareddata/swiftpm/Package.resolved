@@ -1,4 +1,5 @@
 {
+  "originHash" : "6b3386dc9ff1f3a74f1534de9c41d47137eae0901cfe819ed442f1b241549359",
   "pins" : [
     {
       "identity" : "lottie-spm",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
