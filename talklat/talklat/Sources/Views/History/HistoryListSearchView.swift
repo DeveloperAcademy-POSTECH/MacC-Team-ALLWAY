@@ -252,7 +252,7 @@ struct SearchResultItem: View {
                 
                 BDText(
                     text: matchingContent.createdAt.convertToDate(),
-                    style: .H2_M_135
+                    style: .C1_SB_130
                 )
                 .foregroundColor(.GR4)
             }
