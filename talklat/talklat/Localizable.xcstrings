@@ -2504,6 +2504,7 @@
       }
     },
     "현위치" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
