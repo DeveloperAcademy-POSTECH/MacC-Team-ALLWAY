@@ -677,6 +677,40 @@
         }
       }
     },
+    "mail.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Required 1] iPhone Model \n - \n [Required 2] iOS Version \n - \n [Required 3] Information\n - "
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[필수1] iPhone 기종 \n - \n [필수2] iOS 버전 \n - \n [필수3] 문의 내용 \n - "
+          }
+        }
+      }
+    },
+    "mail.subject" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[BISDAM] Report Bug / Inquire"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[BISDAM] 오류신고/문의하기"
+          }
+        }
+      }
+    },
     "mic.permission.denied" : {
       "extractionState" : "manual",
       "localizations" : {

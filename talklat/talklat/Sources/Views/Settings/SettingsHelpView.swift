@@ -17,8 +17,8 @@ struct SettingsHelpView: View {
             Button {
                 openMail(
                     emailTo: "allway.team01@gmail.com",
-                    subject: "[BISDAM] 오류신고/문의하기",
-                    body: "[필수1] iPhone 기종 \n - \n [필수2] iOS 버전 \n - \n [필수3] 문의 내용 \n - "
+                    subject: NSLocalizedString("mail.subject", comment: ""),
+                    body: NSLocalizedString("mail.content", comment: "")
                 )
             } label: {
                 BDListCell(label: NSLocalizedString("inquiry.bugReport", comment: "")) {
@@ -65,7 +65,7 @@ struct SettingsHelpView: View {
         body: String
     ) {
         if let url = URL(
-            string: "mailto:\(emailTo)?subject=\(subject.fixToBrowserString())&body=\(body.fixToBrowserString())"
+            string: "mailto:\(emailTo)?subject=\(subject)&body=\(body)"
         ),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(
