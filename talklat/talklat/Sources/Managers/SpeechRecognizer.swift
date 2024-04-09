@@ -30,7 +30,8 @@ final class SpeechRecognizer: ObservableObject {
     
     @Published public var currentTranscript = ""
     
-    private let recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ko-KR"))!
+    private let recognizer: SFSpeechRecognizer = SFSpeechRecognizer(locale: .autoupdatingCurrent)!
+    
     private let audioEngine: AVAudioEngine = AVAudioEngine()
     private let signalExtractor = SignalExtractor()
     

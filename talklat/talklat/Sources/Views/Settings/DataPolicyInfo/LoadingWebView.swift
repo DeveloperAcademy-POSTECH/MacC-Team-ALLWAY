@@ -45,7 +45,7 @@ struct LoadingWebView: View {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -53,7 +53,8 @@ struct LoadingWebView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "개인정보 처리방침", style: .H1_B_130)
+                BDText(text: NSLocalizedString("개인정보 처리방침", comment: "")
+                       , style: .H1_B_130)
             }
         }
     }

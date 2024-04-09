@@ -8,23 +8,34 @@
 import SwiftUI
 
 private enum SectionType: String, CaseIterable {
-    case textReplacement = "텍스트 대치"
-    case guidingMessage = "안내 문구"
-    case displayMode = "화면 모드"
+    case textReplacement
+    case guidingMessage
+    case displayMode
     // case haptics = "진동"
 //    case gesture = "제스처"
-    case dataPolicyInfo = "개인정보 처리방침"
-    case creators = "만든 사람들"
-    case needHelp = "도움이 필요하신가요?"
+    case dataPolicyInfo
+    case creators
+    case needHelp
+    
+    var title: String {
+        switch self {
+        case .textReplacement: return NSLocalizedString("textReplacement.title", comment: "")
+        case .guidingMessage: return NSLocalizedString("guidingMessage.title", comment: "")
+        case .displayMode: return NSLocalizedString("displayMode.title", comment: "")
+        case .dataPolicyInfo: return NSLocalizedString("dataPolicyInfo.title", comment: "")
+        case .creators: return NSLocalizedString("creators.title", comment: "")
+        case .needHelp: return NSLocalizedString("needHelp.title", comment: "")
+        }
+    }
     
     var category: String {
         switch self {
-        case .textReplacement, .guidingMessage: return "대화"
-        case .displayMode: return "접근성"
+        case .textReplacement, .guidingMessage: return NSLocalizedString("대화", comment: "")
+        case .displayMode: return NSLocalizedString("접근성", comment: "")
         // case .haptics: return "일반"
 //        case .gesture: return "실험실"
-        case .dataPolicyInfo, .creators: return "정보"
-        case .needHelp: return "지원"
+        case .dataPolicyInfo, .creators: return NSLocalizedString("정보", comment: "")
+        case .needHelp: return NSLocalizedString("지원", comment: "")
         }
     }
     
@@ -43,8 +54,15 @@ private enum SectionType: String, CaseIterable {
 }
 
 internal enum AuthorizationType: String {
-    case micAndSpeech = "마이크 및 음성인식"
-    case location = "위치"
+    case micAndSpeech
+    case location
+    
+    var title: String {
+        switch self {
+        case .micAndSpeech: return NSLocalizedString("마이크와 음성 인식", comment: "")
+        case .location: return NSLocalizedString("위치", comment: "")
+        }
+    }
     
     var icon: String {
         switch self {
@@ -60,7 +78,12 @@ struct SettingsListView: View {
     @EnvironmentObject private var locationStore: TKLocationStore
     
     private let sectionCategories: [String] = [
-        "대화", "접근성", /* "실험실", */ "정보", "지원" // TODO: "일반" 추가
+        NSLocalizedString("대화", comment: ""),
+        NSLocalizedString("접근성", comment: ""),
+        /* "실험실", */
+        NSLocalizedString("정보", comment: ""), 
+        NSLocalizedString("지원", comment: "")
+        /* "일반", */
     ]
     
     var body: some View {
@@ -137,7 +160,7 @@ struct SettingsListView: View {
                                         .navigationBarBackButtonHidden()
                                 }
                             } label: {
-                                BDListCell(label: item.rawValue) {
+                                BDListCell(label: item.title) {
                                     Image(systemName: item.icon)
                                 } trailingUI: {
                                     Image(systemName: "chevron.right")
@@ -177,7 +200,7 @@ struct SettingsListView: View {
                             .bold()
                         
                         BDText(
-                            text: "홈",
+                            text: NSLocalizedString("home.title", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -187,7 +210,7 @@ struct SettingsListView: View {
             
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "설정",
+                    text: NSLocalizedString("설정", comment: ""),
                     style: .H1_B_130
                 )
             }
@@ -210,12 +233,20 @@ struct SettingsListView: View {
                     .font(.system(size: 45))
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    BDText(text: "\(noticeItem.rawValue) 권한이 꺼져있어요.", style: .H1_B_130)
-                        .foregroundColor(.white)
+                    BDText(
+                        text: "\(noticeItem.title) \(NSLocalizedString("permission.denied", comment: ""))",
+                        style: .H1_B_130
+                    )
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.leading)
                     
                     HStack {
-                        BDText(text: "권한 허용하러 가기", style: .H1_B_130)
-                            .foregroundColor(.white)
+                        BDText(
+                            text: NSLocalizedString("permission.settings", comment: ""),
+                            style: .H1_B_130
+                        )
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
                         
                         Image(systemName: "arrow.up.forward.app.fill")
                             .foregroundColor(.white)

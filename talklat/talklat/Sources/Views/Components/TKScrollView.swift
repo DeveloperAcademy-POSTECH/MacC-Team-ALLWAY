@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TKScrollView: View {
     enum TKScrollContents {
-        case question(question: String, answer: String, curtainAlignment: Alignment)
+        case question(question: String, answer: String)
         case answer(answer: String, curtainAlignment: Alignment)
         case answerCard(text: String, curtainAlignment: Alignment)
     }
@@ -27,7 +27,7 @@ struct TKScrollView: View {
     // MARK: - BODY
     var body: some View {
         switch style {
-        case let .question(question, answer, align):
+        case let .question(question, answer):
             VStack {
                 if question.isEmpty && answer.isEmpty {
                     BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)

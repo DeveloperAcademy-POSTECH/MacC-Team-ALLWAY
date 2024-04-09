@@ -51,7 +51,7 @@ struct HistoryItemLocationEditView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     BDText(
-                        text: "위치 정보 편집",
+                        text: NSLocalizedString("위치 정보 편집", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -80,7 +80,7 @@ struct HistoryItemLocationEditView: View {
     private var mapHeaderView: some View {
         HStack {
             BDText(
-                text: "위치 정보 편집",
+                text: NSLocalizedString("위치 정보 편집", comment: ""),
                 style: .H1_B_130
             )
             

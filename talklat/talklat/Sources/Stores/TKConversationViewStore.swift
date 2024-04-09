@@ -24,7 +24,7 @@ final class TKConversationViewStore {
         var conversationStatus: ConversationStatus
         var questionText: String = ""
         var answeredText: String = ""
-        var conversationTitle: String = "새로운 대화"
+        var conversationTitle: String = NSLocalizedString("새로운 대화", comment: "")
         
         var hasGuidingMessageShown: Bool = false
         var hasSavingViewDisplayed: Bool = false

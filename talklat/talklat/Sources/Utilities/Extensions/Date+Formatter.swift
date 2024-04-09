@@ -10,17 +10,20 @@ import Foundation
 extension Date {
     public func convertToDate() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd (E)"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let convertedDate = dateFormatter.string(from: self)
-        return convertedDate
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale.current
+        
+        return dateFormatter.string(from: self)
     }
     
+    
     public func convertToTime() -> String {
-        let timeFormmatter = DateFormatter()
-        timeFormmatter.dateFormat = "a hh:mm"
-        timeFormmatter.locale = Locale(identifier: "ko_KR")
-        let convertedTime = timeFormmatter.string(from: self)
-        return convertedTime
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .short
+        timeFormatter.locale = Locale.current
+        
+        return timeFormatter.string(from: self)
     }
 }
