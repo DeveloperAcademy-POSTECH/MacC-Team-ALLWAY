@@ -13,8 +13,16 @@ struct SettingsGuidingEditView: View {
     @State private var isTextEmpty: Bool = false
     @State private var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
-    ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
-    
+    ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
+
+    private let fixedMessage: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
+//    private let fixedMessage: String =
+//        """
+//        해당 화면이 종료되면
+//        음성인식이 시작됩니다.
+//        제 글을 읽고 또박또박 말씀해 주세요.
+//        """
+
     var body: some View {
         VStack {
             // Show GuidingView Button
@@ -25,8 +33,8 @@ struct SettingsGuidingEditView: View {
             } label: {
                 BDText(
                     text: hasContentChanged
-                    ? "안내 문구 적용화면 미리보기"
-                    : "안내 문구 미리보기",
+                    ? NSLocalizedString("settings.guiding.edit.previewButton.changed", comment: "")
+                    : NSLocalizedString("settings.guiding.edit.previewButton", comment: ""),
                     style: .H1_B_130
                 )
                 .foregroundColor(.white)
@@ -45,8 +53,8 @@ struct SettingsGuidingEditView: View {
             SettingTextField(
                 isTextEmpty: $isTextEmpty,
                 text: $guidingMessage,
-                title: "안내 문구",
-                placeholder: "",
+                title: NSLocalizedString("settings.guiding.edit.title", comment: ""),
+                placeholder: NSLocalizedString("settings.guiding.edit.placeholder", comment: ""),
                 limit: 30
             )
             .lineLimit(3)
@@ -54,7 +62,7 @@ struct SettingsGuidingEditView: View {
             
             // FixedMessage Text
             VStack(alignment: .leading) {
-                BDText(text: "고정 문구", style: .H2_SB_135)
+                BDText(text: NSLocalizedString("settings.guiding.edit.fixedMessage.title", comment: ""), style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
                     .padding(.horizontal, 16)
                 
@@ -85,15 +93,21 @@ struct SettingsGuidingEditView: View {
                             .bold()
                         
                         BDText(
-                            text: "안내 문구",
-                            style: .H1_B_130
+                            text: NSLocalizedString(
+                                "settings.guiding.title",
+                                comment: ""
+                            ),
+                               style: .H1_B_130
                         )
                     }
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "안내 문구 편집", style: .H1_B_130)
+                BDText(text: NSLocalizedString(
+                    "settings.guiding.edit",
+                    comment: ""
+                ), style: .H1_B_130)
             }
         }
         .onChange(of: guidingMessage) { _, _ in

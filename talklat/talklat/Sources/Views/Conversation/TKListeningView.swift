@@ -123,26 +123,29 @@ struct TKListeningView: View {
             Spacer()
             
             if store(\.answeredText).isEmpty {
-                BDText(text: "듣고 있어요", style: .H1_B_130)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .frame(minWidth: 110, minHeight: 42)
-                    .background {
-                        ZStack(alignment: .trailing) {
-                            RoundedRectangle(
-                                cornerRadius: 22,
-                                style: .continuous
-                            )
-                            
-                            Rectangle()
-                                .frame(width: 20, height: 20)
-                                .rotationEffect(.degrees(45))
-                                .offset(x: 3)
-                        }
-                        .compositingGroup()
-                        .foregroundStyle(Color.OR5)
+                BDText(
+                    text: NSLocalizedString("듣고 있어요", comment: ""),
+                    style: .H1_B_130
+                )
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .frame(minWidth: 110, minHeight: 42)
+                .background {
+                    ZStack(alignment: .trailing) {
+                        RoundedRectangle(
+                            cornerRadius: 22,
+                            style: .continuous
+                        )
+                        
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(x: 3)
                     }
+                    .compositingGroup()
+                    .foregroundStyle(Color.OR5)
+                }
             }
             
             Button {
@@ -195,9 +198,12 @@ struct TKListeningView: View {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(Color.GR6)
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(Color.GR6)
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
@@ -224,7 +230,7 @@ struct TKListeningView: View {
                     }
                 }
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(Color.white)
             }

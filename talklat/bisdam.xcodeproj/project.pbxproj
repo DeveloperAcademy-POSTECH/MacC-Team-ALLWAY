@@ -21,7 +21,6 @@
 		7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */; };
 		7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */; };
 		7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */; };
-		7E806A422B15A931009FBB51 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E806A412B15A931009FBB51 /* Lottie */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -112,6 +111,7 @@
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
+		C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
@@ -122,6 +122,8 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
+		EF70BACB2BC0F3F600F91F5C /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = EF70BACA2BC0F3F600F91F5C /* Lottie */; };
+		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +213,7 @@
 		7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
+		C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		CE0CBF162B0115900048C784 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		CE0CBF182B0115F80048C784 /* CustomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +249,7 @@
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
@@ -269,7 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E806A422B15A931009FBB51 /* Lottie in Frameworks */,
+				EF70BACB2BC0F3F600F91F5C /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
+				EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
@@ -372,6 +377,7 @@
 		7E8D17C32ACE8AEC00E904E5 /* talklat */ = {
 			isa = PBXGroup;
 			children = (
+				C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */,
 				7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */,
 				7E8D17EF2ACE8B8900E904E5 /* Sources */,
 				7E8D17EE2ACE8B1400E904E5 /* Resources */,
@@ -641,7 +647,7 @@
 			);
 			name = bisdam;
 			packageProductDependencies = (
-				7E806A412B15A931009FBB51 /* Lottie */,
+				EF70BACA2BC0F3F600F91F5C /* Lottie */,
 			);
 			productName = talklat;
 			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
@@ -713,10 +719,11 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
-				7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
 			projectDirPath = "";
@@ -744,9 +751,11 @@
 				577B45232B0DE76500DA010E /* Pretendard-ExtraBold.otf in Resources */,
 				577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */,
 				577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */,
+				C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */,
 				577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */,
 				7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */,
 				7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */,
+				EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */,
 				577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -958,6 +967,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1014,6 +1024,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1032,9 +1043,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1076,9 +1085,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1229,20 +1236,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.3;
+				minimumVersion = 4.4.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7E806A412B15A931009FBB51 /* Lottie */ = {
+		EF70BACA2BC0F3F600F91F5C /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E806A402B15A931009FBB51 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			package = EF70BAC92BC0F3F600F91F5C /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */

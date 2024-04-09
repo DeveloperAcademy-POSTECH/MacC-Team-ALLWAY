@@ -22,16 +22,16 @@ struct TKTextReplacementEditView: View {
                 SettingTRTextField(
                     text: store.bindingPhraseTextField(),
                     focusState: _focusState,
-                    allowSpace: false, title: "단축어",
-                    placeholder: "아아",
+                    allowSpace: false, title: NSLocalizedString("replacement", comment: ""),
+                    placeholder: NSLocalizedString("replacement.placeholder", comment: ""),
                     limit: 20
                 )
                 .focused($focusState)
                 
                 SettingTRTextField(
                     text: store.bindingReplacementTextField(),
-                    title: "변환 문구",
-                    placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                    title: NSLocalizedString("phrase", comment: ""),
+                    placeholder: NSLocalizedString("phrase.placeholder", comment: ""),
                     limit: 160
                 )
                 .focused($focusState)
@@ -44,7 +44,7 @@ struct TKTextReplacementEditView: View {
                 Button {
                     store.onShowDialogButtonTapped()
                 } label: {
-                    BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
+                    BDText(text: NSLocalizedString("textReplacement.delete", comment: ""), style: .H1_B_130)
                         .foregroundColor(Color.white)
                         .cornerRadius(22)
                 }
@@ -68,7 +68,7 @@ struct TKTextReplacementEditView: View {
                             .bold()
                         
                         BDText(
-                            text: "목록",
+                            text: NSLocalizedString("목록", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -79,7 +79,7 @@ struct TKTextReplacementEditView: View {
             // Navigation Title
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "편집",
+                    text: NSLocalizedString("편집", comment: ""),
                     style: .H1_B_130
                 )
             }
@@ -90,7 +90,7 @@ struct TKTextReplacementEditView: View {
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     BDText(
-                        text: "저장",
+                        text: NSLocalizedString("저장", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -104,7 +104,7 @@ struct TKTextReplacementEditView: View {
         }
         .showTKAlert(
             isPresented: store.bindingShowTKAlert(),
-            style: .removeTextReplacement(title: "텍스트 대치 삭제"),
+            style: .removeTextReplacement(title: NSLocalizedString("textReplacement.delete", comment: "")),
             confirmButtonAction: {
                 swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
@@ -112,7 +112,7 @@ struct TKTextReplacementEditView: View {
                 
             },
             confirmButtonLabel: {
-                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
+                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)
             }
         )
     }

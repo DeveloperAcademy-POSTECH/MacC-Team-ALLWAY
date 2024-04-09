@@ -18,7 +18,7 @@ struct SettingsGuidingPreView: View {
                 dismiss()
             } label: {
                 BDText(
-                    text: "취소",
+                    text: NSLocalizedString("취소", comment: ""),
                     style: .H1_B_130
                 )
             }

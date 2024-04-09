@@ -14,6 +14,11 @@ struct TKToast: View {
     let title: String
     let locationInfo: String
     
+    // 유저의 시스템 언어
+    var userPreferredLanguage: String {
+        return Locale.preferredLanguages.first ?? "Language preference not found"
+    }
+
     var body: some View {
         if isPresented {
             HStack(spacing: 12) {
@@ -32,9 +37,23 @@ struct TKToast: View {
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill")
                         
-                        Text("\(locationInfo)")
-                        +
-                        Text("에 대화가 저장되었어요.")
+                        if userPreferredLanguage == "en" {
+                            let _ = print("preferred Language: ", userPreferredLanguage)
+                            Text(NSLocalizedString("location.saved.message", comment: ""))
+                            +
+                            Text("\(locationInfo)")
+                            
+                        } else if userPreferredLanguage == "ko" {
+                            Text("\(locationInfo)")
+                            +
+                            Text(NSLocalizedString("location.saved.message", comment: ""))
+                            
+                        } else {
+                            Text("대화가 저장되었어요.")
+                        }
+                    }
+                    .onAppear {
+                        print("locale: ", userPreferredLanguage)
                     }
                     .font(.caption2)
                     .foregroundStyle(colorScheme == .light ? Color.GR4 : Color.GR6)

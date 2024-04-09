@@ -52,7 +52,7 @@ struct HistoryListSearchView: View {
             case .resultNotFound:
                 TKUnavailableViewBuilder(
                     icon: "doc.questionmark.fill",
-                    description: "검색 결과가 없어요"
+                    description: NSLocalizedString("noSearchResult", comment: "")
                 )
                 .transition(.identity)
                 
@@ -123,7 +123,7 @@ struct SearchResultSection: View {
                 Spacer()
                 
                 BDText(
-                    text: "\(filteredConversations.count)개 발견됨",
+                    text: "\(filteredConversations.count)\(NSLocalizedString("history.search.found", comment: ""))",
                     style: .H2_M_135
                 )
                 .foregroundColor(.GR5)
