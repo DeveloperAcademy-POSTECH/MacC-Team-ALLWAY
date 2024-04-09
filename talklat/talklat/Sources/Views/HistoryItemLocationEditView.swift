@@ -8,7 +8,7 @@
 import MapKit
 import SwiftUI
 
-struct HistoryItemLocationEditView: View {
+struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
     @ObservedObject var locationStore: TKLocationStore
     @ObservedObject var historyInfoStore: TKHistoryInfoStore
     @State private var isFlipped = false
@@ -20,6 +20,8 @@ struct HistoryItemLocationEditView: View {
         latitudinalMeters: 500,
         longitudinalMeters: 500
     )
+    
+    let firebaseStore: any TKFirebaseStore = HistoryInfoEditLocationFirebaseStore()
     
     var body: some View {
         NavigationView {
@@ -58,6 +60,11 @@ struct HistoryItemLocationEditView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "close",
+                            nil
+                        )
                         historyInfoStore.reduce(\.isShowingSheet, into: false)
                     } label: {
                         Text("닫기")
@@ -66,6 +73,7 @@ struct HistoryItemLocationEditView: View {
                 }
             }
             .onAppear {
+                firebaseStore.userDidAction(.viewed)
                 editCoordinateRegion = historyInfoStore(\.editCoordinateRegion) ?? initialCoordinateRegion
                 
                 locationStore.fetchCityName(
@@ -107,6 +115,11 @@ struct HistoryItemLocationEditView: View {
                 switch locationStore(\.authorizationStatus) {
                 case .authorizedAlways, .authorizedWhenInUse:
                     Button {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "myLocation",
+                            nil
+                        )
                         moveToUserLocation()
                         
                         if let _ = historyInfoStore(\.editCoordinateRegion) {
@@ -156,6 +169,11 @@ struct HistoryItemLocationEditView: View {
                 .padding(.bottom, 10)
             
             Button {
+                firebaseStore.userDidAction(
+                    .tapped, 
+                    "pointPin",
+                    nil
+                )
                 historyInfoStore.reduce(
                     \.infoCoordinateRegion,
                      into: editCoordinateRegion
@@ -172,11 +190,6 @@ struct HistoryItemLocationEditView: View {
                     coordinateRegion,
                     cityNameType: .hybrid,
                     usage: .infoAndEdit)
-                
-//                locationStore.fetchCityName(
-//                    coordinateRegion,
-//                    cityNameType: .long,
-//                    usage: .edit)
                 
                 
                 historyInfoStore.plantFlag(coordinateRegion)
@@ -219,61 +232,6 @@ struct HistoryItemLocationEditView: View {
         editCoordinateRegion = coordinateRegion
     }
     
-    //    private func configureSnapshotter() -> MKMapSnapshotter.Options {
-    //        let options = MKMapSnapshotter.Options()
-    //
-    //        options.region = coordinateRegion
-    //        //MARK: 키보드가 올라오면 UIImage의 사이즈가 변경되는것을 막기 위해 -> 더 좋은 방법이 있으면 바꾸고 싶음
-    //        options.size = CGSize(
-    //            width: UIScreen.main.bounds.width - 40,
-    //            height: UIScreen.main.bounds.width - 40
-    //        )
-    //        options.scale = UIScreen.main.scale
-    //        options.showsBuildings = true
-    //        options.pointOfInterestFilter = .includingAll
-    //
-    //        return options
-    //    }
-    
-    //    @MainActor
-    //    private func generateSnapShot() async {
-    //        let options = configureSnapshotter()
-    //        snapShotter = MKMapSnapshotter(options: options)
-    //
-    //        guard let snapShotter = snapShotter else { return }
-    //
-    //        let rect = CGRect(
-    //            x: 0,
-    //            y: 0,
-    //            width: UIScreen.main.bounds.width - 40,
-    //            height: UIScreen.main.bounds.width - 40
-    //        )
-    //
-    //        do {
-    //            let snapshot = try await snapShotter.start()
-    //            var point = snapshot.point(for: coordinateRegion.center)
-    //            let image = UIGraphicsImageRenderer(size: options.size).image { _ in
-    //                snapshot.image.draw(at: .zero)
-    //
-    //                let annotationView = MKPinAnnotationView(annotation: nil, reuseIdentifier: "annotation")
-    //
-    //                let annotationImage = annotationView.image
-    //
-    //                if rect.contains(point) {
-    //                    point.x -= annotationView.bounds.width / 2
-    //                    point.y -= annotationView.bounds.height / 2
-    //                    point.x += annotationView.centerOffset.x
-    //                    point.y += annotationView.centerOffset.y
-    //                }
-    //
-    //                annotationImage?.draw(at: point)
-    //            }
-    //
-    //            locationStore.updateLocationThumbnail(image)
-    //        } catch {
-    //            print(error.localizedDescription)
-    //        }
-    //    }
 }
 
 public struct CustomAnnotationInfo: Identifiable, Equatable {

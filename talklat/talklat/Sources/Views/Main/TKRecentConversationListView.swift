@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct TKRecentConversationListView: View {
+struct TKRecentConversationListView: View, FirebaseAnalyzable {
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
     @ObservedObject var draggableListViewStore: TKDraggableListViewStore
     let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
+    let firebaseStore: any TKFirebaseStore = NearMeFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -45,6 +46,11 @@ struct TKRecentConversationListView: View {
                     if draggableListViewStore(\.conversations).count > 0 {
                         ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
                             Button {
+                                firebaseStore.userDidAction(
+                                    .tapped,
+                                    "nearMeItem",
+                                    nil
+                                )
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
                                 
@@ -132,6 +138,9 @@ struct TKRecentConversationListView: View {
                     
                 } confirmButtonLabel: {
                     Text("네, 그만 할래요")
+                }
+                .onAppear {
+                    firebaseStore.userDidAction(.viewed)
                 }
                 .onDisappear {
                     conversationViewStore.resetConversationState()

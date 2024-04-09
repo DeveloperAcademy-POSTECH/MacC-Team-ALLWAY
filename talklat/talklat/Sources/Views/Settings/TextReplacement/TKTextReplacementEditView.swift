@@ -8,40 +8,68 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementEditView: View {
+struct TKTextReplacementEditView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
     @ObservedObject var store: TextReplacementViewStore
     
-    @FocusState var focusState: Bool
+    @FocusState var shortTextFieldFocusState: Bool
+    @FocusState var longTextFieldFocusState: Bool
+    
+    
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementEditFirebaseStore()
     
     var body: some View {
         VStack(spacing: 10) {
             VStack {
                 SettingTRTextField(
                     text: store.bindingPhraseTextField(),
-                    focusState: _focusState,
+                    focusState: _shortTextFieldFocusState,
                     allowSpace: false, title: "단축어",
                     placeholder: "아아",
                     limit: 20
                 )
-                .focused($focusState)
+                .focused($shortTextFieldFocusState)
+                .onChange(of: shortTextFieldFocusState) {
+                    if shortTextFieldFocusState == true {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "shortenTextField",
+                            nil
+                        )
+                    }
+                }
                 
                 SettingTRTextField(
                     text: store.bindingReplacementTextField(),
+                    focusState: _longTextFieldFocusState,
                     title: "변환 문구",
                     placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
                     limit: 160
                 )
-                .focused($focusState)
                 .padding(.top, 36)
+                .focused($longTextFieldFocusState)
+                .onChange(of: longTextFieldFocusState) {
+                    if longTextFieldFocusState == true {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "fullTextField",
+                            nil
+                        )
+                    }
+                }
             }
             
             Spacer()
             
-            if !focusState {
+            if !shortTextFieldFocusState {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "delete",
+                        nil
+                    )
                     store.onShowDialogButtonTapped()
                 } label: {
                     BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
@@ -58,6 +86,9 @@ struct TKTextReplacementEditView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -86,6 +117,11 @@ struct TKTextReplacementEditView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "save",
+                        nil
+                    )
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -105,11 +141,21 @@ struct TKTextReplacementEditView: View {
         .showTKAlert(
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
+            onDismiss: {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "alertBack", nil)
+                store.onDismissRemoveAlert()
+            },
             confirmButtonAction: {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "alertDelete",
+                    nil
+                )
                 swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()
-                
             },
             confirmButtonLabel: {
                 BDText(text: "네, 삭제할래요", style: .H2_SB_135)

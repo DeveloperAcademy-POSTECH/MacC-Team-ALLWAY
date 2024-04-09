@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TKTypingView: View {
+struct TKTypingView: View, FirebaseAnalyzable {
     // TextReplacement
     @Environment(\.dismiss) private var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
@@ -18,6 +18,7 @@ struct TKTypingView: View {
     
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let namespaceID: Namespace.ID
+    let firebaseStore: any TKFirebaseStore = ConversationTypingFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -31,6 +32,7 @@ struct TKTypingView: View {
                         )
                         .onAppear() {
                             store.onTKHistoryPreviewAppeared()
+                            firebaseStore.userDidAction(.viewed)
                         }
                 }
                 .transition(
@@ -111,6 +113,15 @@ struct TKTypingView: View {
                         .frame(maxWidth: .infinity)
                         .focused($focusState)
                         .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+                        .onChange(of: focusState) { _, newValue in
+                            if newValue == true {
+                                firebaseStore.userDidAction(
+                                    .tapped,
+                                    "field",
+                                    nil
+                                )
+                            }
+                        }
                         
                     }
                     
@@ -169,6 +180,11 @@ extension TKTypingView {
     
     private func startRecordingButtonBuilder() -> some View {
         Button {
+            firebaseStore.userDidAction(
+                .tapped,
+                "next",
+                nil
+            )
             self.hideKeyboard()
             store.blockButtonDoubleTap {
                 store.onStartRecordingButtonTapped()
@@ -236,6 +252,12 @@ extension TKTypingView {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "cancel",
+                    nil
+                )
+                
                 store.onConversationDismissButtonTapped()
                 
             } label: {
@@ -264,6 +286,11 @@ extension TKTypingView {
             
             Button {
                 store.blockButtonDoubleTap {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "save",
+                        nil
+                    )
                     // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
                     // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
                     if let previousConversation = store(\.previousConversation) {
@@ -299,6 +326,11 @@ extension TKTypingView {
             HStack(spacing: 12) {
                 // MARK: Eraser button
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "eraseAll",
+                        nil
+                    )
                     store.onEraseAllButtonTapped()
                     
                 } label: {
@@ -321,6 +353,11 @@ extension TKTypingView {
                         let firstReplacement = replacements.first { // 첫 번째 요소를 사용
                         
                         Button {
+                            firebaseStore.userDidAction(
+                                .tapped,
+                                "textReplace",
+                                nil
+                            )
                             store.onTextReplaceButtonTapped(
                                 with: firstReplacement,
                                 key: key

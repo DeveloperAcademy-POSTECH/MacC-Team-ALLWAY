@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct TKHistoryView: View {
+struct TKHistoryView: View, FirebaseAnalyzable {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var store: TKConversationViewStore
+    let firebaseStore: any TKFirebaseStore = ConversationPreviewFirebaseStore()
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -43,6 +44,9 @@ struct TKHistoryView: View {
             .scrollIndicators(.hidden)
             .padding(.bottom, 16)
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             // Navigation Title
             ToolbarItem(placement: .principal) {
@@ -55,6 +59,11 @@ struct TKHistoryView: View {
         .safeAreaInset(edge: .bottom) {
             if store(\.isTopViewShown) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "goToTypingView",
+                        nil
+                    )
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {

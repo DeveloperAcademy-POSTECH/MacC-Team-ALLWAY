@@ -8,9 +8,10 @@
 import SwiftUI
 
 // TODO: 추후 TKTextField로 코드 전부 병합?
-struct SearchBarView: View {
+struct SearchBarView: View, FirebaseAnalyzable {
     @Binding internal var isSearching: Bool
     @Binding internal var searchText: String
+    let firebaseStore: any TKFirebaseStore = HistorySearchFirebaseStore()
     
     var body: some View {
         // Search Bar Area
@@ -37,6 +38,11 @@ struct SearchBarView: View {
             
             if isSearching {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "eraseAll",
+                        nil
+                    )
                     // Dismiss Search UI
                     withAnimation(
                         .spring(
@@ -54,6 +60,24 @@ struct SearchBarView: View {
                         style: .H1_B_130
                     )
                 }
+            }
+        }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
+        .onChange(of: isSearching) { _, _ in
+            if isSearching == true {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "field",
+                    nil
+                )
+            } else {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "cancel",
+                    nil
+                )
             }
         }
     }

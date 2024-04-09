@@ -9,12 +9,14 @@ import SwiftUI
 import UIKit
 import MessageUI
 
-struct SettingsHelpView: View {
+struct SettingsHelpView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     
     @State private var isEmailShowing: Bool = false
     @State private var emailResult: Result<MFMailComposeResult, Error>?
+    
+    let firebaseStore: any TKFirebaseStore = SettingsHelpsFirebaseStore()
     
     var body: some View {
         VStack {
@@ -23,14 +25,27 @@ struct SettingsHelpView: View {
                 Image(systemName: "chevron.right")
             }
             .onTapGesture {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "mail",
+                    nil
+                )
                 isEmailShowing = true
             }
             
             Spacer()
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "back",
+                        nil
+                    )
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {

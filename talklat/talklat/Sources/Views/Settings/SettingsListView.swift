@@ -54,7 +54,7 @@ internal enum AuthorizationType: String {
     }
 }
 
-struct SettingsListView: View {
+struct SettingsListView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var authManager: TKAuthManager
     @EnvironmentObject private var locationStore: TKLocationStore
@@ -62,6 +62,8 @@ struct SettingsListView: View {
     private let sectionCategories: [String] = [
         "대화", "접근성", /* "실험실", */ "정보", "지원" // TODO: "일반" 추가
     ]
+    
+    let firebaseStore: any TKFirebaseStore = SettingsFirebaseStore()
     
     var body: some View {
         ScrollView {
@@ -105,14 +107,44 @@ struct SettingsListView: View {
                                 case .textReplacement:
                                     TKTextReplacementListView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "textReplace",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                
                                 case .guidingMessage:
                                     SettingsGuidingView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "guideMessage",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                 
                                 case .displayMode:
                                     SettingsDisplayView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "displayMode",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                     // SettingsDisplayTestingView()
                                    
                                     /*
@@ -127,14 +159,44 @@ struct SettingsListView: View {
                                 case .dataPolicyInfo:
                                     LoadingWebView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "personalInfo",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                     
                                 case .creators:
                                     SettingsTeamView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "makers",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                
                                 case .needHelp:
                                     SettingsHelpView()
                                         .navigationBarBackButtonHidden()
+                                        .simultaneousGesture(
+                                            TapGesture()
+                                                .onEnded { _ in
+                                                    firebaseStore.userDidAction(
+                                                        .tapped,
+                                                        "help",
+                                                        nil
+                                                    )
+                                                }
+                                        )
                                 }
                             } label: {
                                 BDListCell(label: item.rawValue) {
@@ -152,6 +214,7 @@ struct SettingsListView: View {
         .padding(.horizontal, 16)
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             switch locationStore(\.authorizationStatus) {
             case .authorizedAlways, .authorizedWhenInUse:
                 authManager.isLocationAuthorized = true
@@ -162,6 +225,11 @@ struct SettingsListView: View {
         .onChange(of: locationStore(\.authorizationStatus)) { _, newValue in
             switch newValue {
             case .authorizedAlways, .authorizedWhenInUse:
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "locationPermit",
+                    nil
+                )
                 authManager.isLocationAuthorized = true
             default:
                 authManager.isLocationAuthorized = false
@@ -170,6 +238,11 @@ struct SettingsListView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "back",
+                        nil
+                    )
                     dismiss()
                 } label: {
                     HStack {
@@ -230,6 +303,25 @@ struct SettingsListView: View {
             .background(Color.OR5)
             .cornerRadius(22)
         }
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded { _ in
+                    switch noticeItem {
+                    case .micAndSpeech:
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "speechPermit",
+                            nil
+                        )
+                    case .location:
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "locationPermit",
+                            nil
+                        )
+                    }
+                }
+        )
     }
 }
 

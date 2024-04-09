@@ -43,7 +43,6 @@
 		7EBD312B2B0B2B1300D5514D /* EnvironmentValues+Namespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA146AC2AFFDFCF003A37CE /* EnvironmentValues+Namespace.swift */; };
 		7EBD312C2B0B2B1300D5514D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF737932AD3DE5600FCBA21 /* Constants.swift */; };
 		7EBD312D2B0B2B1300D5514D /* TKMainViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */; };
-		7EBD312E2B0B2B1300D5514D /* TKConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6641252B03C03F00CDC6AB /* TKConversationViewStore.swift */; };
 		7EBD312F2B0B2B1300D5514D /* TKSwiftDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */; };
 		7EBD31312B0B2B1300D5514D /* GyroScopeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */; };
 		7EBD31322B0B2B1300D5514D /* TextReplacementViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */; };
@@ -119,6 +118,38 @@
 		CE4AB08F2B9761EB0044C29E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB08E2B9761EB0044C29E /* FirebaseAnalytics */; };
 		CE4AB0912B9761EB0044C29E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB0902B9761EB0044C29E /* FirebaseAnalyticsSwift */; };
 		CE4AB0932B9761EB0044C29E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE4AB0922B9761EB0044C29E /* FirebaseCrashlytics */; };
+		CE4AB0962B9769620044C29E /* FirebaseAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0952B9769620044C29E /* FirebaseAnalyticsManager.swift */; };
+		CE4AB0982B980F3D0044C29E /* FirebaseAnalyzable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0972B980F3D0044C29E /* FirebaseAnalyzable.swift */; };
+		CE4AB09C2BC1483B0044C29E /* TKFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB09B2BC1483B0044C29E /* TKFirebaseStore.swift */; };
+		CE4AB09E2BC149210044C29E /* FirebaseActionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB09D2BC149210044C29E /* FirebaseActionable.swift */; };
+		CE4AB0A12BC153C50044C29E /* MainViewFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0A02BC153C50044C29E /* MainViewFirebaseStore.swift */; };
+		CE4AB0A32BC42D880044C29E /* ConversationFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0A22BC42D880044C29E /* ConversationFirebaseStore.swift */; };
+		CE4AB0AB2BC444AD0044C29E /* TKConversationViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0AA2BC444AD0044C29E /* TKConversationViewStore.swift */; };
+		CE4AB0B12BC460AF0044C29E /* NearMeFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0B02BC460AF0044C29E /* NearMeFirebaseStore.swift */; };
+		CE4AB0B32BC509C60044C29E /* PermitAlertFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0B22BC509C60044C29E /* PermitAlertFirebaseStore.swift */; };
+		CE4AB0B52BC510B70044C29E /* ConversationListeningFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0B42BC510B70044C29E /* ConversationListeningFirebaseStore.swift */; };
+		CE4AB0B72BC511B60044C29E /* ConversationTypingFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0B62BC511B60044C29E /* ConversationTypingFirebaseStore.swift */; };
+		CE4AB0B92BC516900044C29E /* ConversationRepeatFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0B82BC516900044C29E /* ConversationRepeatFirebaseStore.swift */; };
+		CE4AB0BB2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0BA2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift */; };
+		CE4AB0BD2BC517440044C29E /* ConversationSaveFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0BC2BC517440044C29E /* ConversationSaveFirebaseStore.swift */; };
+		CE4AB0BF2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0BE2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift */; };
+		CE4AB0C12BC518020044C29E /* HistoryFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0C02BC518020044C29E /* HistoryFirebaseStore.swift */; };
+		CE4AB0C32BC5183F0044C29E /* HistorySearchFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0C22BC5183F0044C29E /* HistorySearchFirebaseStore.swift */; };
+		CE4AB0C52BC518800044C29E /* HistoryInfoEditFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0C42BC518800044C29E /* HistoryInfoEditFirebaseStore.swift */; };
+		CE4AB0C72BC5189C0044C29E /* HistoryInfoEditLocationFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0C62BC5189C0044C29E /* HistoryInfoEditLocationFirebaseStore.swift */; };
+		CE4AB0C92BC519FF0044C29E /* SettingsFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0C82BC519FE0044C29E /* SettingsFirebaseStore.swift */; };
+		CE4AB0CB2BC51A290044C29E /* SettingsTextReplacementFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0CA2BC51A290044C29E /* SettingsTextReplacementFirebaseStore.swift */; };
+		CE4AB0CD2BC51A490044C29E /* SettingsTextReplacementAddFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0CC2BC51A490044C29E /* SettingsTextReplacementAddFirebaseStore.swift */; };
+		CE4AB0CF2BC51AAB0044C29E /* SettingsTextReplacementEditFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0CE2BC51AAB0044C29E /* SettingsTextReplacementEditFirebaseStore.swift */; };
+		CE4AB0D12BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0D02BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift */; };
+		CE4AB0D32BC51AE60044C29E /* SettingsGuideMessageEditFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0D22BC51AE60044C29E /* SettingsGuideMessageEditFirebaseStore.swift */; };
+		CE4AB0D52BC51AFD0044C29E /* SettingsGuideMessagePreviewFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0D42BC51AFD0044C29E /* SettingsGuideMessagePreviewFirebaseStore.swift */; };
+		CE4AB0D72BC51B140044C29E /* SettingsDisplayModeFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0D62BC51B140044C29E /* SettingsDisplayModeFirebaseStore.swift */; };
+		CE4AB0D92BC51B260044C29E /* SettingsPersonalInfoFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0D82BC51B260044C29E /* SettingsPersonalInfoFirebaseStore.swift */; };
+		CE4AB0DB2BC51B4A0044C29E /* SettingsHelpsFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0DA2BC51B4A0044C29E /* SettingsHelpsFirebaseStore.swift */; };
+		CE4AB0DD2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0DC2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift */; };
+		CE4AB0E32BC51EE50044C29E /* HistoryInfoFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0E22BC51EE50044C29E /* HistoryInfoFirebaseStore.swift */; };
+		CE4AB0E52BC521B90044C29E /* SettingsMakersFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -171,14 +202,12 @@
 		7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Dark.json; sourceTree = "<group>"; };
 		7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Light.json; sourceTree = "<group>"; };
 		7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDMain_Circle.json; sourceTree = "<group>"; };
-		7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
 		7E4A6CD82AFB2C100014DDB8 /* TKMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainView.swift; sourceTree = "<group>"; };
 		7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKMainViewStore.swift; sourceTree = "<group>"; };
 		7E4A6CDC2AFB7F7C0014DDB8 /* TKOrbitCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOrbitCircles.swift; sourceTree = "<group>"; };
 		7E4A6CDE2AFBAB980014DDB8 /* TKDraggableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableList.swift; sourceTree = "<group>"; };
 		7E4A6CE02AFBABC90014DDB8 /* TKRecentConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKRecentConversationListView.swift; sourceTree = "<group>"; };
 		7E6494C92AFCD08100FB478C /* TKBreathingCircles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKBreathingCircles.swift; sourceTree = "<group>"; };
-		7E6641252B03C03F00CDC6AB /* TKConversationViewStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
 		7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		7E8445DD2ADFBBD900CFB8BC /* TKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKColor.swift; sourceTree = "<group>"; };
 		7E8906402ACEA31500C9947A /* TKConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKConversationView.swift; sourceTree = "<group>"; };
@@ -232,6 +261,38 @@
 		CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+Equatble.swift"; sourceTree = "<group>"; };
 		CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKDraggableListViewStore.swift; sourceTree = "<group>"; };
 		CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE4AB0952B9769620044C29E /* FirebaseAnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsManager.swift; sourceTree = "<group>"; };
+		CE4AB0972B980F3D0044C29E /* FirebaseAnalyzable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyzable.swift; sourceTree = "<group>"; };
+		CE4AB09B2BC1483B0044C29E /* TKFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB09D2BC149210044C29E /* FirebaseActionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseActionable.swift; sourceTree = "<group>"; };
+		CE4AB0A02BC153C50044C29E /* MainViewFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0A22BC42D880044C29E /* ConversationFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0AA2BC444AD0044C29E /* TKConversationViewStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKConversationViewStore.swift; sourceTree = "<group>"; };
+		CE4AB0B02BC460AF0044C29E /* NearMeFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0B22BC509C60044C29E /* PermitAlertFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermitAlertFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0B42BC510B70044C29E /* ConversationListeningFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListeningFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0B62BC511B60044C29E /* ConversationTypingFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTypingFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0B82BC516900044C29E /* ConversationRepeatFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepeatFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0BA2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationGuidingFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0BC2BC517440044C29E /* ConversationSaveFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSaveFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0BE2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPreviewFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0C02BC518020044C29E /* HistoryFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0C22BC5183F0044C29E /* HistorySearchFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySearchFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0C42BC518800044C29E /* HistoryInfoEditFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoEditFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0C62BC5189C0044C29E /* HistoryInfoEditLocationFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoEditLocationFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0C82BC519FE0044C29E /* SettingsFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0CA2BC51A290044C29E /* SettingsTextReplacementFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextReplacementFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0CC2BC51A490044C29E /* SettingsTextReplacementAddFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextReplacementAddFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0CE2BC51AAB0044C29E /* SettingsTextReplacementEditFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextReplacementEditFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0D02BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGuideMessageFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0D22BC51AE60044C29E /* SettingsGuideMessageEditFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGuideMessageEditFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0D42BC51AFD0044C29E /* SettingsGuideMessagePreviewFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGuideMessagePreviewFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0D62BC51B140044C29E /* SettingsDisplayModeFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayModeFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0D82BC51B260044C29E /* SettingsPersonalInfoFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPersonalInfoFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0DA2BC51B4A0044C29E /* SettingsHelpsFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelpsFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0DC2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelpMailFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0E22BC51EE50044C29E /* HistoryInfoFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMakersFirebaseStore.swift; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -428,6 +489,7 @@
 		7E8D17EF2ACE8B8900E904E5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CE4AB09F2BC1504A0044C29E /* FirebaseStores */,
 				7EE909BE2AFA6B6A0048AF77 /* Protocols */,
 				57806D7E2AE28E85003A7B19 /* Models */,
 				7EF737922AD3DE4C00FCBA21 /* Utilities */,
@@ -490,6 +552,9 @@
 			isa = PBXGroup;
 			children = (
 				7EA9D34C2AFA19BE00A0EE99 /* TKReducer.swift */,
+				CE4AB0972B980F3D0044C29E /* FirebaseAnalyzable.swift */,
+				CE4AB09B2BC1483B0044C29E /* TKFirebaseStore.swift */,
+				CE4AB09D2BC149210044C29E /* FirebaseActionable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -498,9 +563,8 @@
 			isa = PBXGroup;
 			children = (
 				7E4A6CDA2AFB2C350014DDB8 /* TKMainViewStore.swift */,
-				7E6641252B03C03F00CDC6AB /* TKConversationViewStore.swift */,
+				CE4AB0AA2BC444AD0044C29E /* TKConversationViewStore.swift */,
 				EF3B16C82B00C5FC00CDB484 /* TKSwiftDataStore.swift */,
-				7E427EE02AE9559D0028E4F4 /* TKConversationViewStore.swift */,
 				7EA8A78A2AD502D600AFD687 /* GyroScopeStore.swift */,
 				572304FE2B00AF350098FFF5 /* TextReplacementViewStore.swift */,
 				CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */,
@@ -569,6 +633,72 @@
 			path = CustomHistoryViewController;
 			sourceTree = "<group>";
 		};
+		CE4AB09F2BC1504A0044C29E /* FirebaseStores */ = {
+			isa = PBXGroup;
+			children = (
+				CE4AB0DE2BC51B7F0044C29E /* Main */,
+				CE4AB0DF2BC51B980044C29E /* Conversations */,
+				CE4AB0E02BC51BB00044C29E /* Histories */,
+				CE4AB0E12BC51BC80044C29E /* Settings */,
+			);
+			path = FirebaseStores;
+			sourceTree = "<group>";
+		};
+		CE4AB0DE2BC51B7F0044C29E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CE4AB0A02BC153C50044C29E /* MainViewFirebaseStore.swift */,
+				CE4AB0B22BC509C60044C29E /* PermitAlertFirebaseStore.swift */,
+				CE4AB0B02BC460AF0044C29E /* NearMeFirebaseStore.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CE4AB0DF2BC51B980044C29E /* Conversations */ = {
+			isa = PBXGroup;
+			children = (
+				CE4AB0A22BC42D880044C29E /* ConversationFirebaseStore.swift */,
+				CE4AB0B62BC511B60044C29E /* ConversationTypingFirebaseStore.swift */,
+				CE4AB0BA2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift */,
+				CE4AB0B42BC510B70044C29E /* ConversationListeningFirebaseStore.swift */,
+				CE4AB0B82BC516900044C29E /* ConversationRepeatFirebaseStore.swift */,
+				CE4AB0BC2BC517440044C29E /* ConversationSaveFirebaseStore.swift */,
+				CE4AB0BE2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift */,
+			);
+			path = Conversations;
+			sourceTree = "<group>";
+		};
+		CE4AB0E02BC51BB00044C29E /* Histories */ = {
+			isa = PBXGroup;
+			children = (
+				CE4AB0C02BC518020044C29E /* HistoryFirebaseStore.swift */,
+				CE4AB0C22BC5183F0044C29E /* HistorySearchFirebaseStore.swift */,
+				CE4AB0E22BC51EE50044C29E /* HistoryInfoFirebaseStore.swift */,
+				CE4AB0C42BC518800044C29E /* HistoryInfoEditFirebaseStore.swift */,
+				CE4AB0C62BC5189C0044C29E /* HistoryInfoEditLocationFirebaseStore.swift */,
+			);
+			path = Histories;
+			sourceTree = "<group>";
+		};
+		CE4AB0E12BC51BC80044C29E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CE4AB0C82BC519FE0044C29E /* SettingsFirebaseStore.swift */,
+				CE4AB0CA2BC51A290044C29E /* SettingsTextReplacementFirebaseStore.swift */,
+				CE4AB0CC2BC51A490044C29E /* SettingsTextReplacementAddFirebaseStore.swift */,
+				CE4AB0CE2BC51AAB0044C29E /* SettingsTextReplacementEditFirebaseStore.swift */,
+				CE4AB0D02BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift */,
+				CE4AB0D22BC51AE60044C29E /* SettingsGuideMessageEditFirebaseStore.swift */,
+				CE4AB0D42BC51AFD0044C29E /* SettingsGuideMessagePreviewFirebaseStore.swift */,
+				CE4AB0D62BC51B140044C29E /* SettingsDisplayModeFirebaseStore.swift */,
+				CE4AB0D82BC51B260044C29E /* SettingsPersonalInfoFirebaseStore.swift */,
+				CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */,
+				CE4AB0DA2BC51B4A0044C29E /* SettingsHelpsFirebaseStore.swift */,
+				CE4AB0DC2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		EF4799D32B0EF59E005C2B0E /* Guiding */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +728,7 @@
 				5769BF9C2AFB5B900036CF3D /* TKTextReplacementManager.swift */,
 				EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */,
 				EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */,
+				CE4AB0952B9769620044C29E /* FirebaseAnalyticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -830,16 +961,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EBD31142B0B2B1300D5514D /* talklatApp.swift in Sources */,
+				CE4AB0DD2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift in Sources */,
+				CE4AB0D12BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift in Sources */,
+				CE4AB0BB2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift in Sources */,
+				CE4AB0CD2BC51A490044C29E /* SettingsTextReplacementAddFirebaseStore.swift in Sources */,
 				EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */,
 				7EBD311D2B0B2B1300D5514D /* TKReducer.swift in Sources */,
 				7EBD311E2B0B2B1300D5514D /* HistoryItem.swift in Sources */,
+				CE4AB0C52BC518800044C29E /* HistoryInfoEditFirebaseStore.swift in Sources */,
 				7EBD311F2B0B2B1300D5514D /* ChatMessage.swift in Sources */,
 				7EBD31202B0B2B1300D5514D /* TKTextReplacement.swift in Sources */,
+				CE4AB0C12BC518020044C29E /* HistoryFirebaseStore.swift in Sources */,
 				EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */,
 				7EBD31212B0B2B1300D5514D /* TKConversation.swift in Sources */,
 				7EBD31222B0B2B1300D5514D /* TKContent.swift in Sources */,
 				7EBD31232B0B2B1300D5514D /* TKLocation.swift in Sources */,
 				7EBD31242B0B2B1300D5514D /* SampleTKConversation.swift in Sources */,
+				CE4AB0D32BC51AE60044C29E /* SettingsGuideMessageEditFirebaseStore.swift in Sources */,
 				7EBD31252B0B2B1300D5514D /* Double+Degree.swift in Sources */,
 				7EBD31262B0B2B1300D5514D /* Color+Hex.swift in Sources */,
 				5713DC502B0C9B9200ECF34B /* View+SwipeGesture.swift in Sources */,
@@ -847,13 +985,16 @@
 				7EBD31282B0B2B1300D5514D /* String+Language.swift in Sources */,
 				7EBD31292B0B2B1300D5514D /* Character+Consonant.swift in Sources */,
 				7EBD312A2B0B2B1300D5514D /* Date+Formatter.swift in Sources */,
+				CE4AB0AB2BC444AD0044C29E /* TKConversationViewStore.swift in Sources */,
+				CE4AB0E52BC521B90044C29E /* SettingsMakersFirebaseStore.swift in Sources */,
 				7EBD312B2B0B2B1300D5514D /* EnvironmentValues+Namespace.swift in Sources */,
 				EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */,
 				EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */,
 				7EBD312C2B0B2B1300D5514D /* Constants.swift in Sources */,
 				7EBD312D2B0B2B1300D5514D /* TKMainViewStore.swift in Sources */,
-				7EBD312E2B0B2B1300D5514D /* TKConversationViewStore.swift in Sources */,
 				7EBD312F2B0B2B1300D5514D /* TKSwiftDataStore.swift in Sources */,
+				CE4AB0BF2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift in Sources */,
+				CE4AB09C2BC1483B0044C29E /* TKFirebaseStore.swift in Sources */,
 				7EBD31312B0B2B1300D5514D /* GyroScopeStore.swift in Sources */,
 				7EBD31322B0B2B1300D5514D /* TextReplacementViewStore.swift in Sources */,
 				7EBD31332B0B2B1300D5514D /* TKLocationStore.swift in Sources */,
@@ -866,7 +1007,9 @@
 				7EBD31392B0B2B1300D5514D /* HapticManager.swift in Sources */,
 				7EBD313A2B0B2B1300D5514D /* TKTextReplacementManager.swift in Sources */,
 				7EBD313B2B0B2B1300D5514D /* TKAuthManager.swift in Sources */,
+				CE4AB0BD2BC517440044C29E /* ConversationSaveFirebaseStore.swift in Sources */,
 				7EBD313C2B0B2B1300D5514D /* TKOnboardingView.swift in Sources */,
+				CE4AB0B32BC509C60044C29E /* PermitAlertFirebaseStore.swift in Sources */,
 				7EBD313D2B0B2B1300D5514D /* TKOnboardingAuthReqeustView.swift in Sources */,
 				7EBD313E2B0B2B1300D5514D /* TKTextReplacementListView.swift in Sources */,
 				7EBD313F2B0B2B1300D5514D /* SectionIndexTitles.swift in Sources */,
@@ -876,16 +1019,21 @@
 				7EBD31422B0B2B1300D5514D /* TextReplacementRow.swift in Sources */,
 				7EBD31432B0B2B1300D5514D /* TKTextReplacementEditView.swift in Sources */,
 				7EBD31442B0B2B1300D5514D /* TKTextReplacementSearchView.swift in Sources */,
+				CE4AB0982B980F3D0044C29E /* FirebaseAnalyzable.swift in Sources */,
 				7EBD31452B0B2B1300D5514D /* TKTextReplacementAddView.swift in Sources */,
 				7EBD31462B0B2B1300D5514D /* SettingsListView.swift in Sources */,
 				7EBD31472B0B2B1300D5514D /* SettingsDisplayView.swift in Sources */,
 				7EBD31482B0B2B1300D5514D /* SettingsHapticView.swift in Sources */,
+				CE4AB0B92BC516900044C29E /* ConversationRepeatFirebaseStore.swift in Sources */,
 				7EBD31492B0B2B1300D5514D /* SettingsGestureView.swift in Sources */,
 				7EBD314B2B0B2B1300D5514D /* SettingsHelpView.swift in Sources */,
+				CE4AB0C92BC519FF0044C29E /* SettingsFirebaseStore.swift in Sources */,
 				7EBD31502B0B2B1300D5514D /* SettingsTeamView.swift in Sources */,
 				7EBD31512B0B2B1300D5514D /* EmailView.swift in Sources */,
 				7EBD31522B0B2B1300D5514D /* SettingTextField.swift in Sources */,
 				EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */,
+				CE4AB09E2BC149210044C29E /* FirebaseActionable.swift in Sources */,
+				CE4AB0B72BC511B60044C29E /* ConversationTypingFirebaseStore.swift in Sources */,
 				CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */,
 				7EBD31552B0B2B1300D5514D /* TKMainView.swift in Sources */,
 				7EBD31562B0B2B1300D5514D /* TKDraggableList.swift in Sources */,
@@ -899,20 +1047,31 @@
 				7EBD315D2B0B2B1300D5514D /* TKSavingView.swift in Sources */,
 				7EBD315E2B0B2B1300D5514D /* CustomHistoryViewControllerRepresentable.swift in Sources */,
 				7EBD315F2B0B2B1300D5514D /* SectionHeaderView.swift in Sources */,
+				CE4AB0CB2BC51A290044C29E /* SettingsTextReplacementFirebaseStore.swift in Sources */,
 				7EBD31602B0B2B1300D5514D /* ChatMessageCell.swift in Sources */,
+				CE4AB0B12BC460AF0044C29E /* NearMeFirebaseStore.swift in Sources */,
+				CE4AB0A12BC153C50044C29E /* MainViewFirebaseStore.swift in Sources */,
 				7EBD31612B0B2B1300D5514D /* CustomTableViewController.swift in Sources */,
+				CE4AB0D72BC51B140044C29E /* SettingsDisplayModeFirebaseStore.swift in Sources */,
 				7EBD31622B0B2B1300D5514D /* SheetWebView.swift in Sources */,
+				CE4AB0A32BC42D880044C29E /* ConversationFirebaseStore.swift in Sources */,
+				CE4AB0962B9769620044C29E /* FirebaseAnalyticsManager.swift in Sources */,
 				7EBD31632B0B2B1300D5514D /* HistoryViewController.swift in Sources */,
+				CE4AB0DB2BC51B4A0044C29E /* SettingsHelpsFirebaseStore.swift in Sources */,
 				7EBD31642B0B2B1300D5514D /* HistoryListView.swift in Sources */,
 				7EBD31652B0B2B1300D5514D /* HistoryListSearchView.swift in Sources */,
 				7EBD31662B0B2B1300D5514D /* SearchBarView.swift in Sources */,
+				CE4AB0C32BC5183F0044C29E /* HistorySearchFirebaseStore.swift in Sources */,
 				7EBD31672B0B2B1300D5514D /* TKUnavailableViewBuilder.swift in Sources */,
 				7EBD31682B0B2B1300D5514D /* TKColor.swift in Sources */,
 				7EBD31692B0B2B1300D5514D /* TLTextField.swift in Sources */,
 				7EBD316A2B0B2B1300D5514D /* TKOrbitCircles.swift in Sources */,
+				CE4AB0B52BC510B70044C29E /* ConversationListeningFirebaseStore.swift in Sources */,
 				7EBD316B2B0B2B1300D5514D /* TKBreathingCircles.swift in Sources */,
 				7EBD316C2B0B2B1300D5514D /* TKScrollView.swift in Sources */,
 				7EBD316D2B0B2B1300D5514D /* AWTextField.swift in Sources */,
+				CE4AB0C72BC5189C0044C29E /* HistoryInfoEditLocationFirebaseStore.swift in Sources */,
+				CE4AB0D92BC51B260044C29E /* SettingsPersonalInfoFirebaseStore.swift in Sources */,
 				7EBD316E2B0B2B1300D5514D /* CustomAlertView.swift in Sources */,
 				EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */,
 				7EBD316F2B0B2B1300D5514D /* TKAlert.swift in Sources */,
@@ -920,8 +1079,11 @@
 				EF4799D82B0EF59E005C2B0E /* SettingsGuidingView.swift in Sources */,
 				7EBD31712B0B2B1300D5514D /* BDListCell.swift in Sources */,
 				7EBD31722B0B2B1300D5514D /* TKSplashView.swift in Sources */,
+				CE4AB0D52BC51AFD0044C29E /* SettingsGuideMessagePreviewFirebaseStore.swift in Sources */,
+				CE4AB0E32BC51EE50044C29E /* HistoryInfoFirebaseStore.swift in Sources */,
 				7EBD31732B0B2B1300D5514D /* ScrollContainer.swift in Sources */,
 				7EBD31742B0B2B1300D5514D /* SwipeGuideMessage.swift in Sources */,
+				CE4AB0CF2BC51AAB0044C29E /* SettingsTextReplacementEditFirebaseStore.swift in Sources */,
 				7EBD31752B0B2B1300D5514D /* HistoryInfoItemView.swift in Sources */,
 				7EBD31762B0B2B1300D5514D /* HistoryItemLocationEditView.swift in Sources */,
 				7EBD31772B0B2B1300D5514D /* ScrollOffsetObserver.swift in Sources */,

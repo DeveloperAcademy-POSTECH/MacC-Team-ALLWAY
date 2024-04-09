@@ -9,7 +9,9 @@ import Lottie
 import MapKit
 import SwiftUI
 
-struct TKMainView: View {
+struct TKMainView: View, FirebaseAnalyzable {
+    var firebaseStore: any TKFirebaseStore = MainViewFirebaseStore()
+    
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
@@ -80,7 +82,8 @@ struct TKMainView: View {
             }
         }
         .task {
-           await store.onTKMainViewAppeared()
+            await store.onTKMainViewAppeared()
+            firebaseStore.userDidAction(.viewed)
         }
         .fullScreenCover(isPresented: store[\.isConversationFullScreenCoverDisplayed]) {
             TKConversationView(store: conversationViewStore)
@@ -122,6 +125,16 @@ struct TKMainView: View {
                         .resizable()
                 }
                 .tint(Color.GR3)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded{ _ in
+                            firebaseStore.userDidAction(
+                                .tapped,
+                                "history",
+                                nil
+                            )
+                        }
+                )
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -133,6 +146,16 @@ struct TKMainView: View {
                         .resizable()
                 }
                 .tint(Color.GR3)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            firebaseStore.userDidAction(
+                                .tapped,
+                                "setting",
+                                nil
+                            )
+                        }
+                )
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
@@ -172,7 +195,11 @@ struct TKMainView: View {
             } else {
                 store.onStartConversationButtonTapped()
             }
-            
+            firebaseStore.userDidAction(
+                .tapped,
+                "newConversation",
+                nil
+            )
         } label: {
             ZStack {
                 Circle()

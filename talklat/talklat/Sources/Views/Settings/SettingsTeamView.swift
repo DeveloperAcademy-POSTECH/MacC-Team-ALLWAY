@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct SettingsTeamView: View {
+struct SettingsTeamView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) private var colorScheme
+    
+    let firebaseStore: any TKFirebaseStore = SettingsMakersFirebaseStore()
     
     var body: some View {
         ScrollView {
@@ -90,9 +92,17 @@ struct SettingsTeamView: View {
                 
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "back",
+                        nil
+                    )
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {

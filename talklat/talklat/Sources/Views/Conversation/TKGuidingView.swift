@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TKGuidingView: View {
+struct TKGuidingView: View, FirebaseAnalyzable {
     @ObservedObject var store: TKConversationViewStore
     @State private var circleTrim: CGFloat = 0.0
     @State private var flag: Bool = false
@@ -19,6 +19,7 @@ struct TKGuidingView: View {
     음성인식이 시작됩니다.
     제 글을 읽고 또박또박 말씀해 주세요.
     """
+    let firebaseStore: any TKFirebaseStore = ConversationGuidingFirebaseStore()
     
     var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
@@ -27,6 +28,12 @@ struct TKGuidingView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Button {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "cancel",
+                    nil
+                )
+                
                 store.onGuideCancelButtonTapped()
             } label: {
                 BDText(text: "취소", style: .H1_B_130)
@@ -60,6 +67,7 @@ struct TKGuidingView: View {
             }
             .onAppear {
                 flag.toggle()
+                firebaseStore.userDidAction(.viewed)
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)

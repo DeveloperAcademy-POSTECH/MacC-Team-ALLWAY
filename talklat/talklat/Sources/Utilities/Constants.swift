@@ -177,3 +177,8 @@ public enum HistoryInfoTextStatus {
     case textNotChanged
     case textChanged
 }
+
+public enum UserActionType: String {
+    case viewed
+    case tapped
+}

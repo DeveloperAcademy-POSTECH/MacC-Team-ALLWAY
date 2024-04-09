@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct TKSavingView: View {
+struct TKSavingView: View, FirebaseAnalyzable {
     // MARK: - TKLocation Manager, TKConversation Manager Here
     @Environment(\.dismiss) private var dismiss
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
@@ -17,6 +17,7 @@ struct TKSavingView: View {
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     @State private var allConversationTitles: [String] = []
+    let firebaseStore: any TKFirebaseStore = ConversationSaveFirebaseStore()
     var speechRecognizeManager: SpeechRecognizer
     
     var body: some View {
@@ -26,6 +27,11 @@ struct TKSavingView: View {
         ) {
             HStack {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "cancel",
+                        nil
+                    )
                     store.onDismissSavingViewButtonTapped()
                     
                 } label: {
@@ -47,6 +53,11 @@ struct TKSavingView: View {
                 Spacer()
                 
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "save",
+                        nil
+                    )
                     if let res: TKConversation = store.makeNewConversation(
                         with: speechRecognizeManager.currentTranscript,
                         at: TKLocation(
@@ -91,10 +102,23 @@ struct TKSavingView: View {
                 .padding(.leading, 16)
                 .padding(.vertical, 12)
                 .focused($focusState)
+                .onChange(of: focusState) { _, newValue in
+                    if newValue == true {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "field",
+                            nil)
+                    }
+                }
                 
                 Spacer()
                 
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "eraseAll",
+                        nil
+                    )
                     store.onDeleteConversationTitleButtonTapped()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
@@ -137,6 +161,7 @@ struct TKSavingView: View {
             }
             
             focusState = true
+            firebaseStore.userDidAction(.viewed)
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)

@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-struct LoadingWebView: View {
+struct LoadingWebView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     
     @State private var isLoading = true
     @State private var error: Error? = nil
     let url = URL(string: "https://yenchoichoi.notion.site/TALKLAT-fbba4b6204ee4eb9a9681c4d75a673cb?pvs=4")
+    
+    let firebaseStore: any TKFirebaseStore = SettingsPersonalInfoFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -35,9 +37,17 @@ struct LoadingWebView: View {
             }
  
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "back",
+                        nil
+                    )
                     dismiss()
                 } label: {
                     HStack {

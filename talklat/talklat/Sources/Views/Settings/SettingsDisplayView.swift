@@ -21,11 +21,13 @@ private enum ColorSchemeType: String, CaseIterable {
     }
 }
 
-struct SettingsDisplayView: View {
+struct SettingsDisplayView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("BDColorScheme") var BDColorScheme = ColorScheme.unspecified
     @EnvironmentObject var colorSchemeManager: ColorSchemeManager
     @State private var selectedTheme: ColorScheme = .dark
+    
+    let firebaseStore: any TKFirebaseStore = SettingsDisplayModeFirebaseStore()
     
     var body: some View {
         VStack {
@@ -45,6 +47,28 @@ struct SettingsDisplayView: View {
                     colorSchemeManager.colorScheme = selectedTheme
                 }
             }
+            .onChange(of: selectedTheme) {
+                switch selectedTheme {
+                case .unspecified:
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "sameMode",
+                        nil
+                    )
+                case .light:
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "lightMode",
+                        nil
+                    )
+                case .dark:
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "darkMode",
+                        nil
+                    )
+                }
+            }
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -52,6 +76,11 @@ struct SettingsDisplayView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "back",
+                        nil
+                    )
                     dismiss()
                 } label: {
                     HStack {
@@ -71,6 +100,7 @@ struct SettingsDisplayView: View {
             }
         }
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             selectedTheme = colorSchemeManager.colorScheme
         }
     }

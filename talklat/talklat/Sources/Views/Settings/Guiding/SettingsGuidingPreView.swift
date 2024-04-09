@@ -7,14 +7,21 @@
 
 import SwiftUI
 
-struct SettingsGuidingPreView: View {
+struct SettingsGuidingPreView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     
     @Binding var guidingMessage: String
     
+    let firebaseStore: any TKFirebaseStore = SettingsGuideMessagePreviewFirebaseStore()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Button {
+                firebaseStore.userDidAction(
+                    .tapped,
+                    "cancel",
+                    nil
+                )
                 dismiss()
             } label: {
                 BDText(
@@ -41,6 +48,9 @@ struct SettingsGuidingPreView: View {
         .padding(.horizontal, 24)
         .background(Color.OR5)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
     }
 }
 

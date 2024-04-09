@@ -8,13 +8,14 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementAddView: View {
+struct TKTextReplacementAddView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
     @ObservedObject var store: TextReplacementViewStore
     
-    @FocusState var focusState: Bool
+    @FocusState var shortTextFieldFocusState: Bool
+    @FocusState var longTextFieldFocusState: Bool
     @State var phrase: String = ""
     @State var replacement: String = ""
     
@@ -22,15 +23,26 @@ struct TKTextReplacementAddView: View {
         !phrase.isEmpty && !replacement.isEmpty
     }
     
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementAddFirebaseStore()
+    
     var body: some View {
         VStack {
             SettingTRTextField(
                 text: $phrase,
-                focusState: _focusState,
+                focusState: _shortTextFieldFocusState,
                 title: "단축어",
                 placeholder: "아아",
                 limit: 20
             )
+            .onChange(of: shortTextFieldFocusState) {
+                if shortTextFieldFocusState == true {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "shortenTextField",
+                        nil
+                    )
+                }
+            }
             .onChange(of: phrase) { newValue in
                 if newValue.hasPrefix(" ") {
                     phrase = String(newValue.dropFirst())
@@ -38,11 +50,22 @@ struct TKTextReplacementAddView: View {
             }
             
             SettingTRTextField(
-                text: $replacement, title: "변환 문구",
+                text: $replacement,
+                focusState: _longTextFieldFocusState,
+                title: "변환 문구",
                 placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
                 limit: 160
             )
             .padding(.top, 24)
+            .onChange(of: longTextFieldFocusState) {
+                if longTextFieldFocusState == true {
+                    firebaseStore.userDidAction(
+                        .tapped,
+                        "fullTextField",
+                        nil
+                    )
+                }
+            }
             .onChange(of: replacement) { newValue in
                 if newValue.hasPrefix(" ") {
                     replacement = String(newValue.dropFirst())
@@ -50,6 +73,9 @@ struct TKTextReplacementAddView: View {
             }
             
             Spacer()
+        }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
         }
         .safeAreaInset(edge: .top) {
             VStack(spacing: 10) {
@@ -60,6 +86,11 @@ struct TKTextReplacementAddView: View {
                 
                 HStack {
                     Button {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "cancel",
+                            nil
+                        )
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         BDText(
@@ -79,6 +110,11 @@ struct TKTextReplacementAddView: View {
                     
                     Button {
                         if isInputValid {
+                            firebaseStore.userDidAction(
+                                .tapped,
+                                "complete",
+                                nil
+                            )
                             if let item: TKTextReplacement = store.makeNewTextReplacement(
                                 phrase: phrase,
                                 replacement: replacement

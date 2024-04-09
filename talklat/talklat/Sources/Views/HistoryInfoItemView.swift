@@ -9,7 +9,7 @@ import MapKit
 import SwiftData
 import SwiftUI
 
-struct HistoryInfoItemView: View {
+struct HistoryInfoItemView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var locationStore: TKLocationStore
     @StateObject  var historyInfoStore: TKHistoryInfoStore = TKHistoryInfoStore()
@@ -17,6 +17,8 @@ struct HistoryInfoItemView: View {
     @State private var coordinateRegion: MKCoordinateRegion = initialCoordinateRegion
     @State private var isShowingAlert: Bool = false
     var conversation: TKConversation
+    
+    let firebaseStore: any TKFirebaseStore = HistoryInfoEditFirebaseStore()
     
     var body: some View {
         VStack {
@@ -30,6 +32,7 @@ struct HistoryInfoItemView: View {
             Spacer()
         }
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             historyInfoStore.reduce(\.text, into: conversation.title)
             locationStore.reduce(\.infoPlaceName, into: "위치 정보 없음")
             if
@@ -99,6 +102,11 @@ struct HistoryInfoItemView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
                             if historyInfoStore.saveButtonDisabled(conversation) {
+                                firebaseStore.userDidAction(
+                                    .tapped,
+                                    "back",
+                                    nil
+                                )
                                 isTextfieldFocused = false
                                 dismiss()
                             } else {
@@ -128,6 +136,11 @@ struct HistoryInfoItemView: View {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            firebaseStore.userDidAction(
+                                .tapped,
+                                "save",
+                                nil
+                            )
                             //MARK: 저장 메서드
                             isTextfieldFocused = false
                             updateHistoryInfo()
@@ -192,6 +205,15 @@ struct HistoryInfoItemView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 8)
+                .onChange(of: isTextfieldFocused) { _ in
+                    if $isTextfieldFocused.wrappedValue == true {
+                        firebaseStore.userDidAction(
+                            .tapped,
+                            "field",
+                            nil
+                        )
+                    }
+                }
             
             Text(historyInfoStore(\.textLimitMessage))
                 .padding(.leading, 10)
@@ -249,6 +271,11 @@ struct HistoryInfoItemView: View {
                             Spacer()
                             
                             Button {
+                                firebaseStore.userDidAction(
+                                    .tapped,
+                                    "adjustLocation",
+                                    nil
+                                )
                                 isTextfieldFocused = false
                                 historyInfoStore.reduce(\.isShowingSheet, into: true)
                             } label: {
