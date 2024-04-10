@@ -2222,6 +2222,7 @@
       }
     },
     "이 위치에 핀 꼽기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
