@@ -19,19 +19,20 @@ struct TKSplashView: View {
             ? .named("BDSplash_Light")
             : .named("BDSplash_Dark")
         )
-            .playbackMode(playbackMode)
-            .animationDidFinish { _ in
-                playbackMode = .paused
-            }
-            .onAppear {
-                playbackMode = .playing(
-                    .fromProgress(
-                        0,
-                        toProgress: 1,
-                        loopMode: .playOnce
-                    )
+        .playbackMode(playbackMode)
+        .animationDidFinish { _ in
+            playbackMode = .paused
+        }
+        .background(Color.ExceptionWhiteW8)
+        .onAppear {
+            playbackMode = .playing(
+                .fromProgress(
+                    0,
+                    toProgress: 1,
+                    loopMode: .playOnce
                 )
-            }
+            )
+        }
     }
 }
 
