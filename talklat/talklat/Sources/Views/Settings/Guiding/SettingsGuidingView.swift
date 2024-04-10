@@ -72,6 +72,7 @@ struct SettingsGuidingView: View {
                 BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
             if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
                 isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")

@@ -57,6 +57,7 @@ struct SettingsHelpView: View {
         }
         .padding(.top, 24)
         .padding(.horizontal, 16)
+        .background(Color.ExceptionWhiteW8)
     }
     
     private func openMail(

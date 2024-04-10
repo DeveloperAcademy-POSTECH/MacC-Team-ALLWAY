@@ -76,7 +76,7 @@ struct HistoryInfoItemView: View {
         }
         .ignoresSafeArea(.keyboard)
         .background {
-            Color.BaseBGWhite
+            Color.ExceptionWhiteW8
                 .onTapGesture {
                     isTextfieldFocused = false
                 }
@@ -156,6 +156,7 @@ struct HistoryInfoItemView: View {
                         BDText(text: "네, 취소할래요.", style: .H2_SB_135)
                     }
                 )
+                .background(Color.ExceptionWhiteW8)
     }
     
     private var textFieldView: some View {
@@ -264,7 +265,7 @@ struct HistoryInfoItemView: View {
                         .padding()
                         .background {
                             Rectangle()
-                                .fill(Color.GR1)
+                                .fill(Color.ExceptionWhite17)
                         }
                     }
                 }

@@ -102,6 +102,7 @@ struct TKTextReplacementEditView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .showTKAlert(
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: NSLocalizedString("textReplacement.delete", comment: "")),

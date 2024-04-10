@@ -68,6 +68,7 @@ struct HistoryItemLocationEditView: View {
                     .tint(Color.OR5)
                 }
             }
+            .background(Color.ExceptionWhiteW8)
             .onAppear {
                 editCoordinateRegion = historyInfoStore(\.editCoordinateRegion) ?? initialCoordinateRegion
                 
@@ -98,6 +99,7 @@ struct HistoryItemLocationEditView: View {
             .tint(Color.OR5)
         }
         .padding()
+        .background(Color.ExceptionWhiteW8)
     }
     
     private var currentLocationButton: some View {
@@ -121,7 +123,7 @@ struct HistoryItemLocationEditView: View {
                         }
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
-                            .fill(Color.BaseBGWhite)
+                            .fill(Color.ExceptionWhiteW8)
                             .frame(width: 95, height: 44)
                             .overlay {
                                 HStack {
@@ -139,7 +141,7 @@ struct HistoryItemLocationEditView: View {
                         
                     } label: {
                         Circle()
-                            .fill(Color.BaseBGWhite)
+                            .fill(Color.ExceptionWhiteW8)
                             .frame(width: 44)
                             .overlay {
                                 Image(systemName: "location.slash.fill")
@@ -189,7 +191,7 @@ struct HistoryItemLocationEditView: View {
                 }
             } label: {
                 HStack {
-                    BDText(text: "이 위치에 핀 꼽기", style: .H1_B_130)
+                    BDText(text: NSLocalizedString("이 위치에 핀 꼽기", comment: ""), style: .H1_B_130)
                 }
                 .foregroundStyle(Color.white)
                 .frame(height: 38)
@@ -205,6 +207,7 @@ struct HistoryItemLocationEditView: View {
             
         }
         .padding()
+        .background(Color.ExceptionWhiteW8)
     }
     
     private func moveToUserLocation() {
@@ -320,7 +323,7 @@ struct CustomMapAnnotation: View {
                         Text("지도를 움직여 위치를 설정 하세요")
                             .foregroundStyle(Color.white)
                             .font(.footnote)
-                            .fontWeight(.regular)
+                            .fontWeight(.medium)
                     }
                     .padding(.bottom, 12)
             case .fixed:
