@@ -88,25 +88,20 @@ struct SettingsListView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                if let isMicAuthorized = authManager.isMicrophoneAuthorized,
-                   let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
-                    if !isMicAuthorized || !isSpeechAuthorized {
-                        authNoticeBuilder(noticeItem: AuthorizationType.micAndSpeech)
-                    }
-                }
-                
-                if let isLocationAuthorized = authManager.isLocationAuthorized {
-                    if !isLocationAuthorized {
-                        authNoticeBuilder(noticeItem: AuthorizationType.location)
-                    }
+            if let isMicAuthorized = authManager.isMicrophoneAuthorized,
+               let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
+                if !isMicAuthorized || !isSpeechAuthorized {
+                    authNoticeBuilder(noticeItem: AuthorizationType.micAndSpeech)
+                        .padding(.top, 10)
                 }
             }
-            .padding(.top, 10)
-            .padding(
-                .bottom,
-                authManager.hasAllAuthBeenObtained ? 0 : 24
-            )
+            
+            if let isLocationAuthorized = authManager.isLocationAuthorized {
+                if !isLocationAuthorized {
+                    authNoticeBuilder(noticeItem: AuthorizationType.location)
+                        .padding(.top, 10)
+                }
+            }
             
             ForEach(
                 sectionCategories,
@@ -169,10 +164,11 @@ struct SettingsListView: View {
                         }
                     }
                 }
-                .padding(.top, 24)
+                .padding(.top, 20)
             }
         }
         .padding(.horizontal, 16)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             switch locationStore(\.authorizationStatus) {
@@ -267,5 +263,7 @@ struct SettingsListView: View {
 #Preview {
     NavigationStack {
         SettingsListView()
+            .environmentObject(TKAuthManager())
+            .environmentObject(TKLocationStore())
     }
 }

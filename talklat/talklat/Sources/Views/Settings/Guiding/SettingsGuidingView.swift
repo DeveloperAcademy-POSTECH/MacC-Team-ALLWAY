@@ -95,6 +95,7 @@ public func isKeyPresentInUserDefaults(key: String) -> Bool {
 #Preview {
     NavigationStack {
         SettingsGuidingView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
