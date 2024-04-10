@@ -18,6 +18,7 @@
 		577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */; };
 		577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */; };
 		577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */; };
+		7E0465632BC6D741008DE52B /* View+LocalizeLogoFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */; };
 		7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */; };
 		7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */; };
 		7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */; };
@@ -122,7 +123,6 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
-		EF69C9F02BC5815C00A88404 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = EF69C9EF2BC5815C00A88404 /* Lottie */; };
 		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
 		EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */; };
 /* End PBXBuildFile section */
@@ -167,6 +167,7 @@
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		7E0188D82B05F230005AA4D0 /* TKOnboardingAuthReqeustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingAuthReqeustView.swift; sourceTree = "<group>"; };
 		7E0313802B04F8BB0090A704 /* TKSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSplashView.swift; sourceTree = "<group>"; };
+		7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+LocalizeLogoFrame.swift"; sourceTree = "<group>"; };
 		7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Dark.json; sourceTree = "<group>"; };
 		7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Light.json; sourceTree = "<group>"; };
 		7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDMain_Circle.json; sourceTree = "<group>"; };
@@ -275,7 +276,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF69C9F02BC5815C00A88404 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +542,7 @@
 			children = (
 				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
 				7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */,
+				7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */,
 				7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */,
 				5769BFDF2AFE142F0036CF3D /* String+Language.swift */,
 				572A82032B03300B00753516 /* Character+Consonant.swift */,
@@ -650,7 +651,6 @@
 			);
 			name = bisdam;
 			packageProductDependencies = (
-				EF69C9EF2BC5815C00A88404 /* Lottie */,
 			);
 			productName = talklat;
 			productReference = 7E8D17C12ACE8AEC00E904E5 /* bisdam.app */;
@@ -726,7 +726,6 @@
 			);
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
-				EF69C9EE2BC5815C00A88404 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 7E8D17C22ACE8AEC00E904E5 /* Products */;
 			projectDirPath = "";
@@ -823,6 +822,7 @@
 				EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */,
 				EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */,
 				7EBD312C2B0B2B1300D5514D /* Constants.swift in Sources */,
+				7E0465632BC6D741008DE52B /* View+LocalizeLogoFrame.swift in Sources */,
 				7EBD312D2B0B2B1300D5514D /* TKMainViewStore.swift in Sources */,
 				7EBD312E2B0B2B1300D5514D /* TKConversationViewStore.swift in Sources */,
 				7EBD312F2B0B2B1300D5514D /* TKSwiftDataStore.swift in Sources */,
@@ -1045,9 +1045,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2402081256;
+				CURRENT_PROJECT_VERSION = 2404102331;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1067,7 +1067,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1087,9 +1087,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2402081256;
+				CURRENT_PROJECT_VERSION = 2404102331;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 34U36L8239;
+				DEVELOPMENT_TEAM = 67M6ZS7KS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1109,7 +1109,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1238,25 +1238,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		EF69C9EE2BC5815C00A88404 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.4.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EF69C9EF2BC5815C00A88404 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EF69C9EE2BC5815C00A88404 /* XCRemoteSwiftPackageReference "lottie-spm" */;
-			productName = Lottie;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7E8D17B92ACE8AEC00E904E5 /* Project object */;
 }
