@@ -5,7 +5,6 @@
 //  Created by Celan on 11/8/23.
 //
 
-import Lottie
 import MapKit
 import SwiftUI
 
@@ -38,7 +37,12 @@ struct TKMainView: View {
                             default:
                                 Image(systemName: "location.slash.fill")
                             }
-                            BDText(text: "\(locationStore(\.mainPlaceName))", style: .H1_B_130)
+                          
+                            BDText(
+                              text:
+                                locationStore(\.mainPlaceName),
+                              style: .H1_B_130
+                            )
                         }
                     }
                     .foregroundStyle(Color.GR4)
@@ -52,23 +56,24 @@ struct TKMainView: View {
                 maxHeight: .infinity,
                 alignment: .top
             )
+          
+            Spacer()
+                .frame(maxHeight: 50)
             
-            LottieView(animation: .named("BDMain_Circle"))
-                .playing(loopMode: .loop)
-                .aspectRatio(0.4, contentMode: .fit)
-                .overlay {
-                    Circle()
-                        .fill(Color.OR6)
-                        .opacity(0.5)
-                        .scaleEffect(0.65)
-                }
-                .overlay {
-                    startConversationButtonBuilder()
-                }
-                .position(
-                    x: UIScreen.main.bounds.width * 0.5,
-                    y: UIScreen.main.bounds.height * 0.4
-                )
+            TKOrbitCircles(
+              store: store,
+              circleRenderInfos: [
+                CircleRenderInfo(x: -24, y: -8),
+                CircleRenderInfo(x: -16, y: 24),
+                CircleRenderInfo(x: 14, y: -8),
+              ],
+              circleColor: Color.OR5
+            )
+            .task { store.triggerAnimation(true) }
+            .frame(width: 200, height: 200)
+            .overlay {
+              startConversationButtonBuilder()
+            }
             
             // MARK: BottomSheet
             if store(\.isTKMainViewAppeared) {
@@ -109,7 +114,7 @@ struct TKMainView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Image(colorScheme == .light ? "bisdam_typo" : "bisdam_typo_Dark")
                     .resizable()
-                    .frame(width: 56.15, height: 23.48)
+                    .localizeLogoFrame()
                     .padding(.leading, 8)
             }
             
@@ -177,12 +182,17 @@ struct TKMainView: View {
             ZStack {
                 Circle()
                     .fill(Color.OR6)
+                    .frame(width: 200, height: 200)
                     .opacity(0.5)
-                    .scaleEffect(0.42)
-                
+              
                 Circle()
                     .fill(Color.OR6)
-                    .scaleEffect(0.35)
+                    .frame(width: 120, height: 120)
+                    .opacity(0.3)
+              
+                Circle()
+                    .fill(Color.OR6)
+                    .frame(width: 100, height: 100)
                 
                 Image("TALKLAT_BUBBLE_WHITE")
                     .renderingMode(.template)
@@ -217,4 +227,3 @@ struct TKMainView: View {
             .environmentObject(TKAuthManager())
     }
 }
-

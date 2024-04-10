@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "bisdam_typo.svg",
+      "filename" : "bisdam_typo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,10 +12,29 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
+    },
+    {
+      "filename" : "bisdam_typo.svg",
+      "idiom" : "universal",
+      "locale" : "ko",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "locale" : "ko",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "locale" : "ko",
+      "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "localizable" : true
   }
 }
