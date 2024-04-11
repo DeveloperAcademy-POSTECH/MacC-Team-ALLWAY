@@ -23,9 +23,9 @@ final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         
         var returnString: String? = nil
         
-        var mainPlaceName: String = "위치 정보 없음"
-        var infoPlaceName: String = "위치 정보 없음"
-        var editPlaceName: String = "위치 정보 없음"
+        var mainPlaceName: String = NSLocalizedString("위치 정보 없음", comment: "")
+        var infoPlaceName: String = NSLocalizedString("위치 정보 없음", comment: "")
+        var editPlaceName: String = NSLocalizedString("위치 정보 없음", comment: "")
         
         var circularRegion: CLCircularRegion = CLCircularRegion(
             center: CLLocationCoordinate2D(
@@ -141,7 +141,10 @@ final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
                 }
                 guard let placemarks = placemarks else {
                     print("Error: cannot get placemarks")
-                    self?.reduce(\.returnString, into: "위치 정보 없음")
+                    self?.reduce(
+                        \.returnString, 
+                         into: NSLocalizedString("위치 정보 없음", comment: "")
+                    )
                     return
                 }
                 
@@ -159,14 +162,34 @@ final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
                         
                         switch usage {
                         case .main:
-                            self?.reduce(\.mainPlaceName, into: finalString.first ?? "위치 정보 없음")
+                            self?.reduce(
+                                \.mainPlaceName, 
+                                 into: finalString.first 
+                                 ?? NSLocalizedString("위치 정보 없음", comment: "")
+                            )
                         case .info:
-                            self?.reduce(\.infoPlaceName, into: finalString.first ?? "위치 정보 없음")
+                            self?.reduce(
+                                \.infoPlaceName,
+                                 into: finalString.first 
+                                 ?? NSLocalizedString("위치 정보 없음", comment: "")
+                            )
                         case .edit:
-                            self?.reduce(\.editPlaceName, into: finalString.first ?? "위치 정보 없음")
+                            self?.reduce(
+                                \.editPlaceName,
+                                 into: finalString.first
+                                 ?? NSLocalizedString("위치 정보 없음", comment: "")
+                            )
                         case .infoAndEdit:
-                            self?.reduce(\.infoPlaceName, into: finalString.first ?? "위치 정보 없음")
-                            self?.reduce(\.editPlaceName, into: finalString.last ?? "위치 정보 없음")
+                            self?.reduce(
+                                \.infoPlaceName,
+                                 into: finalString.first 
+                                 ?? NSLocalizedString("위치 정보 없음", comment: "")
+                            )
+                            self?.reduce(
+                                \.editPlaceName,
+                                 into: finalString.last
+                                 ?? NSLocalizedString("위치 정보 없음", comment: "")
+                            )
                         }
                     }
                 }
@@ -183,9 +206,18 @@ final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         default:
             locationManager.requestWhenInUseAuthorization()
             self.reduce(\.currentUserCoordinate, into: nil)
-            self.reduce(\.mainPlaceName, into: "위치 정보 없음")
-            self.reduce(\.infoPlaceName, into: "위치 정보 없음")
-            self.reduce(\.editPlaceName, into: "위치 정보 없음")
+            self.reduce(
+                \.mainPlaceName,
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
+            self.reduce(
+                \.infoPlaceName,
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
+            self.reduce(
+                \.editPlaceName, 
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
         }
         
         
@@ -193,8 +225,14 @@ final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     
     private func initialUserTracking() {
         guard let coordinate = self.locationManager.location?.coordinate else { //MARK: 사용자 좌표를 구하지 못할 때 -> 일단은 서울역 좌표. 추후 논의를 통해 변경 예정
-            self.reduce(\.shortPlaceName, into: "위치 정보 없음")
-            self.reduce(\.longPlaceName, into: "위치 정보 없음")
+            self.reduce(
+                \.shortPlaceName,
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
+            self.reduce(
+                \.longPlaceName,
+                 into: NSLocalizedString("위치 정보 없음", comment: "")
+            )
             return
         }
         

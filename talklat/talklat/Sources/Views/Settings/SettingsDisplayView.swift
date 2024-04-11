@@ -8,9 +8,17 @@
 import SwiftUI
 
 private enum ColorSchemeType: String, CaseIterable {
-    case device = "시스템 설정과 동일"
-    case light = "밝은 모드"
-    case dark = "어두운 모드"
+    case device
+    case light
+    case dark
+    
+    var title: String {
+        switch self {
+        case .device: return NSLocalizedString("systemMode", comment: "")
+        case .light: return NSLocalizedString("lightMode", comment: "")
+        case .dark: return NSLocalizedString("darkMode", comment: "")
+        }
+    }
     
     var theme: ColorScheme {
         switch self {
@@ -32,7 +40,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
     var body: some View {
         VStack {
             ForEach(ColorSchemeType.allCases, id: \.self) { type in
-                BDListCell(label: type.rawValue) {
+                BDListCell(label: type.title) {
                 } trailingUI: {
                     if selectedTheme == type.theme {
                         Image(systemName: "checkmark.circle.fill")
@@ -71,7 +79,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -79,7 +87,10 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "화면 모드", style: .H1_B_130)
+                BDText(
+                    text: NSLocalizedString("displayMode.title", comment: ""),
+                    style: .H1_B_130
+                )
             }
         }
         .onAppear {

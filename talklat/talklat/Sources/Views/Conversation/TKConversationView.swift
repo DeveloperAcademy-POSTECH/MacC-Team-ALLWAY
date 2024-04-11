@@ -24,7 +24,6 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-                .transition(.opacity)
             }
             
             if store(\.conversationStatus) == .guiding {
@@ -37,6 +36,12 @@ struct TKConversationView: View {
                 TKListeningView(
                     store: store,
                     namespaceID: TKTransitionNamespace
+                )
+                .transition(
+                    .asymmetric(
+                        insertion: .offset(),
+                        removal: .scale(scale: 1)
+                    )
                 )
                 .onChange(of: speechRecognizeManager.currentTranscript) { oldValue, newValue in
                     if oldValue.isEmpty, !newValue.isEmpty {
@@ -116,4 +121,8 @@ struct TKConversationView: View {
 
 #Preview {
     TKConversationView(store: .init())
+        .environment(TKSwiftDataStore())
+    
 }
+
+

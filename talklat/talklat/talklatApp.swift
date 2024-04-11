@@ -4,6 +4,8 @@
 //
 //  Created by Celan on 2023/10/05.
 //
+//
+
 
 import Firebase
 import Lottie
@@ -20,20 +22,17 @@ struct talklatApp: App {
     @StateObject private var colorSchemeManager = ColorSchemeManager()
     
     @State private var swiftDataManager: TKSwiftDataStore = TKSwiftDataStore()
-    @State private var lottiePlaybackMode: LottiePlaybackMode = LottiePlaybackMode.paused
     
     var body: some Scene {
         WindowGroup {
             Group {
                 if case .splash = authManager.authStatus {
-                    TKSplashView(playbackMode: $lottiePlaybackMode)
-                        .transition(.opacity.animation(.easeInOut))
-                        .onChange(of: lottiePlaybackMode) { _, newValue in
-                            if newValue == .paused {
-                                Task { try? await Task.sleep(for: .seconds(0.3)) }
-                                authManager.checkOnboardingCompletion()
-                            }
-                        }
+                    TKSplashView()
+                          .transition(.opacity.animation(.easeInOut))
+                          .task {
+                              try? await Task.sleep(for: .seconds(0.3))
+                              authManager.checkOnboardingCompletion()
+                          }
                 }
                 
                 if case .onboarding = authManager.authStatus {

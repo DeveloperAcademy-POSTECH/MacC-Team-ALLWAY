@@ -13,17 +13,19 @@ struct TKGuidingView: View, FirebaseAnalyzable {
     @State private var flag: Bool = false
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    let guide: String =
-    """
-    해당 화면이 종료되면
-    음성인식이 시작됩니다.
-    제 글을 읽고 또박또박 말씀해 주세요.
-    """
+
+    let guide: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
     let firebaseStore: any TKFirebaseStore = ConversationGuidingFirebaseStore()
-    
+//    """
+//    해당 화면이 종료되면
+//    음성인식이 시작됩니다.
+//    제 글을 읽고 또박또박 말씀해 주세요.
+//    """
+//    
+
     var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
-    ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
+    ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,9 +34,11 @@ struct TKGuidingView: View, FirebaseAnalyzable {
                 
                 store.onGuideCancelButtonTapped()
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
             }
-            .frame(width: 44, height: 44)
             .padding(.bottom, 20)
             
             BDText(text: guidingMessage, style: .LT_B_120)
@@ -44,7 +48,7 @@ struct TKGuidingView: View, FirebaseAnalyzable {
                 .frame(maxWidth: .infinity, maxHeight: 2)
                 .padding(.bottom, 32)
             
-            BDText(text: guide, style: .T2_B_160)
+            BDText(text: Constants.CONVERSATION_GUIDINGMESSAGE, style: .T2_B_160)
             
             Spacer()
         }

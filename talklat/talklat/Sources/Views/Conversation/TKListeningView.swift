@@ -17,7 +17,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
     let firebaseStore: any TKFirebaseStore = ConversationListeningFirebaseStore()
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
@@ -51,13 +51,11 @@ struct TKListeningView: View, FirebaseAnalyzable {
                 }
             }
             
-            
             if store(\.conversationStatus) == .recording {
                 TKScrollView(
                     style: .question(
                         question: store(\.questionText),
-                        answer: store(\.answeredText),
-                        curtainAlignment: .bottom
+                        answer: store(\.answeredText)
                     ), curtain: {
                         LinearGradient(
                             colors: [.BaseBGWhite, .clear],
@@ -83,7 +81,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
                             )
                         }
                     )
-                    .frame(maxHeight: 300)
+                    .frame(height: 400)
                 }
                 .frame(
                     maxHeight: UIScreen.main.bounds.height * 0.55,
@@ -94,13 +92,14 @@ struct TKListeningView: View, FirebaseAnalyzable {
                         .ignoresSafeArea(edges: .bottom)
                         .matchedGeometryEffect(
                             id: "ORANGE_BACKGROUND",
-                            in: namespaceID
+                            in: namespaceID,
+                            properties: .position
                         )
                 }
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: .bottom),
-                        removal: .opacity
+                        removal: .identity
                     )
                 )
             }
@@ -129,26 +128,29 @@ struct TKListeningView: View, FirebaseAnalyzable {
             Spacer()
             
             if store(\.answeredText).isEmpty {
-                BDText(text: "듣고 있어요", style: .H1_B_130)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .frame(minWidth: 110, minHeight: 42)
-                    .background {
-                        ZStack(alignment: .trailing) {
-                            RoundedRectangle(
-                                cornerRadius: 22,
-                                style: .continuous
-                            )
-                            
-                            Rectangle()
-                                .frame(width: 20, height: 20)
-                                .rotationEffect(.degrees(45))
-                                .offset(x: 3)
-                        }
-                        .compositingGroup()
-                        .foregroundStyle(Color.OR5)
+                BDText(
+                    text: NSLocalizedString("듣고 있어요", comment: ""),
+                    style: .H1_B_130
+                )
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .frame(minWidth: 110, minHeight: 42)
+                .background {
+                    ZStack(alignment: .trailing) {
+                        RoundedRectangle(
+                            cornerRadius: 22,
+                            style: .continuous
+                        )
+                        
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(x: 3)
                     }
+                    .compositingGroup()
+                    .foregroundStyle(Color.OR5)
+                }
             }
             
             Button {
@@ -191,6 +193,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
                         }
                 }
             }
+            .disabled(store(\.answeredText.isEmpty))
             .disabled(store(\.blockButtonDoubleTap))
         }
     }
@@ -202,9 +205,12 @@ struct TKListeningView: View, FirebaseAnalyzable {
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(Color.GR6)
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(Color.GR6)
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
@@ -232,7 +238,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
                     firebaseStore.userDidAction(.tapped(.save))
                 }
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(Color.white)
             }
@@ -252,6 +258,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
     return TKListeningView(
         store: store, namespaceID: namespace
     )
+    .environment(TKSwiftDataStore())
     .frame(maxHeight: .infinity)
     .onAppear {
         store.reduce(\.conversationStatus, into: .recording)

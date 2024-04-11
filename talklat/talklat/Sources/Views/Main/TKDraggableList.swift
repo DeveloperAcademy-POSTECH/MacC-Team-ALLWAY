@@ -40,7 +40,7 @@ struct TKDraggableList: View, FirebaseAnalyzable {
                     conversationViewStore: conversationViewStore,
                     draggableListViewStore: draggableListViewStore
                 )
-                .padding(.top, 32)
+                .padding(.top, 12)
                 .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
                 .scrollIndicators(.hidden)
             }
@@ -111,6 +111,11 @@ struct TKDraggableList: View, FirebaseAnalyzable {
 #Preview {
     ZStack {
         Color.yellow
-        TKDraggableList(mainViewstore: .init(), conversationViewStore: .init())
+      
+        TKDraggableList(
+            mainViewstore: .init(),
+            conversationViewStore: .init()
+        )
+        .environmentObject(TKLocationStore())
     }
 }

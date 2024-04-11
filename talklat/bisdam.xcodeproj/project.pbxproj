@@ -18,10 +18,10 @@
 		577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451D2B0DE76500DA010E /* Pretendard-Medium.otf */; };
 		577B45272B0DE76500DA010E /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451E2B0DE76500DA010E /* Pretendard-Bold.otf */; };
 		577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 577B451F2B0DE76500DA010E /* Pretendard-Regular.otf */; };
+		7E0465632BC6D741008DE52B /* View+LocalizeLogoFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */; };
 		7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */; };
 		7E35CFE12B184FF60017ABC7 /* BDSplash_Light.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */; };
 		7E35CFE32B1855EE0017ABC7 /* BDMain_Circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */; };
-		7E806A422B15A931009FBB51 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E806A412B15A931009FBB51 /* Lottie */; };
 		7E8D17D62ACE8AED00E904E5 /* talklatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17D52ACE8AED00E904E5 /* talklatTests.swift */; };
 		7E8D17E02ACE8AED00E904E5 /* talklatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17DF2ACE8AED00E904E5 /* talklatUITests.swift */; };
 		7E8D17E22ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8D17E12ACE8AED00E904E5 /* talklatUITestsLaunchTests.swift */; };
@@ -111,6 +111,7 @@
 		7ED9AA082ACE8E4300B1EA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17CB2ACE8AED00E904E5 /* Preview Assets.xcassets */; };
 		7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D17C82ACE8AED00E904E5 /* Assets.xcassets */; };
 		7EEEFB622B0F360E0003763A /* View+TKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEEFB612B0F360E0003763A /* View+TKAlert.swift */; };
+		C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */; };
 		CE405C2D2B0CD7E4003F2586 /* OptionalInt+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */; };
 		CE405C2F2B0E8AD6003F2586 /* Coordinate+Equatble.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C2E2B0E8AD6003F2586 /* Coordinate+Equatble.swift */; };
 		CE405C312B0F3C2F003F2586 /* TKDraggableListViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE405C302B0F3C2F003F2586 /* TKDraggableListViewStore.swift */; };
@@ -158,6 +159,8 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
+		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
+		EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +203,7 @@
 		57806D7F2AE28ED3003A7B19 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		7E0188D82B05F230005AA4D0 /* TKOnboardingAuthReqeustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingAuthReqeustView.swift; sourceTree = "<group>"; };
 		7E0313802B04F8BB0090A704 /* TKSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKSplashView.swift; sourceTree = "<group>"; };
+		7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+LocalizeLogoFrame.swift"; sourceTree = "<group>"; };
 		7E35CFDC2B184FF60017ABC7 /* BDSplash_Dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Dark.json; sourceTree = "<group>"; };
 		7E35CFDE2B184FF60017ABC7 /* BDSplash_Light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDSplash_Light.json; sourceTree = "<group>"; };
 		7E35CFE22B1855EE0017ABC7 /* BDMain_Circle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BDMain_Circle.json; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 		7EF74B642B073DFB00DCBA82 /* SettingsTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTeamView.swift; sourceTree = "<group>"; };
 		7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Degree.swift"; sourceTree = "<group>"; };
 		7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
+		C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		CE0CBF142B01157A0048C784 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		CE0CBF162B0115900048C784 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		CE0CBF182B0115F80048C784 /* CustomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
@@ -314,6 +319,7 @@
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
 		EF7BB3222B03970300F8FEC9 /* SettingsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayView.swift; sourceTree = "<group>"; };
@@ -328,6 +334,7 @@
 		EF90C5202AE0FE9E00A95BD7 /* SwipeGuideMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGuideMessage.swift; sourceTree = "<group>"; };
 		EFA9EDA12AF35CC40099AB56 /* TKGuidingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKGuidingView.swift; sourceTree = "<group>"; };
 		EFA9EDA32AF3D6E60099AB56 /* ScrollOffsetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetObserver.swift; sourceTree = "<group>"; };
+		EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Replacement.swift"; sourceTree = "<group>"; };
 		EFF347432B020DD900D2D1FB /* SettingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListView.swift; sourceTree = "<group>"; };
 		EFFE7A6C2B05BC7000E17AA1 /* TKAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -424,6 +431,7 @@
 			children = (
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
 				CE4AB08B2B97604D0044C29E /* GoogleService-Info.plist */,
+				EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */,
 				7E8D17C32ACE8AEC00E904E5 /* talklat */,
 				7E8D17D42ACE8AED00E904E5 /* talklatTests */,
 				7E8D17DE2ACE8AED00E904E5 /* talklatUITests */,
@@ -444,6 +452,7 @@
 		7E8D17C32ACE8AEC00E904E5 /* talklat */ = {
 			isa = PBXGroup;
 			children = (
+				C1D627BA2BBF229F00EEB771 /* Localizable.xcstrings */,
 				7E8D17C42ACE8AEC00E904E5 /* talklatApp.swift */,
 				7E8D17EF2ACE8B8900E904E5 /* Sources */,
 				7E8D17EE2ACE8B1400E904E5 /* Resources */,
@@ -609,6 +618,7 @@
 			children = (
 				7EFA2C2A2AD51FC80013B533 /* Double+Degree.swift */,
 				7E8445D92ADFB4FC00CFB8BC /* Color+Hex.swift */,
+				7E0465622BC6D741008DE52B /* View+LocalizeLogoFrame.swift */,
 				7EFE53772AE6228300DF4D85 /* View+Keyboard.swift */,
 				5769BFDF2AFE142F0036CF3D /* String+Language.swift */,
 				572A82032B03300B00753516 /* Character+Consonant.swift */,
@@ -619,6 +629,7 @@
 				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
 				CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */,
+				EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -860,6 +871,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 7E8D17B82ACE8AEC00E904E5;
 			packageReferences = (
@@ -893,9 +905,11 @@
 				577B45232B0DE76500DA010E /* Pretendard-ExtraBold.otf in Resources */,
 				577B45222B0DE76500DA010E /* Pretendard-SemiBold.otf in Resources */,
 				577B45212B0DE76500DA010E /* Pretendard-Black.otf in Resources */,
+				C1D627BB2BBF229F00EEB771 /* Localizable.xcstrings in Resources */,
 				577B45282B0DE76500DA010E /* Pretendard-Regular.otf in Resources */,
 				7ED9AA092ACE8E4300B1EA4E /* Assets.xcassets in Resources */,
 				7E35CFDF2B184FF60017ABC7 /* BDSplash_Dark.json in Resources */,
+				EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */,
 				577B45262B0DE76500DA010E /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -995,6 +1009,7 @@
 				EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */,
 				EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */,
 				7EBD312C2B0B2B1300D5514D /* Constants.swift in Sources */,
+				7E0465632BC6D741008DE52B /* View+LocalizeLogoFrame.swift in Sources */,
 				7EBD312D2B0B2B1300D5514D /* TKMainViewStore.swift in Sources */,
 				7EBD312F2B0B2B1300D5514D /* TKSwiftDataStore.swift in Sources */,
 				CE4AB0BF2BC517C10044C29E /* ConversationPreviewFirebaseStore.swift in Sources */,
@@ -1009,6 +1024,7 @@
 				7EBD31372B0B2B1300D5514D /* SignalExtractor.swift in Sources */,
 				7EBD31382B0B2B1300D5514D /* SpeechRecognizer.swift in Sources */,
 				7EBD31392B0B2B1300D5514D /* HapticManager.swift in Sources */,
+				EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */,
 				7EBD313A2B0B2B1300D5514D /* TKTextReplacementManager.swift in Sources */,
 				7EBD313B2B0B2B1300D5514D /* TKAuthManager.swift in Sources */,
 				CE4AB0BD2BC517440044C29E /* ConversationSaveFirebaseStore.swift in Sources */,
@@ -1164,6 +1180,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1220,6 +1237,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1238,6 +1256,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2402081256;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = 2404112136;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
@@ -1261,6 +1280,7 @@
 				);
 				MARKETING_VERSION = 1.1.1;
 				OTHER_LDFLAGS = "-ObjC";
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1280,7 +1300,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2402081256;
+				CURRENT_PROJECT_VERSION = 2404112136;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				ENABLE_PREVIEWS = YES;
@@ -1304,6 +1324,7 @@
 				);
 				MARKETING_VERSION = 1.1.1;
 				OTHER_LDFLAGS = "-ObjC";
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

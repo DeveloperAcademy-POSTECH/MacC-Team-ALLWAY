@@ -53,7 +53,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     BDText(
-                        text: "위치 정보 편집",
+                        text: NSLocalizedString("위치 정보 편집", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -84,7 +84,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
     private var mapHeaderView: some View {
         HStack {
             BDText(
-                text: "위치 정보 편집",
+                text: NSLocalizedString("위치 정보 편집", comment: ""),
                 style: .H1_B_130
             )
             
@@ -124,11 +124,10 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
                             .fill(Color.BaseBGWhite)
-                            .frame(width: 95, height: 44)
+                            .frame(width: 44, height: 44)
                             .overlay {
                                 HStack {
                                     Image(systemName: "location.fill")
-                                    Text("현위치")
                                 }
                                 .foregroundStyle(Color.OR5)
                             }

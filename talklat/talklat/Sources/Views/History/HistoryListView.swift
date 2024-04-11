@@ -51,7 +51,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                     if dataStore.conversations.isEmpty {
                         TKUnavailableViewBuilder(
                             icon: "bubble.left.and.bubble.right.fill",
-                            description: "아직 대화 기록이 없어요"
+                            description:  NSLocalizedString("history.noconversation", comment: "")
                         )
                     } else {
                         ScrollView {
@@ -86,7 +86,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                                     .bold()
                                 
                                 BDText(
-                                    text: "홈",
+                                    text: NSLocalizedString("home.title", comment: ""),
                                     style: .H1_B_130
                                 )
                             }
@@ -96,7 +96,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                     
                     ToolbarItem(placement: .principal) {
                         BDText(
-                            text: "히스토리",
+                            text: NSLocalizedString("히스토리", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -116,7 +116,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                             }
                         } label: {
                             BDText(
-                                text: isEditing ? "완료" : "편집",
+                                text: isEditing ? NSLocalizedString("완료", comment: "") : NSLocalizedString("편집", comment: ""),
                                 style: .H1_B_130
                             )
                         }
@@ -165,7 +165,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
             }
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                BDText(text: "네, 삭제할래요", style: .H2_SB_135)
+                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)
             }
         }
         .onChange(of: isSearchFocused) { _, _ in

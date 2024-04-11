@@ -30,8 +30,8 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
             SettingTRTextField(
                 text: $phrase,
                 focusState: _shortTextFieldFocusState,
-                title: "단축어",
-                placeholder: "아아",
+                title: NSLocalizedString("replacement", comment: ""),
+                placeholder: NSLocalizedString("replacement.placeholder", comment: ""),
                 limit: 20
             )
             .simultaneousGesture(
@@ -49,8 +49,8 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
             SettingTRTextField(
                 text: $replacement,
                 focusState: _longTextFieldFocusState,
-                title: "변환 문구",
-                placeholder: "아이스 아메리카노 한 잔 주시겠어요?",
+                title: NSLocalizedString("phrase", comment: ""),
+                placeholder: NSLocalizedString("phrase.placeholder", comment: ""),
                 limit: 160
             )
             .padding(.top, 24)
@@ -84,7 +84,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         BDText(
-                            text: "취소",
+                            text: NSLocalizedString("취소", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -92,7 +92,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                     Spacer()
                     
                     BDText(
-                        text: "텍스트 대치 추가",
+                        text: NSLocalizedString("textReplacement.add", comment: ""),
                         style: .H1_B_130
                     )
                     
@@ -118,7 +118,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                         }
                     } label: {
                         BDText(
-                            text: "완료",
+                            text: NSLocalizedString("완료", comment: ""),
                             style: .H1_B_130
                         )
                     }

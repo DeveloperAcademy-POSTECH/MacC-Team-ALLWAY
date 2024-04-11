@@ -51,7 +51,7 @@ struct TKHistoryView: View, FirebaseAnalyzable {
             // Navigation Title
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "대화 내용",
+                    text: NSLocalizedString("대화 내용", comment: ""),
                     style: .H1_B_130
                 )
             }
@@ -63,7 +63,7 @@ struct TKHistoryView: View, FirebaseAnalyzable {
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {
-                        BDText(text: "작성 화면으로 돌아가기", style: .FN_SB_135)
+                        BDText(text: NSLocalizedString("작성 화면으로 돌아가기", comment: ""), style: .FN_SB_135)
                         
                         Image(systemName: "chevron.compact.down")
                             .resizable()

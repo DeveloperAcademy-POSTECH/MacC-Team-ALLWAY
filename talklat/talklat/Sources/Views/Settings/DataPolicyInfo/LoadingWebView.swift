@@ -12,28 +12,48 @@ struct LoadingWebView: View, FirebaseAnalyzable {
     
     @State private var isLoading = true
     @State private var error: Error? = nil
-    let url = URL(string: "https://yenchoichoi.notion.site/TALKLAT-fbba4b6204ee4eb9a9681c4d75a673cb?pvs=4")
+   
+    let korUrl = URL(
+        string: "https://yenchoichoi.notion.site/TALKLAT-fbba4b6204ee4eb9a9681c4d75a673cb?pvs=4"
+    )
+    
+    let foreignUrl = URL(
+        string: "https://yenchoichoi.notion.site/BISDAM-Privacy-Policy-d75e2c24b4294c65a30316e2e9a085ae?pvs=4"
+    )
     
     let firebaseStore: any TKFirebaseStore = SettingsPersonalInfoFirebaseStore()
     
     var body: some View {
         ZStack {
             if let error = error {
-                Text(error.localizedDescription)
-                    .foregroundColor(.pink)
-            } else if let url = url {
-                WebView(
-                    url: url,
-                    isLoading: $isLoading,
-                    error: $error
+                BDText(
+                    text: NSLocalizedString("webView.loading.failure", comment: ""),
+                    style: .T3_B_125
                 )
+                
+            } else {
+                if Locale.autoupdatingCurrent.identifier == "ko_KR" {
+                    if let url = korUrl {
+                        WebView(
+                            url: url,
+                            isLoading: $isLoading,
+                            error: $error
+                        )
+                    }
+                } else {
+                    if let url = foreignUrl {
+                        WebView(
+                            url: url,
+                            isLoading: $isLoading,
+                            error: $error
+                        )
+                    }
+                }
                 
                 if isLoading {
                     ProgressView()
                         .scaleEffect(2)
                 }
-            } else {
-                Text("Sorry, we could not load this url.")
             }
  
         }
@@ -51,7 +71,7 @@ struct LoadingWebView: View, FirebaseAnalyzable {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -59,7 +79,8 @@ struct LoadingWebView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "개인정보 처리방침", style: .H1_B_130)
+                BDText(text: NSLocalizedString("개인정보 처리방침", comment: "")
+                       , style: .H1_B_130)
             }
         }
     }

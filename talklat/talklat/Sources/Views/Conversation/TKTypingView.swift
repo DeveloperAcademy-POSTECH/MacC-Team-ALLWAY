@@ -30,7 +30,7 @@ struct TKTypingView: View, FirebaseAnalyzable {
                             ? .infinity
                             : 0
                         )
-                        .onAppear() {
+                        .onAppear {
                             store.onTKHistoryPreviewAppeared()
                         }
                 }
@@ -62,11 +62,12 @@ struct TKTypingView: View, FirebaseAnalyzable {
                                         )
                                     }
                                 )
+                                .frame(height: 200)
                             }
                         }
                         .frame(
                             maxWidth: .infinity,
-                            maxHeight: 250,
+                            maxHeight: 300,
                             alignment: .top
                         )
                         .padding(.bottom, 24)
@@ -74,7 +75,8 @@ struct TKTypingView: View, FirebaseAnalyzable {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
-                                    in: namespaceID
+                                    in: namespaceID,
+                                    properties: .position
                                 )
                                 .ignoresSafeArea()
                         }
@@ -84,7 +86,7 @@ struct TKTypingView: View, FirebaseAnalyzable {
                     }
                     
                     Spacer()
-                        .frame(maxHeight: 32)
+                        .frame(maxHeight: 15)
                     
                     characterLimitViewBuilder()
                         .opacity(focusState ? 1.0 : 0.0)
@@ -249,9 +251,12 @@ extension TKTypingView {
                 firebaseStore.userDidAction(.tapped(.cancel))
                 store.onConversationDismissButtonTapped()
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(cancelButtonTextColor())
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(cancelButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
@@ -292,7 +297,7 @@ extension TKTypingView {
                 }
                 
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(saveButtonTextColor())
             }
@@ -434,4 +439,5 @@ extension TKTypingView {
 
 #Preview {
     TKConversationView(store: TKConversationViewStore())
+        .environment(TKSwiftDataStore())
 }

@@ -21,7 +21,7 @@ struct SettingsGuidingPreView: View, FirebaseAnalyzable {
                 dismiss()
             } label: {
                 BDText(
-                    text: "취소",
+                    text: NSLocalizedString("취소", comment: ""),
                     style: .H1_B_130
                 )
             }
@@ -30,11 +30,12 @@ struct SettingsGuidingPreView: View, FirebaseAnalyzable {
                 .multilineTextAlignment(.leading)
             
             BDText(
-                text: "해당 화면이 종료되면 \n음성인식이 시작됩니다. \n제 글을 읽고 또박또박 말씀해 주세요.",
+              text: Constants.CONVERSATION_GUIDINGMESSAGE,
                 style: .T2_B_160
             )
             
             Spacer()
+                .frame(maxWidth: .infinity)
         }
         .foregroundColor(.white)
         .frame(
@@ -53,5 +54,6 @@ struct SettingsGuidingPreView: View, FirebaseAnalyzable {
 #Preview {
     NavigationStack {
         SettingsGuidingPreView(guidingMessage: .constant("ddd"))
+            .navigationBarTitleDisplayMode(.inline)
     }
 }

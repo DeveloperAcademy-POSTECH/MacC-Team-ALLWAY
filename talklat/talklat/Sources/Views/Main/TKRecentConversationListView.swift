@@ -29,7 +29,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             .padding(.trailing, 7)
                     }
                     
-                    BDText(text: "내 주변 대화 목록", style: .T2_B_125)
+                    BDText(text: NSLocalizedString("내 주변 대화 목록", comment: ""), style: .T2_B_125)
                         .foregroundStyle(Color.GR7)
                 }
                 .foregroundStyle(Color.GR5)
@@ -67,7 +67,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                                         Spacer()
                                         
                                         Group {
-                                            BDText(text: "대화하기", style: .H2_SB_135)
+                                            BDText(text: NSLocalizedString("대화하기", comment: ""), style: .H2_SB_135)
                                                 .foregroundStyle(Color.GR7)
                                             
                                             Image(systemName: "chevron.right")
@@ -88,7 +88,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                         }
                         //                    .padding(.bottom, 32)
                     } else {
-                        BDText(text: "근처에서 나눈 대화가 없어요.", style: .H2_SB_135)
+                        BDText(text: NSLocalizedString("근처에서 나눈 대화가 없어요.", comment: ""), style: .H2_SB_135)
                             .foregroundStyle(Color.GR3)
                             .frame(
                                 maxWidth: .infinity,
@@ -98,7 +98,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             .padding(.horizontal, 32)
                     }
                 } else {
-                    BDText(text: "근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", comment: ""), style: .H2_SB_135)
                         .foregroundStyle(Color.GR3)
                         .frame(
                             maxWidth: .infinity,
@@ -132,7 +132,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                     draggableListViewStore.onConversationFullScreenDismissed()
                     
                 } confirmButtonLabel: {
-                    Text("네, 그만 할래요")
+                    Text(NSLocalizedString("네, 그만 할래요", comment: ""))
                 }
                 .onDisappear {
                     conversationViewStore.resetConversationState()

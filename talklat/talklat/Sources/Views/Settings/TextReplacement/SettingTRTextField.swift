@@ -70,11 +70,11 @@ struct SettingTRTextField: View {
         isTextEmpty: Bool
     ) -> some View {
         if !allowSpace && text.contains(" ") {
-            return BDText(text: "단축어에는 띄어쓰기를 사용할 수 없어요", style: .FN_SB_135)
+            return BDText(text: NSLocalizedString("textReplacement.noWhiteSpace", comment: ""), style: .FN_SB_135)
                 .foregroundColor(Color.RED)
         }
         if currentCount == 0 {
-            return BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
+            return BDText(text: NSLocalizedString("textReplacement.morethanone", comment: ""), style: .FN_SB_135)
                 .foregroundColor(Color.RED)
         } else {
             let displayCount = min(currentCount, limit)

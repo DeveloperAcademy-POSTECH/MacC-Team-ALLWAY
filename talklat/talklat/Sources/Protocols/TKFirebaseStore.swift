@@ -50,10 +50,10 @@ extension TKFirebaseStore {
               """)
         
         
-//        FirebaseAnalyticsManager.shared.sendGA(
-//            eventName, 
-//            payload
-//        )
+        FirebaseAnalyticsManager.shared.sendGA(
+            eventName, 
+            payload
+        )
     }
     
     
@@ -114,8 +114,8 @@ extension TKFirebaseStore {
         var payload: [String : Any] = [:]
         
         let viewId = viewId
-        let viewEnterDate = Date.now.convertToDate()
-        let viewEnterTime = Date.now.convertToTime()
+        let viewEnterDate = Date.now.convertToDate(.korean)
+        let viewEnterTime = Date.now.convertToTime(.korean)
         
         payload["viewId"] = viewId
         payload["viewEnterDate"] = viewEnterDate

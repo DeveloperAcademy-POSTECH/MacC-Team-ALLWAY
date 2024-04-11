@@ -15,7 +15,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
     
     var body: some View {
         VStack {
-            BDListCell(label: "대화 시작 시 안내 문구 사용") {
+            BDListCell(label: NSLocalizedString("settings.guide.toggleLabel", comment: "")) {
                 } trailingUI: {
                     Toggle(
                         "",
@@ -29,7 +29,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                 }
             
             BDText(
-                text: "안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요.",
+                text: NSLocalizedString("settings.guide.description", comment: ""),
                 style: .H2_SB_135
             )
             .foregroundColor(.GR3)
@@ -40,7 +40,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                 SettingsGuidingEditView()
                     .navigationBarBackButtonHidden()
             } label: {
-                BDListCell(label: "안내 문구 편집") {
+                BDListCell(label: NSLocalizedString("settings.guiding.edit", comment: "")) {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
                             .foregroundColor(
@@ -73,7 +73,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -81,7 +81,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "안내 문구", style: .H1_B_130)
+                BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
             }
         }
         .onAppear {
@@ -108,6 +108,7 @@ public func isKeyPresentInUserDefaults(key: String) -> Bool {
 #Preview {
     NavigationStack {
         SettingsGuidingView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
