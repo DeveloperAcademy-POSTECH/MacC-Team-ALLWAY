@@ -27,11 +27,6 @@ struct TKSavingView: View, FirebaseAnalyzable {
         ) {
             HStack {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "cancel",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.cancel))
                     store.onDismissSavingViewButtonTapped()
                     
@@ -54,11 +49,6 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 Spacer()
                 
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "save",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.save))
                     if let res: TKConversation = store.makeNewConversation(
                         with: speechRecognizeManager.currentTranscript,
@@ -106,10 +96,6 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 .focused($focusState)
                 .onChange(of: focusState) { _, newValue in
                     if newValue == true {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "field",
-//                            nil)
                         firebaseStore.userDidAction(.tapped(.field))
                     }
                 }
@@ -117,11 +103,6 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 Spacer()
                 
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "eraseAll",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.eraseAll))
                     store.onDeleteConversationTitleButtonTapped()
                 } label: {

@@ -101,11 +101,30 @@ struct TKMainView: View, FirebaseAnalyzable {
                 }
                 .showTKAlert(
                     isPresented: conversationViewStore.bindingTKAlertFlag(),
-                    style: .conversationCancellation
+                    style: .conversationCancellation,
+                    onDismiss:
+                        {
+                            switch conversationViewStore(\.conversationStatus) {
+                            case .recording:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CL")))
+                            case .guiding:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CG")))
+                            case .writing:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CT")))
+                            }
+                        }
                 ) {
+                    switch conversationViewStore(\.conversationStatus) {
+                    case .recording:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CL")))
+                    case .guiding:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CG")))
+                    case .writing:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CT")))
+                    }
                     store.onConversationFullscreenDismissed()
-                    
                 } confirmButtonLabel: {
+                    
                     BDText(text: "네, 그만 할래요", style: .H2_SB_135)
                 }
         }
@@ -129,11 +148,6 @@ struct TKMainView: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded{ _ in
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "history",
-//                                nil
-//                            )
                             firebaseStore.userDidAction(.tapped(.history))
                         }
                 )
@@ -151,11 +165,6 @@ struct TKMainView: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "setting",
-//                                nil
-//                            )
                             firebaseStore.userDidAction(.tapped(.setting))
                         }
                 )
@@ -166,27 +175,19 @@ struct TKMainView: View, FirebaseAnalyzable {
             isPresented: store[\.isSpeechAuthAlertPresented],
             style: .conversation,
             onDismiss: {
-//                permitAlertFirebaseStore.userDidAction(
-//                    .tapped,
-//                    "back",
-//                    nil
-//                )
                 permitAlertFirebaseStore.userDidAction(.tapped(.back))
             }
         ) {
-//            permitAlertFirebaseStore.userDidAction(
-//                .tapped,
-//                "permit",
-//                nil
-//            )
             permitAlertFirebaseStore.userDidAction(.tapped(.permit))
             store.onGoSettingScreenButtonTapped()
-            
         } confirmButtonLabel: {
             HStack(spacing: 8) {
                 BDText(text: "설정으로 이동", style: .H2_SB_135)
                 
                 Image(systemName: "arrow.up.right.square.fill")
+            }
+            .onAppear {
+                permitAlertFirebaseStore.userDidAction(.viewed)
             }
         }
         .overlay(alignment: .top) {
@@ -200,9 +201,7 @@ struct TKMainView: View, FirebaseAnalyzable {
                 )
             }
         }
-        .onAppear {
-            permitAlertFirebaseStore.userDidAction(.viewed) // 확인 필요
-        }
+        
     }
     
     private func startConversationButtonBuilder() -> some View {
@@ -215,11 +214,6 @@ struct TKMainView: View, FirebaseAnalyzable {
             } else {
                 store.onStartConversationButtonTapped()
             }
-//            firebaseStore.userDidAction(
-//                .tapped,
-//                "newConversation",
-//                nil
-//            )
             firebaseStore.userDidAction(.tapped(.newConversation))
         } label: {
             ZStack {

@@ -43,20 +43,19 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
                     }
                 }
                 .onTapGesture {
+                    switch type {
+                    case .device:
+                        firebaseStore.userDidAction(.tapped(.sameMode))
+                    case .light:
+                        firebaseStore.userDidAction(.tapped(.lightMode))
+                    case .dark:
+                        firebaseStore.userDidAction(.tapped(.darkMode))
+                    }
                     selectedTheme = type.theme
                     colorSchemeManager.colorScheme = selectedTheme
                 }
             }
-            .onChange(of: selectedTheme) {
-                switch selectedTheme {
-                case .unspecified:
-                    firebaseStore.userDidAction(.tapped(.sameMode))
-                case .light:
-                    firebaseStore.userDidAction(.tapped(.lightMode))
-                case .dark:
-                    firebaseStore.userDidAction(.tapped(.darkMode))
-                }
-            }
+            
             Spacer()
         }
         .padding(.horizontal, 16)

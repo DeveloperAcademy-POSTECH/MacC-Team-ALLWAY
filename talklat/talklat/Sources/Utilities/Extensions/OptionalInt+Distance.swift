@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Optional where Wrapped == Int {
+extension Optional where Wrapped == Double {
     func toStringDistance() -> String {
         guard let distance = self else { return "위치 정보 없음" }
         

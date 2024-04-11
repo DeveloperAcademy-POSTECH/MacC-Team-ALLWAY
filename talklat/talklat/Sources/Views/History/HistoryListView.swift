@@ -78,11 +78,6 @@ struct HistoryListView: View, FirebaseAnalyzable {
                     ToolbarItem(placement: .topBarLeading) {
                         // Back Button
                         Button {
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "back",
-//                                nil
-//                            )
                             firebaseStore.userDidAction(.tapped(.back))
                             dismiss()
                         } label: {
@@ -127,18 +122,8 @@ struct HistoryListView: View, FirebaseAnalyzable {
                         }
                         .onChange(of: isEditing) { _, newValue in
                             if newValue == true {
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "edit",
-//                                    nil
-//                                )
                                 firebaseStore.userDidAction(.tapped(.edit))
                             } else {
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "complete",
-//                                    nil
-//                                )
                                 firebaseStore.userDidAction(.tapped(.complete))
                             }
                         }
@@ -159,21 +144,11 @@ struct HistoryListView: View, FirebaseAnalyzable {
             isPresented: $isDialogShowing,
             style: .removeConversation(title: selectedConversation.title)
         ) {
-//            firebaseStore.userDidAction(
-//                .tapped,
-//                "alertCancel",
-//                nil
-//            )
-            firebaseStore.userDidAction(.tapped(.alertCancel))
+            firebaseStore.userDidAction(.tapped(.alertCancel(firebaseStore.viewId)))
             isDialogShowing = false
             
         } confirmButtonAction: {
-//            firebaseStore.userDidAction(
-//                .tapped,
-//                "alertDelete",
-//                nil
-//            )
-            firebaseStore.userDidAction(.tapped(.alertDelete))
+            firebaseStore.userDidAction(.tapped(.alertDelete(firebaseStore.viewId)))
             withAnimation {
                 // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
                 // Delete Content
@@ -201,7 +176,6 @@ struct HistoryListView: View, FirebaseAnalyzable {
                 )
             ) {
                 if $isSearchFocused.wrappedValue {
-//                    firebaseStore.userDidAction(.tapped, "field", nil)
                     firebaseStore.userDidAction(.tapped(.field))
                     isSearching = true
                 } else {
@@ -247,11 +221,6 @@ struct LocationList: View, FirebaseAnalyzable {
                 
                 // Collapse Button
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "discloseSection",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.discloseSection))
                     withAnimation(
                         .spring(
@@ -303,11 +272,6 @@ struct LocationList: View, FirebaseAnalyzable {
                     .simultaneousGesture(
                         TapGesture()
                             .onEnded { _ in
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "item",
-//                                    nil
-//                                )
                                 firebaseStore.userDidAction(.tapped(.item))
                             }
                     )
@@ -323,7 +287,7 @@ struct LocationList: View, FirebaseAnalyzable {
     }
 }
 
-struct CellItem: View {
+struct CellItem: View, FirebaseAnalyzable {
     var conversation: TKConversation
     
     @State internal var isRemoving: Bool = false
@@ -331,12 +295,15 @@ struct CellItem: View {
     @Binding internal var isEditing: Bool
     @Binding internal var isDialogShowing: Bool
     
+    let firebaseStore: any TKFirebaseStore = HistoryFirebaseStore()
+    
     var body: some View {
         HStack {
             HStack {
                 // Leading Remove Button Appear
                 if isEditing {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.select))
                         withAnimation(
                             .spring(
                                 .bouncy,
@@ -413,6 +380,7 @@ struct CellItem: View {
             // TrashBin Appear
             if isRemoving && isEditing {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.delete))
                     withAnimation {
                         selectedConversation = conversation
                         isDialogShowing = true

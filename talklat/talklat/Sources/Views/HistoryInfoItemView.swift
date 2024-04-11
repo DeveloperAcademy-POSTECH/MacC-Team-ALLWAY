@@ -32,8 +32,6 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
             Spacer()
         }
         .onAppear {
-//            firebaseStore.userDidAction(.viewed, nil, nil)
-            firebaseStore.userDidAction(.viewed)
             historyInfoStore.reduce(\.text, into: conversation.title)
             locationStore.reduce(\.infoPlaceName, into: "위치 정보 없음")
             if
@@ -74,6 +72,13 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                 
                 historyInfoStore.reduce(\.isNotChanged, into: true)
             }
+            
+            firebaseStore.userDidAction(
+                .viewed,
+                .historyType(
+                    conversation,
+                    locationStore(\.infoPlaceName))
+            )
         }
         .ignoresSafeArea(.keyboard)
         .background {
@@ -102,13 +107,8 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
+                            firebaseStore.userDidAction(.tapped(.back))
                             if historyInfoStore.saveButtonDisabled(conversation) {
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "back",
-//                                    nil
-//                                )
-                                firebaseStore.userDidAction(.tapped(.back))
                                 isTextfieldFocused = false
                                 dismiss()
                             } else {
@@ -138,12 +138,10 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "save",
-//                                nil
-//                            )
-                            firebaseStore.userDidAction(.tapped(.save))
+                            firebaseStore.userDidAction(
+                                .tapped(.save),
+                                .historyType(conversation, locationStore(\.infoPlaceName))
+                            )
                             //MARK: 저장 메서드
                             isTextfieldFocused = false
                             updateHistoryInfo()
@@ -159,7 +157,11 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                 .showTKAlert(
                     isPresented: historyInfoStore.bindingAlert(),
                     style: .editCancellation(title: "변경 사항 취소"),
+                    onDismiss: {
+                        firebaseStore.userDidAction(.tapped(.alertCancel(firebaseStore.viewId)))
+                    },
                     confirmButtonAction: ({
+                        firebaseStore.userDidAction(.tapped(.alertBack(firebaseStore.viewId)))
                         historyInfoStore.reduce(\.isShowingAlert, into: false)
                         dismiss()
                     }),
@@ -196,6 +198,7 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                     HStack {
                         Spacer()
                         Button {
+                            firebaseStore.userDidAction(.tapped(.eraseAll))
                             // textfield 텍스트 삭제 메서드
                             historyInfoStore.reduce(\.text, into: "")
                         } label: {
@@ -210,11 +213,6 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                 .padding(.bottom, 8)
                 .onChange(of: isTextfieldFocused) { _ in
                     if $isTextfieldFocused.wrappedValue == true {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "field",
-//                            nil
-//                        )
                         firebaseStore.userDidAction(.tapped(.field))
                     }
                 }
@@ -275,11 +273,6 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                             Spacer()
                             
                             Button {
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "adjustLocation",
-//                                    nil
-//                                )
                                 firebaseStore.userDidAction(.tapped(.adjustLocation))
                                 isTextfieldFocused = false
                                 historyInfoStore.reduce(\.isShowingSheet, into: true)

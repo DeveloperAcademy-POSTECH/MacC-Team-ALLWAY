@@ -33,17 +33,6 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 SettingsGuidingPreView(
                     guidingMessage: $guidingMessage
                 )
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded { _ in
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "preview",
-//                                nil
-//                            )
-                            firebaseStore.userDidAction(.tapped(.preview))
-                        }
-                )
             } label: {
                 BDText(
                     text: hasContentChanged
@@ -61,6 +50,12 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 )
                 .cornerRadius(22)
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.preview))
+                    }
+            )
             .disabled(isTextEmpty)
             
             // GuidingMessage TextField
@@ -76,11 +71,6 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
             .padding(.vertical, 24)
             .onChange(of: focusState) {
                 if focusState == true {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "guideMessageField",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.guideMesageField))
                 }
             }
@@ -109,16 +99,14 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .onAppear {
-            firebaseStore.userDidAction(.viewed)
+            firebaseStore.userDidAction(
+                .viewed,
+                .guideMessageType(guidingMessage)
+            )
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "back",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
@@ -146,6 +134,10 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 UserDefaults.standard.set(
                     self.guidingMessage,
                     forKey: "guidingMessage"
+                )
+                firebaseStore.userDidAction(
+                    .tapped(.save),
+                    .guideMessageType(guidingMessage)
                 )
                 isTextEmpty = false
             } else {

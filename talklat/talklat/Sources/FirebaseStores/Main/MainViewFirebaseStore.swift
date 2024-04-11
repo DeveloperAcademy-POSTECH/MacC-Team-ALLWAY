@@ -16,28 +16,5 @@ struct MainViewFirebaseStore: TKFirebaseStore {
         case newConversation
         case unRegistered
     }
-    
-    
-//    public func detailUserAction(
-//        _ userActionType: UserActionType,
-//        _ eventName: String,
-//        _ payload: [String : Any]?
-//    ) {
-//        let userActionType = userActionType.rawValue
-//        let event = FirebaseAction.create(eventName)
-//        
-//        
-//        switch event {
-//            
-//        case .history:
-//            break
-//        case .setting:
-//            break
-//        case .newConversation:
-//            break
-//        case .unRegistered:
-//            print("This event")
-//        }
-//    }
 }
 

@@ -111,11 +111,6 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "back",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -137,11 +132,6 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "add",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.add))
                     store.showTextReplacementAddView()
                 } label: {
@@ -199,17 +189,6 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         TKTextReplacementEditView(
                             store: store
                         )
-                        .simultaneousGesture(
-                            TapGesture()
-                                .onEnded { _ in
-//                                    firebaseStore.userDidAction(
-//                                        .tapped,
-//                                        "item",
-//                                        nil
-//                                    )
-                                    firebaseStore.userDidAction(.tapped(.item))
-                                }
-                        )
                         .onAppear {
                             store.selectTextReplacement(
                                 phrase: key,
@@ -228,6 +207,13 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         )
                         .cornerRadius(16)
                     }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                print("HI hello")
+                                firebaseStore.userDidAction(.tapped(.item))
+                            }
+                    )
                 }
             }
         }
@@ -246,6 +232,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             } trailingButton: {
                 if !store.viewState.searchText.isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.eraseAll))
                         store.onSearchTextRemoveButtonTapped()
                         
                     } label: {
@@ -259,11 +246,6 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
                 if !oldValue,
                    newValue {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "field",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.field))
                     store.onSearchingText()
                 }
@@ -271,6 +253,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             
             if store(\.isSearching) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.cancel))
                     self.hideKeyboard()
                     store.cancelSearchAndHideKeyboard()
                     

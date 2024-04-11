@@ -60,11 +60,6 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "close",
-//                            nil
-//                        )
                         firebaseStore.userDidAction(.tapped(.close))
                         historyInfoStore.reduce(\.isShowingSheet, into: false)
                     } label: {
@@ -116,11 +111,6 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                 switch locationStore(\.authorizationStatus) {
                 case .authorizedAlways, .authorizedWhenInUse:
                     Button {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "myLocation",
-//                            nil
-//                        )
                         firebaseStore.userDidAction(.tapped(.myLocation))
                         moveToUserLocation()
                         
@@ -171,11 +161,6 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                 .padding(.bottom, 10)
             
             Button {
-//                firebaseStore.userDidAction(
-//                    .tapped, 
-//                    "pointPin",
-//                    nil
-//                )
                 firebaseStore.userDidAction(.tapped(.pointPin))
                 historyInfoStore.reduce(
                     \.infoCoordinateRegion,

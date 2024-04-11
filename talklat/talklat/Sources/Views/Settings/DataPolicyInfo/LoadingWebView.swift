@@ -43,11 +43,6 @@ struct LoadingWebView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "back",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {

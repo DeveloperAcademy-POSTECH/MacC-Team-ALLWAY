@@ -187,7 +187,7 @@ internal enum UserActionType {
         case .viewed:
             return "viewed"
         case .tapped(let tappedType):
-            return "tapped_\(tappedType.rawValue.capitalized)"
+            return "tapped_\(tappedType.rawValue().capitalizeOnlyFirstLetter())"
         }
     }
 }
@@ -196,14 +196,13 @@ internal enum PayloadType {
     case viewedType
     case buttonType(String)
     case nearMeType(TKConversation, Int)
-    case historyType(TKConversation, TKLocation)
+    case historyType(TKConversation, String)
     case textReplacementType(String, String)
     case guideMessageType(String)
+    case allNearMeType([(Double,TKConversation)])
 }
 
-
-
-enum TappedType: String {
+enum TappedType {
     // view이름들
     case history
     case setting
@@ -227,9 +226,9 @@ enum TappedType: String {
     case complete
     case select
     case delete
-    case alertBack
-    case alertCancel
-    case alertDelete
+    case alertBack(String)
+    case alertCancel(String)
+    case alertDelete(String)
     case adjustLocation
     case close
     case map
@@ -257,4 +256,18 @@ enum TappedType: String {
     case darkMode
     case mail
     case send
+    
+    func rawValue() -> String {
+        switch self {
+        case .alertBack(let viewId):
+            return "alertBack_\(viewId)"
+        case .alertCancel(let viewId):
+            return "alertCancel_\(viewId)"
+        case .alertDelete(let viewId):
+            return "alertDelete_\(viewId)"
+        default:
+            return String(describing: self)
+        }
+    }
 }
+

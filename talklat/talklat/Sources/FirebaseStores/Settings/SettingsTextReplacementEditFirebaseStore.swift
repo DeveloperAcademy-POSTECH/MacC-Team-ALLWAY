@@ -10,9 +10,6 @@ import Foundation
 struct SettingsTextReplacementEditFirebaseStore: TKFirebaseStore {
     var viewId: String = "STE"
     
-    func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
-        
-    }
     
     enum FirebaseAction: String, FirebaseActionable {
         case shortenTextField

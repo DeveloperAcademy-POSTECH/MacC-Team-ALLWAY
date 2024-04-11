@@ -10,13 +10,6 @@ import Foundation
 struct ConversationRepeatFirebaseStore: TKFirebaseStore {
     var viewId: String = "CR"
     
-    func detailUserAction(
-        _ actionType: UserActionType,
-        _ eventName: String,
-        _ payload: [String : Any]?
-    ) {
-        
-    }
     
     enum FirebaseAction: String, FirebaseActionable {
         case cancel

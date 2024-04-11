@@ -152,12 +152,20 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-//                            firebaseStore.userDidAction(
-//                                .tapped,
-//                                "item",
-//                                nil
-//                            )
-                            firebaseStore.userDidAction(.tapped(.item))
+                            if let conversation = content.conversation {
+                                if let location = conversation.location {
+                                    firebaseStore.userDidAction(
+                                        .tapped(.item),
+                                        .historyType(
+                                            conversation,
+                                            location.blockName
+                                        ))
+                                } else {
+                                    print("From FirebaseStore: location missing")
+                                }
+                            } else {
+                                print("From firebaseStore: conversationMissing")
+                            }
                         }
                 )
             }

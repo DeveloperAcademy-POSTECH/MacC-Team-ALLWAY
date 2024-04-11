@@ -102,85 +102,60 @@ struct SettingsListView: View, FirebaseAnalyzable {
                         id: \.rawValue
                     ) { item in
                         if category == item.category {
-                            NavigationLink {
-                                switch item {
-                                case .textReplacement:
-                                    TKTextReplacementListView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.textReplace))
-                                                }
-                                        )
-                               
-                                case .guidingMessage:
-                                    SettingsGuidingView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.guideMessage))
-                                                }
-                                        )
-                                
-                                case .displayMode:
-                                    SettingsDisplayView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.displayMode))
-                                                }
-                                        )
-                                    // SettingsDisplayTestingView()
-                                   
-                                    /*
-                                     case .haptics:
-                                         SettingsHapticView()
-                                     */
-                                    
-//                                case .gesture:
-//                                    SettingsGestureView()
-//                                        .navigationBarBackButtonHidden()
-                                    
-                                case .dataPolicyInfo:
-                                    LoadingWebView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.personalInfo))
-                                                }
-                                        )
-                                    
-                                case .creators:
-                                    SettingsTeamView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.makers))
-                                                }
-                                        )
-                               
-                                case .needHelp:
-                                    SettingsHelpView()
-                                        .navigationBarBackButtonHidden()
-                                        .simultaneousGesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.help))
-                                                }
-                                        )
-                                }
-                            } label: {
-                                BDListCell(label: item.rawValue) {
-                                    Image(systemName: item.icon)
-                                } trailingUI: {
-                                    Image(systemName: "chevron.right")
+                            Group {
+                                NavigationLink {
+                                    switch item {
+                                    case .textReplacement:
+                                        TKTextReplacementListView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .guidingMessage:
+                                        SettingsGuidingView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .displayMode:
+                                        SettingsDisplayView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .dataPolicyInfo:
+                                        LoadingWebView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .creators:
+                                        SettingsTeamView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .needHelp:
+                                        SettingsHelpView()
+                                            .navigationBarBackButtonHidden()
+                                    }
+                                } label: {
+                                    BDListCell(label: item.rawValue) {
+                                        Image(systemName: item.icon)
+                                    } trailingUI: {
+                                        Image(systemName: "chevron.right")
+                                    }
                                 }
                             }
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded { _ in
+                                        switch item {
+                                        case .textReplacement:
+                                            firebaseStore.userDidAction(.tapped(.textReplace))
+                                        case .guidingMessage:
+                                            firebaseStore.userDidAction(.tapped(.guideMessage))
+                                        case .displayMode:
+                                            firebaseStore.userDidAction(.tapped(.displayMode))
+                                        case .dataPolicyInfo:
+                                            firebaseStore.userDidAction(.tapped(.personalInfo))
+                                        case .creators:
+                                            firebaseStore.userDidAction(.tapped(.makers))
+                                        case .needHelp:
+                                            firebaseStore.userDidAction(.tapped(.help))
+                                        }
+                                    }
+                            )
                         }
                     }
                 }

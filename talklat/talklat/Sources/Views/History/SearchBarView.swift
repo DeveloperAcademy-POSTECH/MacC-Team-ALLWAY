@@ -27,6 +27,7 @@ struct SearchBarView: View, FirebaseAnalyzable {
                 if isSearching 
                     && !searchText.isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.eraseAll))
                         // Remove All
                         searchText = ""
                     } label: {
@@ -38,12 +39,7 @@ struct SearchBarView: View, FirebaseAnalyzable {
             
             if isSearching {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "eraseAll",
-//                        nil
-//                    )
-                    firebaseStore.userDidAction(.tapped(.eraseAll))
+                    firebaseStore.userDidAction(.tapped(.cancel))
                     // Dismiss Search UI
                     withAnimation(
                         .spring(
@@ -64,23 +60,13 @@ struct SearchBarView: View, FirebaseAnalyzable {
             }
         }
         .onAppear {
-            firebaseStore.userDidAction(.viewed)
+            
         }
         .onChange(of: isSearching) { _, _ in
             if isSearching == true {
-//                firebaseStore.userDidAction(
-//                    .tapped,
-//                    "field",
-//                    nil
-//                )
-                firebaseStore.userDidAction(.tapped(.field))
-            } else {
-//                firebaseStore.userDidAction(
-//                    .tapped,
-//                    "cancel",
-//                    nil
-//                )
-                firebaseStore.userDidAction(.tapped(.cancel))
+                firebaseStore.userDidAction(.viewed)
+                firebaseStore.userDidAction(
+                    .tapped(.field))
             }
         }
     }

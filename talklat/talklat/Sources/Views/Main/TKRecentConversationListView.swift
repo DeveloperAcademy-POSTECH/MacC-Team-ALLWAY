@@ -46,15 +46,9 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                     if draggableListViewStore(\.conversations).count > 0 {
                         ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
                             Button {
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "nearMeItem",
-//                                    [.nearMeType(conversation, locationStore.calculateDistance(conversation.location) ?? 0)]
-//                                )
-                                firebaseStore.userDidAction(.tapped(.nearMeItem))
+                                firebaseStore.userDidAction(.tapped(.nearMeItem), .nearMeType(conversation, Int(locationStore.calculateDistance(conversation.location) ?? -1.0)))
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
-                                
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -67,7 +61,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        BDText(text: (conversation.createdAt).convertToDate(), style: .FN_SB_135)
+                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: .FN_SB_135)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()

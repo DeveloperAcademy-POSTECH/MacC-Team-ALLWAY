@@ -22,17 +22,10 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                         isOn: $isGuidingEnabled
                     )
                     .frame(width: 70)
-                    .simultaneousGesture(
-                        TapGesture()
-                            .onEnded { _ in
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "toggle",
-//                                    nil
-//                                )
-                                firebaseStore.userDidAction(.tapped(.toggle))
-                            }
-                    )
+                    .onChange(of: isGuidingEnabled) { _, _ in
+                        firebaseStore.userDidAction(.tapped(.toggle))
+                    }
+                    
                 }
             
             BDText(
@@ -46,18 +39,6 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
             NavigationLink {
                 SettingsGuidingEditView()
                     .navigationBarBackButtonHidden()
-                    .simultaneousGesture(
-                        TapGesture()
-                            .onEnded { _ in
-//                                firebaseStore.userDidAction(
-//                                    .tapped,
-//                                    "editGuideMessage",
-//                                    nil
-//                                )
-                                firebaseStore.userDidAction(.tapped(.editGuideMessage))
-                            }
-                    )
-                
             } label: {
                 BDListCell(label: "안내 문구 편집") {
                     } trailingUI: {
@@ -69,6 +50,12 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                             )
                     }
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.editGuideMessage))
+                    }
+            )
             .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
@@ -78,11 +65,6 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "back",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {

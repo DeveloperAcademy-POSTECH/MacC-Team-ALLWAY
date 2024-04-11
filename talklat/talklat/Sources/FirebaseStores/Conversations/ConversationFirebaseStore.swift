@@ -19,20 +19,4 @@ struct ConversationFirebaseStore: TKFirebaseStore {
         case textReplace
         case unRegistered
     }
-    
-    public func detailUserAction(
-        _ userActionType: UserActionType,
-        _ eventName: String,
-        _ payload: [String : Any]?
-    ) {
-        let event = FirebaseAction.create(eventName)
-        
-//        switch event {
-//            
-//        }
-    }
-    
-    private func changeViewID() {
-        
-    }
 }

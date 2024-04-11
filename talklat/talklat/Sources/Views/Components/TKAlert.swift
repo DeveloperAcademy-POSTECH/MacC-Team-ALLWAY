@@ -166,11 +166,9 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
             Button {
                 if let dismissAction = dismissAction {
                     dismissAction()
-                    
-                } else {
-                    withAnimation {
-                        bindingPresentedFlag = false
-                    }
+                }
+                withAnimation {
+                    bindingPresentedFlag = false
                 }
             } label: {
                 BDText(text: dismissText, style: .H2_SB_135)

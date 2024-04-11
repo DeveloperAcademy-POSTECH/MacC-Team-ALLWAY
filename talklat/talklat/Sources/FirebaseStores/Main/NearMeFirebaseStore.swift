@@ -13,18 +13,5 @@ struct NearMeFirebaseStore: TKFirebaseStore {
     enum FirebaseAction: String, FirebaseActionable {
         case nearMeItem
         case unRegistered
-    }
-    
-    public func detailUserAction(
-        _ userActionType: UserActionType,
-        _ eventName: String,
-        _ payload: [String : Any]?
-    ) {
-        let event = FirebaseAction.create(eventName)
-        
-//        switch {
-//
-//        }
-    }
-    
+    }   
 }

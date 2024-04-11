@@ -33,11 +33,6 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 .focused($shortTextFieldFocusState)
                 .onChange(of: shortTextFieldFocusState) {
                     if shortTextFieldFocusState == true {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "shortenTextField",
-//                            nil
-//                        )
                         firebaseStore.userDidAction(.tapped(.shortenTextField))
                     }
                 }
@@ -53,11 +48,6 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 .focused($longTextFieldFocusState)
                 .onChange(of: longTextFieldFocusState) {
                     if longTextFieldFocusState == true {
-//                        firebaseStore.userDidAction(
-//                            .tapped,
-//                            "fullTextField",
-//                            nil
-//                        )
                         firebaseStore.userDidAction(.tapped(.fullTextField))
                     }
                 }
@@ -67,11 +57,6 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             
             if !shortTextFieldFocusState {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "delete",
-//                        nil
-//                    )
                     firebaseStore.userDidAction(.tapped(.delete))
                     store.onShowDialogButtonTapped()
                 } label: {
@@ -90,7 +75,13 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
         .padding()
         .navigationBarBackButtonHidden()
         .onAppear {
-            firebaseStore.userDidAction(.viewed)
+            firebaseStore.userDidAction(
+                .viewed,
+                .textReplacementType(
+                    store.bindingPhraseTextField().wrappedValue,
+                    store.bindingReplacementTextField().wrappedValue
+                )
+            )
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -120,12 +111,13 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-//                    firebaseStore.userDidAction(
-//                        .tapped,
-//                        "save",
-//                        nil
-//                    )
-                    firebaseStore.userDidAction(.tapped(.save))
+                    firebaseStore.userDidAction(
+                        .tapped(.save),
+                        .textReplacementType(
+                            store.bindingPhraseTextField().wrappedValue,
+                            store.bindingPhraseTextField().wrappedValue
+                        )
+                    )
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -146,19 +138,11 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
             onDismiss: {
-//                firebaseStore.userDidAction(
-//                    .tapped,
-//                    "alertBack", nil)
-                firebaseStore.userDidAction(.tapped(.alertBack))
+                firebaseStore.userDidAction(.tapped(.alertBack(firebaseStore.viewId)))
                 store.onDismissRemoveAlert()
             },
             confirmButtonAction: {
-//                firebaseStore.userDidAction(
-//                    .tapped,
-//                    "alertDelete",
-//                    nil
-//                )
-                firebaseStore.userDidAction(.tapped(.alertDelete))
+                firebaseStore.userDidAction(.tapped(.alertDelete(firebaseStore.viewId)))
                 swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()

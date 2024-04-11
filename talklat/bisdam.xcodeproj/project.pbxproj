@@ -150,6 +150,7 @@
 		CE4AB0DD2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0DC2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift */; };
 		CE4AB0E32BC51EE50044C29E /* HistoryInfoFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0E22BC51EE50044C29E /* HistoryInfoFirebaseStore.swift */; };
 		CE4AB0E52BC521B90044C29E /* SettingsMakersFirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */; };
+		CE4AB0E72BC8283C0044C29E /* String+Capitalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -293,6 +294,7 @@
 		CE4AB0DC2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelpMailFirebaseStore.swift; sourceTree = "<group>"; };
 		CE4AB0E22BC51EE50044C29E /* HistoryInfoFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryInfoFirebaseStore.swift; sourceTree = "<group>"; };
 		CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMakersFirebaseStore.swift; sourceTree = "<group>"; };
+		CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalize.swift"; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				7EEEFB612B0F360E0003763A /* View+TKAlert.swift */,
 				5713DC4F2B0C9B9200ECF34B /* View+SwipeGesture.swift */,
 				CE405C2C2B0CD7E4003F2586 /* OptionalInt+Distance.swift */,
+				CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -961,6 +964,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EBD31142B0B2B1300D5514D /* talklatApp.swift in Sources */,
+				CE4AB0E72BC8283C0044C29E /* String+Capitalize.swift in Sources */,
 				CE4AB0DD2BC51B6D0044C29E /* SettingsHelpMailFirebaseStore.swift in Sources */,
 				CE4AB0D12BC51ACD0044C29E /* SettingsGuideMessageFirebaseStore.swift in Sources */,
 				CE4AB0BB2BC516DF0044C29E /* ConversationGuidingFirebaseStore.swift in Sources */,

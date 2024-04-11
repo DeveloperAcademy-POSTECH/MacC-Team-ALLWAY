@@ -49,8 +49,10 @@ struct TKDraggableList: View, FirebaseAnalyzable {
             }
             .onChange(of: mainViewstore(\.isBottomSheetMaxed)) { _ , _ in
                 if mainViewstore(\.isBottomSheetMaxed) == true {
-//                    firebaseStore.userDidAction(.viewed, nil, [.viewedType])
-                    firebaseStore.userDidAction(.viewed)
+                    firebaseStore.userDidAction(
+                        .viewed,
+                        .allNearMeType(locationStore.getClosestConversationForGA(dataStore.conversations))
+                    )
                 }
             }
             .onChange(of: dataStore.conversations) { _, newValue in

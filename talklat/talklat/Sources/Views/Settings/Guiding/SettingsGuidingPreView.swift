@@ -17,12 +17,7 @@ struct SettingsGuidingPreView: View, FirebaseAnalyzable {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Button {
-//                firebaseStore.userDidAction(
-//                    .tapped,
-//                    "cancel",
-//                    nil
-//                )
-                firebaseStore.userDidAction(.tapped(.cancel))
+                firebaseStore.userDidAction(.tapped(.close))
                 dismiss()
             } label: {
                 BDText(

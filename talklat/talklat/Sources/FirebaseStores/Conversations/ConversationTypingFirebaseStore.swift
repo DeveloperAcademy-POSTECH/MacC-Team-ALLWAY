@@ -19,14 +19,6 @@ struct ConversationTypingFirebaseStore: TKFirebaseStore {
         case next
         case unRegistered
     }
-    
-    func detailUserAction(
-        _ userActionType: UserActionType,
-        _ eventName: String,
-        _ payload: [String : Any]?
-    ) {
-        let event = FirebaseAction.create(eventName)
-    }
 }
 
 
