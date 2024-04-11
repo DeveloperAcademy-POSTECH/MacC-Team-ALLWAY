@@ -178,7 +178,83 @@ public enum HistoryInfoTextStatus {
     case textChanged
 }
 
-public enum UserActionType: String {
+internal enum UserActionType {
     case viewed
-    case tapped
+    case tapped(TappedType)
+    
+    func gaValue() -> String {
+        switch self {
+        case .viewed:
+            return "viewed"
+        case .tapped(let tappedType):
+            return "tapped_\(tappedType.rawValue.capitalized)"
+        }
+    }
+}
+
+internal enum PayloadType {
+    case viewedType
+    case buttonType(String)
+    case nearMeType(TKConversation, Int)
+    case historyType(TKConversation, TKLocation)
+    case textReplacementType(String, String)
+    case guideMessageType(String)
+}
+
+
+
+enum TappedType: String {
+    // view이름들
+    case history
+    case setting
+    case newConversation
+    case permit
+    case back
+    case nearMeItem
+    
+    // user행동들
+    case cancel
+    case save
+    case field
+    case eraseAll
+    case next
+    case textReplace
+    case goToTypingView
+    case edit
+    case discloseSection
+    case item
+    case add
+    case complete
+    case select
+    case delete
+    case alertBack
+    case alertCancel
+    case alertDelete
+    case adjustLocation
+    case close
+    case map
+    case myLocation
+    case pointPin
+    
+    case guideMessage
+    case displayMode
+    case personalInfo
+    case makers
+    case help
+    
+    case speechPermit
+    case locationPermit
+    case indexBar
+    case shortenTextField
+    case fullTextField
+    
+    case toggle
+    case editGuideMessage
+    case preview
+    case guideMesageField
+    case sameMode
+    case lightMode
+    case darkMode
+    case mail
+    case send
 }

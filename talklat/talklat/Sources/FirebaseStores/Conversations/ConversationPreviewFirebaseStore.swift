@@ -8,7 +8,7 @@
 import Foundation
 
 struct ConversationPreviewFirebaseStore: TKFirebaseStore {
-    var viewID: String = "CP"
+    var viewId: String = "CP"
     
     func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
         

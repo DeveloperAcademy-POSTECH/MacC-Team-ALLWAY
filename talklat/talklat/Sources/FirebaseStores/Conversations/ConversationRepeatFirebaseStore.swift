@@ -8,7 +8,7 @@
 import Foundation
 
 struct ConversationRepeatFirebaseStore: TKFirebaseStore {
-    var viewID: String = "CR"
+    var viewId: String = "CR"
     
     func detailUserAction(
         _ actionType: UserActionType,

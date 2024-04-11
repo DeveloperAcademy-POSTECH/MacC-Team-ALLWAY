@@ -8,7 +8,7 @@
 import Foundation
 
 struct NearMeFirebaseStore: TKFirebaseStore {
-    let viewID: String = "NM"
+    let viewId: String = "NM"
     
     enum FirebaseAction: String, FirebaseActionable {
         case nearMeItem

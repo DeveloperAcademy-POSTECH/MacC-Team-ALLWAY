@@ -25,11 +25,12 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                     .simultaneousGesture(
                         TapGesture()
                             .onEnded { _ in
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "toggle",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "toggle",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.toggle))
                             }
                     )
                 }
@@ -48,11 +49,12 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                     .simultaneousGesture(
                         TapGesture()
                             .onEnded { _ in
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "editGuideMessage",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "editGuideMessage",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.editGuideMessage))
                             }
                     )
                 
@@ -76,11 +78,12 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "back",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {

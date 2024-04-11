@@ -152,11 +152,12 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "item",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "item",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.item))
                         }
                 )
             }

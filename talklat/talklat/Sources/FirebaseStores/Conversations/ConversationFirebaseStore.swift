@@ -8,7 +8,7 @@
 import Foundation
 
 struct ConversationFirebaseStore: TKFirebaseStore {
-    internal var viewID: String = "C"
+    internal var viewId: String = "C"
     
     enum FirebaseAction: String, FirebaseActionable {
         case cancel

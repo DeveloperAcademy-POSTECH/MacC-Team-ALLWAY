@@ -8,7 +8,7 @@
 import Foundation
 
 struct MainViewFirebaseStore: TKFirebaseStore {
-    let viewID: String = "M"
+    let viewId: String = "M"
     
     public enum FirebaseAction: String, FirebaseActionable {
         case history

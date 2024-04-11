@@ -21,11 +21,12 @@ struct TKListeningView: View, FirebaseAnalyzable {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "back",
-                            nil
-                        )
+//                        firebaseStore.userDidAction(
+//                            .tapped,
+//                            "back",
+//                            nil
+//                        )
+                        firebaseStore.userDidAction(.tapped(.back))
                         store.blockButtonDoubleTap {
                             store.onBackToWritingChevronTapped()
                         }
@@ -156,11 +157,12 @@ struct TKListeningView: View, FirebaseAnalyzable {
             }
             
             Button {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "next",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "next",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.next))
                 store.blockButtonDoubleTap {
                     store.onStopRecordingButtonTapped()
                 }
@@ -206,11 +208,12 @@ struct TKListeningView: View, FirebaseAnalyzable {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "cancel",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "cancel",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.cancel))
                 store.onConversationDismissButtonTapped()
                 
             } label: {
@@ -241,11 +244,12 @@ struct TKListeningView: View, FirebaseAnalyzable {
                         store.onSaveConversationButtonTapped()
                     }
                     
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "save",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "save",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.save))
                 }
             } label: {
                 BDText(text: "저장", style: .H1_B_130)

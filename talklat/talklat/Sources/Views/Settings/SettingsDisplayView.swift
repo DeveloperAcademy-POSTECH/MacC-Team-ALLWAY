@@ -50,23 +50,11 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
             .onChange(of: selectedTheme) {
                 switch selectedTheme {
                 case .unspecified:
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "sameMode",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.sameMode))
                 case .light:
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "lightMode",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.lightMode))
                 case .dark:
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "darkMode",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.darkMode))
                 }
             }
             Spacer()
@@ -76,11 +64,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {

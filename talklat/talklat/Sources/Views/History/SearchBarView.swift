@@ -38,11 +38,12 @@ struct SearchBarView: View, FirebaseAnalyzable {
             
             if isSearching {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "eraseAll",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "eraseAll",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.eraseAll))
                     // Dismiss Search UI
                     withAnimation(
                         .spring(
@@ -67,17 +68,19 @@ struct SearchBarView: View, FirebaseAnalyzable {
         }
         .onChange(of: isSearching) { _, _ in
             if isSearching == true {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "field",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "field",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.field))
             } else {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "cancel",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "cancel",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.cancel))
             }
         }
     }

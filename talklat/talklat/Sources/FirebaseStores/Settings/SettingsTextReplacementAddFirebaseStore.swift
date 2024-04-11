@@ -8,7 +8,7 @@
 import Foundation
 
 struct SettingsTextReplacementAddFirebaseStore: TKFirebaseStore {
-    var viewID: String = "STA"
+    var viewId: String = "STA"
     
     func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
         

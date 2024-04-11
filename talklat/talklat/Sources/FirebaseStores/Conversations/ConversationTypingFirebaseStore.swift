@@ -8,7 +8,7 @@
 import Foundation
 
 struct ConversationTypingFirebaseStore: TKFirebaseStore {
-    let viewID: String = "CT"
+    let viewId: String = "CT"
     
     enum FirebaseAction: String, FirebaseActionable {
         static let cancel = "cancel"

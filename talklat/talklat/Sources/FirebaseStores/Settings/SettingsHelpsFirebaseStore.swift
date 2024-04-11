@@ -8,7 +8,7 @@
 import Foundation
 
 struct SettingsHelpsFirebaseStore: TKFirebaseStore {
-    var viewID: String = "SH"
+    var viewId: String = "SH"
     
     func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
         

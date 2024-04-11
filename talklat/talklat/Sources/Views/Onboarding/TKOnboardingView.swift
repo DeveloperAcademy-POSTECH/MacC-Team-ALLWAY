@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TKOnboardingView: View, FirebaseAnalyzable {
+struct TKOnboardingView: View {
     #warning("추후 app 에서 호출하고 status를 관리하게 될 예정")
     #warning("View 에서 로직 분리 필요")
     @ObservedObject var authManager: TKAuthManager
@@ -31,8 +31,6 @@ struct TKOnboardingView: View, FirebaseAnalyzable {
         description: "",
         highlightTarget: []
     )
-    
-    let firebaseStore: any TKFirebaseStore = PermitAlertFirebaseStore()
     
     var body: some View {
         VStack {
@@ -106,9 +104,6 @@ struct TKOnboardingView: View, FirebaseAnalyzable {
                 authManager.checkCurrentAuthorizedCondition()
                 proceedOnboardingStep()
             }
-        }
-        .onAppear {
-            firebaseStore.userDidAction(.viewed)
         }
     }
     

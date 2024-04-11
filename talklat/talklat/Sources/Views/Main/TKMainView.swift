@@ -10,8 +10,6 @@ import MapKit
 import SwiftUI
 
 struct TKMainView: View, FirebaseAnalyzable {
-    var firebaseStore: any TKFirebaseStore = MainViewFirebaseStore()
-    
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
@@ -23,6 +21,9 @@ struct TKMainView: View, FirebaseAnalyzable {
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
+    
+    let firebaseStore: any TKFirebaseStore = MainViewFirebaseStore()
+    let permitAlertFirebaseStore: any TKFirebaseStore = PermitAlertFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -128,11 +129,12 @@ struct TKMainView: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded{ _ in
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "history",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "history",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.history))
                         }
                 )
             }
@@ -149,11 +151,12 @@ struct TKMainView: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "setting",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "setting",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.setting))
                         }
                 )
             }
@@ -161,8 +164,22 @@ struct TKMainView: View, FirebaseAnalyzable {
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
         .showTKAlert(
             isPresented: store[\.isSpeechAuthAlertPresented],
-            style: .conversation
+            style: .conversation,
+            onDismiss: {
+//                permitAlertFirebaseStore.userDidAction(
+//                    .tapped,
+//                    "back",
+//                    nil
+//                )
+                permitAlertFirebaseStore.userDidAction(.tapped(.back))
+            }
         ) {
+//            permitAlertFirebaseStore.userDidAction(
+//                .tapped,
+//                "permit",
+//                nil
+//            )
+            permitAlertFirebaseStore.userDidAction(.tapped(.permit))
             store.onGoSettingScreenButtonTapped()
             
         } confirmButtonLabel: {
@@ -183,6 +200,9 @@ struct TKMainView: View, FirebaseAnalyzable {
                 )
             }
         }
+        .onAppear {
+            permitAlertFirebaseStore.userDidAction(.viewed) // 확인 필요
+        }
     }
     
     private func startConversationButtonBuilder() -> some View {
@@ -195,11 +215,12 @@ struct TKMainView: View, FirebaseAnalyzable {
             } else {
                 store.onStartConversationButtonTapped()
             }
-            firebaseStore.userDidAction(
-                .tapped,
-                "newConversation",
-                nil
-            )
+//            firebaseStore.userDidAction(
+//                .tapped,
+//                "newConversation",
+//                nil
+//            )
+            firebaseStore.userDidAction(.tapped(.newConversation))
         } label: {
             ZStack {
                 Circle()

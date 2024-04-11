@@ -25,11 +25,12 @@ struct SettingsHelpView: View, FirebaseAnalyzable {
                 Image(systemName: "chevron.right")
             }
             .onTapGesture {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "mail",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "mail",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.mail))
                 isEmailShowing = true
             }
             
@@ -41,11 +42,12 @@ struct SettingsHelpView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "back",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {

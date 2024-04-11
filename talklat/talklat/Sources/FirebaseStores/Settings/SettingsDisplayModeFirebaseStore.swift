@@ -8,7 +8,7 @@
 import Foundation
 
 struct SettingsDisplayModeFirebaseStore: TKFirebaseStore {
-    var viewID: String = "SD"
+    var viewId: String = "SD"
     
     func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
         

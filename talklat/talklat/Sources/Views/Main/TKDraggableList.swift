@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TKDraggableList: View {
+struct TKDraggableList: View, FirebaseAnalyzable {
     @EnvironmentObject private var locationStore: TKLocationStore
     @ObservedObject var mainViewstore: TKMainViewStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
@@ -15,6 +15,8 @@ struct TKDraggableList: View {
     @GestureState var gestureOffset: CGFloat = 0
     let firstOffset = UIScreen.main.bounds.height * 0.65
     let dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
+    let firebaseStore: any TKFirebaseStore = NearMeFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -44,6 +46,12 @@ struct TKDraggableList: View {
             }
             .onChange(of: mainViewstore(\.lastOffset)) { _, _ in
                 mainViewstore.onBottomSheetMaxed(firstOffset)
+            }
+            .onChange(of: mainViewstore(\.isBottomSheetMaxed)) { _ , _ in
+                if mainViewstore(\.isBottomSheetMaxed) == true {
+//                    firebaseStore.userDidAction(.viewed, nil, [.viewedType])
+                    firebaseStore.userDidAction(.viewed)
+                }
             }
             .onChange(of: dataStore.conversations) { _, newValue in
                 draggableListViewStore.reduce(

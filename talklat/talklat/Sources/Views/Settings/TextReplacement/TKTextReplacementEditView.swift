@@ -33,11 +33,12 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 .focused($shortTextFieldFocusState)
                 .onChange(of: shortTextFieldFocusState) {
                     if shortTextFieldFocusState == true {
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "shortenTextField",
-                            nil
-                        )
+//                        firebaseStore.userDidAction(
+//                            .tapped,
+//                            "shortenTextField",
+//                            nil
+//                        )
+                        firebaseStore.userDidAction(.tapped(.shortenTextField))
                     }
                 }
                 
@@ -52,11 +53,12 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 .focused($longTextFieldFocusState)
                 .onChange(of: longTextFieldFocusState) {
                     if longTextFieldFocusState == true {
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "fullTextField",
-                            nil
-                        )
+//                        firebaseStore.userDidAction(
+//                            .tapped,
+//                            "fullTextField",
+//                            nil
+//                        )
+                        firebaseStore.userDidAction(.tapped(.fullTextField))
                     }
                 }
             }
@@ -65,11 +67,12 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             
             if !shortTextFieldFocusState {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "delete",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "delete",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.delete))
                     store.onShowDialogButtonTapped()
                 } label: {
                     BDText(text: "텍스트 대치 삭제", style: .H1_B_130)
@@ -117,11 +120,12 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "save",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "save",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.save))
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -142,17 +146,19 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             isPresented: store.bindingShowTKAlert(),
             style: .removeTextReplacement(title: "텍스트 대치 삭제"),
             onDismiss: {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "alertBack", nil)
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "alertBack", nil)
+                firebaseStore.userDidAction(.tapped(.alertBack))
                 store.onDismissRemoveAlert()
             },
             confirmButtonAction: {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "alertDelete",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "alertDelete",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.alertDelete))
                 swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()

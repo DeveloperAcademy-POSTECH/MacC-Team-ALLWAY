@@ -36,11 +36,12 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "preview",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "preview",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.preview))
                         }
                 )
             } label: {
@@ -75,11 +76,12 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
             .padding(.vertical, 24)
             .onChange(of: focusState) {
                 if focusState == true {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "guideMessageField",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "guideMessageField",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.guideMesageField))
                 }
             }
             
@@ -112,11 +114,12 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "back",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {

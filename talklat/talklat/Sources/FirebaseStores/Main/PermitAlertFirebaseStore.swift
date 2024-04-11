@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct PermitAlertFirebaseStore: TKFirebaseStore {
-    let viewID: String = "PA"
+    let viewId: String = "PA"
     
     enum FirebaseAction: String, FirebaseActionable {
         case permit

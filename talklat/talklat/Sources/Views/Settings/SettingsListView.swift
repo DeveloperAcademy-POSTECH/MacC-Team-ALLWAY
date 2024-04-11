@@ -110,11 +110,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "textReplace",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.textReplacement))
                                                 }
                                         )
                                
@@ -124,11 +120,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "guideMessage",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.guideMessage))
                                                 }
                                         )
                                 
@@ -138,11 +130,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "displayMode",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.displayMode))
                                                 }
                                         )
                                     // SettingsDisplayTestingView()
@@ -162,11 +150,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "personalInfo",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.personalInfo))
                                                 }
                                         )
                                     
@@ -176,11 +160,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "makers",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.makers))
                                                 }
                                         )
                                
@@ -190,11 +170,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(
-                                                        .tapped,
-                                                        "help",
-                                                        nil
-                                                    )
+                                                    firebaseStore.userDidAction(.tapped(.help))
                                                 }
                                         )
                                 }
@@ -225,11 +201,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
         .onChange(of: locationStore(\.authorizationStatus)) { _, newValue in
             switch newValue {
             case .authorizedAlways, .authorizedWhenInUse:
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "locationPermit",
-                    nil
-                )
+                firebaseStore.userDidAction(.tapped(.locationPermit))
                 authManager.isLocationAuthorized = true
             default:
                 authManager.isLocationAuthorized = false
@@ -238,11 +210,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -308,17 +276,9 @@ struct SettingsListView: View, FirebaseAnalyzable {
                 .onEnded { _ in
                     switch noticeItem {
                     case .micAndSpeech:
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "speechPermit",
-                            nil
-                        )
+                        firebaseStore.userDidAction(.tapped(.speechPermit))
                     case .location:
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "locationPermit",
-                            nil
-                        )
+                        firebaseStore.userDidAction(.tapped(.locationPermit))
                     }
                 }
         )

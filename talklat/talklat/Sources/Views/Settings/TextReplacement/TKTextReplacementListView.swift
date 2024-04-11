@@ -111,11 +111,12 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "back",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "back",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -136,11 +137,12 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "add",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "add",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.add))
                     store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
@@ -200,11 +202,12 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         .simultaneousGesture(
                             TapGesture()
                                 .onEnded { _ in
-                                    firebaseStore.userDidAction(
-                                        .tapped,
-                                        "item",
-                                        nil
-                                    )
+//                                    firebaseStore.userDidAction(
+//                                        .tapped,
+//                                        "item",
+//                                        nil
+//                                    )
+                                    firebaseStore.userDidAction(.tapped(.item))
                                 }
                         )
                         .onAppear {
@@ -256,11 +259,12 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
                 if !oldValue,
                    newValue {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "field",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "field",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.field))
                     store.onSearchingText()
                 }
             }

@@ -28,11 +28,12 @@ struct TKGuidingView: View, FirebaseAnalyzable {
     var body: some View {
         VStack(alignment: .leading) {
             Button {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "cancel",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "cancel",
+//                    [.viewedType]
+//                )
+                firebaseStore.userDidAction(.tapped(.cancel))
                 
                 store.onGuideCancelButtonTapped()
             } label: {

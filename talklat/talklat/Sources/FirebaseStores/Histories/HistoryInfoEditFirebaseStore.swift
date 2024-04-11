@@ -8,7 +8,7 @@
 import Foundation
 
 struct HistoryInfoEditFirebaseStore: TKFirebaseStore {
-    var viewID: String = "HIE"
+    var viewId: String = "HIE"
     
     func detailUserAction(_ actionType: UserActionType, _ eventName: String, _ payload: [String : Any]?) {
         

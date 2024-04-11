@@ -115,11 +115,12 @@ struct TKTypingView: View, FirebaseAnalyzable {
                         .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
                         .onChange(of: focusState) { _, newValue in
                             if newValue == true {
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "field",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "field",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.field))
                             }
                         }
                         
@@ -180,11 +181,12 @@ extension TKTypingView {
     
     private func startRecordingButtonBuilder() -> some View {
         Button {
-            firebaseStore.userDidAction(
-                .tapped,
-                "next",
-                nil
-            )
+//            firebaseStore.userDidAction(
+//                .tapped,
+//                "next",
+//                nil
+//            )
+            firebaseStore.userDidAction(.tapped(.next))
             self.hideKeyboard()
             store.blockButtonDoubleTap {
                 store.onStartRecordingButtonTapped()
@@ -252,11 +254,12 @@ extension TKTypingView {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "cancel",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "cancel",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.cancel))
                 
                 store.onConversationDismissButtonTapped()
                 
@@ -286,11 +289,12 @@ extension TKTypingView {
             
             Button {
                 store.blockButtonDoubleTap {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "save",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "save",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.save))
                     // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
                     // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
                     if let previousConversation = store(\.previousConversation) {
@@ -326,11 +330,12 @@ extension TKTypingView {
             HStack(spacing: 12) {
                 // MARK: Eraser button
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "eraseAll",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "eraseAll",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.eraseAll))
                     store.onEraseAllButtonTapped()
                     
                 } label: {
@@ -353,11 +358,12 @@ extension TKTypingView {
                         let firstReplacement = replacements.first { // 첫 번째 요소를 사용
                         
                         Button {
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "textReplace",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "textReplace",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.textReplace))
                             store.onTextReplaceButtonTapped(
                                 with: firstReplacement,
                                 key: key

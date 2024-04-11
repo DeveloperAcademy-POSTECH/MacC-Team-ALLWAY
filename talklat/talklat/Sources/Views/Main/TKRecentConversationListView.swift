@@ -46,11 +46,12 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                     if draggableListViewStore(\.conversations).count > 0 {
                         ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
                             Button {
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "nearMeItem",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "nearMeItem",
+//                                    [.nearMeType(conversation, locationStore.calculateDistance(conversation.location) ?? 0)]
+//                                )
+                                firebaseStore.userDidAction(.tapped(.nearMeItem))
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
                                 
@@ -138,9 +139,6 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                     
                 } confirmButtonLabel: {
                     Text("네, 그만 할래요")
-                }
-                .onAppear {
-                    firebaseStore.userDidAction(.viewed)
                 }
                 .onDisappear {
                     conversationViewStore.resetConversationState()

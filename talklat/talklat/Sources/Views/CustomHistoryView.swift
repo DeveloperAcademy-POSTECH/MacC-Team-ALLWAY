@@ -82,11 +82,12 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
             if historyViewType == .item {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "back",
-                            nil
-                        )
+//                        firebaseStore.userDidAction(
+//                            .tapped,
+//                            "back",
+//                            nil
+//                        )
+                        firebaseStore.userDidAction(.tapped(.back))
                         dismiss()
                     } label: {
                         HStack {

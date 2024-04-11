@@ -53,19 +53,21 @@ struct EmailView: UIViewControllerRepresentable {
             
             switch result {
             case .cancelled:
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "cancel",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "cancel",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.cancel))
             case .saved:
                 break
             case .sent:
-                firebaseStore.userDidAction(
-                    .tapped,
-                    "send",
-                    nil
-                )
+//                firebaseStore.userDidAction(
+//                    .tapped,
+//                    "send",
+//                    nil
+//                )
+                firebaseStore.userDidAction(.tapped(.send))
             case .failed:
                 break
             @unknown default:

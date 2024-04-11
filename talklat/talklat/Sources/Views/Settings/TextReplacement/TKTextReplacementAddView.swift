@@ -36,11 +36,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
             )
             .onChange(of: shortTextFieldFocusState) {
                 if shortTextFieldFocusState == true {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "shortenTextField",
-                        nil
-                    )
+                    firebaseStore.userDidAction(.tapped(.shortenTextField))
                 }
             }
             .onChange(of: phrase) { newValue in
@@ -59,11 +55,12 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
             .padding(.top, 24)
             .onChange(of: longTextFieldFocusState) {
                 if longTextFieldFocusState == true {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "fullTextField",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "fullTextField",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.fullTextField))
                 }
             }
             .onChange(of: replacement) { newValue in
@@ -86,11 +83,12 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                 
                 HStack {
                     Button {
-                        firebaseStore.userDidAction(
-                            .tapped,
-                            "cancel",
-                            nil
-                        )
+//                        firebaseStore.userDidAction(
+//                            .tapped,
+//                            "cancel",
+//                            nil
+//                        )
+                        firebaseStore.userDidAction(.tapped(.cancel))
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         BDText(
@@ -110,11 +108,12 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                     
                     Button {
                         if isInputValid {
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "complete",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "complete",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.complete))
                             if let item: TKTextReplacement = store.makeNewTextReplacement(
                                 phrase: phrase,
                                 replacement: replacement

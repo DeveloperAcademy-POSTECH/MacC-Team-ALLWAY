@@ -78,11 +78,12 @@ struct HistoryListView: View, FirebaseAnalyzable {
                     ToolbarItem(placement: .topBarLeading) {
                         // Back Button
                         Button {
-                            firebaseStore.userDidAction(
-                                .tapped,
-                                "back",
-                                nil
-                            )
+//                            firebaseStore.userDidAction(
+//                                .tapped,
+//                                "back",
+//                                nil
+//                            )
+                            firebaseStore.userDidAction(.tapped(.back))
                             dismiss()
                         } label: {
                             HStack {
@@ -126,17 +127,19 @@ struct HistoryListView: View, FirebaseAnalyzable {
                         }
                         .onChange(of: isEditing) { _, newValue in
                             if newValue == true {
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "edit",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "edit",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.edit))
                             } else {
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "complete",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "complete",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.complete))
                             }
                         }
                     }
@@ -156,19 +159,21 @@ struct HistoryListView: View, FirebaseAnalyzable {
             isPresented: $isDialogShowing,
             style: .removeConversation(title: selectedConversation.title)
         ) {
-            firebaseStore.userDidAction(
-                .tapped,
-                "alertCancel",
-                nil
-            )
+//            firebaseStore.userDidAction(
+//                .tapped,
+//                "alertCancel",
+//                nil
+//            )
+            firebaseStore.userDidAction(.tapped(.alertCancel))
             isDialogShowing = false
             
         } confirmButtonAction: {
-            firebaseStore.userDidAction(
-                .tapped,
-                "alertDelete",
-                nil
-            )
+//            firebaseStore.userDidAction(
+//                .tapped,
+//                "alertDelete",
+//                nil
+//            )
+            firebaseStore.userDidAction(.tapped(.alertDelete))
             withAnimation {
                 // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
                 // Delete Content
@@ -196,7 +201,8 @@ struct HistoryListView: View, FirebaseAnalyzable {
                 )
             ) {
                 if $isSearchFocused.wrappedValue {
-                    firebaseStore.userDidAction(.tapped, "field", nil)
+//                    firebaseStore.userDidAction(.tapped, "field", nil)
+                    firebaseStore.userDidAction(.tapped(.field))
                     isSearching = true
                 } else {
                     isSearching = false
@@ -241,11 +247,12 @@ struct LocationList: View, FirebaseAnalyzable {
                 
                 // Collapse Button
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "discloseSection",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "discloseSection",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.discloseSection))
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -296,11 +303,12 @@ struct LocationList: View, FirebaseAnalyzable {
                     .simultaneousGesture(
                         TapGesture()
                             .onEnded { _ in
-                                firebaseStore.userDidAction(
-                                    .tapped,
-                                    "item",
-                                    nil
-                                )
+//                                firebaseStore.userDidAction(
+//                                    .tapped,
+//                                    "item",
+//                                    nil
+//                                )
+                                firebaseStore.userDidAction(.tapped(.item))
                             }
                     )
                 }

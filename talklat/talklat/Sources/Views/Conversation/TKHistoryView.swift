@@ -59,11 +59,12 @@ struct TKHistoryView: View, FirebaseAnalyzable {
         .safeAreaInset(edge: .bottom) {
             if store(\.isTopViewShown) {
                 Button {
-                    firebaseStore.userDidAction(
-                        .tapped,
-                        "goToTypingView",
-                        nil
-                    )
+//                    firebaseStore.userDidAction(
+//                        .tapped,
+//                        "goToTypingView",
+//                        nil
+//                    )
+                    firebaseStore.userDidAction(.tapped(.goToTypingView))
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {
