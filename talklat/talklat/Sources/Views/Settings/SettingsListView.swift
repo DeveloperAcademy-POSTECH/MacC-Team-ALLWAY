@@ -110,7 +110,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                         .simultaneousGesture(
                                             TapGesture()
                                                 .onEnded { _ in
-                                                    firebaseStore.userDidAction(.tapped(.textReplacement))
+                                                    firebaseStore.userDidAction(.tapped(.textReplace))
                                                 }
                                         )
                                
