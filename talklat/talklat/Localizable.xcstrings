@@ -1496,6 +1496,7 @@
       }
     },
     "Sorry, we could not load this url." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1705,8 +1706,38 @@
         }
       }
     },
+    "webView.loading.failure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry, we could not load this url."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "죄송합니다. 페이지를 불러올 수 없습니다."
+          }
+        }
+      }
+    },
     "개인정보 처리방침" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "개인정보 처리방침"
+          }
+        }
+      }
     },
     "권한 허용하러 가기" : {
       "extractionState" : "manual",
