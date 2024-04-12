@@ -25,12 +25,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "bisdam"
+            "value" : "bisdamRelease"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "bisdam"
           }
         }

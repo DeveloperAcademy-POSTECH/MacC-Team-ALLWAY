@@ -94,4 +94,5 @@ iOSInjectionProject/
 .DS_Store
 
 # Firebase Info plist
-GoogleService-Info.plist
+talklat/bisdamDebug/GoogleService-Info.plist
+talklat/bisdamRelease/GoogleService-Info.plist
