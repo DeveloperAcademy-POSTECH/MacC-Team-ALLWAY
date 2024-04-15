@@ -52,6 +52,7 @@ class CustomTableViewController: UITableViewController {
         guard let firstItem = messages[section].first else { return header }
         
         header.dateLabel.text = firstItem.createdAt.convertToDate()
+       
         header.timeLabel.text = firstItem.createdAt.convertToTime()
         
         return header

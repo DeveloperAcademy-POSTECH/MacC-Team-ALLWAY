@@ -34,6 +34,7 @@ struct SearchBarView: View {
                     }
                 }
             }
+            .background(Color.ExceptionWhiteW8)
             
             if isSearching {
                 Button {

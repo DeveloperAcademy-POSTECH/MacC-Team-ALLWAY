@@ -81,6 +81,7 @@ struct SettingsDisplayView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
             selectedTheme = colorSchemeManager.colorScheme
         }

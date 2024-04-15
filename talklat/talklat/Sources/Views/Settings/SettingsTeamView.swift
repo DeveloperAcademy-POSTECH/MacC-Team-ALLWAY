@@ -39,7 +39,7 @@ struct SettingsTeamView: View {
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.AlertBGWhite)
+                        .foregroundColor(.ExceptionWhiteW8)
                         .overlay {
                             Text("🙃")
                                 .font(.largeTitle)
@@ -70,7 +70,7 @@ struct SettingsTeamView: View {
                 }
                 .padding(.vertical, 16)
                 .padding(.leading, 16)
-                .background(Color.GR1)
+                .background(Color.ExceptionWhite17)
                 .cornerRadius(22)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
@@ -156,6 +156,7 @@ struct SettingsTeamView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
     }
 }
 
@@ -169,7 +170,7 @@ struct TeamOneView: View {
         HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.AlertBGWhite)
+                .foregroundColor(.ExceptionWhiteW8)
                 .overlay {
                     Text(emoji)
                         .font(.largeTitle)
@@ -198,7 +199,7 @@ struct TeamOneView: View {
         }
         .padding(.vertical, 16)
         .padding(.leading, 16)
-        .background(Color.GR1)
+        .background(Color.ExceptionWhite17)
         .cornerRadius(22)
     }
 }

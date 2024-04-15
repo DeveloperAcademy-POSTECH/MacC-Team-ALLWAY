@@ -59,6 +59,7 @@ struct CustomHistoryView: View {
             case .item:
                 // TODO: ver 1.1
                 EmptyView()
+                    .background(Color.ExceptionWhiteW8)
 //                Button {
 //                    // MARK: Start Conversation From This Location
 //                } label: {
@@ -118,6 +119,7 @@ struct CustomHistoryView: View {
         .fontWeight(.bold)
         .navigationTitle(historyViewType == .item ? conversation.title : NSLocalizedString("대화 내용", comment: ""))
         .navigationBarBackButtonHidden(true)
+        .background(Color.ExceptionWhiteW8)
     }
     
     //MARK: SwipeDown 했을때의 액션 -> ConversationViewStore 연결

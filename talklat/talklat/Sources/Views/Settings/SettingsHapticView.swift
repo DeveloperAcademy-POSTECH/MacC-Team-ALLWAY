@@ -47,6 +47,7 @@ struct SettingsHapticView: View {
                 BDText(text: "진동", style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
     }
 }
 

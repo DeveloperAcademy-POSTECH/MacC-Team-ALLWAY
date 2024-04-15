@@ -211,6 +211,7 @@ struct SettingsListView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .scrollIndicators(.hidden)
     }
     

@@ -110,6 +110,7 @@ struct SettingsGuidingEditView: View {
                 ), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onChange(of: guidingMessage) { _, _ in
             hasContentChanged = true
             
