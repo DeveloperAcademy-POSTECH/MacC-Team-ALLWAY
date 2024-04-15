@@ -124,11 +124,10 @@ struct HistoryItemLocationEditView: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
                             .fill(Color.ExceptionWhiteW8)
-                            .frame(width: 95, height: 44)
+                            .frame(width: 44, height: 44)
                             .overlay {
                                 HStack {
                                     Image(systemName: "location.fill")
-                                    Text("현위치")
                                 }
                                 .foregroundStyle(Color.OR5)
                             }

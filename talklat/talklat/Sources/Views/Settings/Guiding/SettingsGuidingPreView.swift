@@ -32,6 +32,7 @@ struct SettingsGuidingPreView: View {
             )
             
             Spacer()
+                .frame(maxWidth: .infinity)
         }
         .foregroundColor(.white)
         .frame(
@@ -47,5 +48,6 @@ struct SettingsGuidingPreView: View {
 #Preview {
     NavigationStack {
         SettingsGuidingPreView(guidingMessage: .constant("ddd"))
+            .navigationBarTitleDisplayMode(.inline)
     }
 }

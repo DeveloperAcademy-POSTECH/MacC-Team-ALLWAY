@@ -131,5 +131,6 @@ struct SettingsGuidingEditView: View {
 #Preview {
     NavigationStack {
         SettingsGuidingEditView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
