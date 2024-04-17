@@ -305,6 +305,7 @@
 		CE4AB1B32BC938B90044C29E /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		CE4AB1CE2BC941480044C29E /* bisdam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 577B45292B0DE78E00DA010E /* bisdam-Info.plist */; };
 		CE4AB1D82BC94F0A0044C29E /* bisdam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 577B45292B0DE78E00DA010E /* bisdam-Info.plist */; };
+		CE4AB1ED2BC95E990044C29E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -453,6 +454,7 @@
 		CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMakersFirebaseStore.swift; sourceTree = "<group>"; };
 		CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalize.swift"; sourceTree = "<group>"; };
 		CE4AB1B82BC938B90044C29E /* bisdamDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisdamDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -889,6 +891,7 @@
 		CE4AB1C82BC93BEC0044C29E /* bisdamDebug */ = {
 			isa = PBXGroup;
 			children = (
+				CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */,
 			);
 			path = bisdamDebug;
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 				CE4AB1282BC938B90044C29E /* Pretendard-SemiBold.otf in Resources */,
 				CE4AB1292BC938B90044C29E /* Pretendard-Black.otf in Resources */,
 				CE4AB12A2BC938B90044C29E /* Localizable.xcstrings in Resources */,
+				CE4AB1ED2BC95E990044C29E /* GoogleService-Info.plist in Resources */,
 				CE4AB12B2BC938B90044C29E /* Pretendard-Regular.otf in Resources */,
 				CE4AB12C2BC938B90044C29E /* Assets.xcassets in Resources */,
 				CE4AB12D2BC938B90044C29E /* BDSplash_Dark.json in Resources */,

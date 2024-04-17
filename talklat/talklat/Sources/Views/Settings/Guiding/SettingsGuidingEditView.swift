@@ -69,6 +69,15 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
             )
             .lineLimit(3)
             .padding(.vertical, 24)
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(
+                            .tapped(.save),
+                            .guideMessageType(guidingMessage)
+                        )
+                    }
+            )
             .onChange(of: focusState) {
                 if focusState == true {
                     firebaseStore.userDidAction(.tapped(.guideMesageField))
@@ -141,10 +150,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                     self.guidingMessage,
                     forKey: "guidingMessage"
                 )
-                firebaseStore.userDidAction(
-                    .tapped(.save),
-                    .guideMessageType(guidingMessage)
-                )
+                
                 isTextEmpty = false
             } else {
                 isTextEmpty = true
