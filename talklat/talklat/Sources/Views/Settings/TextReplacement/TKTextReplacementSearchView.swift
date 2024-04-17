@@ -37,10 +37,12 @@ struct TKTextReplacementSearchView: View {
     var body: some View {
         if filteredLists.isEmpty {
             emptySearchResultView
+                .background(Color.ExceptionWhiteW8)
         } else {
             ScrollView {
                 searchResultList
             }
+            .background(Color.ExceptionWhiteW8)
         }
     }
     

@@ -140,6 +140,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
             }
         }
         .padding(.horizontal, 20)
+        .background(Color.ExceptionWhiteW8)
         .showTKAlert(
             isPresented: $isDialogShowing,
             style: .removeConversation(title: selectedConversation.title)
@@ -284,6 +285,7 @@ struct LocationList: View, FirebaseAnalyzable {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
     }
 }
 
@@ -344,14 +346,14 @@ struct CellItem: View, FirebaseAnalyzable {
                         text:conversation.createdAt.convertToDate(),
                         style: .H2_M_135
                     )
-                    .foregroundColor(.GR4)
+                    .foregroundColor(.GR5)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .opacity(isEditing ? 0 : 1)
-                    .foregroundColor(.GR4)
+                    .foregroundColor(.ExceptionWhite36)
                     .font(
                         .system(
                             size: 17,
@@ -362,7 +364,7 @@ struct CellItem: View, FirebaseAnalyzable {
             }
             .frame(height: 60)
             .padding(.horizontal)
-            .background(Color.GR1)
+            .background(Color.ExceptionWhite17)
             .cornerRadius(16)
             .onTapGesture {
                 if isRemoving && isEditing {

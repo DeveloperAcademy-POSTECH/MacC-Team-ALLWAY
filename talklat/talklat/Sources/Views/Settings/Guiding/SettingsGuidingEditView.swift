@@ -68,21 +68,17 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 limit: 30
             )
             .lineLimit(3)
-            .padding(.vertical, 24)
             .simultaneousGesture(
                 TapGesture()
                     .onEnded { _ in
                         firebaseStore.userDidAction(
-                            .tapped(.save),
+                            .tapped(.guideMesageField),
                             .guideMessageType(guidingMessage)
                         )
                     }
             )
-            .onChange(of: focusState) {
-                if focusState == true {
-                    firebaseStore.userDidAction(.tapped(.guideMesageField))
-                }
-            }
+            .padding(.vertical, 24)
+            
             
             // FixedMessage Text
             VStack(alignment: .leading) {
@@ -141,6 +137,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 ), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onChange(of: guidingMessage) { _, _ in
             hasContentChanged = true
             

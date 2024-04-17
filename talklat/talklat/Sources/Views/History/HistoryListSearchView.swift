@@ -30,6 +30,7 @@ struct HistoryListSearchView: View {
             switch searchStatus {
             case .inactive:
                 EmptyView()
+                    .background(Color.ExceptionWhiteW8)
                 
             case .resultFound:
                 ScrollView {
@@ -48,6 +49,7 @@ struct HistoryListSearchView: View {
                 }
                 .scrollIndicators(.hidden)
                 .transition(.identity)
+                .background(Color.ExceptionWhiteW8)
                 
             case .resultNotFound:
                 TKUnavailableViewBuilder(
@@ -55,6 +57,7 @@ struct HistoryListSearchView: View {
                     description: NSLocalizedString("noSearchResult", comment: "")
                 )
                 .transition(.identity)
+                .background(Color.ExceptionWhiteW8)
                 
                 Spacer()
             }
@@ -272,7 +275,7 @@ struct SearchResultItem: View {
                 
                 BDText(
                     text: matchingContent.createdAt.convertToDate(),
-                    style: .H2_M_135
+                    style: .C1_SB_130
                 )
                 .foregroundColor(.GR4)
             }
@@ -282,7 +285,6 @@ struct SearchResultItem: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 9)
         .padding(.horizontal, 16)
-        .background(Color.GR1)
         .cornerRadius(16)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")

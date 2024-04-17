@@ -61,6 +61,7 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
             case .item:
                 // TODO: ver 1.1
                 EmptyView()
+                    .background(Color.ExceptionWhiteW8)
 //                Button {
 //                    // MARK: Start Conversation From This Location
 //                } label: {
@@ -121,6 +122,7 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
         .fontWeight(.bold)
         .navigationTitle(historyViewType == .item ? conversation.title : NSLocalizedString("대화 내용", comment: ""))
         .navigationBarBackButtonHidden(true)
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
             firebaseStore.userDidAction(.viewed)
         }

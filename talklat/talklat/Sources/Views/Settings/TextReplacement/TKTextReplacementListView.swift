@@ -91,7 +91,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                                         .padding(.top, 24)
                                 ) {
                                     listSection(groupKey)
-                                        .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
+                                        .background(Color.ExceptionWhite17.clipShape(RoundedRectangle(cornerRadius: 15)))
                                         .padding(.horizontal, 16)
                                 }
                             }
@@ -148,7 +148,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView(store: store)
         }
-        .background(Color.BaseBGWhite)
+        .background(Color.ExceptionWhiteW8)
     }
     
     // MARK: 리스트 정렬

@@ -36,6 +36,7 @@ struct SearchBarView: View, FirebaseAnalyzable {
                     }
                 }
             }
+            .background(Color.ExceptionWhiteW8)
             
             if isSearching {
                 Button {

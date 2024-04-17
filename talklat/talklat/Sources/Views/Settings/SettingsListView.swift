@@ -227,6 +227,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .scrollIndicators(.hidden)
     }
     

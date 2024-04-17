@@ -93,6 +93,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
             firebaseStore.userDidAction(.viewed)
             selectedTheme = colorSchemeManager.colorScheme

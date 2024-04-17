@@ -84,6 +84,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                 BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
             firebaseStore.userDidAction(.viewed)
             if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
