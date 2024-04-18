@@ -34,11 +34,14 @@ struct EmailView: UIViewControllerRepresentable {
         return Coordinator(self)
     }
 
-    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate, FirebaseAnalyzable {
         var parent: EmailView
+        
+        let firebaseStore: any TKFirebaseStore = SettingsHelpMailFirebaseStore()
 
         init(_ parent: EmailView) {
             self.parent = parent
+            firebaseStore.userDidAction(.viewed)
         }
 
         func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -47,6 +50,20 @@ struct EmailView: UIViewControllerRepresentable {
             } else {
                 parent.result = .success(result)
             }
+            
+            switch result {
+            case .cancelled:
+                firebaseStore.userDidAction(.tapped(.cancel))
+            case .saved:
+                break
+            case .sent:
+                firebaseStore.userDidAction(.tapped(.send))
+            case .failed:
+                break
+            @unknown default:
+                print("Some unknown result happened in mailVC \(result)")
+            }
+            
             parent.isShowing = false
         }
     }

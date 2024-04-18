@@ -103,7 +103,7 @@ struct HistoryListSearchView: View {
 }
 
 // MARK: - (Matching) Location Unit
-struct SearchResultSection: View {
+struct SearchResultSection: View, FirebaseAnalyzable {
     var location: TKLocation
     var dataStore: TKSwiftDataStore
     
@@ -111,6 +111,8 @@ struct SearchResultSection: View {
     @State private var filteredContents = [TKContent]()
     @Binding var matchingContents: [TKContent]
     @Binding var searchText: String
+    
+    let firebaseStore: any TKFirebaseStore = HistorySearchFirebaseStore()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -144,13 +146,31 @@ struct SearchResultSection: View {
                     } else {
                         Text("Conversation이 없어요!")
                     }
-                    
                 } label: {
                     SearchResultItem(
                         matchingContent: content,
                         searchText: $searchText
                     )
                 }
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            if let conversation = content.conversation {
+                                if let location = conversation.location {
+                                    firebaseStore.userDidAction(
+                                        .tapped(.item),
+                                        .historyType(
+                                            conversation,
+                                            location.blockName
+                                        ))
+                                } else {
+                                    print("From FirebaseStore: location missing")
+                                }
+                            } else {
+                                print("From firebaseStore: conversationMissing")
+                            }
+                        }
+                )
             }
         }
         .padding(.top, 24)

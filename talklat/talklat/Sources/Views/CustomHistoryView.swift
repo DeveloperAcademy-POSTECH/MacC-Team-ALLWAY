@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct CustomHistoryView: View {
+struct CustomHistoryView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @State private var showWebSheet: Bool = false
     @State private var webURL: URL?
@@ -16,6 +16,8 @@ struct CustomHistoryView: View {
     let webViewNotification = Notification.Name("webViewNotification")
     let historyViewType: HistoryViewType
     var conversation: TKConversation
+    
+    let firebaseStore: any TKFirebaseStore = HistoryInfoFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -81,6 +83,7 @@ struct CustomHistoryView: View {
             if historyViewType == .item {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.back))
                         dismiss()
                     } label: {
                         HStack {
@@ -120,6 +123,9 @@ struct CustomHistoryView: View {
         .navigationTitle(historyViewType == .item ? conversation.title : NSLocalizedString("대화 내용", comment: ""))
         .navigationBarBackButtonHidden(true)
         .background(Color.ExceptionWhiteW8)
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
     }
     
     //MARK: SwipeDown 했을때의 액션 -> ConversationViewStore 연결

@@ -8,9 +8,11 @@
 import SwiftUI
 import SwiftData
 
-struct HistoryListView: View {
+struct HistoryListView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
+    
+    let firebaseStore: any TKFirebaseStore = HistoryFirebaseStore()
     
     @State private var selectedConversation: TKConversation = TKConversation(
         title: "",
@@ -76,6 +78,7 @@ struct HistoryListView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         // Back Button
                         Button {
+                            firebaseStore.userDidAction(.tapped(.back))
                             dismiss()
                         } label: {
                             HStack {
@@ -117,6 +120,13 @@ struct HistoryListView: View {
                                 style: .H1_B_130
                             )
                         }
+                        .onChange(of: isEditing) { _, newValue in
+                            if newValue == true {
+                                firebaseStore.userDidAction(.tapped(.edit))
+                            } else {
+                                firebaseStore.userDidAction(.tapped(.complete))
+                            }
+                        }
                     }
                 }
             } else {
@@ -135,9 +145,11 @@ struct HistoryListView: View {
             isPresented: $isDialogShowing,
             style: .removeConversation(title: selectedConversation.title)
         ) {
+            firebaseStore.userDidAction(.tapped(.alertCancel(firebaseStore.viewId)))
             isDialogShowing = false
             
         } confirmButtonAction: {
+            firebaseStore.userDidAction(.tapped(.alertDelete(firebaseStore.viewId)))
             withAnimation {
                 // TODO: cascading deletion 임시방편. SwiftData relationship 수정 필요.
                 // Delete Content
@@ -165,6 +177,7 @@ struct HistoryListView: View {
                 )
             ) {
                 if $isSearchFocused.wrappedValue {
+                    firebaseStore.userDidAction(.tapped(.field))
                     isSearching = true
                 } else {
                     isSearching = false
@@ -176,11 +189,15 @@ struct HistoryListView: View {
                 isSearchFocused = false
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
     }
 }
 
 // MARK: - Location Based List Items
-struct LocationList: View {
+struct LocationList: View, FirebaseAnalyzable {
+    let firebaseStore: any TKFirebaseStore = HistoryFirebaseStore()
     var dataStore: TKSwiftDataStore
     internal var location: TKLocation
     @State internal var isCollapsed: Bool = false
@@ -205,6 +222,7 @@ struct LocationList: View {
                 
                 // Collapse Button
                 Button {
+                    firebaseStore.userDidAction(.tapped(.discloseSection))
                     withAnimation(
                         .spring(
                             .bouncy,
@@ -243,7 +261,6 @@ struct LocationList: View {
                             historyViewType: .item,
                             conversation: conversation
                         )
-                        
                     } label: {
                         CellItem(
                             conversation: conversation,
@@ -253,6 +270,12 @@ struct LocationList: View {
                         )
                         .disabled(!isEditing)
                     }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                firebaseStore.userDidAction(.tapped(.item))
+                            }
+                    )
                 }
                 .transition(
                     .asymmetric(
@@ -266,7 +289,7 @@ struct LocationList: View {
     }
 }
 
-struct CellItem: View {
+struct CellItem: View, FirebaseAnalyzable {
     var conversation: TKConversation
     
     @State internal var isRemoving: Bool = false
@@ -274,12 +297,15 @@ struct CellItem: View {
     @Binding internal var isEditing: Bool
     @Binding internal var isDialogShowing: Bool
     
+    let firebaseStore: any TKFirebaseStore = HistoryFirebaseStore()
+    
     var body: some View {
         HStack {
             HStack {
                 // Leading Remove Button Appear
                 if isEditing {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.select))
                         withAnimation(
                             .spring(
                                 .bouncy,
@@ -356,6 +382,7 @@ struct CellItem: View {
             // TrashBin Appear
             if isRemoving && isEditing {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.delete))
                     withAnimation {
                         selectedConversation = conversation
                         isDialogShowing = true

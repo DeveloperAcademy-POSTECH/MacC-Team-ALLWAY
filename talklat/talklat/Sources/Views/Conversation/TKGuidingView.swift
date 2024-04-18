@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct TKGuidingView: View {
+struct TKGuidingView: View, FirebaseAnalyzable {
     @ObservedObject var store: TKConversationViewStore
     @State private var circleTrim: CGFloat = 0.0
     @State private var flag: Bool = false
     
     let guideTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+
     let guide: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
+    let firebaseStore: any TKFirebaseStore = ConversationGuidingFirebaseStore()
 //    """
 //    해당 화면이 종료되면
 //    음성인식이 시작됩니다.
@@ -28,6 +30,8 @@ struct TKGuidingView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Button {
+                firebaseStore.userDidAction(.tapped(.cancel))
+                
                 store.onGuideCancelButtonTapped()
             } label: {
                 BDText(
@@ -63,6 +67,10 @@ struct TKGuidingView: View {
             }
             .onAppear {
                 flag.toggle()
+                firebaseStore.userDidAction(
+                    .viewed,
+                    .guideMessageType(guidingMessage)
+                )
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)

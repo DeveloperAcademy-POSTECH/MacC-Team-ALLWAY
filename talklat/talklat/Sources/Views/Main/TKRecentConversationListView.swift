@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct TKRecentConversationListView: View {
+struct TKRecentConversationListView: View, FirebaseAnalyzable {
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
     @ObservedObject var draggableListViewStore: TKDraggableListViewStore
     let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
+    let firebaseStore: any TKFirebaseStore = NearMeFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -45,9 +46,9 @@ struct TKRecentConversationListView: View {
                     if draggableListViewStore(\.conversations).count > 0 {
                         ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
                             Button {
+                                firebaseStore.userDidAction(.tapped(.nearMeItem), .nearMeType(conversation, Int(locationStore.calculateDistance(conversation.location) ?? -1.0)))
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
-                                
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -60,7 +61,7 @@ struct TKRecentConversationListView: View {
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        BDText(text: (conversation.createdAt).convertToDate(), style: .FN_SB_135)
+                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: .FN_SB_135)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()

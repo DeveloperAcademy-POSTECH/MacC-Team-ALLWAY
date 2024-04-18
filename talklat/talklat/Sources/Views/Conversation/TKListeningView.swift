@@ -8,18 +8,20 @@
 import Observation
 import SwiftUI
 
-struct TKListeningView: View {
+struct TKListeningView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
     
     @ObservedObject var store: TKConversationViewStore
     let namespaceID: Namespace.ID
+    let firebaseStore: any TKFirebaseStore = ConversationListeningFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.back))
                         store.blockButtonDoubleTap {
                             store.onBackToWritingChevronTapped()
                         }
@@ -116,6 +118,9 @@ struct TKListeningView: View {
                     )
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
     }
     
     private func bottomListeningButtonBuilder() -> some View {
@@ -149,6 +154,7 @@ struct TKListeningView: View {
             }
             
             Button {
+                firebaseStore.userDidAction(.tapped(.next))
                 store.blockButtonDoubleTap {
                     store.onStopRecordingButtonTapped()
                 }
@@ -195,6 +201,7 @@ struct TKListeningView: View {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
+                firebaseStore.userDidAction(.tapped(.cancel))
                 store.onConversationDismissButtonTapped()
                 
             } label: {
@@ -222,12 +229,13 @@ struct TKListeningView: View {
                             from: store(\.historyItems),
                             into: previousConversation
                         )
-                        
                         store.onSaveConversationIntoPreviousButtonTapped()
                         
                     } else {
                         store.onSaveConversationButtonTapped()
                     }
+                    
+                    firebaseStore.userDidAction(.tapped(.save))
                 }
             } label: {
                 BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)

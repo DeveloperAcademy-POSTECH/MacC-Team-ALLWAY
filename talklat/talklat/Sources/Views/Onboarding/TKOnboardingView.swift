@@ -31,7 +31,7 @@ struct TKOnboardingView: View {
         description: "",
         highlightTarget: []
     )
-        
+    
     var body: some View {
         VStack {
             if case .start = onboardingStep {
