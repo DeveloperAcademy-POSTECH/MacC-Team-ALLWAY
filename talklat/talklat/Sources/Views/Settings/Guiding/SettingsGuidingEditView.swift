@@ -7,21 +7,25 @@
 
 import SwiftUI
 
-struct SettingsGuidingEditView: View {
+struct SettingsGuidingEditView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @State private var hasContentChanged: Bool = false
     @State private var isTextEmpty: Bool = false
+    @FocusState var focusState: Bool
     @State private var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
-    ) ?? String("안녕하세요. \n저는 청각장애를 \n가지고 있습니다.")
+    ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
+
+    private let fixedMessage: String = NSLocalizedString("settings.guiding.edit.fixedMessage", comment: "")
+//    private let fixedMessage: String =
+//        """
+//        해당 화면이 종료되면
+//        음성인식이 시작됩니다.
+//        제 글을 읽고 또박또박 말씀해 주세요.
+//        """
+
     
-    private let fixedMessage: String =
-        """
-        해당 화면이 종료되면
-        음성인식이 시작됩니다.
-        제 글을 읽고 또박또박 말씀해 주세요.
-        """
-    
+    let firebaseStore: any TKFirebaseStore = SettingsGuideMessageEditFirebaseStore()
     var body: some View {
         VStack {
             // Show GuidingView Button
@@ -32,8 +36,8 @@ struct SettingsGuidingEditView: View {
             } label: {
                 BDText(
                     text: hasContentChanged
-                    ? "안내 문구 적용화면 미리보기"
-                    : "안내 문구 미리보기",
+                    ? NSLocalizedString("settings.guiding.edit.previewButton.changed", comment: "")
+                    : NSLocalizedString("settings.guiding.edit.previewButton", comment: ""),
                     style: .H1_B_130
                 )
                 .foregroundColor(.white)
@@ -46,27 +50,44 @@ struct SettingsGuidingEditView: View {
                 )
                 .cornerRadius(22)
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.preview))
+                    }
+            )
             .disabled(isTextEmpty)
             
             // GuidingMessage TextField
             SettingTextField(
                 isTextEmpty: $isTextEmpty,
                 text: $guidingMessage,
-                title: "안내 문구",
-                placeholder: "",
+                focusState: _focusState,
+                title: NSLocalizedString("settings.guiding.edit.title", comment: ""),
+                placeholder: NSLocalizedString("settings.guiding.edit.placeholder", comment: ""),
                 limit: 30
             )
             .lineLimit(3)
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(
+                            .tapped(.guideMesageField),
+                            .guideMessageType(guidingMessage)
+                        )
+                    }
+            )
             .padding(.vertical, 24)
+            
             
             // FixedMessage Text
             VStack(alignment: .leading) {
-                BDText(text: "고정 문구", style: .H2_SB_135)
+                BDText(text: NSLocalizedString("settings.guiding.edit.fixedMessage.title", comment: ""), style: .H2_SB_135)
                     .foregroundStyle(Color.GR5)
                     .padding(.horizontal, 16)
                 
                 HStack {
-                    Text(fixedMessage)
+                    Text(Constants.CONVERSATION_GUIDINGMESSAGE)
                         .foregroundColor(.GR4)
                     
                     Spacer()
@@ -82,9 +103,16 @@ struct SettingsGuidingEditView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
+        .onAppear {
+            firebaseStore.userDidAction(
+                .viewed,
+                .guideMessageType(guidingMessage)
+            )
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -92,17 +120,24 @@ struct SettingsGuidingEditView: View {
                             .bold()
                         
                         BDText(
-                            text: "안내 문구",
-                            style: .H1_B_130
+                            text: NSLocalizedString(
+                                "settings.guiding.title",
+                                comment: ""
+                            ),
+                               style: .H1_B_130
                         )
                     }
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "안내 문구 편집", style: .H1_B_130)
+                BDText(text: NSLocalizedString(
+                    "settings.guiding.edit",
+                    comment: ""
+                ), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onChange(of: guidingMessage) { _, _ in
             hasContentChanged = true
             
@@ -112,6 +147,7 @@ struct SettingsGuidingEditView: View {
                     self.guidingMessage,
                     forKey: "guidingMessage"
                 )
+                
                 isTextEmpty = false
             } else {
                 isTextEmpty = true
@@ -123,5 +159,6 @@ struct SettingsGuidingEditView: View {
 #Preview {
     NavigationStack {
         SettingsGuidingEditView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }

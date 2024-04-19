@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TKDraggableList: View {
+struct TKDraggableList: View, FirebaseAnalyzable {
     @EnvironmentObject private var locationStore: TKLocationStore
     @ObservedObject var mainViewstore: TKMainViewStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
@@ -15,6 +15,8 @@ struct TKDraggableList: View {
     @GestureState var gestureOffset: CGFloat = 0
     let firstOffset = UIScreen.main.bounds.height * 0.65
     let dataStore: TKSwiftDataStore = TKSwiftDataStore()
+    
+    let firebaseStore: any TKFirebaseStore = NearMeFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -38,12 +40,20 @@ struct TKDraggableList: View {
                     conversationViewStore: conversationViewStore,
                     draggableListViewStore: draggableListViewStore
                 )
-                .padding(.top, 32)
+                .padding(.top, 12)
                 .scrollDisabled(!mainViewstore(\.isBottomSheetMaxed))
                 .scrollIndicators(.hidden)
             }
             .onChange(of: mainViewstore(\.lastOffset)) { _, _ in
                 mainViewstore.onBottomSheetMaxed(firstOffset)
+            }
+            .onChange(of: mainViewstore(\.isBottomSheetMaxed)) { _ , _ in
+                if mainViewstore(\.isBottomSheetMaxed) == true {
+                    firebaseStore.userDidAction(
+                        .viewed,
+                        .allNearMeType(locationStore.getClosestConversationForGA(dataStore.conversations))
+                    )
+                }
             }
             .onChange(of: dataStore.conversations) { _, newValue in
                 draggableListViewStore.reduce(
@@ -101,6 +111,11 @@ struct TKDraggableList: View {
 #Preview {
     ZStack {
         Color.yellow
-        TKDraggableList(mainViewstore: .init(), conversationViewStore: .init())
+      
+        TKDraggableList(
+            mainViewstore: .init(),
+            conversationViewStore: .init()
+        )
+        .environmentObject(TKLocationStore())
     }
 }

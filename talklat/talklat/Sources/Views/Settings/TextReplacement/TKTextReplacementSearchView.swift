@@ -37,10 +37,12 @@ struct TKTextReplacementSearchView: View {
     var body: some View {
         if filteredLists.isEmpty {
             emptySearchResultView
+                .background(Color.ExceptionWhiteW8)
         } else {
             ScrollView {
                 searchResultList
             }
+            .background(Color.ExceptionWhiteW8)
         }
     }
     
@@ -49,7 +51,10 @@ struct TKTextReplacementSearchView: View {
             Spacer()
             Image(colorScheme == .light ? "search.result.none.light" : "search.result.none.dark")
                 .padding(.bottom, 40)
-            BDText(text: "검색 결과가 없어요", style: .H1_B_130)
+            BDText(
+                text: NSLocalizedString("noSearchResult", comment: ""),
+                style: .H1_B_130
+            )
                 .foregroundColor(Color.GR3)
             Spacer()
         }

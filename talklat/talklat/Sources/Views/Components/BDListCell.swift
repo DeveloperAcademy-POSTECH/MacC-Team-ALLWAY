@@ -34,7 +34,7 @@ struct BDListCell<LabelIcon: View, TrailingUI: View>: View {
         .frame(maxWidth: .infinity) // TODO: maxHeight 지정
         .padding(.vertical, 19)
         .padding(.horizontal, 20)
-        .background(Color.GR1)
+        .background(Color.ExceptionWhite17)
         .cornerRadius(16)
     }
     

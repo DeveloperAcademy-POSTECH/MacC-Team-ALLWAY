@@ -7,23 +7,29 @@
 
 import SwiftUI
 
-struct SettingsGuidingView: View {
+struct SettingsGuidingView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @State private var isGuidingEnabled: Bool = true
     
+    let firebaseStore: any TKFirebaseStore = SettingsGuideMessageFirebaseStore()
+    
     var body: some View {
         VStack {
-            BDListCell(label: "대화 시작 시 안내 문구 사용") {
+            BDListCell(label: NSLocalizedString("settings.guide.toggleLabel", comment: "")) {
                 } trailingUI: {
                     Toggle(
                         "",
                         isOn: $isGuidingEnabled
                     )
                     .frame(width: 70)
+                    .onChange(of: isGuidingEnabled) { _, _ in
+                        firebaseStore.userDidAction(.tapped(.toggle))
+                    }
+                    
                 }
             
             BDText(
-                text: "안내 문구는 상대방에게 대화 시작 시 필요한 안내 사항을 보여주는 용도로 사용할 수 있어요.",
+                text: NSLocalizedString("settings.guide.description", comment: ""),
                 style: .H2_SB_135
             )
             .foregroundColor(.GR3)
@@ -33,9 +39,8 @@ struct SettingsGuidingView: View {
             NavigationLink {
                 SettingsGuidingEditView()
                     .navigationBarBackButtonHidden()
-                
             } label: {
-                BDListCell(label: "안내 문구 편집") {
+                BDListCell(label: NSLocalizedString("settings.guiding.edit", comment: "")) {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
                             .foregroundColor(
@@ -45,6 +50,12 @@ struct SettingsGuidingView: View {
                             )
                     }
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.editGuideMessage))
+                    }
+            )
             .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
@@ -54,6 +65,7 @@ struct SettingsGuidingView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -61,7 +73,7 @@ struct SettingsGuidingView: View {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -69,10 +81,12 @@ struct SettingsGuidingView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "안내 문구", style: .H1_B_130)
+                BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
                 isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")
             } else {
@@ -95,6 +109,7 @@ public func isKeyPresentInUserDefaults(key: String) -> Bool {
 #Preview {
     NavigationStack {
         SettingsGuidingView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

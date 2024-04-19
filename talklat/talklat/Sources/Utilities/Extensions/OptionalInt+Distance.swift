@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension Optional where Wrapped == Int {
+extension Optional where Wrapped == Double {
     func toStringDistance() -> String {
-        guard let distance = self else { return "위치 정보 없음" }
+        guard let distance = self else { return NSLocalizedString("위치 정보 없음", comment: "") }
         
         if distance > 1000 {
             return String(Int(distance / 1000)) + "km"

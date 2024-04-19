@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TKTypingView: View {
+struct TKTypingView: View, FirebaseAnalyzable {
     // TextReplacement
     @Environment(\.dismiss) private var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
@@ -18,6 +18,7 @@ struct TKTypingView: View {
     
     @State private var matchedTextReplacement: TKTextReplacement? = nil
     let namespaceID: Namespace.ID
+    let firebaseStore: any TKFirebaseStore = ConversationTypingFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -29,7 +30,7 @@ struct TKTypingView: View {
                             ? .infinity
                             : 0
                         )
-                        .onAppear() {
+                        .onAppear {
                             store.onTKHistoryPreviewAppeared()
                         }
                 }
@@ -61,11 +62,12 @@ struct TKTypingView: View {
                                         )
                                     }
                                 )
+                                .frame(height: 200)
                             }
                         }
                         .frame(
                             maxWidth: .infinity,
-                            maxHeight: 250,
+                            maxHeight: 300,
                             alignment: .top
                         )
                         .padding(.bottom, 24)
@@ -73,7 +75,8 @@ struct TKTypingView: View {
                             Color.OR5
                                 .matchedGeometryEffect(
                                     id: "ORANGE_BACKGROUND",
-                                    in: namespaceID
+                                    in: namespaceID,
+                                    properties: .position
                                 )
                                 .ignoresSafeArea()
                         }
@@ -83,7 +86,7 @@ struct TKTypingView: View {
                     }
                     
                     Spacer()
-                        .frame(maxHeight: 32)
+                        .frame(maxHeight: 15)
                     
                     characterLimitViewBuilder()
                         .opacity(focusState ? 1.0 : 0.0)
@@ -111,10 +114,18 @@ struct TKTypingView: View {
                         .frame(maxWidth: .infinity)
                         .focused($focusState)
                         .matchedGeometryEffect(id: "QUESTION_TEXT", in: namespaceID)
+                        .onChange(of: focusState) { _, newValue in
+                            if newValue == true {
+                                firebaseStore.userDidAction(.tapped(.field))
+                            }
+                        }
                         
                     }
                     
                     Spacer()
+                }
+                .onAppear {
+                    firebaseStore.userDidAction(.viewed)
                 }
             }
         }
@@ -169,6 +180,7 @@ extension TKTypingView {
     
     private func startRecordingButtonBuilder() -> some View {
         Button {
+            firebaseStore.userDidAction(.tapped(.next))
             self.hideKeyboard()
             store.blockButtonDoubleTap {
                 store.onStartRecordingButtonTapped()
@@ -236,12 +248,15 @@ extension TKTypingView {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
+                firebaseStore.userDidAction(.tapped(.cancel))
                 store.onConversationDismissButtonTapped()
-                
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(cancelButtonTextColor())
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(cancelButtonTextColor())
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
@@ -264,6 +279,7 @@ extension TKTypingView {
             
             Button {
                 store.blockButtonDoubleTap {
+                    firebaseStore.userDidAction(.tapped(.save))
                     // MARK: Previous가 있다면 DataStore가 책임을 이어받는다.
                     // 그렇지 않다면 conversationViewStore가 책임을 유지한다.
                     if let previousConversation = store(\.previousConversation) {
@@ -281,7 +297,7 @@ extension TKTypingView {
                 }
                 
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(saveButtonTextColor())
             }
@@ -299,6 +315,7 @@ extension TKTypingView {
             HStack(spacing: 12) {
                 // MARK: Eraser button
                 Button {
+                    firebaseStore.userDidAction(.tapped(.eraseAll))
                     store.onEraseAllButtonTapped()
                     
                 } label: {
@@ -321,6 +338,11 @@ extension TKTypingView {
                         let firstReplacement = replacements.first { // 첫 번째 요소를 사용
                         
                         Button {
+                            firebaseStore.userDidAction(
+                                .tapped(.textReplace),
+                                .textReplacementType(
+                                    key, firstReplacement
+                                ))
                             store.onTextReplaceButtonTapped(
                                 with: firstReplacement,
                                 key: key
@@ -417,4 +439,5 @@ extension TKTypingView {
 
 #Preview {
     TKConversationView(store: TKConversationViewStore())
+        .environment(TKSwiftDataStore())
 }

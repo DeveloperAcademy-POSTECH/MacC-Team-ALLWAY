@@ -17,13 +17,12 @@ class TableHeader: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         dateLabel.text = Date.now.convertToDate()
-        dateLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        
+        dateLabel.font = .systemFont(ofSize: 12, weight: .semibold)
         dateLabel.textAlignment = .center
         dateLabel.textColor = UIColor.systemGray
         
         timeLabel.text = Date.now.convertToTime()
-        timeLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        timeLabel.font = .systemFont(ofSize: 12, weight: .semibold)
         timeLabel.textColor = UIColor.systemGray2
         timeLabel.textAlignment = .center
         

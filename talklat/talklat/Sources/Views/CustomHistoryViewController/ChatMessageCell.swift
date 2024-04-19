@@ -72,18 +72,18 @@ class ChatMessageCell: UITableViewCell, UITextViewDelegate {
             // textView constraints
             textView.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
             textView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -24),
-            textView.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.8, constant: -40),
+            textView.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.8, constant: 0),//0
             
             // bubbleBackgroundView constraints
-            bubbleBackgroundView.topAnchor.constraint(equalTo: textView.topAnchor, constant: -10),
-            bubbleBackgroundView.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: -16),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 10),
-            bubbleBackgroundView.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 16),
+            bubbleBackgroundView.topAnchor.constraint(equalTo: textView.topAnchor, constant: -4),
+            bubbleBackgroundView.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: -14),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 4),
+            bubbleBackgroundView.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 14),
             
             // iconView constraints
             iconView.widthAnchor.constraint(equalToConstant: 24),
             iconView.heightAnchor.constraint(equalToConstant: 24),
-            iconView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: -2)
+            iconView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: -8)
         ]
         NSLayoutConstraint.activate(constraints)
         

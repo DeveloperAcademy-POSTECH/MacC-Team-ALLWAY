@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementListView: View {
+struct TKTextReplacementListView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
@@ -37,6 +37,8 @@ struct TKTextReplacementListView: View {
         }
     }
     
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementFirebaseStore()
+    
     var body: some View {
         VStack {
             searchBarBuilder()
@@ -58,8 +60,12 @@ struct TKTextReplacementListView: View {
                             .foregroundColor(.GR2)
                             .padding(.bottom, 30)
                         
-                        BDText(text: "아직 설정한 텍스트 대치가 없어요", style: .H1_M_130)
-                            .foregroundStyle(Color.GR3)
+                        BDText(
+                            text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"),
+                            style: .H1_SB_130
+                        )
+                        .foregroundStyle(Color.GR3)
+                        .multilineTextAlignment(.center)
                     }
                     .frame(
                         maxHeight: .infinity,
@@ -85,7 +91,7 @@ struct TKTextReplacementListView: View {
                                         .padding(.top, 24)
                                 ) {
                                     listSection(groupKey)
-                                        .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
+                                        .background(Color.ExceptionWhite17.clipShape(RoundedRectangle(cornerRadius: 15)))
                                         .padding(.horizontal, 16)
                                 }
                             }
@@ -103,9 +109,13 @@ struct TKTextReplacementListView: View {
                 }
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -113,7 +123,7 @@ struct TKTextReplacementListView: View {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -121,11 +131,12 @@ struct TKTextReplacementListView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "텍스트 대치", style: .H1_B_130)
+                BDText(text: NSLocalizedString("textReplacement.title", comment: ""), style: .H1_B_130)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.add))
                     store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
@@ -137,7 +148,7 @@ struct TKTextReplacementListView: View {
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView(store: store)
         }
-        .background(Color.BaseBGWhite)
+        .background(Color.ExceptionWhiteW8)
     }
     
     // MARK: 리스트 정렬
@@ -200,6 +211,13 @@ struct TKTextReplacementListView: View {
                         )
                         .cornerRadius(16)
                     }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                print("HI hello")
+                                firebaseStore.userDidAction(.tapped(.item))
+                            }
+                    )
                 }
             }
         }
@@ -211,13 +229,14 @@ struct TKTextReplacementListView: View {
             AWTextField(
                 style: .search,
                 text: store.bindingSearchText(),
-                placeholder: "검색"
+                placeholder: NSLocalizedString("settings.textReplacement.search.placeholder", comment: "Search")
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
             } trailingButton: {
                 if !store.viewState.searchText.isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.eraseAll))
                         store.onSearchTextRemoveButtonTapped()
                         
                     } label: {
@@ -231,18 +250,20 @@ struct TKTextReplacementListView: View {
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
                 if !oldValue,
                    newValue {
+                    firebaseStore.userDidAction(.tapped(.field))
                     store.onSearchingText()
                 }
             }
             
             if store(\.isSearching) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.cancel))
                     self.hideKeyboard()
                     store.cancelSearchAndHideKeyboard()
                     
                 } label: {
                     BDText(
-                        text: "취소",
+                        text: NSLocalizedString("취소", comment: ""),
                         style: .H1_B_130
                     )
                 }

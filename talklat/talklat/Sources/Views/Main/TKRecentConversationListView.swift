@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct TKRecentConversationListView: View {
+struct TKRecentConversationListView: View, FirebaseAnalyzable {
     @EnvironmentObject var locationStore: TKLocationStore
     @ObservedObject var conversationViewStore: TKConversationViewStore
     @ObservedObject var draggableListViewStore: TKDraggableListViewStore
     let swiftDataStore: TKSwiftDataStore = TKSwiftDataStore()
+    let firebaseStore: any TKFirebaseStore = NearMeFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +29,7 @@ struct TKRecentConversationListView: View {
                             .padding(.trailing, 7)
                     }
                     
-                    BDText(text: "내 주변 대화 목록", style: .T2_B_125)
+                    BDText(text: NSLocalizedString("내 주변 대화 목록", comment: ""), style: .T2_B_125)
                         .foregroundStyle(Color.GR7)
                 }
                 .foregroundStyle(Color.GR5)
@@ -45,9 +46,9 @@ struct TKRecentConversationListView: View {
                     if draggableListViewStore(\.conversations).count > 0 {
                         ForEach(draggableListViewStore(\.conversations), id: \.self) { conversation in
                             Button {
+                                firebaseStore.userDidAction(.tapped(.nearMeItem), .nearMeType(conversation, Int(locationStore.calculateDistance(conversation.location) ?? -1.0)))
                                 draggableListViewStore.onTapDraggableListItem(conversation)
                                 conversationViewStore.reduce(\.previousConversation, into: conversation)
-                                
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -60,13 +61,13 @@ struct TKRecentConversationListView: View {
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        BDText(text: (conversation.createdAt).convertToDate(), style: .FN_SB_135)
+                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: .FN_SB_135)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()
                                         
                                         Group {
-                                            BDText(text: "대화하기", style: .H2_SB_135)
+                                            BDText(text: NSLocalizedString("대화하기", comment: ""), style: .H2_SB_135)
                                                 .foregroundStyle(Color.GR7)
                                             
                                             Image(systemName: "chevron.right")
@@ -87,7 +88,7 @@ struct TKRecentConversationListView: View {
                         }
                         //                    .padding(.bottom, 32)
                     } else {
-                        BDText(text: "근처에서 나눈 대화가 없어요.", style: .H2_SB_135)
+                        BDText(text: NSLocalizedString("근처에서 나눈 대화가 없어요.", comment: ""), style: .H2_SB_135)
                             .foregroundStyle(Color.GR3)
                             .frame(
                                 maxWidth: .infinity,
@@ -97,7 +98,7 @@ struct TKRecentConversationListView: View {
                             .padding(.horizontal, 32)
                     }
                 } else {
-                    BDText(text: "근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", comment: ""), style: .H2_SB_135)
                         .foregroundStyle(Color.GR3)
                         .frame(
                             maxWidth: .infinity,
@@ -131,7 +132,7 @@ struct TKRecentConversationListView: View {
                     draggableListViewStore.onConversationFullScreenDismissed()
                     
                 } confirmButtonLabel: {
-                    Text("네, 그만 할래요")
+                    Text(NSLocalizedString("네, 그만 할래요", comment: ""))
                 }
                 .onDisappear {
                     conversationViewStore.resetConversationState()
