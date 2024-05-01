@@ -9,7 +9,7 @@ import MapKit
 import SwiftData
 import SwiftUI
 
-struct HistoryInfoItemView: View {
+struct HistoryInfoItemView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var locationStore: TKLocationStore
     @StateObject  var historyInfoStore: TKHistoryInfoStore = TKHistoryInfoStore()
@@ -17,6 +17,8 @@ struct HistoryInfoItemView: View {
     @State private var coordinateRegion: MKCoordinateRegion = initialCoordinateRegion
     @State private var isShowingAlert: Bool = false
     var conversation: TKConversation
+    
+    let firebaseStore: any TKFirebaseStore = HistoryInfoEditFirebaseStore()
     
     var body: some View {
         VStack {
@@ -73,10 +75,17 @@ struct HistoryInfoItemView: View {
                 
                 historyInfoStore.reduce(\.isNotChanged, into: true)
             }
+            
+            firebaseStore.userDidAction(
+                .viewed,
+                .historyType(
+                    conversation,
+                    locationStore(\.infoPlaceName))
+            )
         }
         .ignoresSafeArea(.keyboard)
         .background {
-            Color.BaseBGWhite
+            Color.ExceptionWhiteW8
                 .onTapGesture {
                     isTextfieldFocused = false
                 }
@@ -101,6 +110,7 @@ struct HistoryInfoItemView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
+                            firebaseStore.userDidAction(.tapped(.back))
                             if historyInfoStore.saveButtonDisabled(conversation) {
                                 isTextfieldFocused = false
                                 dismiss()
@@ -131,6 +141,10 @@ struct HistoryInfoItemView: View {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            firebaseStore.userDidAction(
+                                .tapped(.save),
+                                .historyType(conversation, locationStore(\.infoPlaceName))
+                            )
                             //MARK: 저장 메서드
                             isTextfieldFocused = false
                             updateHistoryInfo()
@@ -148,7 +162,11 @@ struct HistoryInfoItemView: View {
                     style: .editCancellation(
                         title: NSLocalizedString("취소", comment: "")
                     ),
+                    onDismiss: {
+                        firebaseStore.userDidAction(.tapped(.alertCancel(firebaseStore.viewId)))
+                    },
                     confirmButtonAction: ({
+                        firebaseStore.userDidAction(.tapped(.alertBack(firebaseStore.viewId)))
                         historyInfoStore.reduce(\.isShowingAlert, into: false)
                         dismiss()
                     }),
@@ -156,6 +174,7 @@ struct HistoryInfoItemView: View {
                         BDText(text: "네, 취소할래요.", style: .H2_SB_135)
                     }
                 )
+                .background(Color.ExceptionWhiteW8)
     }
     
     private var textFieldView: some View {
@@ -185,6 +204,7 @@ struct HistoryInfoItemView: View {
                     HStack {
                         Spacer()
                         Button {
+                            firebaseStore.userDidAction(.tapped(.eraseAll))
                             // textfield 텍스트 삭제 메서드
                             historyInfoStore.reduce(\.text, into: "")
                         } label: {
@@ -197,6 +217,11 @@ struct HistoryInfoItemView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 8)
+                .onChange(of: isTextfieldFocused) { _ in
+                    if $isTextfieldFocused.wrappedValue == true {
+                        firebaseStore.userDidAction(.tapped(.field))
+                    }
+                }
             
             Text(historyInfoStore(\.textLimitMessage))
                 .padding(.leading, 10)
@@ -254,6 +279,7 @@ struct HistoryInfoItemView: View {
                             Spacer()
                             
                             Button {
+                                firebaseStore.userDidAction(.tapped(.adjustLocation))
                                 isTextfieldFocused = false
                                 historyInfoStore.reduce(\.isShowingSheet, into: true)
                             } label: {
@@ -264,7 +290,7 @@ struct HistoryInfoItemView: View {
                         .padding()
                         .background {
                             Rectangle()
-                                .fill(Color.GR1)
+                                .fill(Color.ExceptionWhite17)
                         }
                     }
                 }

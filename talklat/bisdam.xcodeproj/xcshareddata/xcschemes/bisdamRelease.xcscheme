@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
-               BuildableName = "bisdam.app"
-               BlueprintName = "bisdam"
+               BuildableName = "bisdamRelease.app"
+               BlueprintName = "bisdamRelease"
                ReferencedContainer = "container:bisdam.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
-            BuildableName = "bisdam.app"
-            BlueprintName = "bisdam"
+            BuildableName = "bisdamRelease.app"
+            BlueprintName = "bisdamRelease"
             ReferencedContainer = "container:bisdam.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -63,8 +63,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7E8D17C02ACE8AEC00E904E5"
-            BuildableName = "bisdam.app"
-            BlueprintName = "bisdam"
+            BuildableName = "bisdamRelease.app"
+            BlueprintName = "bisdamRelease"
             ReferencedContainer = "container:bisdam.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

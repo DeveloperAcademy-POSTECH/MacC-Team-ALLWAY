@@ -8,7 +8,7 @@
 import MapKit
 import SwiftUI
 
-struct TKMainView: View {
+struct TKMainView: View, FirebaseAnalyzable {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
@@ -20,6 +20,9 @@ struct TKMainView: View {
     @StateObject private var conversationViewStore = TKConversationViewStore()
     
     @State private var recentConversation: TKConversation?
+    
+    let firebaseStore: any TKFirebaseStore = MainViewFirebaseStore()
+    let permitAlertFirebaseStore: any TKFirebaseStore = PermitAlertFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -85,7 +88,8 @@ struct TKMainView: View {
             }
         }
         .task {
-           await store.onTKMainViewAppeared()
+            await store.onTKMainViewAppeared()
+            firebaseStore.userDidAction(.viewed)
         }
         .fullScreenCover(isPresented: store[\.isConversationFullScreenCoverDisplayed]) {
             TKConversationView(store: conversationViewStore)
@@ -102,10 +106,28 @@ struct TKMainView: View {
                 }
                 .showTKAlert(
                     isPresented: conversationViewStore.bindingTKAlertFlag(),
-                    style: .conversationCancellation
+                    style: .conversationCancellation,
+                    onDismiss:
+                        {
+                            switch conversationViewStore(\.conversationStatus) {
+                            case .recording:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CL")))
+                            case .guiding:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CG")))
+                            case .writing:
+                                firebaseStore.userDidAction(.tapped(.alertBack("CT")))
+                            }
+                        }
                 ) {
+                    switch conversationViewStore(\.conversationStatus) {
+                    case .recording:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CL")))
+                    case .guiding:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CG")))
+                    case .writing:
+                        firebaseStore.userDidAction(.tapped(.alertCancel("CT")))
+                    }
                     store.onConversationFullscreenDismissed()
-                    
                 } confirmButtonLabel: {
                     BDText(text: NSLocalizedString("네, 그만 할래요", comment: ""), style: .H2_SB_135)
                 }
@@ -127,6 +149,12 @@ struct TKMainView: View {
                         .resizable()
                 }
                 .tint(Color.GR3)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded{ _ in
+                            firebaseStore.userDidAction(.tapped(.history))
+                        }
+                )
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -138,20 +166,32 @@ struct TKMainView: View {
                         .resizable()
                 }
                 .tint(Color.GR3)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            firebaseStore.userDidAction(.tapped(.setting))
+                        }
+                )
             }
         }
         .background { Color.GR1.ignoresSafeArea(edges: [.top, .bottom]) }
         .showTKAlert(
             isPresented: store[\.isSpeechAuthAlertPresented],
-            style: .conversation
+            style: .conversation,
+            onDismiss: {
+                permitAlertFirebaseStore.userDidAction(.tapped(.back))
+            }
         ) {
+            permitAlertFirebaseStore.userDidAction(.tapped(.permit))
             store.onGoSettingScreenButtonTapped()
-            
         } confirmButtonLabel: {
             HStack(spacing: 8) {
                 BDText(text: NSLocalizedString("설정으로 이동", comment: ""), style: .H2_SB_135)
                 
                 Image(systemName: "arrow.up.right.square.fill")
+            }
+            .onAppear {
+                permitAlertFirebaseStore.userDidAction(.viewed)
             }
         }
         .overlay(alignment: .top) {
@@ -165,6 +205,7 @@ struct TKMainView: View {
                 )
             }
         }
+        
     }
     
     private func startConversationButtonBuilder() -> some View {
@@ -177,7 +218,7 @@ struct TKMainView: View {
             } else {
                 store.onStartConversationButtonTapped()
             }
-            
+            firebaseStore.userDidAction(.tapped(.newConversation))
         } label: {
             ZStack {
                 Circle()

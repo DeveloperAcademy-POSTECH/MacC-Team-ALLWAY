@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementListView: View {
+struct TKTextReplacementListView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
@@ -36,6 +36,8 @@ struct TKTextReplacementListView: View {
             }
         }
     }
+    
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementFirebaseStore()
     
     var body: some View {
         VStack {
@@ -89,7 +91,7 @@ struct TKTextReplacementListView: View {
                                         .padding(.top, 24)
                                 ) {
                                     listSection(groupKey)
-                                        .background(Color.GR1.clipShape(RoundedRectangle(cornerRadius: 15)))
+                                        .background(Color.ExceptionWhite17.clipShape(RoundedRectangle(cornerRadius: 15)))
                                         .padding(.horizontal, 16)
                                 }
                             }
@@ -107,9 +109,13 @@ struct TKTextReplacementListView: View {
                 }
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -130,6 +136,7 @@ struct TKTextReplacementListView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.add))
                     store.showTextReplacementAddView()
                 } label: {
                     Image(systemName: "plus")
@@ -141,7 +148,7 @@ struct TKTextReplacementListView: View {
         .sheet(isPresented: store.bindingToShowTextReplacementAddView()) {
             TKTextReplacementAddView(store: store)
         }
-        .background(Color.BaseBGWhite)
+        .background(Color.ExceptionWhiteW8)
     }
     
     // MARK: 리스트 정렬
@@ -204,6 +211,13 @@ struct TKTextReplacementListView: View {
                         )
                         .cornerRadius(16)
                     }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                print("HI hello")
+                                firebaseStore.userDidAction(.tapped(.item))
+                            }
+                    )
                 }
             }
         }
@@ -222,6 +236,7 @@ struct TKTextReplacementListView: View {
             } trailingButton: {
                 if !store.viewState.searchText.isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.eraseAll))
                         store.onSearchTextRemoveButtonTapped()
                         
                     } label: {
@@ -235,12 +250,14 @@ struct TKTextReplacementListView: View {
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
                 if !oldValue,
                    newValue {
+                    firebaseStore.userDidAction(.tapped(.field))
                     store.onSearchingText()
                 }
             }
             
             if store(\.isSearching) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.cancel))
                     self.hideKeyboard()
                     store.cancelSearchAndHideKeyboard()
                     

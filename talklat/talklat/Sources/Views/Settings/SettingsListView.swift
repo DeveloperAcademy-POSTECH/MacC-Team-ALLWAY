@@ -72,7 +72,7 @@ internal enum AuthorizationType: String {
     }
 }
 
-struct SettingsListView: View {
+struct SettingsListView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var authManager: TKAuthManager
     @EnvironmentObject private var locationStore: TKLocationStore
@@ -85,6 +85,8 @@ struct SettingsListView: View {
         NSLocalizedString("지원", comment: "")
         /* "일반", */
     ]
+    
+    let firebaseStore: any TKFirebaseStore = SettingsFirebaseStore()
     
     var body: some View {
         ScrollView {
@@ -118,49 +120,60 @@ struct SettingsListView: View {
                         id: \.rawValue
                     ) { item in
                         if category == item.category {
-                            NavigationLink {
-                                switch item {
-                                case .textReplacement:
-                                    TKTextReplacementListView()
-                                        .navigationBarBackButtonHidden()
-                               
-                                case .guidingMessage:
-                                    SettingsGuidingView()
-                                        .navigationBarBackButtonHidden()
-                                
-                                case .displayMode:
-                                    SettingsDisplayView()
-                                        .navigationBarBackButtonHidden()
-                                    // SettingsDisplayTestingView()
-                                   
-                                    /*
-                                     case .haptics:
-                                         SettingsHapticView()
-                                     */
-                                    
-//                                case .gesture:
-//                                    SettingsGestureView()
-//                                        .navigationBarBackButtonHidden()
-                                    
-                                case .dataPolicyInfo:
-                                    LoadingWebView()
-                                        .navigationBarBackButtonHidden()
-                                    
-                                case .creators:
-                                    SettingsTeamView()
-                                        .navigationBarBackButtonHidden()
-                               
-                                case .needHelp:
-                                    SettingsHelpView()
-                                        .navigationBarBackButtonHidden()
-                                }
-                            } label: {
-                                BDListCell(label: item.title) {
-                                    Image(systemName: item.icon)
-                                } trailingUI: {
-                                    Image(systemName: "chevron.right")
+                            Group {
+                                NavigationLink {
+                                    switch item {
+                                    case .textReplacement:
+                                        TKTextReplacementListView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .guidingMessage:
+                                        SettingsGuidingView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .displayMode:
+                                        SettingsDisplayView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .dataPolicyInfo:
+                                        LoadingWebView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .creators:
+                                        SettingsTeamView()
+                                            .navigationBarBackButtonHidden()
+                                        
+                                    case .needHelp:
+                                        SettingsHelpView()
+                                            .navigationBarBackButtonHidden()
+                                    }
+                                } label: {
+                                    BDListCell(label: item.rawValue) {
+                                        Image(systemName: item.icon)
+                                    } trailingUI: {
+                                        Image(systemName: "chevron.right")
+                                    }
                                 }
                             }
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded { _ in
+                                        switch item {
+                                        case .textReplacement:
+                                            firebaseStore.userDidAction(.tapped(.textReplace))
+                                        case .guidingMessage:
+                                            firebaseStore.userDidAction(.tapped(.guideMessage))
+                                        case .displayMode:
+                                            firebaseStore.userDidAction(.tapped(.displayMode))
+                                        case .dataPolicyInfo:
+                                            firebaseStore.userDidAction(.tapped(.personalInfo))
+                                        case .creators:
+                                            firebaseStore.userDidAction(.tapped(.makers))
+                                        case .needHelp:
+                                            firebaseStore.userDidAction(.tapped(.help))
+                                        }
+                                    }
+                            )
                         }
                     }
                 }
@@ -171,6 +184,7 @@ struct SettingsListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             switch locationStore(\.authorizationStatus) {
             case .authorizedAlways, .authorizedWhenInUse:
                 authManager.isLocationAuthorized = true
@@ -181,6 +195,7 @@ struct SettingsListView: View {
         .onChange(of: locationStore(\.authorizationStatus)) { _, newValue in
             switch newValue {
             case .authorizedAlways, .authorizedWhenInUse:
+                firebaseStore.userDidAction(.tapped(.locationPermit))
                 authManager.isLocationAuthorized = true
             default:
                 authManager.isLocationAuthorized = false
@@ -189,6 +204,7 @@ struct SettingsListView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -211,6 +227,7 @@ struct SettingsListView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .scrollIndicators(.hidden)
     }
     
@@ -257,6 +274,17 @@ struct SettingsListView: View {
             .background(Color.OR5)
             .cornerRadius(22)
         }
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded { _ in
+                    switch noticeItem {
+                    case .micAndSpeech:
+                        firebaseStore.userDidAction(.tapped(.speechPermit))
+                    case .location:
+                        firebaseStore.userDidAction(.tapped(.locationPermit))
+                    }
+                }
+        )
     }
 }
 

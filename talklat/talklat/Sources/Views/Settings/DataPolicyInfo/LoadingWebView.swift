@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoadingWebView: View {
+struct LoadingWebView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     
     @State private var isLoading = true
@@ -20,6 +20,8 @@ struct LoadingWebView: View {
     let foreignUrl = URL(
         string: "https://yenchoichoi.notion.site/BISDAM-Privacy-Policy-d75e2c24b4294c65a30316e2e9a085ae?pvs=4"
     )
+    
+    let firebaseStore: any TKFirebaseStore = SettingsPersonalInfoFirebaseStore()
     
     var body: some View {
         ZStack {
@@ -55,9 +57,13 @@ struct LoadingWebView: View {
             }
  
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {

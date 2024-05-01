@@ -5,12 +5,20 @@
 //  Created by Ye Eun Choi on 11/15/23.
 //
 
-import UIKit
+import MessageUI
 import SwiftUI
+import UIKit
 
-struct SettingsHelpView: View {
+
+struct SettingsHelpView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
+    
+
+    @State private var isEmailShowing: Bool = false
+    @State private var emailResult: Result<MFMailComposeResult, Error>?
+    
+    let firebaseStore: any TKFirebaseStore = SettingsHelpsFirebaseStore()
     
     var body: some View {
         VStack {
@@ -29,9 +37,13 @@ struct SettingsHelpView: View {
             
             Spacer()
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -57,6 +69,7 @@ struct SettingsHelpView: View {
         }
         .padding(.top, 24)
         .padding(.horizontal, 16)
+        .background(Color.ExceptionWhiteW8)
     }
     
     private func openMail(

@@ -1858,7 +1858,6 @@
       }
     },
     "네, 취소할래요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2138,7 +2137,6 @@
       }
     },
     "아니오, 저장할래요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

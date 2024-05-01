@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct SettingsGuidingEditView: View {
+struct SettingsGuidingEditView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @State private var hasContentChanged: Bool = false
     @State private var isTextEmpty: Bool = false
+    @FocusState var focusState: Bool
     @State private var guidingMessage: String = UserDefaults.standard.string(
         forKey: "guidingMessage"
     ) ?? NSLocalizedString("settings.guiding.edit.defaultGuidingMessage", comment: "")
@@ -23,6 +24,8 @@ struct SettingsGuidingEditView: View {
 //        제 글을 읽고 또박또박 말씀해 주세요.
 //        """
 
+    
+    let firebaseStore: any TKFirebaseStore = SettingsGuideMessageEditFirebaseStore()
     var body: some View {
         VStack {
             // Show GuidingView Button
@@ -47,18 +50,35 @@ struct SettingsGuidingEditView: View {
                 )
                 .cornerRadius(22)
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.preview))
+                    }
+            )
             .disabled(isTextEmpty)
             
             // GuidingMessage TextField
             SettingTextField(
                 isTextEmpty: $isTextEmpty,
                 text: $guidingMessage,
+                focusState: _focusState,
                 title: NSLocalizedString("settings.guiding.edit.title", comment: ""),
                 placeholder: NSLocalizedString("settings.guiding.edit.placeholder", comment: ""),
                 limit: 30
             )
             .lineLimit(3)
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(
+                            .tapped(.guideMesageField),
+                            .guideMessageType(guidingMessage)
+                        )
+                    }
+            )
             .padding(.vertical, 24)
+            
             
             // FixedMessage Text
             VStack(alignment: .leading) {
@@ -83,9 +103,16 @@ struct SettingsGuidingEditView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
+        .onAppear {
+            firebaseStore.userDidAction(
+                .viewed,
+                .guideMessageType(guidingMessage)
+            )
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -110,6 +137,7 @@ struct SettingsGuidingEditView: View {
                 ), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onChange(of: guidingMessage) { _, _ in
             hasContentChanged = true
             
@@ -119,6 +147,7 @@ struct SettingsGuidingEditView: View {
                     self.guidingMessage,
                     forKey: "guidingMessage"
                 )
+                
                 isTextEmpty = false
             } else {
                 isTextEmpty = true

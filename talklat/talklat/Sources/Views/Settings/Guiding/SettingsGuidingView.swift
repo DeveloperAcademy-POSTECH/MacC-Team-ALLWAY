@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct SettingsGuidingView: View {
+struct SettingsGuidingView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @State private var isGuidingEnabled: Bool = true
+    
+    let firebaseStore: any TKFirebaseStore = SettingsGuideMessageFirebaseStore()
     
     var body: some View {
         VStack {
@@ -20,6 +22,10 @@ struct SettingsGuidingView: View {
                         isOn: $isGuidingEnabled
                     )
                     .frame(width: 70)
+                    .onChange(of: isGuidingEnabled) { _, _ in
+                        firebaseStore.userDidAction(.tapped(.toggle))
+                    }
+                    
                 }
             
             BDText(
@@ -33,7 +39,6 @@ struct SettingsGuidingView: View {
             NavigationLink {
                 SettingsGuidingEditView()
                     .navigationBarBackButtonHidden()
-                
             } label: {
                 BDListCell(label: NSLocalizedString("settings.guiding.edit", comment: "")) {
                     } trailingUI: {
@@ -45,6 +50,12 @@ struct SettingsGuidingView: View {
                             )
                     }
             }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.editGuideMessage))
+                    }
+            )
             .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
@@ -54,6 +65,7 @@ struct SettingsGuidingView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -72,7 +84,9 @@ struct SettingsGuidingView: View {
                 BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             if isKeyPresentInUserDefaults(key: "isGuidingEnabled") {
                 isGuidingEnabled = UserDefaults.standard.bool(forKey: "isGuidingEnabled")
             } else {

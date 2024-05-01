@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
-class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
+final class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
     // Equatable에 conform 시키기 위해 extension을 쓰는것보다는 최대한 원시타입을 씁시다 - 갓짤랑
     struct ViewState {
         var currentUserCoordinate: MKCoordinateRegion? = nil
@@ -296,7 +296,7 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         }
     }
     
-    public func calculateDistance(_ location: TKLocation?) -> Int? {
+    public func calculateDistance(_ location: TKLocation?) -> Double? {
         guard let coordinate = self(\.currentUserCoordinate)?.center else { return nil }
         guard let location = location else { return nil }
         
@@ -317,8 +317,11 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
             sqrt(1-a)
         )
         
-        let distanceInMeters = Double(earthRadius) * c
-        return Int(distanceInMeters)
+        var distanceInMeters = Double(earthRadius) * c
+        if distanceInMeters < 1 {
+            distanceInMeters = 0
+        }
+        return distanceInMeters.rounded(.toNearestOrEven)
     }
     
     public func getClosestConversation(_ conversations: [TKConversation]) -> [TKConversation] {
@@ -326,33 +329,60 @@ class TKLocationStore: NSObject, CLLocationManagerDelegate, TKReducer {
         guard self.detectAuthorization() == true else { return [TKConversation]() }
         
         // 거리 순에 따른 정리
-        var distanceConversationDict = [Int: TKConversation]()
+        var distanceConversationTuple = [(Double, TKConversation)]()
         conversations.forEach { conversation in
             if let location = conversation.location {
                 if let calculatedDistance = calculateDistance(location) {
                     if calculatedDistance < 4000 { // 4km 이내만 반환
-                        distanceConversationDict[calculatedDistance] = conversation
+                        distanceConversationTuple.append((calculatedDistance, conversation))
                     }
                 }
             }
         }
         
-        let keys = distanceConversationDict.keys.sorted(by: {$0 < $1}) // 거리에 따라 key sorting
+        let sortedDistanceConversation = distanceConversationTuple.sorted(by: {$0.0 < $1.0}) // 거리에 따라 key sorting
         var closeConversations = [TKConversation]()
         
-        keys.forEach { key in
-            if let value = distanceConversationDict[key] {
-                closeConversations.append(value)
+        for i in 0..<sortedDistanceConversation.count {
+            closeConversations.append(sortedDistanceConversation[i].1)
+            
+            if i >= 9 {
+                break
             }
         }
         
         // 가까운 10개만 잘라서 반환
-        if closeConversations.count > 10 {
-            return Array(closeConversations[0..<10])
-        } else {
-            return closeConversations
-        }
+        return closeConversations
     }
+    
+    public func getClosestConversationForGA(_ conversations: [TKConversation]) -> [(Double, TKConversation)] {
+        
+        guard self.detectAuthorization() == true else { return [(Double, TKConversation)]() }
+        
+        // 거리 순에 따른 정리
+        var distanceConversationTuple = [(Double, TKConversation)]()
+        conversations.forEach { conversation in
+            if let location = conversation.location {
+                if let calculatedDistance = calculateDistance(location) {
+                    if calculatedDistance < 4000 { // 4km 이내만 반환
+                        distanceConversationTuple.append((calculatedDistance, conversation))
+                    }
+                }
+            }
+        }
+        
+        let sortedDistanceConversation = distanceConversationTuple.sorted(by: {$0.0 < $1.0}) // 거리에 따라 key sorting
+        
+        var closestTenConversations: [(Double, TKConversation)] = []
+        if sortedDistanceConversation.count > 10 {
+            closestTenConversations = Array(sortedDistanceConversation[0..<10])
+        } else {
+            closestTenConversations = sortedDistanceConversation
+        }
+        
+        return closestTenConversations
+    }
+        
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         makeNewRegion()

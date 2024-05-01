@@ -8,13 +8,14 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementAddView: View {
+struct TKTextReplacementAddView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
     @ObservedObject var store: TextReplacementViewStore
     
-    @FocusState var focusState: Bool
+    @FocusState var shortTextFieldFocusState: Bool
+    @FocusState var longTextFieldFocusState: Bool
     @State var phrase: String = ""
     @State var replacement: String = ""
     
@@ -22,34 +23,53 @@ struct TKTextReplacementAddView: View {
         !phrase.isEmpty && !replacement.isEmpty
     }
     
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementAddFirebaseStore()
+    
     var body: some View {
         VStack {
             SettingTRTextField(
                 text: $phrase,
-                focusState: _focusState,
+                focusState: _shortTextFieldFocusState,
                 title: NSLocalizedString("replacement", comment: ""),
                 placeholder: NSLocalizedString("replacement.placeholder", comment: ""),
                 limit: 20
             )
-            .onChange(of: phrase) { newValue in
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.shortenTextField))
+                    }
+            )
+            .onChange(of: phrase) { _, newValue in
                 if newValue.hasPrefix(" ") {
                     phrase = String(newValue.dropFirst())
                 }
             }
             
             SettingTRTextField(
-                text: $replacement, title: NSLocalizedString("phrase", comment: ""),
+                text: $replacement,
+                focusState: _longTextFieldFocusState,
+                title: NSLocalizedString("phrase", comment: ""),
                 placeholder: NSLocalizedString("phrase.placeholder", comment: ""),
                 limit: 160
             )
             .padding(.top, 24)
-            .onChange(of: replacement) { newValue in
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded { _ in
+                        firebaseStore.userDidAction(.tapped(.fullTextField))
+                    }
+            )
+            .onChange(of: replacement) { _, newValue in
                 if newValue.hasPrefix(" ") {
                     replacement = String(newValue.dropFirst())
                 }
             }
             
             Spacer()
+        }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
         }
         .safeAreaInset(edge: .top) {
             VStack(spacing: 10) {
@@ -60,6 +80,7 @@ struct TKTextReplacementAddView: View {
                 
                 HStack {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.cancel))
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         BDText(
@@ -79,6 +100,13 @@ struct TKTextReplacementAddView: View {
                     
                     Button {
                         if isInputValid {
+                            firebaseStore.userDidAction(
+                                .tapped(.complete),
+                                .textReplacementType(
+                                    phrase,
+                                    replacement
+                                )
+                            )
                             if let item: TKTextReplacement = store.makeNewTextReplacement(
                                 phrase: phrase,
                                 replacement: replacement

@@ -8,40 +8,56 @@
 import SwiftData
 import SwiftUI
 
-struct TKTextReplacementEditView: View {
+struct TKTextReplacementEditView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
     
     @ObservedObject var store: TextReplacementViewStore
     
-    @FocusState var focusState: Bool
+    @FocusState var shortTextFieldFocusState: Bool
+    @FocusState var longTextFieldFocusState: Bool
+    
+    
+    let firebaseStore: any TKFirebaseStore = SettingsTextReplacementEditFirebaseStore()
     
     var body: some View {
         VStack(spacing: 10) {
             VStack {
                 SettingTRTextField(
                     text: store.bindingPhraseTextField(),
-                    focusState: _focusState,
+                    focusState: _shortTextFieldFocusState,
                     allowSpace: false, title: NSLocalizedString("replacement", comment: ""),
                     placeholder: NSLocalizedString("replacement.placeholder", comment: ""),
                     limit: 20
                 )
-                .focused($focusState)
+                .focused($shortTextFieldFocusState)
+                .onChange(of: shortTextFieldFocusState) {
+                    if shortTextFieldFocusState == true {
+                        firebaseStore.userDidAction(.tapped(.shortenTextField))
+                    }
+                }
                 
                 SettingTRTextField(
                     text: store.bindingReplacementTextField(),
+                    focusState: _longTextFieldFocusState,
                     title: NSLocalizedString("phrase", comment: ""),
                     placeholder: NSLocalizedString("phrase.placeholder", comment: ""),
                     limit: 160
                 )
-                .focused($focusState)
                 .padding(.top, 36)
+                .focused($longTextFieldFocusState)
+                .onChange(of: longTextFieldFocusState) {
+                    if longTextFieldFocusState == true {
+                        firebaseStore.userDidAction(.tapped(.fullTextField))
+                    }
+                }
             }
             
             Spacer()
             
-            if !focusState {
+            if !shortTextFieldFocusState {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.delete))
                     store.onShowDialogButtonTapped()
                 } label: {
                     BDText(text: NSLocalizedString("textReplacement.delete", comment: ""), style: .H1_B_130)
@@ -58,6 +74,15 @@ struct TKTextReplacementEditView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
+        .onAppear {
+            firebaseStore.userDidAction(
+                .viewed,
+                .textReplacementType(
+                    store.bindingPhraseTextField().wrappedValue,
+                    store.bindingReplacementTextField().wrappedValue
+                )
+            )
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -86,6 +111,13 @@ struct TKTextReplacementEditView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    firebaseStore.userDidAction(
+                        .tapped(.save),
+                        .textReplacementType(
+                            store.bindingPhraseTextField().wrappedValue,
+                            store.bindingPhraseTextField().wrappedValue
+                        )
+                    )
                     updateTextReplacement()
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -102,14 +134,18 @@ struct TKTextReplacementEditView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .showTKAlert(
             isPresented: store.bindingShowTKAlert(),
-            style: .removeTextReplacement(title: NSLocalizedString("textReplacement.delete", comment: "")),
+            style: .removeTextReplacement(title: NSLocalizedString("textReplacement.delete", comment: "")), onDismiss: {
+                firebaseStore.userDidAction(.tapped(.alertBack(firebaseStore.viewId)))
+                store.onDismissRemoveAlert()
+            },
             confirmButtonAction: {
+                firebaseStore.userDidAction(.tapped(.alertDelete(firebaseStore.viewId)))
                 swiftDataStore.removeItem(identifyTextReplacement())
                 presentationMode.wrappedValue.dismiss()
                 store.onDismissRemoveAlert()
-                
             },
             confirmButtonLabel: {
                 BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)

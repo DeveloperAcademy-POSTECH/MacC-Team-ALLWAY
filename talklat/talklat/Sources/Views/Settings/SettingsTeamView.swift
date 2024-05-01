@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct SettingsTeamView: View {
+struct SettingsTeamView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) private var colorScheme
+    
+    let firebaseStore: any TKFirebaseStore = SettingsMakersFirebaseStore()
     
     var body: some View {
         ScrollView {
@@ -39,7 +41,7 @@ struct SettingsTeamView: View {
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.AlertBGWhite)
+                        .foregroundColor(.ExceptionWhiteW8)
                         .overlay {
                             Text("🙃")
                                 .font(.largeTitle)
@@ -70,7 +72,7 @@ struct SettingsTeamView: View {
                 }
                 .padding(.vertical, 16)
                 .padding(.leading, 16)
-                .background(Color.GR1)
+                .background(Color.ExceptionWhite17)
                 .cornerRadius(22)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
@@ -130,9 +132,13 @@ struct SettingsTeamView: View {
                 .padding(.bottom, 12)
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -156,6 +162,7 @@ struct SettingsTeamView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
     }
 }
 
@@ -169,7 +176,7 @@ struct TeamOneView: View {
         HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.AlertBGWhite)
+                .foregroundColor(.ExceptionWhiteW8)
                 .overlay {
                     Text(emoji)
                         .font(.largeTitle)
@@ -198,7 +205,7 @@ struct TeamOneView: View {
         }
         .padding(.vertical, 16)
         .padding(.leading, 16)
-        .background(Color.GR1)
+        .background(Color.ExceptionWhite17)
         .cornerRadius(22)
     }
 }

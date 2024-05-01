@@ -54,6 +54,7 @@ struct SettingTextField: View {
                     Spacer()
                 }
             })
+            .focused($focusState)
         }
     }
     

@@ -8,7 +8,7 @@
 import MapKit
 import SwiftUI
 
-struct HistoryItemLocationEditView: View {
+struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
     @ObservedObject var locationStore: TKLocationStore
     @ObservedObject var historyInfoStore: TKHistoryInfoStore
     @State private var isFlipped = false
@@ -20,6 +20,8 @@ struct HistoryItemLocationEditView: View {
         latitudinalMeters: 500,
         longitudinalMeters: 500
     )
+    
+    let firebaseStore: any TKFirebaseStore = HistoryInfoEditLocationFirebaseStore()
     
     var body: some View {
         NavigationView {
@@ -44,8 +46,11 @@ struct HistoryItemLocationEditView: View {
                         isFlipped: historyInfoStore.bindingFlipped()
                     )
                 }
+                .frame(height: UIScreen.main.bounds.height > 700 ? UIScreen.main.bounds.height * 0.64 : UIScreen.main.bounds.height * 0.61)
+                .offset(y: UIScreen.main.bounds.height > 700 ? 0 : -(UIScreen.main.bounds.height * 0.02))
                 
                 mapFooterView
+                    .offset(y: UIScreen.main.bounds.height > 700 ? -(UIScreen.main.bounds.height * 0.01) : -(UIScreen.main.bounds.height * 0.025))
             }
             .frame(maxHeight: .infinity)
             .toolbar {
@@ -58,6 +63,7 @@ struct HistoryItemLocationEditView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.close))
                         historyInfoStore.reduce(\.isShowingSheet, into: false)
                     } label: {
                         Text("닫기")
@@ -65,7 +71,9 @@ struct HistoryItemLocationEditView: View {
                     .tint(Color.OR5)
                 }
             }
+            .background(Color.ExceptionWhiteW8)
             .onAppear {
+                firebaseStore.userDidAction(.viewed)
                 editCoordinateRegion = historyInfoStore(\.editCoordinateRegion) ?? initialCoordinateRegion
                 
                 locationStore.fetchCityName(
@@ -95,6 +103,7 @@ struct HistoryItemLocationEditView: View {
             .tint(Color.OR5)
         }
         .padding()
+        .background(Color.ExceptionWhiteW8)
     }
     
     private var currentLocationButton: some View {
@@ -107,6 +116,7 @@ struct HistoryItemLocationEditView: View {
                 switch locationStore(\.authorizationStatus) {
                 case .authorizedAlways, .authorizedWhenInUse:
                     Button {
+                        firebaseStore.userDidAction(.tapped(.myLocation))
                         moveToUserLocation()
                         
                         if let _ = historyInfoStore(\.editCoordinateRegion) {
@@ -118,7 +128,7 @@ struct HistoryItemLocationEditView: View {
                         }
                     } label: {
                         RoundedRectangle(cornerRadius: 26)
-                            .fill(Color.BaseBGWhite)
+                            .fill(Color.ExceptionWhiteW8)
                             .frame(width: 44, height: 44)
                             .overlay {
                                 HStack {
@@ -135,7 +145,7 @@ struct HistoryItemLocationEditView: View {
                         
                     } label: {
                         Circle()
-                            .fill(Color.BaseBGWhite)
+                            .fill(Color.ExceptionWhiteW8)
                             .frame(width: 44)
                             .overlay {
                                 Image(systemName: "location.slash.fill")
@@ -149,12 +159,13 @@ struct HistoryItemLocationEditView: View {
     
     private var mapFooterView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(locationStore(\.editPlaceName))
-                .font(.title3)
-                .fontWeight(.bold)
-                .padding(.bottom, 10)
+            BDText(text: locationStore(\.editPlaceName), style: .T3_B_125)
+                .padding(.bottom, 16)
+                .fixedSize(horizontal: false, vertical: true)
+                .lineLimit(2)
             
             Button {
+                firebaseStore.userDidAction(.tapped(.pointPin))
                 historyInfoStore.reduce(
                     \.infoCoordinateRegion,
                      into: editCoordinateRegion
@@ -172,11 +183,6 @@ struct HistoryItemLocationEditView: View {
                     cityNameType: .hybrid,
                     usage: .infoAndEdit)
                 
-//                locationStore.fetchCityName(
-//                    coordinateRegion,
-//                    cityNameType: .long,
-//                    usage: .edit)
-                
                 
                 historyInfoStore.plantFlag(coordinateRegion)
                 
@@ -185,10 +191,8 @@ struct HistoryItemLocationEditView: View {
                 }
             } label: {
                 HStack {
-                    Text("이 위치에 핀 꼽기")
+                    BDText(text: NSLocalizedString("이 위치에 핀 꼽기", comment: ""), style: .H1_B_130)
                 }
-                .font(.headline)
-                .fontWeight(.bold)
                 .foregroundStyle(Color.white)
                 .frame(height: 38)
                 .frame(maxWidth: .infinity)
@@ -199,10 +203,11 @@ struct HistoryItemLocationEditView: View {
                         .frame(height: 56)
                 }
             }
-            .padding(.vertical)
+            .padding(.bottom, 16)
             
         }
         .padding()
+        .background(Color.ExceptionWhiteW8)
     }
     
     private func moveToUserLocation() {
@@ -218,61 +223,6 @@ struct HistoryItemLocationEditView: View {
         editCoordinateRegion = coordinateRegion
     }
     
-    //    private func configureSnapshotter() -> MKMapSnapshotter.Options {
-    //        let options = MKMapSnapshotter.Options()
-    //
-    //        options.region = coordinateRegion
-    //        //MARK: 키보드가 올라오면 UIImage의 사이즈가 변경되는것을 막기 위해 -> 더 좋은 방법이 있으면 바꾸고 싶음
-    //        options.size = CGSize(
-    //            width: UIScreen.main.bounds.width - 40,
-    //            height: UIScreen.main.bounds.width - 40
-    //        )
-    //        options.scale = UIScreen.main.scale
-    //        options.showsBuildings = true
-    //        options.pointOfInterestFilter = .includingAll
-    //
-    //        return options
-    //    }
-    
-    //    @MainActor
-    //    private func generateSnapShot() async {
-    //        let options = configureSnapshotter()
-    //        snapShotter = MKMapSnapshotter(options: options)
-    //
-    //        guard let snapShotter = snapShotter else { return }
-    //
-    //        let rect = CGRect(
-    //            x: 0,
-    //            y: 0,
-    //            width: UIScreen.main.bounds.width - 40,
-    //            height: UIScreen.main.bounds.width - 40
-    //        )
-    //
-    //        do {
-    //            let snapshot = try await snapShotter.start()
-    //            var point = snapshot.point(for: coordinateRegion.center)
-    //            let image = UIGraphicsImageRenderer(size: options.size).image { _ in
-    //                snapshot.image.draw(at: .zero)
-    //
-    //                let annotationView = MKPinAnnotationView(annotation: nil, reuseIdentifier: "annotation")
-    //
-    //                let annotationImage = annotationView.image
-    //
-    //                if rect.contains(point) {
-    //                    point.x -= annotationView.bounds.width / 2
-    //                    point.y -= annotationView.bounds.height / 2
-    //                    point.x += annotationView.centerOffset.x
-    //                    point.y += annotationView.centerOffset.y
-    //                }
-    //
-    //                annotationImage?.draw(at: point)
-    //            }
-    //
-    //            locationStore.updateLocationThumbnail(image)
-    //        } catch {
-    //            print(error.localizedDescription)
-    //        }
-    //    }
 }
 
 public struct CustomAnnotationInfo: Identifiable, Equatable {
@@ -318,7 +268,7 @@ struct CustomMapAnnotation: View {
                         Text("지도를 움직여 위치를 설정 하세요")
                             .foregroundStyle(Color.white)
                             .font(.footnote)
-                            .fontWeight(.regular)
+                            .fontWeight(.medium)
                     }
                     .padding(.bottom, 12)
             case .fixed:

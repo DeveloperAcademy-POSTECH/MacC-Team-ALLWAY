@@ -29,11 +29,13 @@ private enum ColorSchemeType: String, CaseIterable {
     }
 }
 
-struct SettingsDisplayView: View {
+struct SettingsDisplayView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("BDColorScheme") var BDColorScheme = ColorScheme.unspecified
     @EnvironmentObject var colorSchemeManager: ColorSchemeManager
     @State private var selectedTheme: ColorScheme = .dark
+    
+    let firebaseStore: any TKFirebaseStore = SettingsDisplayModeFirebaseStore()
     
     var body: some View {
         VStack {
@@ -49,10 +51,19 @@ struct SettingsDisplayView: View {
                     }
                 }
                 .onTapGesture {
+                    switch type {
+                    case .device:
+                        firebaseStore.userDidAction(.tapped(.sameMode))
+                    case .light:
+                        firebaseStore.userDidAction(.tapped(.lightMode))
+                    case .dark:
+                        firebaseStore.userDidAction(.tapped(.darkMode))
+                    }
                     selectedTheme = type.theme
                     colorSchemeManager.colorScheme = selectedTheme
                 }
             }
+            
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -60,6 +71,7 @@ struct SettingsDisplayView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     dismiss()
                 } label: {
                     HStack {
@@ -81,7 +93,9 @@ struct SettingsDisplayView: View {
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
         .onAppear {
+            firebaseStore.userDidAction(.viewed)
             selectedTheme = colorSchemeManager.colorScheme
         }
     }

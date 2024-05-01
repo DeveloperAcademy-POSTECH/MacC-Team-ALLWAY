@@ -31,7 +31,7 @@ struct TKOnboardingView: View {
         description: "",
         highlightTarget: []
     )
-        
+    
     var body: some View {
         VStack {
             if case .start = onboardingStep {
@@ -86,6 +86,7 @@ struct TKOnboardingView: View {
         .safeAreaInset(edge: .bottom) {
             onboardingBottomFooter(info: onboardInfo)
         }
+        .background(Color.ExceptionWhiteW8)
         .onChange(of: authManager.isMicrophoneAuthorized) { _, newValue in
         #warning("추후 ViewState로 정리")
             if newValue != nil {
