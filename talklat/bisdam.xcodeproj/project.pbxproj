@@ -396,6 +396,7 @@
 		7EC5852F2B05B97600EDB171 /* TKTextReplacementSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKTextReplacementSearchView.swift; sourceTree = "<group>"; };
 		7EC585302B05B97600EDB171 /* TKTextReplacementAddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKTextReplacementAddView.swift; sourceTree = "<group>"; };
 		7EC585392B05BB9F00EDB171 /* TKOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKOnboardingView.swift; sourceTree = "<group>"; };
+		7EC6C3AB2BCBB5F200885FE8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7ED6BB132B00B2F5006D02DC /* TKScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKScrollView.swift; sourceTree = "<group>"; };
 		7EE087E72ADD4FAE00E07720 /* TKHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKHistoryView.swift; sourceTree = "<group>"; };
 		7EEEFB612B0F360E0003763A /* View+TKAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+TKAlert.swift"; sourceTree = "<group>"; };
@@ -595,6 +596,7 @@
 		7E8D17B82ACE8AEC00E904E5 = {
 			isa = PBXGroup;
 			children = (
+				7EC6C3AB2BCBB5F200885FE8 /* PrivacyInfo.xcprivacy */,
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
 				CE4AB1C82BC93BEC0044C29E /* bisdamDebug */,
 				CE4AB1C72BC93BE10044C29E /* bisdamRelease */,
@@ -1647,6 +1649,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2404141556;
 				CURRENT_PROJECT_VERSION = 2404112136;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
@@ -1672,6 +1675,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.1;
 				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
@@ -1693,7 +1697,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2404112136;
+				CURRENT_PROJECT_VERSION = 2404141556;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = CZH2CMCGCZ;
 				DEVELOPMENT_TEAM = MTUYFM4K8P;
@@ -1717,6 +1721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.1;
 				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.allway.talklat;
