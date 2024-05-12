@@ -14,6 +14,8 @@ extension Color {
     static let BaseBGWhite = Color("BaseBGWhite")
     static let SheetBGWhite = Color("SheetBGWhite")
     static let AlertBGWhite = Color("AlertBGWhite")
+    static let Exception26 = Color("Exception26")
+    static let Exception35 = Color("Exception35")
     
     static let RED = Color("RED")
     static let GR1 = Color("GR1")

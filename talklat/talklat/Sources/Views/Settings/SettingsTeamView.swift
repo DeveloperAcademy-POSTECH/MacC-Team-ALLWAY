@@ -28,7 +28,7 @@ struct SettingsTeamView: View {
                     Spacer()
                 }
                 .padding(.leading, 24)
-                .padding(.bottom, 50)
+                .padding(.bottom, 24)
                 
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
                     .padding(.horizontal, 16)
@@ -36,33 +36,25 @@ struct SettingsTeamView: View {
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.AlertBGWhite)
+                        .foregroundColor(.Exception26)
                         .overlay {
                             Text("🙃")
                                 .font(.largeTitle)
                         }
-                    VStack {
-                        HStack {
-                            BDText(text: "레츠 Lets", style: .H1_B_130)
-                                .foregroundStyle(Color.GR9)
-                            Spacer()
-                        }
-                        HStack {
-                            BDText(text: "iOS Developer", style: .FN_SB_135)
-                                .foregroundStyle(Color.GR5)
-                            Spacer()
-                        }
-                        HStack {
-                            BDText(text: "안녕하세요 천재 개(발자) 레츠입니다 :)", style: .FN_SB_135)
-                                .rotationEffect(Angle(degrees: 180))
-                                .foregroundStyle(Color.GR5)
-                            Spacer()
-                        }
+                    VStack(alignment: .leading, spacing: 1) {
+                        Spacer()
+                        BDText(text: "레츠 Lets", style: .H1_B_130)
+                            .foregroundStyle(Color.GR9)
+                        BDText(text: "iOS Developer", style: .FN_SB_135)
+                            .foregroundStyle(Color.GR5)
+                        BDText(text: "안녕하세요 천재 개(발자) 레츠입니다 :)", style: .FN_SB_135)
+                            .rotationEffect(Angle(degrees: 180))
+                            .foregroundStyle(Color.Exception35)
+                        Spacer()
                     }
                     .padding(.leading, 12)
                     Spacer()
                 }
-                .padding(.vertical, 16)
                 .padding(.leading, 16)
                 .background(Color.GR1)
                 .cornerRadius(22)
@@ -129,34 +121,26 @@ struct TeamOneView: View {
         HStack(spacing: 0) {
             Circle()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.AlertBGWhite)
+                .foregroundColor(.Exception26)
                 .overlay {
                     Text(emoji)
                         .font(.largeTitle)
                 }
-            VStack {
-                HStack {
-                    BDText(text: name, style: .H1_B_130)
-                        .foregroundStyle(Color.GR9)
-                    Spacer()
-                }
-                HStack {
-                    BDText(text: jobTitle, style: .FN_SB_135)
-                        .foregroundStyle(Color.GR5)
-                    Spacer()
-                }
-                HStack {
-                    BDText(text: customMessage, style: .FN_SB_135)
-                        .foregroundStyle(Color.GR5)
-                    Spacer()
-                }
+            VStack(alignment: .leading, spacing: 1) {
+                Spacer()
+                BDText(text: name, style: .H1_B_130)
+                    .foregroundStyle(Color.GR9)
+                BDText(text: jobTitle, style: .FN_SB_135)
+                    .foregroundStyle(Color.GR6)
+                BDText(text: customMessage, style: .FN_SB_135)
+                    .foregroundStyle(Color.Exception35)
+                Spacer()
             }
             .padding(.leading, 12)
             
             Spacer()
             
         }
-        .padding(.vertical, 16)
         .padding(.leading, 16)
         .background(Color.GR1)
         .cornerRadius(22)
