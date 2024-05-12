@@ -121,12 +121,22 @@ struct TKTextReplacementListView: View {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "텍스트 대치", style: .H1_B_130)
+                BDText(
+                    text: "텍스트 대치",
+                    style: .H1_B_130
+                )
             }
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    store.showTextReplacementAddView()
+                    withAnimation(
+                        .spring(
+                            dampingFraction: 0.7,
+                            blendDuration: 0.4
+                        )
+                    ) {
+                        store.showTextReplacementAddView()
+                    }
                 } label: {
                     Image(systemName: "plus")
                         .bold()
@@ -236,17 +246,30 @@ struct TKTextReplacementListView: View {
             .padding(.vertical, 7)
             .focused($isTextFieldFocused)
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
-                if !oldValue,
-                   newValue {
-                    store.onSearchingText()
+                withAnimation(
+                    .spring(
+                        dampingFraction: 0.8,
+                        blendDuration: 0.4
+                    )
+                ) {
+                    if !oldValue,
+                       newValue {
+                        store.onSearchingText()
+                    }
                 }
             }
             
             if store(\.isSearching) {
                 Button {
-                    self.hideKeyboard()
-                    store.cancelSearchAndHideKeyboard()
-                    
+                    withAnimation(
+                        .spring(
+                            dampingFraction: 0.8,
+                            blendDuration: 0.9
+                        )
+                    ) {
+                        self.hideKeyboard()
+                        store.cancelSearchAndHideKeyboard()
+                    }
                 } label: {
                     BDText(
                         text: "취소",
