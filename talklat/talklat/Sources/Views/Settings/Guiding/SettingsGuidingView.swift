@@ -45,6 +45,7 @@ struct SettingsGuidingView: View {
                             )
                     }
             }
+            .opacity(isGuidingEnabled ? 1.0 : 0.3)
             .disabled(isGuidingEnabled ? false : true)
             
             Spacer()
