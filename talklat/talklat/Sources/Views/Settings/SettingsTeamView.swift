@@ -22,7 +22,7 @@ struct SettingsTeamView: View {
                 .padding(.top, 24)
                 .padding(.bottom, 16)
                 HStack {
-                    BDText(text: "애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다.", style: .H1_B_160)
+                    BDText(text: "애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다.", style: .H1_M_160)
                         .foregroundStyle(Color.GR9)
                     
                     Spacer()
