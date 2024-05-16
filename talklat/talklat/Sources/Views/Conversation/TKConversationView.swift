@@ -24,7 +24,6 @@ struct TKConversationView: View {
                     store: store,
                     namespaceID: TKTransitionNamespace
                 )
-//                .transition(.opacity)
             }
             
             if store(\.conversationStatus) == .guiding {
@@ -122,6 +121,8 @@ struct TKConversationView: View {
 
 #Preview {
     TKConversationView(store: .init())
+        .environment(TKSwiftDataStore())
+    
 }
 
 

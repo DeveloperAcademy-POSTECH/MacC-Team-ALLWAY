@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct TKSavingView: View {
+struct TKSavingView: View, FirebaseAnalyzable {
     // MARK: - TKLocation Manager, TKConversation Manager Here
     @Environment(\.dismiss) private var dismiss
     @Environment(TKSwiftDataStore.self) private var swiftDataStore
@@ -17,6 +17,7 @@ struct TKSavingView: View {
     @ObservedObject var store: TKConversationViewStore
     @FocusState var focusState: Bool
     @State private var allConversationTitles: [String] = []
+    let firebaseStore: any TKFirebaseStore = ConversationSaveFirebaseStore()
     var speechRecognizeManager: SpeechRecognizer
     
     var body: some View {
@@ -26,11 +27,12 @@ struct TKSavingView: View {
         ) {
             HStack {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.cancel))
                     store.onDismissSavingViewButtonTapped()
                     
                 } label: {
                     BDText(
-                        text: "취소",
+                        text: NSLocalizedString("취소", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -47,6 +49,7 @@ struct TKSavingView: View {
                 Spacer()
                 
                 Button {
+                    firebaseStore.userDidAction(.tapped(.save))
                     if let res: TKConversation = store.makeNewConversation(
                         with: speechRecognizeManager.currentTranscript,
                         at: TKLocation(
@@ -61,7 +64,7 @@ struct TKSavingView: View {
                     
                 } label: {
                     BDText(
-                        text: "저장",
+                        text: NSLocalizedString("저장", comment: ""),
                         style: .H1_B_130
                     )
                 }
@@ -73,8 +76,11 @@ struct TKSavingView: View {
             .padding(.bottom, 24)
             
             HStack {
-                BDText(text: "제목", style: .H2_SB_135)
-                    .foregroundStyle(Color.GR5)
+                BDText(
+                    text: NSLocalizedString("제목", comment: ""),
+                    style: .H2_SB_135
+                )
+                .foregroundStyle(Color.GR5)
                 
                 Spacer()
 
@@ -84,17 +90,23 @@ struct TKSavingView: View {
             
             HStack {
                 TextField(
-                    "대화 제목을 지어주세요",
+                    NSLocalizedString("대화 제목을 지어주세요", comment: ""),
                     text: store.bindingConversationTitle()
                 )
                 .font(.headline)
                 .padding(.leading, 16)
                 .padding(.vertical, 12)
                 .focused($focusState)
+                .onChange(of: focusState) { _, newValue in
+                    if newValue == true {
+                        firebaseStore.userDidAction(.tapped(.field))
+                    }
+                }
                 
                 Spacer()
                 
                 Button {
+                    firebaseStore.userDidAction(.tapped(.eraseAll))
                     store.onDeleteConversationTitleButtonTapped()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
@@ -112,10 +124,12 @@ struct TKSavingView: View {
             .padding(.bottom, 8)
             
             if store(\.conversationTitle).isEmpty {
-                BDText(text: "한 글자 이상 입력해 주세요", style: .FN_SB_135)
-                    .foregroundStyle(Color.RED)
-                    .padding(.leading, 32)
-                    .transition(.opacity.animation(.easeInOut))
+                BDText(
+                    text: NSLocalizedString("textReplacement.morethanone", comment: ""),
+                    style: .FN_SB_135)
+                .foregroundStyle(Color.RED)
+                .padding(.leading, 32)
+                .transition(.opacity.animation(.easeInOut))
                 
             } else if store(\.hasCurrentConversationTitlePrevious) {
                 Text("이미 있는 제목이에요")
@@ -137,6 +151,7 @@ struct TKSavingView: View {
             }
             
             focusState = true
+            firebaseStore.userDidAction(.viewed)
         }
         .animation(.easeInOut, value: store(\.conversationTitle))
         .frame(maxHeight: .infinity, alignment: .top)

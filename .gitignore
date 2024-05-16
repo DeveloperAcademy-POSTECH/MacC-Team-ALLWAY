@@ -92,3 +92,7 @@ iOSInjectionProject/
 # Mac
 **/.DS_Store
 .DS_Store
+
+# Firebase Info plist
+talklat/bisdamDebug/GoogleService-Info.plist
+talklat/bisdamRelease/GoogleService-Info.plist

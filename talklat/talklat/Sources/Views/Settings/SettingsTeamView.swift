@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct SettingsTeamView: View {
+struct SettingsTeamView: View, FirebaseAnalyzable {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) private var colorScheme
+    
+    let firebaseStore: any TKFirebaseStore = SettingsMakersFirebaseStore()
     
     var body: some View {
         ScrollView {
@@ -22,14 +24,17 @@ struct SettingsTeamView: View {
                 .padding(.top, 24)
                 .padding(.bottom, 16)
                 HStack {
-                    BDText(text: "애플 디벨로퍼 아카데미 수료생으로 구성된\nALLWAY(올해의 팀) 팀은 사회의 다양한 문제를\n탐구하고 분석하여 문제 해결을 위한 기술 서비스를\n기획 및 제작하고 있습니다.", style: .H1_M_160)
-                        .foregroundStyle(Color.GR9)
+                    BDText(
+                        text: NSLocalizedString("creators.description", comment: ""),
+                        style: .H1_M_160
+                    )
+                    .foregroundStyle(Color.GR9)
                     
                     Spacer()
                 }
                 .padding(.leading, 24)
                 .padding(.bottom, 24)
-                
+  
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
@@ -56,35 +61,73 @@ struct SettingsTeamView: View {
                     Spacer()
                 }
                 .padding(.leading, 16)
-                .background(Color.GR1)
+                .background(Color.ExceptionWhite17)
                 .cornerRadius(22)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
                 
-                TeamOneView(emoji: "🐠", name: "리앤 Lianne", jobTitle: "iOS Developer", customMessage: "버그를 잡았는데요, 안잡혔습니다.")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-                TeamOneView(emoji: "🥐", name: "매들린 Madeline", jobTitle: "iOS Developer", customMessage: "do { try 행복 } catch { 야근 }")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-                TeamOneView(emoji: "🌏", name: "지구 Jigu", jobTitle: "Product Manager", customMessage: "방금 얘기한 내용 노션에 정리되어있습니다~! :)")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-                TeamOneView(emoji: "🍋", name: "린 Reene", jobTitle: "Product Manager", customMessage: "호방하지만 기품있는 외조담당")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-                TeamOneView(emoji: "👃🏻", name: "코비 Koby", jobTitle: "UXUI Designer", customMessage: "좋은 제품을 잘 만들고 싶은 디자이너")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-                TeamOneView(emoji: "☕️", name: "모카 Moca", jobTitle: "UXUI Designer", customMessage: "우주? 아~ 제가 발로 밟고 있는거요?")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
+                TeamOneView(
+                    emoji: "🐠",
+                    name: "리앤 Lianne",
+                    jobTitle: "iOS Developer",
+                    customMessage: NSLocalizedString("lianne.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
                 
+                TeamOneView(
+                    emoji: "🥐",
+                    name: "매들린 Madeline",
+                    jobTitle: "iOS Developer",
+                    customMessage: NSLocalizedString("madeline.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+                
+                TeamOneView(
+                    emoji: "🌏",
+                    name: "지구 Jigu",
+                    jobTitle: "Product Manager",
+                    customMessage: NSLocalizedString("jigu.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+                
+                TeamOneView(
+                    emoji: "🍋",
+                    name: "린 Reene",
+                    jobTitle: "Product Manager",
+                    customMessage: NSLocalizedString("reene.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+                
+                TeamOneView(
+                    emoji: "👃🏻",
+                    name: "코비 Koby",
+                    jobTitle: "UXUI Designer",
+                    customMessage: NSLocalizedString("koby.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+                
+                TeamOneView(
+                    emoji: "☕️",
+                    name: "모카 Moca",
+                    jobTitle: "UXUI Designer",
+                    customMessage: NSLocalizedString("moca.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
             }
+        }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    firebaseStore.userDidAction(.tapped(.back))
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -92,7 +135,7 @@ struct SettingsTeamView: View {
                             .bold()
                         
                         BDText(
-                            text: "설정",
+                            text: NSLocalizedString("설정", comment: ""),
                             style: .H1_B_130
                         )
                     }
@@ -103,11 +146,12 @@ struct SettingsTeamView: View {
             // Navigation Title
             ToolbarItem(placement: .principal) {
                 BDText(
-                    text: "만든 사람들",
+                    text: NSLocalizedString("creators.title", comment: ""),
                     style: .H1_B_130
                 )
             }
         }
+        .background(Color.ExceptionWhiteW8)
     }
 }
 
@@ -142,7 +186,7 @@ struct TeamOneView: View {
             
         }
         .padding(.leading, 16)
-        .background(Color.GR1)
+        .background(Color.ExceptionWhite17)
         .cornerRadius(22)
     }
 }

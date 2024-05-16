@@ -8,18 +8,20 @@
 import Observation
 import SwiftUI
 
-struct TKListeningView: View {
+struct TKListeningView: View, FirebaseAnalyzable {
     @Environment(\.dismiss) var dismiss
     @Environment(TKSwiftDataStore.self) private var dataStore
     
     @ObservedObject var store: TKConversationViewStore
     let namespaceID: Namespace.ID
+    let firebaseStore: any TKFirebaseStore = ConversationListeningFirebaseStore()
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 if store(\.answeredText).isEmpty {
                     Button {
+                        firebaseStore.userDidAction(.tapped(.back))
                         store.blockButtonDoubleTap {
                             store.onBackToWritingChevronTapped()
                         }
@@ -53,8 +55,7 @@ struct TKListeningView: View {
                 TKScrollView(
                     style: .question(
                         question: store(\.questionText),
-                        answer: store(\.answeredText),
-                        curtainAlignment: .bottom
+                        answer: store(\.answeredText)
                     ), curtain: {
                         LinearGradient(
                             colors: [.BaseBGWhite, .clear],
@@ -117,6 +118,9 @@ struct TKListeningView: View {
                     )
             }
         }
+        .onAppear {
+            firebaseStore.userDidAction(.viewed)
+        }
     }
     
     private func bottomListeningButtonBuilder() -> some View {
@@ -124,29 +128,33 @@ struct TKListeningView: View {
             Spacer()
             
             if store(\.answeredText).isEmpty {
-                BDText(text: "듣고 있어요", style: .H1_B_130)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .frame(minWidth: 110, minHeight: 42)
-                    .background {
-                        ZStack(alignment: .trailing) {
-                            RoundedRectangle(
-                                cornerRadius: 22,
-                                style: .continuous
-                            )
-                            
-                            Rectangle()
-                                .frame(width: 20, height: 20)
-                                .rotationEffect(.degrees(45))
-                                .offset(x: 3)
-                        }
-                        .compositingGroup()
-                        .foregroundStyle(Color.OR5)
+                BDText(
+                    text: NSLocalizedString("듣고 있어요", comment: ""),
+                    style: .H1_B_130
+                )
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .frame(minWidth: 110, minHeight: 42)
+                .background {
+                    ZStack(alignment: .trailing) {
+                        RoundedRectangle(
+                            cornerRadius: 22,
+                            style: .continuous
+                        )
+                        
+                        Rectangle()
+                            .frame(width: 20, height: 20)
+                            .rotationEffect(.degrees(45))
+                            .offset(x: 3)
                     }
+                    .compositingGroup()
+                    .foregroundStyle(Color.OR5)
+                }
             }
             
             Button {
+                firebaseStore.userDidAction(.tapped(.next))
                 store.blockButtonDoubleTap {
                     store.onStopRecordingButtonTapped()
                 }
@@ -185,6 +193,7 @@ struct TKListeningView: View {
                         }
                 }
             }
+            .disabled(store(\.answeredText.isEmpty))
             .disabled(store(\.blockButtonDoubleTap))
         }
     }
@@ -192,12 +201,16 @@ struct TKListeningView: View {
     private func endConversationButtonBuilder() -> some View {
         HStack {
             Button {
+                firebaseStore.userDidAction(.tapped(.cancel))
                 store.onConversationDismissButtonTapped()
                 
             } label: {
-                BDText(text: "취소", style: .H1_B_130)
-                    .padding(.horizontal, 6)
-                    .foregroundStyle(Color.GR6)
+                BDText(
+                    text: NSLocalizedString("취소", comment: ""),
+                    style: .H1_B_130
+                )
+                .padding(.horizontal, 6)
+                .foregroundStyle(Color.GR6)
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
@@ -216,15 +229,16 @@ struct TKListeningView: View {
                             from: store(\.historyItems),
                             into: previousConversation
                         )
-                        
                         store.onSaveConversationIntoPreviousButtonTapped()
                         
                     } else {
                         store.onSaveConversationButtonTapped()
                     }
+                    
+                    firebaseStore.userDidAction(.tapped(.save))
                 }
             } label: {
-                BDText(text: "저장", style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
                     .padding(.horizontal, 6)
                     .foregroundStyle(Color.white)
             }

@@ -17,7 +17,7 @@ struct SettingTRSearchBar: View {
             AWTextField(
                 style: .search,
                 text: store.bindingSearchText(),
-                placeholder: "검색"
+                placeholder: NSLocalizedString("settings.textReplacement.search.placeholder", comment: "")
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)
@@ -42,7 +42,7 @@ struct SettingTRSearchBar: View {
                     
                 } label: {
                     BDText(
-                        text: "취소",
+                        text: NSLocalizedString("취소", comment: ""),
                         style: .H1_B_130
                     )
                 }
