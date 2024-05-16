@@ -17,6 +17,7 @@ extension Color {
 
     static let Exception26 = Color("Exception26")
     static let Exception35 = Color("Exception35")
+    
     static let ExceptionWhiteW8 = Color("ExceptionWhiteW8")
     static let ExceptionWhite17 = Color("ExceptionWhite17")
     static let ExceptionWhite36 = Color("ExceptionWhite36")

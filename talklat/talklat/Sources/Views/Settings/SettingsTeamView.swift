@@ -34,7 +34,6 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                 }
                 .padding(.leading, 24)
                 .padding(.bottom, 24)
-  
                 TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)

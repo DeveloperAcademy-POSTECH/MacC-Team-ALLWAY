@@ -131,10 +131,6 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(
-                    text: "텍스트 대치",
-                    style: .H1_B_130
-                )
                 BDText(text: NSLocalizedString("textReplacement.title", comment: ""), style: .H1_B_130)
             }
             
