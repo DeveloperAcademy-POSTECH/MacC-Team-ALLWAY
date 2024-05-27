@@ -50,6 +50,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                             )
                     }
             }
+            .opacity(isGuidingEnabled ? 1.0 : 0.3)
             .simultaneousGesture(
                 TapGesture()
                     .onEnded { _ in
