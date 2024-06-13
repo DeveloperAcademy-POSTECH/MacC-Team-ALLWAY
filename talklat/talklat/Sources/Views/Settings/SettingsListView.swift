@@ -91,18 +91,16 @@ struct SettingsListView: View, FirebaseAnalyzable {
     var body: some View {
         ScrollView {
             if let isMicAuthorized = authManager.isMicrophoneAuthorized,
-               let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
-                if !isMicAuthorized || !isSpeechAuthorized {
-                    authNoticeBuilder(noticeItem: AuthorizationType.micAndSpeech)
-                        .padding(.top, 10)
-                }
+               let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized,
+               !isMicAuthorized || !isSpeechAuthorized {
+              authNoticeBuilder(noticeItem: AuthorizationType.micAndSpeech)
+                .padding(.top, 10)
             }
             
-            if let isLocationAuthorized = authManager.isLocationAuthorized {
-                if !isLocationAuthorized {
-                    authNoticeBuilder(noticeItem: AuthorizationType.location)
-                        .padding(.top, 10)
-                }
+            if let isLocationAuthorized = authManager.isLocationAuthorized,
+               !isLocationAuthorized {
+              authNoticeBuilder(noticeItem: AuthorizationType.location)
+                .padding(.top, 10)
             }
             
             ForEach(
@@ -148,7 +146,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                                             .navigationBarBackButtonHidden()
                                     }
                                 } label: {
-                                    BDListCell(label: item.rawValue) {
+                                    BDListCell(label: item.title) {
                                         Image(systemName: item.icon)
                                     } trailingUI: {
                                         Image(systemName: "chevron.right")
