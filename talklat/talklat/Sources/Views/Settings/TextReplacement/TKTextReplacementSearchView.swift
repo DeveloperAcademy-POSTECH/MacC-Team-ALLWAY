@@ -35,7 +35,7 @@ struct TKTextReplacementSearchView: View {
     }
 
     var body: some View {
-        if filteredLists.isEmpty {
+        if filteredLists.isEmpty && !store(\.searchText).isEmpty {
             emptySearchResultView
                 .background(Color.ExceptionWhiteW8)
         } else {

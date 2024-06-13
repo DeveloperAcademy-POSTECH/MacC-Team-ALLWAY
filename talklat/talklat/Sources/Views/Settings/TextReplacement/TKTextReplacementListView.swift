@@ -136,8 +136,15 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    firebaseStore.userDidAction(.tapped(.add))
-                    store.showTextReplacementAddView()
+                    withAnimation(
+                        .spring(
+                            dampingFraction: 0.7,
+                            blendDuration: 0.4
+                        )
+                    ) {
+                        firebaseStore.userDidAction(.tapped(.add))
+                        store.showTextReplacementAddView()
+                    }
                 } label: {
                     Image(systemName: "plus")
                         .bold()
@@ -189,6 +196,12 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                 id: \.key
             ) { key, values in
                 if let firstValue = values.first {
+                    
+                    let processedValue = firstValue
+                        .split(separator: "\n")
+                        .map { String($0).trimmingCharacters(in: .whitespaces) }
+                        .joined(separator: "\n")
+                    
                     NavigationLink {
                         TKTextReplacementEditView(
                             store: store
@@ -201,13 +214,14 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         }
                     } label: {
                         // TODO: 글자 수 말고 한 줄의 기준을 어떻게 잡을까..?
-                        let displayValue = firstValue.count > 40
-                        ? String(firstValue.prefix(17)) + "..."
-                        : firstValue
+//                        let displayValue = firstValue.count > 40
+//                        ? String(firstValue.prefix(17)) + "..."
+//                        : firstValue
                         
                         TextReplacementRow(
                             key: key,
-                            value: displayValue
+                            value: processedValue,
+                            lineLimit: 2
                         )
                         .cornerRadius(16)
                     }
@@ -248,19 +262,32 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             .padding(.vertical, 7)
             .focused($isTextFieldFocused)
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
-                if !oldValue,
-                   newValue {
-                    firebaseStore.userDidAction(.tapped(.field))
-                    store.onSearchingText()
+                withAnimation(
+                    .spring(
+                        dampingFraction: 0.8,
+                        blendDuration: 0.4
+                    )
+                ) {
+                    if !oldValue,
+                       newValue {
+                        firebaseStore.userDidAction(.tapped(.field))
+                        store.onSearchingText()
+                    }
                 }
             }
             
             if store(\.isSearching) {
                 Button {
-                    firebaseStore.userDidAction(.tapped(.cancel))
-                    self.hideKeyboard()
-                    store.cancelSearchAndHideKeyboard()
-                    
+                    withAnimation(
+                        .spring(
+                            dampingFraction: 0.8,
+                            blendDuration: 0.9
+                        )
+                    ) {
+                        firebaseStore.userDidAction(.tapped(.cancel))
+                        self.hideKeyboard()
+                        store.cancelSearchAndHideKeyboard()
+                    }
                 } label: {
                     BDText(
                         text: NSLocalizedString("취소", comment: ""),
