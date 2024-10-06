@@ -510,4 +510,8 @@ extension TKConversationViewStore {
     private func countLastWord(_ transcript: String) -> Int {
         return transcript.components(separatedBy: " ").last?.count ?? 0
     }
+  
+    public func updateTextLimitMessage() {
+        self.reduce(\.conversationTitle, into: String(self(\.conversationTitle).prefix(20)))
+    }
 }

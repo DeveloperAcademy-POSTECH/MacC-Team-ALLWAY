@@ -97,10 +97,13 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 .padding(.leading, 16)
                 .padding(.vertical, 12)
                 .focused($focusState)
+                .onChange(of: store(\.conversationTitle)) { oldValue, newValue in
+                    guard newValue.count > 20 else { return }
+                    store.updateTextLimitMessage()
+                }
                 .onChange(of: focusState) { _, newValue in
-                    if newValue == true {
-                        firebaseStore.userDidAction(.tapped(.field))
-                    }
+                    guard newValue == true else { return }
+                    firebaseStore.userDidAction(.tapped(.field))
                 }
                 
                 Spacer()
