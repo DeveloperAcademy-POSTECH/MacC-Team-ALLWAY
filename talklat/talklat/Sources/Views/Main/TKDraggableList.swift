@@ -93,16 +93,21 @@ struct TKDraggableList: View, FirebaseAnalyzable {
         .offset(y: mainViewstore(\.lastOffset))
         .gesture(
             DragGesture()
-                .onChanged { value in
-                    if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
-                        mainViewstore.onUpdatingDragOffset(value.translation.height)
-                    }
+              .onChanged { value in
+                guard locationStore(\.isAuthorized),
+                      !draggableListViewStore(\.conversations).isEmpty else { return }
+                
+                if abs(mainViewstore(\.lastOffset)) == abs(mainViewstore(\.height)), value.translation.height <= 0 {
+                  return
+                } else {
+                  mainViewstore.onUpdatingDragOffset(value.translation.height)
                 }
-                .onEnded { value in
-                    if locationStore(\.isAuthorized) && !draggableListViewStore(\.conversations).isEmpty {
-                        mainViewstore.onDragEnded(firstOffset)
-                    }
-                }
+              }
+              .onEnded { value in
+                guard locationStore(\.isAuthorized),
+                      !draggableListViewStore(\.conversations).isEmpty else { return }
+                mainViewstore.onDragEnded(firstOffset)
+              }
         )
         .ignoresSafeArea(.all, edges: .bottom)
     }

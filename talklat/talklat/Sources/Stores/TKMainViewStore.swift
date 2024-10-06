@@ -18,6 +18,7 @@ final class TKMainViewStore {
         
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
+        var height: CGFloat = 0
         var authStatus: AuthStatus = .splash
     }
     
@@ -68,11 +69,8 @@ final class TKMainViewStore {
     }
     
     public func onGoSettingScreenButtonTapped() {
-        if let url = URL(
-            string: UIApplication.openSettingsURLString
-        ) {
-            UIApplication.shared.open(url)
-        }
+      guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+      UIApplication.shared.open(url)
     }
     
     public func onStartConversationButtonTapped() {
@@ -91,6 +89,7 @@ final class TKMainViewStore {
     }
     
     public func onDragEnded(_ height: CGFloat) {
+        self.reduce(\.height, into: height)
         withAnimation(.spring()) {
             if self(\.offset) < -150 {
                 self.reduce(\.lastOffset, into: -(height))
