@@ -305,7 +305,6 @@
 		CE4AB1B32BC938B90044C29E /* CustomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CBF222B0119030048C784 /* CustomHistoryView.swift */; };
 		CE4AB1CE2BC941480044C29E /* bisdam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 577B45292B0DE78E00DA010E /* bisdam-Info.plist */; };
 		CE4AB1D82BC94F0A0044C29E /* bisdam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 577B45292B0DE78E00DA010E /* bisdam-Info.plist */; };
-		CE4AB1ED2BC95E990044C29E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */; };
 		EF41DD2B2B0CC26F009857E3 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2A2B0CC26F009857E3 /* ColorSchemeManager.swift */; };
 		EF41DD2D2B0CC29C009857E3 /* SettingsDisplayTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41DD2C2B0CC29C009857E3 /* SettingsDisplayTestingView.swift */; };
 		EF4799D72B0EF59E005C2B0E /* SettingsGuidingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D42B0EF59E005C2B0E /* SettingsGuidingEditView.swift */; };
@@ -313,6 +312,7 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
+		EF68C94E2CEDE57D005903F1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF68C94D2CEDE57D005903F1 /* GoogleService-Info.plist */; };
 		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
 		EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */; };
 /* End PBXBuildFile section */
@@ -455,7 +455,6 @@
 		CE4AB0E42BC521B90044C29E /* SettingsMakersFirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMakersFirebaseStore.swift; sourceTree = "<group>"; };
 		CE4AB0E62BC8283C0044C29E /* String+Capitalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalize.swift"; sourceTree = "<group>"; };
 		CE4AB1B82BC938B90044C29E /* bisdamDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisdamDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE79CAEA2AF0CEC20007713B /* TKLocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKLocationStore.swift; sourceTree = "<group>"; };
 		CEF43C472ADA97FF00DE02A9 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		EF1162AA2AFCB90F000D0F5B /* HistoryListSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListSearchView.swift; sourceTree = "<group>"; };
@@ -475,6 +474,7 @@
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		EF68C94D2CEDE57D005903F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
@@ -598,6 +598,7 @@
 			children = (
 				7EC6C3AB2BCBB5F200885FE8 /* PrivacyInfo.xcprivacy */,
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
+				EF68C94D2CEDE57D005903F1 /* GoogleService-Info.plist */,
 				CE4AB1C82BC93BEC0044C29E /* bisdamDebug */,
 				CE4AB1C72BC93BE10044C29E /* bisdamRelease */,
 				EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */,
@@ -893,7 +894,6 @@
 		CE4AB1C82BC93BEC0044C29E /* bisdamDebug */ = {
 			isa = PBXGroup;
 			children = (
-				CE4AB1EC2BC95E990044C29E /* GoogleService-Info.plist */,
 			);
 			path = bisdamDebug;
 			sourceTree = "<group>";
@@ -1153,7 +1153,7 @@
 				CE4AB1282BC938B90044C29E /* Pretendard-SemiBold.otf in Resources */,
 				CE4AB1292BC938B90044C29E /* Pretendard-Black.otf in Resources */,
 				CE4AB12A2BC938B90044C29E /* Localizable.xcstrings in Resources */,
-				CE4AB1ED2BC95E990044C29E /* GoogleService-Info.plist in Resources */,
+				EF68C94E2CEDE57D005903F1 /* GoogleService-Info.plist in Resources */,
 				CE4AB12B2BC938B90044C29E /* Pretendard-Regular.otf in Resources */,
 				CE4AB12C2BC938B90044C29E /* Assets.xcassets in Resources */,
 				CE4AB12D2BC938B90044C29E /* BDSplash_Dark.json in Resources */,
@@ -1815,7 +1815,7 @@
 				CURRENT_PROJECT_VERSION = 2410061544;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = K4977QK5HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
@@ -1858,7 +1858,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2410061544;
 				DEVELOPMENT_ASSET_PATHS = "\"talklat/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 67M6ZS7KS6;
+				DEVELOPMENT_TEAM = K4977QK5HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bisdam-Info.plist";
