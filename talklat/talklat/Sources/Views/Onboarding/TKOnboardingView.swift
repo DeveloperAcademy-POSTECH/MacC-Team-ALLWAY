@@ -59,13 +59,11 @@ struct TKOnboardingView: View {
                 ) {
                     // MARK: CONDITION
                     if authManager.hasAllAuthBeenObtained {
-                        BDText(text: Constants.Onboarding.ALL_AUTH, style: .LT_B_160)
-                            .fixedSize()
+                        BDText(text: Constants.Onboarding.ALL_AUTH, style: .LT_B_120)
                             .foregroundStyle(Color.OR6)
                         
                     } else {
-                        BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: .LT_B_160)
-                            .fixedSize()
+                        BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: .LT_B_120)
                             .foregroundStyle(Color.OR6)
                     }
                     
