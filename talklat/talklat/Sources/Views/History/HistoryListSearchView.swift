@@ -22,8 +22,9 @@ struct HistoryListSearchView: View {
         createdAt: Date.now
     )]
     @State private var searchStatus: SearchStatus = .inactive
-    @Binding internal var isSearching: Bool
-    @Binding internal var searchText: String
+    
+    @Binding var isSearching: Bool
+    @Binding var searchText: String
     
     var body: some View {
         Group {
@@ -34,18 +35,27 @@ struct HistoryListSearchView: View {
                 
             case .resultFound:
                 ScrollView {
-                    ForEach(
-                        dataStore.getContentBasedLocations(
-                            contents: matchingContents
-                        )
-                    ) { location in
-                        SearchResultSection(
-                            location: location,
-                            dataStore: dataStore,
-                            matchingContents: $matchingContents,
-                            searchText: $searchText
-                        )
+                    // 섹션 타이틀로 사용할 위치 정보 추출
+                    let locationList = matchingContents.flatMap {
+                        dataStore.getContentBasedLocations(content: $0)
                     }
+                    
+                    // 중복된 위치 문자열 제거
+                    let locationStrings = Array(Set(locationList.map { $0.blockName }))
+                    
+                    // 위치 정보로 섹션 타이틀 나열
+                    ForEach(locationStrings, id: \.self) { string in
+                        let matchingLocation = locationList.first { $0.blockName == string }
+                        if let location = matchingLocation {
+                            SearchResultSection(
+                                location: location,
+                                dataStore: dataStore,
+                                matchingContents: $matchingContents,
+                                searchText: $searchText
+                            )
+                        }
+                    }
+                    
                 }
                 .scrollIndicators(.hidden)
                 .transition(.identity)
@@ -135,43 +145,48 @@ struct SearchResultSection: View, FirebaseAnalyzable {
             }
             
             // Contents
-            ForEach(filteredContents, id: \.self) { content in
-                NavigationLink {
-                    if let conversation = content.conversation {
-                        CustomHistoryView(
-                            historyViewType: .item,
-                            // TODO: Store 메서드에서 처리
-                            conversation: conversation
-                        )
-                    } else {
-                        Text("Conversation이 없어요!")
-                    }
-                } label: {
-                    SearchResultItem(
-                        matchingContent: content,
-                        searchText: $searchText
-                    )
-                }
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded { _ in
-                            if let conversation = content.conversation {
-                                if let location = conversation.location {
-                                    firebaseStore.userDidAction(
-                                        .tapped(.item),
-                                        .historyType(
-                                            conversation,
-                                            location.blockName
-                                        ))
-                                } else {
-                                    print("From FirebaseStore: location missing")
-                                }
-                            } else {
-                                print("From firebaseStore: conversationMissing")
-                            }
+            ForEach(Array(filteredContents.enumerated()), id: \.offset) { index, content in
+                if let conversation = content.conversation {
+                
+                    /// 일치하는 위치 타이틀 아래에서만 리스트 생성
+                    if conversation.location?.blockName == location.blockName {
+                        NavigationLink {
+                            CustomHistoryView(
+                                historyViewType: .item,
+                                // TODO: Store 메서드에서 처리
+                                conversation: conversation
+                            )
+                        } label: {
+                            SearchResultItem(
+                                matchingContent: content,
+                                searchText: $searchText
+                            )
                         }
-                )
+                        .simultaneousGesture(
+                            TapGesture()
+                                .onEnded { _ in
+                                    if let conversation = content.conversation {
+                                        if let location = conversation.location {
+                                            firebaseStore.userDidAction(
+                                                .tapped(.item),
+                                                .historyType(
+                                                    conversation,
+                                                    location.blockName
+                                                ))
+                                        } else {
+                                            print("From FirebaseStore: location missing")
+                                        }
+                                    } else {
+                                        print("From firebaseStore: conversationMissing")
+                                    }
+                                }
+                        )
+                    }
+                } else {
+                    Text("Conversation이 없어요!")
+                }
             }
+            
         }
         .padding(.top, 24)
         .onAppear {
@@ -183,37 +198,37 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 }
             }
             
-            // Conversation을 기준으로 그룹핑 된 matchingContents을 담은 딕셔너리
-            /// [(TKConversation: [TKContent, TKContent]) ... ]
-            let groupedContents = Dictionary(
-                grouping: matchingContents,
-                by: { $0.conversation }
-            )
-            
-            // 그룹핑 된 딕셔너리에서 한 개 이상의 Content가 존재할 경우, 마지막 Content만 필터링 된 배열에 추가
-            groupedContents.forEach { (key: TKConversation?, value: [TKContent]) in
-                if value.count > 1 {
-                    /// createdAt 기준으로 오름차순 정렬
-                    var createdAtArray = value.map { $0.createdAt }
-                    createdAtArray.sort(
-                        by: { $0.compare($1) == .orderedAscending }
-                    )
-                    
-                    /// 정렬된 배열의 맨 마지막 Content를 필터링 된 배열에 추가
-                    value.forEach { content in
-                        if content.createdAt == createdAtArray.last {
-                            filteredContents.append(content)
-                        }
-                    }
-                } else {
-                    filteredContents.append(contentsOf: value)
-                }
-                
-                // 필터링 된 Content 내림차순 정렬
-                filteredContents.sort(
-                    by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
-                )
-            }
+             // Conversation을 기준으로 그룹핑 된 matchingContents을 담은 딕셔너리
+             /// [(TKConversation: [TKContent, TKContent]) ... ]
+             let groupedContents = Dictionary(
+                 grouping: matchingContents,
+                 by: { $0.conversation }
+             )
+             
+             // 그룹핑 된 딕셔너리에서 한 개 이상의 Content가 존재할 경우, 마지막 Content만 필터링 된 배열에 추가
+             groupedContents.forEach { (key: TKConversation?, value: [TKContent]) in
+                 if value.count > 1 {
+                     /// createdAt 기준으로 오름차순 정렬
+                     var createdAtArray = value.map { $0.createdAt }
+                     createdAtArray.sort(
+                         by: { $0.compare($1) == .orderedAscending }
+                     )
+                     
+                     /// 정렬된 배열의 맨 마지막 Content를 필터링 된 배열에 추가
+                     value.forEach { content in
+                         if content.createdAt == createdAtArray.last {
+                             filteredContents.append(content)
+                         }
+                     }
+                 } else {
+                     filteredContents.append(contentsOf: value)
+                 }
+                 
+                 // 필터링 된 Content 내림차순 정렬
+                 filteredContents.sort(
+                     by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
+                 )
+             }
         }
         .onChange(of: dataStore.conversations) { oldValue, newValue in
             // 데이터 최신화 (임시방편)

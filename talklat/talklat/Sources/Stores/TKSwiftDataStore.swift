@@ -57,11 +57,10 @@ extension TKSwiftDataStore {
     }
     
     // HistoryListSearchView에서 쓰이는 specific fetch (TKContent -> TKLocation)
-    public func getContentBasedLocations(contents: [TKContent]) -> [TKLocation] {
+    public func getContentBasedLocations(content: TKContent) -> [TKLocation] {
         var locations: [TKLocation] = []
-        contents.forEach { content in
-            locations = dataManager.getContentMatchingLocations(content: content)
-        }
+        locations = dataManager.getContentMatchingLocations(content: content)
+        
         return filterDuplicatedBlockNames(locations: locations)
     }
     
