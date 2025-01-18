@@ -692,12 +692,6 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual"
-    },
-    "Key 1" : {
-      "extractionState" : "manual"
-    },
     "koby.sentence" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1946,29 +1940,6 @@
         }
       }
     },
-    "Sorry, we could not load this url." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sorry, we could not load this url."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "죄송합니다, 사이트를 연결할 수 없습니다."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "抱歉，无法连接到网站。"
-          }
-        }
-      }
-    },
     "speech.permission.denied" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2405,29 +2376,6 @@
         }
       }
     },
-    "네, 취소할래요" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "네, 취소할래요"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "是的，我要取消。"
-          }
-        }
-      }
-    },
     "단축어" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2531,17 +2479,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请为对话取一个标题"
-          }
-        }
-      }
-    },
-    "대화가 저장되었어요." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Conversation is saved."
           }
         }
       }
@@ -2766,23 +2703,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "前往设置"
-          }
-        }
-      }
-    },
-    "아니오, 저장할래요" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No, I will save it"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "아니오, 저장할래요"
           }
         }
       }
@@ -3279,52 +3199,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
-          }
-        }
-      }
-    },
-    "허용하러 가기" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow Access"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "허용하러 가기"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "前往允许"
-          }
-        }
-      }
-    },
-    "현위치" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current Location"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "현위치"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "当前位置"
           }
         }
       }
