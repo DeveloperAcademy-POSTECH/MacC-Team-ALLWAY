@@ -128,7 +128,7 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 Spacer()
                 
                 BDText(
-                    text: "\(filteredConversations.count)\(NSLocalizedString("history.search.found", comment: ""))",
+                    text: String(format: NSLocalizedString("history.search.found", comment: ""), filteredConversations.count),
                     style: .H2_M_135
                 )
                 .foregroundColor(.GR5)

@@ -37,20 +37,7 @@ struct TKToast: View {
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill")
                         
-                        if userPreferredLanguage == "en" {
-                            let _ = print("preferred Language: ", userPreferredLanguage)
-                            Text(NSLocalizedString("location.saved.message", comment: ""))
-                            +
-                            Text("\(locationInfo)")
-                            
-                        } else if userPreferredLanguage == "ko" {
-                            Text("\(locationInfo)")
-                            +
-                            Text(NSLocalizedString("location.saved.message", comment: ""))
-                            
-                        } else {
-                            Text("대화가 저장되었어요.")
-                        }
+                        Text(String(format: NSLocalizedString("location.saved.message", comment: ""), locationInfo))
                     }
                     .onAppear {
                         print("locale: ", userPreferredLanguage)
