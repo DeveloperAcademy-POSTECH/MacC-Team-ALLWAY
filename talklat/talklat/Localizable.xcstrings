@@ -287,6 +287,29 @@
         }
       }
     },
+    "celan.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXC_BAD_ACCESS"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXC_BAD_ACCESS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXC_BAD_ACCESS"
+          }
+        }
+      }
+    },
     "CguideMessage" : {
       "comment" : "청각장애 안내 메시지",
       "localizations" : {
@@ -300,6 +323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서\n텍스트로 변환됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我有听力障碍。您说的话会通过语音识别转换为文本。"
           }
         }
       }
@@ -405,6 +434,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "저는 청각장애가 있어요.\n말씀하신 내용은 음성인식되어서\n텍스트로 변환됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我有听力障碍。您说的话会通过语音识别转换为文本。"
           }
         }
       }
@@ -648,6 +683,12 @@
             "state" : "translated",
             "value" : "방금 얘기한 내용 노션에 정리되어있습니다~! :)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guys I've already summarized\nwhat we just talked about in Notion! :)"
+          }
         }
       }
     },
@@ -671,6 +712,12 @@
             "state" : "needs_review",
             "value" : "좋은 제품을 잘 만들고 싶은 디자이너"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Designer who wants to\nmake good products well"
+          }
         }
       }
     },
@@ -688,6 +735,12 @@
             "state" : "translated",
             "value" : "안녕하세요 천재 개(발자) 레츠입니다 :)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, I'm Lets, a genius developer :)"
+          }
         }
       }
     },
@@ -704,6 +757,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "버그를 잡았는데요, 안잡혔습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Waiting for a job offer from Apple."
           }
         }
       }
@@ -787,13 +846,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[\"working late\": true, \"team work\": true]\n.forEach { print(\"I love \\($0.key)\") }"
+            "value" : "iOS x UX enthusiast 👩🏻‍💻"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "do { try 행복 } catch { 야근 }"
+            "value" : "UX 사랑하는 개발자 👩🏻‍💻"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "iOS x UX enthusiast 👩🏻‍💻"
           }
         }
       }
@@ -920,6 +985,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "우주? 아~ 제가 발로 밟고 있는거요?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The universe? Oh you mean\nwhat I'm stepping on right now?"
           }
         }
       }
@@ -1121,6 +1192,12 @@
             "state" : "translated",
             "value" : "원활한 앱 사용을 위해 앱 설정에서 모든 권한을 허용해 주세요."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了顺利使用应用程序，请在应用程序设置中允许所有权限。"
+          }
         }
       }
     },
@@ -1298,7 +1375,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "중국어줄임말 추천좀 해주세요"
+            "value" : "非常感谢！"
           }
         }
       }
@@ -1316,6 +1393,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "호방하지만 기품있는 외조담당"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A generous but dignified person\nin charge of foreign affairs"
           }
         }
       }
@@ -1361,7 +1444,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "중추해"
+            "value" : "不用谢！"
           }
         }
       }
@@ -1382,6 +1465,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "저는 청각장애가 있어요. 말씀하신 내용은 음성인식되어서 텍스트로 변환됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我有听力障碍。您说的话会通过语音识别转换为文本。"
           }
         }
       }
@@ -1848,6 +1937,12 @@
             "state" : "translated",
             "value" : "음성인식이 되고 있어요. 또박또박 말씀해 주세요."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音识别正在进行中，请清楚地说话。"
+          }
         }
       }
     },
@@ -1991,6 +2086,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "내용을 작성해 주세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入内容"
           }
         }
       }
@@ -2528,6 +2629,12 @@
             "state" : "translated",
             "value" : "마이크 및 음성인식 권한이 꺼져있어요."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "麦克风和语音识别权限已关闭。"
+          }
         }
       }
     },
@@ -2694,6 +2801,12 @@
             "state" : "translated",
             "value" : "아이스 아메리카노 한 잔 주시겠어요?"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请给我一杯冰美式咖啡。"
+          }
         }
       }
     },
@@ -2755,6 +2868,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "위치 권한이 꺼져있어요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的位置权限已关闭。"
           }
         }
       }
@@ -2862,6 +2981,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "이 위치에 핀 꼽기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在此位置插入标记。"
           }
         }
       }
