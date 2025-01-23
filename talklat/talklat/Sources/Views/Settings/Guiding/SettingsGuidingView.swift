@@ -15,7 +15,9 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
     
     var body: some View {
         VStack {
-            BDListCell(label: NSLocalizedString("settings.guide.toggleLabel", comment: "")) {
+            BDListCell(
+                label: NSLocalizedString("settings.guide.toggleLabel", comment: "")
+            ) {
                 } trailingUI: {
                     Toggle(
                         "",
@@ -40,7 +42,9 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                 SettingsGuidingEditView()
                     .navigationBarBackButtonHidden()
             } label: {
-                BDListCell(label: NSLocalizedString("settings.guiding.edit", comment: "")) {
+                BDListCell(
+                    label: NSLocalizedString("settings.guiding.edit", comment: "")
+                ) {
                     } trailingUI: {
                         Image(systemName: "chevron.right")
                             .foregroundColor(
@@ -82,7 +86,10 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: NSLocalizedString("settings.guiding.title", comment: ""), style: .H1_B_130)
+                BDText(
+                    text: NSLocalizedString("settings.guiding.title", comment: ""),
+                    style: .H1_B_130
+                )
             }
         }
         .background(Color.ExceptionWhiteW8)

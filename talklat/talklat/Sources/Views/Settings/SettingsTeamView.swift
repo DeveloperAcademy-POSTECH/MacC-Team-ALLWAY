@@ -23,6 +23,7 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                 .padding(.leading, 24)
                 .padding(.top, 24)
                 .padding(.bottom, 16)
+                
                 HStack {
                     BDText(
                         text: NSLocalizedString("creators.description", comment: ""),
@@ -34,9 +35,16 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                 }
                 .padding(.leading, 24)
                 .padding(.bottom, 24)
-                TeamOneView(emoji: "🌿", name: "첼란 Celan", jobTitle: "iOS Developer", customMessage: "EXC_BAD_ACCESS")
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
+                
+                TeamOneView(
+                    emoji: "🌿",
+                    name: "첼란 Celan",
+                    jobTitle: "iOS Developer",
+                    customMessage: NSLocalizedString("celan.sentence", comment: "")
+                )
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+                
                 HStack(spacing: 0) {
                     Circle()
                         .frame(width: 60, height: 60)
@@ -51,7 +59,7 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                             .foregroundStyle(Color.GR9)
                         BDText(text: "iOS Developer", style: .FN_SB_135)
                             .foregroundStyle(Color.GR5)
-                        BDText(text: "안녕하세요 천재 개(발자) 레츠입니다 :)", style: .FN_SB_135)
+                        BDText(text: NSLocalizedString("lets.sentence", comment: ""), style: .FN_SB_135)
                             .rotationEffect(Angle(degrees: 180))
                             .foregroundStyle(Color.Exception35)
                         Spacer()
