@@ -37,7 +37,11 @@ struct TKToast: View {
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill")
                         
-                        Text(String(format: NSLocalizedString("location.saved.message", comment: ""), locationInfo))
+                        Text(String(
+                            format: NSLocalizedString(
+                                "location.saved.message",
+                                comment: ""),
+                            locationInfo))
                     }
                     .onAppear {
                         print("locale: ", userPreferredLanguage)
