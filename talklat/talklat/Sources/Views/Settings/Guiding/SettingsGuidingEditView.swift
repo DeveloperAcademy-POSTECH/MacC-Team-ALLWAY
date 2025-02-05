@@ -35,9 +35,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 )
             } label: {
                 BDText(
-                    text: hasContentChanged
-                    ? NSLocalizedString("settings.guiding.edit.previewButton.changed", comment: "")
-                    : NSLocalizedString("settings.guiding.edit.previewButton", comment: ""),
+                    text: NSLocalizedString("settings.guiding.edit.previewButton", comment: ""),
                     style: .H1_B_130
                 )
                 .foregroundColor(.white)
