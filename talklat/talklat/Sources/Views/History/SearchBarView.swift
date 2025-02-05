@@ -60,9 +60,6 @@ struct SearchBarView: View, FirebaseAnalyzable {
                 }
             }
         }
-        .onAppear {
-            
-        }
         .onChange(of: isSearching) { _, _ in
             if isSearching == true {
                 firebaseStore.userDidAction(.viewed)

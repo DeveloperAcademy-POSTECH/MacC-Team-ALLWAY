@@ -114,8 +114,8 @@ struct HistoryListSearchView: View {
 
 // MARK: - (Matching) Location Unit
 struct SearchResultSection: View, FirebaseAnalyzable {
-    var location: TKLocation
-    var dataStore: TKSwiftDataStore
+    let location: TKLocation
+    let dataStore: TKSwiftDataStore
     
     @State private var filteredConversations = Set<TKConversation>()
     @State private var filteredContents = [TKContent]()
@@ -124,6 +124,7 @@ struct SearchResultSection: View, FirebaseAnalyzable {
     
     let firebaseStore: any TKFirebaseStore = HistorySearchFirebaseStore()
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
             // Location Title
@@ -137,17 +138,23 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 
                 Spacer()
                 
+                let searchResults = filteredContents
+                    .filter { $0.conversation?.location?.blockName == location.blockName }
+                    .count
+                
                 BDText(
-                    text: "\(filteredConversations.count)\(NSLocalizedString("history.search.found", comment: ""))",
+                    text: "\(searchResults)\(NSLocalizedString("history.search.found", comment: ""))",
                     style: .H2_M_135
                 )
                 .foregroundColor(.GR5)
             }
             
             // Contents
-            ForEach(Array(filteredContents.enumerated()), id: \.offset) { index, content in
+            ForEach(
+                Array(filteredContents.enumerated()),
+                id: \.offset
+            ) { index, content in
                 if let conversation = content.conversation {
-                
                     /// 일치하는 위치 타이틀 아래에서만 리스트 생성
                     if conversation.location?.blockName == location.blockName {
                         NavigationLink {
@@ -186,7 +193,6 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                     Text("Conversation이 없어요!")
                 }
             }
-            
         }
         .padding(.top, 24)
         .onAppear {
@@ -198,37 +204,37 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 }
             }
             
-             // Conversation을 기준으로 그룹핑 된 matchingContents을 담은 딕셔너리
-             /// [(TKConversation: [TKContent, TKContent]) ... ]
-             let groupedContents = Dictionary(
-                 grouping: matchingContents,
-                 by: { $0.conversation }
-             )
-             
-             // 그룹핑 된 딕셔너리에서 한 개 이상의 Content가 존재할 경우, 마지막 Content만 필터링 된 배열에 추가
-             groupedContents.forEach { (key: TKConversation?, value: [TKContent]) in
-                 if value.count > 1 {
-                     /// createdAt 기준으로 오름차순 정렬
-                     var createdAtArray = value.map { $0.createdAt }
-                     createdAtArray.sort(
-                         by: { $0.compare($1) == .orderedAscending }
-                     )
-                     
-                     /// 정렬된 배열의 맨 마지막 Content를 필터링 된 배열에 추가
-                     value.forEach { content in
-                         if content.createdAt == createdAtArray.last {
-                             filteredContents.append(content)
-                         }
-                     }
-                 } else {
-                     filteredContents.append(contentsOf: value)
-                 }
-                 
-                 // 필터링 된 Content 내림차순 정렬
-                 filteredContents.sort(
-                     by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
-                 )
-             }
+            // Conversation을 기준으로 그룹핑 된 matchingContents을 담은 딕셔너리
+            /// [(TKConversation: [TKContent, TKContent]) ... ]
+            let groupedContents = Dictionary(
+                grouping: matchingContents,
+                by: { $0.conversation }
+            )
+            
+            // 그룹핑 된 딕셔너리에서 한 개 이상의 Content가 존재할 경우, 마지막 Content만 필터링 된 배열에 추가
+            groupedContents.forEach { (key: TKConversation?, value: [TKContent]) in
+                if value.count > 1 {
+                    /// createdAt 기준으로 오름차순 정렬
+                    var createdAtArray = value.map { $0.createdAt }
+                    createdAtArray.sort(
+                        by: { $0.compare($1) == .orderedAscending }
+                    )
+                    
+                    /// 정렬된 배열의 맨 마지막 Content를 필터링 된 배열에 추가
+                    value.forEach { content in
+                        if content.createdAt == createdAtArray.last {
+                            filteredContents.append(content)
+                        }
+                    }
+                } else {
+                    filteredContents.append(contentsOf: value)
+                }
+                
+                // 필터링 된 Content 내림차순 정렬
+                filteredContents.sort(
+                    by: { $0.createdAt.compare($1.createdAt) == .orderedDescending }
+                )
+            }
         }
         .onChange(of: dataStore.conversations) { oldValue, newValue in
             // 데이터 최신화 (임시방편)
@@ -303,7 +309,7 @@ struct SearchResultItem: View {
         .cornerRadius(16)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")
-        
+            
             // StartingIndex 구하기
             var isCharacterFound: Bool = false
             
@@ -318,7 +324,7 @@ struct SearchResultItem: View {
                 }
             }
         }
-
+        
     }
 }
 
