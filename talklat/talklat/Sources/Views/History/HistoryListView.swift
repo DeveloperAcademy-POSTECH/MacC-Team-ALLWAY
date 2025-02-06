@@ -147,6 +147,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
         ) {
             firebaseStore.userDidAction(.tapped(.alertCancel(firebaseStore.viewId)))
             isDialogShowing = false
+            isEditing = false
             
         } confirmButtonAction: {
             firebaseStore.userDidAction(.tapped(.alertDelete(firebaseStore.viewId)))
@@ -163,6 +164,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                 // Delete Conversation
                 dataStore.removeItem(selectedConversation)
                 isDialogShowing = false // TODO: 이거 필요한가? 중복된 코드 아닌가
+                isEditing = false
             }
         } confirmButtonLabel: {
             HStack(spacing: 8) {
@@ -316,14 +318,22 @@ struct CellItem: View, FirebaseAnalyzable {
                         }
                     } label: {
                         if !isRemoving {
-                            Image(systemName: "minus.circle.fill")
-                                .foregroundStyle(.white, .red)
-                                .font(.system(size: 20))
-                                .padding(.trailing, 5)
-                                .transition(
-                                    .push(from: .trailing)
-                                    .combined(with: .opacity)
-                                )
+                            Button {
+                                firebaseStore.userDidAction(.tapped(.delete))
+                                withAnimation {
+                                    selectedConversation = conversation
+                                    isDialogShowing = true
+                                }
+                            } label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundStyle(.white, .red)
+                                    .font(.system(size: 20))
+                                    .padding(.trailing, 5)
+                                    .transition(
+                                        .push(from: .trailing)
+                                        .combined(with: .opacity)
+                                    )
+                            }
                         }
                     }
                     .transition(
@@ -377,27 +387,6 @@ struct CellItem: View, FirebaseAnalyzable {
                         isRemoving = false
                     }
                 }
-            }
-            
-            // TrashBin Appear
-            if isRemoving && isEditing {
-                Button {
-                    firebaseStore.userDidAction(.tapped(.delete))
-                    withAnimation {
-                        selectedConversation = conversation
-                        isDialogShowing = true
-                    }
-                } label: {
-                    Image(systemName: "trash.fill")
-                        .font(.system(size: 25))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 25)
-                        .padding(.vertical, 14)
-                        .background(Color.RED)
-                        .cornerRadius(16)
-                }
-                .frame(height: 60)
-                .transition(.move(edge: .trailing))
             }
         }
         .onChange(of: isEditing) { _, _ in

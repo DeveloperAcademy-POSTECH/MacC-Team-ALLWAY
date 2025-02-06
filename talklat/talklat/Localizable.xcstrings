@@ -4,6 +4,12 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
+    "%lld" : {
+
+    },
     "🙃" : {
 
     },
@@ -1161,7 +1167,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "좋아요! 이제 비스담을 이용해 볼까요?"
+            "value" : "좋아요!/n이제 비스담을 이용해 볼까요?"
           }
         },
         "zh-Hans" : {
@@ -2367,8 +2373,18 @@
             "state" : "needs_review",
             "value" : "네, 삭제할래요"
           }
+<<<<<<< HEAD
+        }
+      }
+    },
+    "네, 취소할래요" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+=======
         },
         "zh-Hans" : {
+>>>>>>> dev
           "stringUnit" : {
             "state" : "translated",
             "value" : "是的，我要删除。"
@@ -2698,8 +2714,18 @@
             "state" : "needs_review",
             "value" : "설정으로 이동"
           }
+<<<<<<< HEAD
+        }
+      }
+    },
+    "아니오, 저장할래요" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+=======
         },
         "zh-Hans" : {
+>>>>>>> dev
           "stringUnit" : {
             "state" : "translated",
             "value" : "前往设置"
@@ -3194,6 +3220,20 @@
             "state" : "needs_review",
             "value" : "편집"
           }
+<<<<<<< HEAD
+        }
+      }
+    },
+    "허용하러 가기" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Access"
+          }
+=======
+>>>>>>> dev
         },
         "zh-Hans" : {
           "stringUnit" : {

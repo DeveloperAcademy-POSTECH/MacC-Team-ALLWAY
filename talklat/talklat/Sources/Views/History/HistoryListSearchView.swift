@@ -22,8 +22,9 @@ struct HistoryListSearchView: View {
         createdAt: Date.now
     )]
     @State private var searchStatus: SearchStatus = .inactive
-    @Binding internal var isSearching: Bool
-    @Binding internal var searchText: String
+    
+    @Binding var isSearching: Bool
+    @Binding var searchText: String
     
     var body: some View {
         Group {
@@ -34,18 +35,27 @@ struct HistoryListSearchView: View {
                 
             case .resultFound:
                 ScrollView {
-                    ForEach(
-                        dataStore.getContentBasedLocations(
-                            contents: matchingContents
-                        )
-                    ) { location in
-                        SearchResultSection(
-                            location: location,
-                            dataStore: dataStore,
-                            matchingContents: $matchingContents,
-                            searchText: $searchText
-                        )
+                    // 섹션 타이틀로 사용할 위치 정보 추출
+                    let locationList = matchingContents.flatMap {
+                        dataStore.getContentBasedLocations(content: $0)
                     }
+                    
+                    // 중복된 위치 문자열 제거
+                    let locationStrings = Array(Set(locationList.map { $0.blockName }))
+                    
+                    // 위치 정보로 섹션 타이틀 나열
+                    ForEach(locationStrings, id: \.self) { string in
+                        let matchingLocation = locationList.first { $0.blockName == string }
+                        if let location = matchingLocation {
+                            SearchResultSection(
+                                location: location,
+                                dataStore: dataStore,
+                                matchingContents: $matchingContents,
+                                searchText: $searchText
+                            )
+                        }
+                    }
+                    
                 }
                 .scrollIndicators(.hidden)
                 .transition(.identity)
@@ -104,8 +114,8 @@ struct HistoryListSearchView: View {
 
 // MARK: - (Matching) Location Unit
 struct SearchResultSection: View, FirebaseAnalyzable {
-    var location: TKLocation
-    var dataStore: TKSwiftDataStore
+    let location: TKLocation
+    let dataStore: TKSwiftDataStore
     
     @State private var filteredConversations = Set<TKConversation>()
     @State private var filteredContents = [TKContent]()
@@ -114,6 +124,7 @@ struct SearchResultSection: View, FirebaseAnalyzable {
     
     let firebaseStore: any TKFirebaseStore = HistorySearchFirebaseStore()
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
             // Location Title
@@ -127,50 +138,60 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 
                 Spacer()
                 
+                let searchResults = filteredContents
+                    .filter { $0.conversation?.location?.blockName == location.blockName }
+                    .count
+                
                 BDText(
-                    text: String(format: NSLocalizedString("history.search.found", comment: ""), filteredConversations.count),
+                    text: "\(searchResults)\(NSLocalizedString("history.search.found", comment: ""))",
                     style: .H2_M_135
                 )
                 .foregroundColor(.GR5)
             }
             
             // Contents
-            ForEach(filteredContents, id: \.self) { content in
-                NavigationLink {
-                    if let conversation = content.conversation {
-                        CustomHistoryView(
-                            historyViewType: .item,
-                            // TODO: Store 메서드에서 처리
-                            conversation: conversation
-                        )
-                    } else {
-                        Text("Conversation이 없어요!")
-                    }
-                } label: {
-                    SearchResultItem(
-                        matchingContent: content,
-                        searchText: $searchText
-                    )
-                }
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded { _ in
-                            if let conversation = content.conversation {
-                                if let location = conversation.location {
-                                    firebaseStore.userDidAction(
-                                        .tapped(.item),
-                                        .historyType(
-                                            conversation,
-                                            location.blockName
-                                        ))
-                                } else {
-                                    print("From FirebaseStore: location missing")
-                                }
-                            } else {
-                                print("From firebaseStore: conversationMissing")
-                            }
+            ForEach(
+                Array(filteredContents.enumerated()),
+                id: \.offset
+            ) { index, content in
+                if let conversation = content.conversation {
+                    /// 일치하는 위치 타이틀 아래에서만 리스트 생성
+                    if conversation.location?.blockName == location.blockName {
+                        NavigationLink {
+                            CustomHistoryView(
+                                historyViewType: .item,
+                                // TODO: Store 메서드에서 처리
+                                conversation: conversation
+                            )
+                        } label: {
+                            SearchResultItem(
+                                matchingContent: content,
+                                searchText: $searchText
+                            )
                         }
-                )
+                        .simultaneousGesture(
+                            TapGesture()
+                                .onEnded { _ in
+                                    if let conversation = content.conversation {
+                                        if let location = conversation.location {
+                                            firebaseStore.userDidAction(
+                                                .tapped(.item),
+                                                .historyType(
+                                                    conversation,
+                                                    location.blockName
+                                                ))
+                                        } else {
+                                            print("From FirebaseStore: location missing")
+                                        }
+                                    } else {
+                                        print("From firebaseStore: conversationMissing")
+                                    }
+                                }
+                        )
+                    }
+                } else {
+                    Text("Conversation이 없어요!")
+                }
             }
         }
         .padding(.top, 24)
@@ -288,7 +309,7 @@ struct SearchResultItem: View {
         .cornerRadius(16)
         .onAppear {
             let searchTextKeywords = searchText.split(separator: " ")
-        
+            
             // StartingIndex 구하기
             var isCharacterFound: Bool = false
             
@@ -303,7 +324,7 @@ struct SearchResultItem: View {
                 }
             }
         }
-
+        
     }
 }
 
