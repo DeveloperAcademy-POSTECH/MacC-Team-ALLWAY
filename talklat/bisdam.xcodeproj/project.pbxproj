@@ -312,7 +312,6 @@
 		EF4799D92B0EF59E005C2B0E /* SettingsGuidingPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799D62B0EF59E005C2B0E /* SettingsGuidingPreView.swift */; };
 		EF4799DD2B0EF5A7005C2B0E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DB2B0EF5A7005C2B0E /* WebView.swift */; };
 		EF4799DE2B0EF5A7005C2B0E /* LoadingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */; };
-		EF68C9532CEDEAB9005903F1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF68C9522CEDEAB9005903F1 /* GoogleService-Info.plist */; };
 		EF70BACE2BC0FFDF00F91F5C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */; };
 		EFF0D1B12BBEF921003FAC87 /* String+Replacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0D1B02BBEF921003FAC87 /* String+Replacement.swift */; };
 /* End PBXBuildFile section */
@@ -474,8 +473,6 @@
 		EF4799DB2B0EF5A7005C2B0E /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EF4799DC2B0EF5A7005C2B0E /* LoadingWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWebView.swift; sourceTree = "<group>"; };
 		EF67C64A2ACEB67000C1074E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
-		EF68C9522CEDEAB9005903F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		EF68C9542CEDEABA005903F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		EF7938962AFB748100402A4E /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		EF79389A2AFB754100402A4E /* SampleTKConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTKConversation.swift; sourceTree = "<group>"; };
@@ -599,7 +596,6 @@
 			children = (
 				7EC6C3AB2BCBB5F200885FE8 /* PrivacyInfo.xcprivacy */,
 				577B45292B0DE78E00DA010E /* bisdam-Info.plist */,
-				EF68C9522CEDEAB9005903F1 /* GoogleService-Info.plist */,
 				CE4AB1C82BC93BEC0044C29E /* bisdamDebug */,
 				CE4AB1C72BC93BE10044C29E /* bisdamRelease */,
 				EF70BACD2BC0FFDF00F91F5C /* InfoPlist.xcstrings */,
@@ -895,7 +891,6 @@
 		CE4AB1C82BC93BEC0044C29E /* bisdamDebug */ = {
 			isa = PBXGroup;
 			children = (
-				EF68C9542CEDEABA005903F1 /* GoogleService-Info.plist */,
 			);
 			path = bisdamDebug;
 			sourceTree = "<group>";
@@ -1155,7 +1150,6 @@
 				CE4AB1282BC938B90044C29E /* Pretendard-SemiBold.otf in Resources */,
 				CE4AB1292BC938B90044C29E /* Pretendard-Black.otf in Resources */,
 				CE4AB12A2BC938B90044C29E /* Localizable.xcstrings in Resources */,
-				EF68C9532CEDEAB9005903F1 /* GoogleService-Info.plist in Resources */,
 				CE4AB12B2BC938B90044C29E /* Pretendard-Regular.otf in Resources */,
 				CE4AB12C2BC938B90044C29E /* Assets.xcassets in Resources */,
 				CE4AB12D2BC938B90044C29E /* BDSplash_Dark.json in Resources */,
