@@ -50,7 +50,8 @@ struct TKMainView: View, FirebaseAnalyzable {
                     }
                     .foregroundStyle(Color.GR4)
 
-                    BDText(text: NSLocalizedString("새 대화 시작하기", comment: ""), style: .T2_B_125)
+                    BDText(text: NSLocalizedString("새 대화 시작하기", comment: ""),
+                           style: .T2_B_125)
                         .foregroundStyle(Color.OR5)
                 }
             }
@@ -129,7 +130,13 @@ struct TKMainView: View, FirebaseAnalyzable {
                     }
                     store.onConversationFullscreenDismissed()
                 } confirmButtonLabel: {
-                    BDText(text: NSLocalizedString("네, 그만 할래요", comment: ""), style: .H2_SB_135)
+                    BDText(
+                        text: NSLocalizedString(
+                            "네, 그만 할래요",
+                            comment: ""
+                        ),
+                        style: .H2_SB_135
+                    )
                 }
         }
         .toolbar {
@@ -186,7 +193,10 @@ struct TKMainView: View, FirebaseAnalyzable {
             store.onGoSettingScreenButtonTapped()
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                BDText(text: NSLocalizedString("설정으로 이동", comment: ""), style: .H2_SB_135)
+                BDText(
+                    text: NSLocalizedString("설정으로 이동", comment: ""),
+                    style: .H2_SB_135
+                )
                 
                 Image(systemName: "arrow.up.right.square.fill")
             }

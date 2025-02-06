@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "비스담"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BISDAM"
+          }
         }
       }
     },
@@ -31,6 +37,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "bisdam"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "bisdam"
           }
         }
@@ -50,6 +62,12 @@
             "state" : "translated",
             "value" : "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要开启精确位置和位置权限，以便将用户之前的对话内容按地点保存，并在用户重新访问该地点时建议继续对话。"
+          }
         }
       }
     },
@@ -66,6 +84,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "사용자가 이전 대화한 내용을 장소 기반으로 저장하고, 장소를 재방문할 경우 이어서 대화하기를 제안하기 위해 정확한 위치 켬과 위치 정보 권한이 필요합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要开启精确位置和位置权限，以便将用户之前的对话内容按地点保存，并在用户重新访问该地点时建议继续对话。"
           }
         }
       }
@@ -84,6 +108,12 @@
             "state" : "translated",
             "value" : "사용자가 대화하고자 하는 상대방의 음성을 인식하기 위해 마이크 권한이 필요합니다."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要麦克风权限以识别用户希望交谈的对方声音。"
+          }
         }
       }
     },
@@ -100,6 +130,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "인식한 상대방의 음성을 텍스트로 변환하기 위해 음성 인식 권한이 필요합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要语音识别权限将识别的对方声音转换为文本。"
           }
         }
       }

@@ -131,7 +131,10 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: NSLocalizedString("textReplacement.title", comment: ""), style: .H1_B_130)
+                BDText(
+                    text: NSLocalizedString("textReplacement.title", comment: ""),
+                    style: .H1_B_130
+                )
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -243,7 +246,10 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             AWTextField(
                 style: .search,
                 text: store.bindingSearchText(),
-                placeholder: NSLocalizedString("settings.textReplacement.search.placeholder", comment: "Search")
+                placeholder: NSLocalizedString(
+                    "settings.textReplacement.search.placeholder",
+                    comment: "Search"
+                )
             ) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.GR4)

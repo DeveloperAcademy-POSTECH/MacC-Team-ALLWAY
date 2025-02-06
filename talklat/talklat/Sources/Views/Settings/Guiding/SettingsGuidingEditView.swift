@@ -118,11 +118,8 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                             .bold()
                         
                         BDText(
-                            text: NSLocalizedString(
-                                "settings.guiding.title",
-                                comment: ""
-                            ),
-                               style: .H1_B_130
+                            text: NSLocalizedString("settings.guiding.title",comment: ""),
+                            style: .H1_B_130
                         )
                     }
                 }

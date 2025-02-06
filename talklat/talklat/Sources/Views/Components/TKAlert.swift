@@ -227,24 +227,12 @@ extension TKAlert {
            let isSpeechAuthorized = authManager.isSpeechRecognitionAuthorized {
             if isMicrophoneAuthorized, !isSpeechAuthorized {
                 return NSLocalizedString("alert.speech.permission", comment: "")
-//                return """
-//                비스담을 이용하기 위해 음성 인식 접근 권한
-//                까지 허용해 주세요.
-//                """
             }
             else if !isMicrophoneAuthorized, isSpeechAuthorized {
                 return NSLocalizedString("alert.microphone.permission", comment: "")
-//                return """
-//                비스담을 이용하기 위해 마이크 접근 권한
-//                까지 허용해 주세요.
-//                """
             }
             else if !isMicrophoneAuthorized, !isSpeechAuthorized {
                 return NSLocalizedString("alert.conversation.permission", comment: "")
-//                return """
-//                비스담을 이용하기 위해 마이크와
-//                음성 인식 접근 권한을 모두 허용해 주세요.
-//                """
             }
         }
         
