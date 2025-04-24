@@ -92,7 +92,7 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
                             
                             BDText(
                                 text: NSLocalizedString("목록", comment: ""),
-                                style: .H1_B_130
+                                style: ._17H_B
                             )
                         }
                     }
@@ -104,7 +104,7 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
                         text: historyViewType == .item
                         ? conversation.title
                         : NSLocalizedString("대화 내용", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 

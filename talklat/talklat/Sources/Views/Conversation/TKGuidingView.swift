@@ -36,19 +36,19 @@ struct TKGuidingView: View, FirebaseAnalyzable {
             } label: {
                 BDText(
                     text: NSLocalizedString("취소", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
             .padding(.bottom, 20)
             
-            BDText(text: guidingMessage, style: .LT_B_120)
+            BDText(text: guidingMessage, style: ._34LT_EXB)
                 .multilineTextAlignment(.leading)
             
             Spacer()
                 .frame(maxWidth: .infinity, maxHeight: 2)
                 .padding(.bottom, 32)
             
-            BDText(text: Constants.CONVERSATION_GUIDINGMESSAGE, style: .T2_B_160)
+            BDText(text: Constants.CONVERSATION_GUIDINGMESSAGE, style: ._22T2_B)
             
             Spacer()
         }

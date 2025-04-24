@@ -15,7 +15,7 @@ struct SettingsGestureView: View {
         VStack(alignment: .leading) {
             BDText( // TODO: 섹션 타이틀 TKListCell로 이동
                 text: "대화 전환",
-                style: .H2_SB_135
+                style: ._15H2_SMB
             )
             .foregroundColor(.GR5)
             .padding(.leading, 16)
@@ -40,14 +40,14 @@ struct SettingsGestureView: View {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "진동", style: .H1_B_130)
+                BDText(text: "진동", style: ._17H_B)
             }
         }
         .onAppear {

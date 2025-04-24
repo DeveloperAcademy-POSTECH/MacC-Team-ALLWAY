@@ -20,7 +20,7 @@ struct SettingTRTextField: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                BDText(text: title, style: .H2_SB_135)
+                BDText(text: title, style: ._15H2_SMB)
                     .foregroundStyle(Color.GR5)
                     .padding(.horizontal, 16)
                 Spacer()

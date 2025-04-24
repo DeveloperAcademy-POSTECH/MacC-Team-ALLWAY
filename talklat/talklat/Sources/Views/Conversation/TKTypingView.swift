@@ -169,7 +169,7 @@ struct TKTypingView: View, FirebaseAnalyzable {
 // MARK: View Builders
 extension TKTypingView {
     private func characterLimitViewBuilder() -> some View {
-        BDText(text: "\(store(\.questionText).count)/\(store.questionTextLimit)", style: .C1_SB_130)
+        BDText(text: "\(store(\.questionText).count)/\(store.questionTextLimit)", style: ._13F_M)
             .monospacedDigit()
             .foregroundColor(
                 hasQuestionTextReachedMaximumCount
@@ -253,7 +253,7 @@ extension TKTypingView {
             } label: {
                 BDText(
                     text: NSLocalizedString("취소", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .padding(.horizontal, 6)
                 .foregroundStyle(cancelButtonTextColor())
@@ -297,7 +297,7 @@ extension TKTypingView {
                 }
                 
             } label: {
-                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: ._17H_B)
                     .padding(.horizontal, 6)
                     .foregroundStyle(saveButtonTextColor())
             }
@@ -349,7 +349,7 @@ extension TKTypingView {
                             )
                             
                         } label: {
-                            BDText(text: firstReplacement, style: .H2_SB_135)
+                            BDText(text: firstReplacement, style: ._15H2_SMB)
                                 .foregroundColor(Color.GR7)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)

@@ -130,7 +130,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
             if store(\.answeredText).isEmpty {
                 BDText(
                     text: NSLocalizedString("듣고 있어요", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
@@ -207,7 +207,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
             } label: {
                 BDText(
                     text: NSLocalizedString("취소", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .padding(.horizontal, 6)
                 .foregroundStyle(Color.GR6)
@@ -238,7 +238,7 @@ struct TKListeningView: View, FirebaseAnalyzable {
                     firebaseStore.userDidAction(.tapped(.save))
                 }
             } label: {
-                BDText(text: NSLocalizedString("저장", comment: ""), style: .H1_B_130)
+                BDText(text: NSLocalizedString("저장", comment: ""), style: ._17H_B)
                     .padding(.horizontal, 6)
                     .foregroundStyle(Color.white)
             }

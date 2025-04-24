@@ -13,7 +13,7 @@ struct SettingsHapticView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            BDText(text: "기본", style: .H2_SB_135) // TODO: 섹션 타이틀 TKListCell로 이동
+            BDText(text: "기본", style: ._15H2_SMB) // TODO: 섹션 타이틀 TKListCell로 이동
                 .foregroundColor(.GR5)
                 .padding(.leading, 16)
             
@@ -37,14 +37,14 @@ struct SettingsHapticView: View {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
             }
             
             ToolbarItem(placement: .principal) {
-                BDText(text: "진동", style: .H1_B_130)
+                BDText(text: "진동", style: ._17H_B)
             }
         }
         .background(Color.ExceptionWhiteW8)

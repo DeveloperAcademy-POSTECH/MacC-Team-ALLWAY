@@ -38,7 +38,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                     text: hasContentChanged
                     ? NSLocalizedString("settings.guiding.edit.previewButton.changed", comment: "")
                     : NSLocalizedString("settings.guiding.edit.previewButton", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .foregroundColor(.white)
                 .padding(.vertical, 17)
@@ -82,7 +82,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
             
             // FixedMessage Text
             VStack(alignment: .leading) {
-                BDText(text: NSLocalizedString("settings.guiding.edit.fixedMessage.title", comment: ""), style: .H2_SB_135)
+                BDText(text: NSLocalizedString("settings.guiding.edit.fixedMessage.title", comment: ""), style: ._15H2_SMB)
                     .foregroundStyle(Color.GR5)
                     .padding(.horizontal, 16)
                 
@@ -121,7 +121,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("settings.guiding.title",comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -131,7 +131,7 @@ struct SettingsGuidingEditView: View, FirebaseAnalyzable {
                 BDText(text: NSLocalizedString(
                     "settings.guiding.edit",
                     comment: ""
-                ), style: .H1_B_130)
+                ), style: ._17H_B)
             }
         }
         .background(Color.ExceptionWhiteW8)

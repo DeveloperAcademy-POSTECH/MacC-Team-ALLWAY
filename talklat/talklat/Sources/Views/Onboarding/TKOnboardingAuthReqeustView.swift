@@ -16,7 +16,7 @@ struct TKOnboardingAuthReqeustView: View {
             alignment: .leading,
             spacing: 0
         ) {
-            BDText(text: "\(info.title).", style: .LT_B_120)
+            BDText(text: "\(info.title).", style: ._34LT_EXB)
                 .foregroundStyle(Color.OR6)
                 .padding(.bottom, 36)
             
@@ -30,7 +30,7 @@ struct TKOnboardingAuthReqeustView: View {
             .lineSpacing(10)
             .padding(.bottom, 20)
             
-            BDText(text: Constants.Onboarding.CHANGE_AUTH_GUIDE, style: .H2_SB_135)
+            BDText(text: Constants.Onboarding.CHANGE_AUTH_GUIDE, style: ._15H2_SMB)
                 .foregroundStyle(Color.GR4)
             
             Spacer()

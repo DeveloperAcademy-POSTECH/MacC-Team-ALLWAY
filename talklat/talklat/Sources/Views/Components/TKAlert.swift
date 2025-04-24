@@ -92,12 +92,12 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                         .scaleEffect(1.3)
                         .foregroundStyle(tintColor)
                     
-                    BDText(text: headerTitle, style: .H1_B_130)
+                    BDText(text: headerTitle, style: ._17H_B)
                         .foregroundStyle(Color.GR9)
                         .multilineTextAlignment(.center)
                         .lineSpacing(0)
                     
-                    BDText(text: description, style: .H2_SB_135)
+                    BDText(text: description, style: ._15H2_SMB)
                         .foregroundStyle(Color.GR6)
                         .multilineTextAlignment(.center)
                         .lineLimit(3, reservesSpace: true)
@@ -123,10 +123,10 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                 alignment: .leading,
                 spacing: 16
             ) {
-                BDText(text: getConversationAuthTitle(), style: .H1_B_130)
+                BDText(text: getConversationAuthTitle(), style: ._17H_B)
                     .foregroundStyle(Color.GR9)
                 
-                BDText(text: getConversationAuthDescription(), style: .H2_SB_135)
+                BDText(text: getConversationAuthDescription(), style: ._15H2_SMB)
                     .foregroundStyle(Color.GR6)
                     .multilineTextAlignment(.leading)
                     .lineLimit(4, reservesSpace: true)
@@ -144,7 +144,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                         : Color.RED
                     )
                     
-                    BDText(text: NSLocalizedString("microphoneAccessPermission", comment: "Microphone access permission"), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("microphoneAccessPermission", comment: "Microphone access permission"), style: ._15H2_SMB)
                 }
                 
                 HStack {
@@ -159,7 +159,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                         : Color.RED
                     )
                     
-                    BDText(text: NSLocalizedString("speechRecognitionPermission", comment: "Speech recognition permission"), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("speechRecognitionPermission", comment: "Speech recognition permission"), style: ._15H2_SMB)
                 }
             }
             .font(.subheadline.weight(.semibold))
@@ -176,7 +176,7 @@ struct TKAlert<ConfirmButtonLabel: View>: View {
                     bindingPresentedFlag = false
                 }
             } label: {
-                BDText(text: dismissText, style: .H2_SB_135)
+                BDText(text: dismissText, style: ._15H2_SMB)
                     .foregroundStyle(Color.GR6)
                     .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)

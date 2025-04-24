@@ -52,7 +52,7 @@ struct TKHistoryView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("대화 내용", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }
@@ -82,7 +82,7 @@ struct TKHistoryView: View, FirebaseAnalyzable {
 
 extension TKHistoryView {
     private func questionTextBuilder(_ item: HistoryItem) -> some View {
-        BDText(text: item.text, style: .H2_SB_160)
+        BDText(text: item.text, style: ._15H2_SMB)
             .foregroundColor(Color.GR7)
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
@@ -107,7 +107,7 @@ extension TKHistoryView {
                 .foregroundColor(Color.OR5)
                 .padding(.leading, 4)
             
-            BDText(text: item.text, style: .H2_SB_160)
+            BDText(text: item.text, style: ._15H2_SMB)
                 .foregroundColor(Color.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)

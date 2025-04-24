@@ -108,7 +108,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                 id: \.self
             ) { category in
                 VStack(alignment: .leading) {
-                    BDText(text: category, style: .H1_B_130)
+                    BDText(text: category, style: ._17H_B)
                         .foregroundColor(.GR8)
                         .padding(.leading, 8)
                     
@@ -211,7 +211,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("home.title", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     .foregroundColor(Color.OR6)
@@ -221,7 +221,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("설정", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }
@@ -246,7 +246,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                 VStack(alignment: .leading, spacing: 8) {
                     BDText(
                         text: "\(noticeItem.title) \(NSLocalizedString("permission.denied", comment: ""))",
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
@@ -254,7 +254,7 @@ struct SettingsListView: View, FirebaseAnalyzable {
                     HStack {
                         BDText(
                             text: NSLocalizedString("permission.settings", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)

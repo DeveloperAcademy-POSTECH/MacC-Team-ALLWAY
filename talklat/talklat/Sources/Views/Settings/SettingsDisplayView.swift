@@ -80,7 +80,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -89,7 +89,7 @@ struct SettingsDisplayView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("displayMode.title", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }

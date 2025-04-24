@@ -8,31 +8,29 @@
 import SwiftUI
 
 enum BDTextStyle {
-    // MARK: General Type
-    // Large Title Styles
-    case LT_B_120, LT_SB_120, LT_M_120
-    // Title Styles
-    case T1_B_120, T1_SB_120, T1_M_120
-    case T2_B_125, T2_SB_125, T2_M_125
-    case T3_B_125, T3_SB_125, T3_M_125
-    // Headline Styles
-    case H1_B_130, H1_SB_130, H1_M_130
-    case H2_SB_135, H2_M_135
-    // Footnote Styles
-    case FN_SB_135, FN_M_135
-    // Caption Styles
-    case C1_SB_130, C1_M_130
-    case C2_SB_120
-    // MARK: for Conversation+HistoryBubble Type (for C)
-    // Large Title Styles
-    case LT_B_160, LT_M_160
-    // Title Styles
-    case T1_B_170, T1_M_170
-    case T2_B_160, T2_M_160
-    case T3_B_160, T3_M_160
-    // Headline Styles
-    case H1_B_160, H1_M_160
-    case H2_SB_160, H2_M_160
+    
+    // MARK: General Type (G-Type)
+    // 22pt (T2)
+    case _22T2_B, _22T2_R
+    // 20pt (T3 -> H1)
+    case _20H1_B, _20H1_R
+    // 17pt (H1 -> H)
+    case _17H_B, _17H_SMB, _17H_R
+    // 15pt (H2)
+    case _15H2_SMB, _15H2_R
+    // 13pt (FN -> F)
+    case _13F_M
+    
+    // MARK: Conversation Type (C-Type)
+    // 34pt (LT)
+    case _34LT_EXB
+    // 28pt (T1)
+    case _28T1_B
+    // 20pt (H1)
+    case _20H1_SMB
+    
+    // MARK: Legacy
+    case FN_SB_135
 }
 
 struct BDText: View {
@@ -62,92 +60,49 @@ struct BDText: View {
     private func propertiesForStyle(_ style: BDTextStyle) -> (Font, Font.Weight, CGFloat, CGFloat) {
         switch style {
             // MARK: G-Type
-            // Large Title Styles
-        case .LT_B_120:
-            return (Font.custom("Pretendard-Bold", size: 34), .bold, 1.3, 34)
-        case .LT_SB_120:
-            return (Font.custom("Pretendard-SemiBold", size: 34), .semibold, 1.3, 34)
-        case .LT_M_120:
-            return (Font.custom("Pretendard-Medium", size: 34), .medium, 1.3, 34)
-            
-            // Title Styles
-        case .T1_B_120:
-            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.3, 28)
-        case .T1_SB_120:
-            return (Font.custom("Pretendard-SemiBold", size: 28), .semibold, 1.3, 28)
-        case .T1_M_120:
-            return (Font.custom("Pretendard-Medium", size: 28), .medium, 1.3, 28)
-        case .T2_B_125:
+            // 22pt (T2)
+        case ._22T2_B:
             return (Font.custom("Pretendard-Bold", size: 22), .bold, 1.3, 22)
-        case .T2_SB_125:
-            return (Font.custom("Pretendard-SemiBold", size: 22), .semibold, 1.3, 22)
-        case .T2_M_125:
-            return (Font.custom("Pretendard-Medium", size: 22), .medium, 1.3, 22)
-        case .T3_B_125:
+        case ._22T2_R:
+            return (Font.custom("Pretendard-Medium", size: 22), .regular, 1.3, 22)
+            // 20pt (H1)
+        case ._20H1_B:
             return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.3, 20)
-        case .T3_SB_125:
-            return (Font.custom("Pretendard-SemiBold", size: 20), .semibold, 1.3, 20)
-        case .T3_M_125:
-            return (Font.custom("Pretendard-Medium", size: 20), .medium, 1.3, 20)
-            
-            // Headline Styles
-        case .H1_B_130:
+
+        case ._20H1_R:
+            return (Font.custom("Pretendard-Medium", size: 20), .regular, 1.3, 20)
+            // 17pt (H)
+        case ._17H_B:
             return (Font.custom("Pretendard-Bold", size: 17), .bold, 1.3, 17)
-        case .H1_SB_130:
+        case ._17H_SMB:
             return (Font.custom("Pretendard-SemiBold", size: 17), .semibold, 1.3, 17)
-        case .H1_M_130:
-            return (Font.custom("Pretendard-Medium", size: 17), .medium, 1.3, 17)
-        case .H2_SB_135:
+        case ._17H_R:
+            return (Font.custom("Pretendard-Medium", size: 17), .regular, 1.3, 17)
+            // 15pt (H2)
+        case ._15H2_SMB:
             return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.3, 15)
-        case .H2_M_135:
-            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.3, 15)
-            
-            // Footnote Styles
-        case .FN_SB_135:
-            return (Font.custom("Pretendard-SemiBold", size: 13), .semibold, 1.3, 13)
-        case .FN_M_135:
+        case ._15H2_R:
+            return (Font.custom("Pretendard-Medium", size: 15), .regular, 1.3, 15)
+            // 13pt (F)
+        case ._13F_M:
             return (Font.custom("Pretendard-Medium", size: 13), .medium, 1.3, 13)
             
-            // Caption Styles
-        case .C1_SB_130:
-            return (Font.custom("Pretendard-SemiBold", size: 12), .semibold, 1.3, 12)
-        case .C1_M_130:
-            return (Font.custom("Pretendard-Medium", size: 12), .medium, 1.3, 12)
-        case .C2_SB_120:
-            return (Font.custom("Pretendard-SemiBold", size: 11), .semibold, 1.3, 11)
             
             // MARK: C-Type
-            // Large Title Styles
-        case .LT_B_160:
-            return (Font.custom("Pretendard-Bold", size: 34), .bold, 1.7, 34)
-        case .LT_M_160:
-            return (Font.custom("Pretendard-Medium", size: 34), .medium, 1.7, 34)
+            // 34pt (LT)
+        case ._34LT_EXB:
+            return (Font.custom("Pretendard-ExtraBold", size: 34), .black, 1.7, 34)
+            // 28pt (T1)
+        case ._28T1_B:
+            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.7, 28)
+            // 20pt (H1)
+        case ._20H1_SMB:
+            return (Font.custom("Pretendard-SemiBold", size: 20), .semibold, 1.7, 20)
             
-            
-            // Title Styles
-        case .T1_B_170:
-            return (Font.custom("Pretendard-Bold", size: 28), .bold, 1.7, 28) // 피그마에 비해 행간 1.7 너무 넓어요ㅠㅠ
-        case .T1_M_170:
-            return (Font.custom("Pretendard-Medium", size: 28), .medium, 1.7, 28)
-        case .T2_B_160:
-            return (Font.custom("Pretendard-Bold", size: 22), .bold, 1.7, 22)
-        case .T2_M_160:
-            return (Font.custom("Pretendard-Medium", size: 22), .medium, 1.7, 22)
-        case .T3_B_160:
-            return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.7, 20)
-        case .T3_M_160:
-            return (Font.custom("Pretendard-Medium", size: 20), .medium, 1.7, 20)
-            
-            // Headline Styles
-        case .H1_B_160:
-            return (Font.custom("Pretendard-Bold", size: 17), .bold, 1.7, 17)
-        case .H1_M_160:
-            return (Font.custom("Pretendard-Medium", size: 17), .medium, 1.7, 17)
-        case .H2_SB_160:
-            return (Font.custom("Pretendard-SemiBold", size: 15), .semibold, 1.7, 15)
-        case .H2_M_160:
-            return (Font.custom("Pretendard-Medium", size: 15), .medium, 1.7, 15)
-            
+            // MARK: Legacy
+        case .FN_SB_135:
+            return (Font.custom("Pretendard-SemiBold", size: 13), .semibold, 1.3, 13)
+
         }
     }
     
@@ -161,15 +116,14 @@ struct BDText: View {
     }
 }
 
+
 // Test View
 struct BDTextTestView: View {
     var body: some View {
         VStack {
-            BDText(text: "H1_B_130", style: .H1_B_130)
-            BDText(text: "LT_B_120", style: .LT_B_120)
-            BDText(text: "FN_SB_135", style: .FN_SB_135)
-            BDText(text: "C1_M_130", style: .C1_M_130)
-            BDText(text: "라 ㄴ링ㄹ ㄴㅇ라 ㄴ일ㄴ알ㄴㅇ; ㅣㄹㅇ나;ㅣㄹ자ㅣㄹㅈ디ㅏ ㅈ리ㅏㅇ니 ㄷㄹ딪; ㅏㅣ;ㄹㅇ나ㅣ라 ㅣㄴㄹ디ㅏㄹ 니ㅏ;ㅇㄹㄴ;ㅣ아리 안리;ㅏㅣ;리;ㅏ디ㅏ; ㅣ", style: .T1_B_170)
+            BDText(text: "_17H_B", style: ._17H_B)
+            BDText(text: "_34LT_EXB", style: ._34LT_EXB)
+            BDText(text: "라 ㄴ링ㄹ ㄴㅇ라 ㄴ일ㄴ알ㄴㅇ; ㅣㄹㅇ나;ㅣㄹ자ㅣㄹㅈ디ㅏ ㅈ리ㅏㅇ니 ㄷㄹ딪; ㅏㅣ;ㄹㅇ나ㅣ라 ㅣㄴㄹ디ㅏㄹ 니ㅏ;ㅇㄹㄴ;ㅣ아리 안리;ㅏㅣ;리;ㅏ디ㅏ; ㅣ", style: ._28T1_B)
         }
     }
 }
