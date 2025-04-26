@@ -44,14 +44,14 @@ struct TKMainView: View, FirebaseAnalyzable {
                             BDText(
                               text:
                                 locationStore(\.mainPlaceName),
-                              style: .H1_B_130
+                              style: ._17H_B
                             )
                         }
                     }
                     .foregroundStyle(Color.GR4)
 
                     BDText(text: NSLocalizedString("새 대화 시작하기", comment: ""),
-                           style: .T2_B_125)
+                           style: ._22T2_B)
                         .foregroundStyle(Color.OR5)
                 }
             }
@@ -135,7 +135,7 @@ struct TKMainView: View, FirebaseAnalyzable {
                             "네, 그만 할래요",
                             comment: ""
                         ),
-                        style: .H2_SB_135
+                        style: ._15H2_SMB
                     )
                 }
         }
@@ -195,7 +195,7 @@ struct TKMainView: View, FirebaseAnalyzable {
             HStack(spacing: 8) {
                 BDText(
                     text: NSLocalizedString("설정으로 이동", comment: ""),
-                    style: .H2_SB_135
+                    style: ._15H2_SMB
                 )
                 
                 Image(systemName: "arrow.up.right.square.fill")

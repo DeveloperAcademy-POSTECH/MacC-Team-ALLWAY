@@ -120,7 +120,7 @@ struct SearchResultSection: View, FirebaseAnalyzable {
             HStack {
                 Image(systemName: "location.fill")
                 
-                BDText(text: location.blockName, style: .T3_B_125)
+                BDText(text: location.blockName, style: ._20H1_B)
                     .foregroundColor(.GR8)
                     .padding(.leading, -5)
                     .lineLimit(1)
@@ -129,7 +129,7 @@ struct SearchResultSection: View, FirebaseAnalyzable {
                 
                 BDText(
                     text: String(format: NSLocalizedString("history.search.found", comment: ""), filteredConversations.count),
-                    style: .H2_M_135
+                    style: ._15H2_R
                 )
                 .foregroundColor(.GR5)
             }
@@ -237,7 +237,7 @@ struct SearchResultItem: View {
             VStack(alignment: .leading, spacing: -3) {
                 BDText(
                     text: matchingContent.conversation?.title ?? "BISDAM TITLE",
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .foregroundStyle(Color.GR8)
                 
@@ -262,7 +262,7 @@ struct SearchResultItem: View {
                             
                             BDText(
                                 text: String(character.element),
-                                style: .H2_M_135
+                                style: ._15H2_R
                             )
                             .foregroundStyle(
                                 isHighlighted
@@ -275,7 +275,7 @@ struct SearchResultItem: View {
                 
                 BDText(
                     text: matchingContent.createdAt.convertToDate(),
-                    style: .C1_SB_130
+                    style: ._13F_M
                 )
                 .foregroundColor(.GR4)
             }

@@ -85,7 +85,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                     } label: {
                         BDText(
                             text: NSLocalizedString("취소", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     
@@ -93,7 +93,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                     
                     BDText(
                         text: NSLocalizedString("textReplacement.add", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                     
                     Spacer()
@@ -119,7 +119,7 @@ struct TKTextReplacementAddView: View, FirebaseAnalyzable {
                     } label: {
                         BDText(
                             text: NSLocalizedString("완료", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     .disabled(!isInputValid)

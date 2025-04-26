@@ -30,7 +30,7 @@ struct TKScrollView: View {
         case let .question(question, answer):
             VStack {
                 if question.isEmpty && answer.isEmpty {
-                    BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: .T1_B_170)
+                    BDText(text: Constants.SHOWINGVIEW_GUIDINGMESSAGE, style: ._28T1_B)
                         .foregroundColor(Color.GR4) // GR4 색상
                         .multilineTextAlignment(.leading)
                         .frame(
@@ -39,7 +39,7 @@ struct TKScrollView: View {
                         )
                         .padding(.horizontal, 24)
                 } else {
-                    BDText(text: question, style: answer.isEmpty ? .T1_B_170 : .T3_B_160)
+                    BDText(text: question, style: answer.isEmpty ? ._28T1_B : ._20H1_B)
                         .multilineTextAlignment(.leading)
                         .frame(
                             maxWidth: .infinity,
@@ -59,7 +59,7 @@ struct TKScrollView: View {
         case let .answer(answer, align):
             ScrollViewReader { proxy in
                 ScrollView {
-                    BDText(text: answer, style: .T1_B_170)
+                    BDText(text: answer, style: ._28T1_B)
                         .foregroundStyle(Color.white)
                         .frame(
                             maxWidth: .infinity,
@@ -98,7 +98,7 @@ struct TKScrollView: View {
             
         case let .answerCard(answer, align):
             ScrollView {
-                BDText(text: answer, style: .T3_B_160)
+                BDText(text: answer, style: ._20H1_B)
                     .foregroundStyle(Color.white)
                     .lineSpacing(8)
                     .padding(.horizontal, 24)

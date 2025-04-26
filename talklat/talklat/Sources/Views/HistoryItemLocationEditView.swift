@@ -57,7 +57,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                 ToolbarItem(placement: .principal) {
                     BDText(
                         text: NSLocalizedString("위치 정보 편집", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 
@@ -89,7 +89,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
         HStack {
             BDText(
                 text: NSLocalizedString("위치 정보 편집", comment: ""),
-                style: .H1_B_130
+                style: ._17H_B
             )
             
             Button {
@@ -159,7 +159,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
     
     private var mapFooterView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            BDText(text: locationStore(\.editPlaceName), style: .T3_B_125)
+            BDText(text: locationStore(\.editPlaceName), style: ._20H1_B)
                 .padding(.bottom, 16)
                 .fixedSize(horizontal: false, vertical: true)
                 .lineLimit(2)
@@ -191,7 +191,7 @@ struct HistoryItemLocationEditView: View, FirebaseAnalyzable {
                 }
             } label: {
                 HStack {
-                    BDText(text: NSLocalizedString("이 위치에 핀 꼽기", comment: ""), style: .H1_B_130)
+                    BDText(text: NSLocalizedString("이 위치에 핀 꼽기", comment: ""), style: ._17H_B)
                 }
                 .foregroundStyle(Color.white)
                 .frame(height: 38)

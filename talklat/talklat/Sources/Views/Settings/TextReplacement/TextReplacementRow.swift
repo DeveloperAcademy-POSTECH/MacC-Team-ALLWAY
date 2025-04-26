@@ -14,7 +14,7 @@ struct TextReplacementRow: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            BDText(text: key, style: .H1_B_130)
+            BDText(text: key, style: ._17H_B)
                 .lineLimit(1)
                 .foregroundStyle(Color.GR9)
                 .foregroundStyle(Color.GR7)
@@ -25,7 +25,7 @@ struct TextReplacementRow: View {
             Divider()
                 .padding(.leading, 16)
             
-            BDText(text: value, style: .H2_SB_135)
+            BDText(text: value, style: ._15H2_SMB)
                 .lineLimit(lineLimit)
                 .foregroundStyle(Color.GR5)
                 .frame(maxWidth: .infinity, alignment: .leading)

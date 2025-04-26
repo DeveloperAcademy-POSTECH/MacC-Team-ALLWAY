@@ -124,7 +124,7 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                                 
                                 BDText(
                                     text: NSLocalizedString("대화", comment: ""),
-                                    style: .H1_B_130
+                                    style: ._17H_B
                                 )
                             }
                             .tint(Color.OR5)
@@ -135,7 +135,7 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                     ToolbarItem(placement: .principal) {
                         BDText(
                             text: NSLocalizedString("정보", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     
@@ -171,7 +171,7 @@ struct HistoryInfoItemView: View, FirebaseAnalyzable {
                         dismiss()
                     }),
                     confirmButtonLabel: {
-                        BDText(text: "네, 취소할래요.", style: .H2_SB_135)
+                        BDText(text: "네, 취소할래요.", style: ._15H2_SMB)
                     }
                 )
                 .background(Color.ExceptionWhiteW8)

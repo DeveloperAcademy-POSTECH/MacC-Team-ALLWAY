@@ -29,7 +29,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             .padding(.trailing, 7)
                     }
                     
-                    BDText(text: NSLocalizedString("내 주변 대화 목록", comment: ""), style: .T2_B_125)
+                    BDText(text: NSLocalizedString("내 주변 대화 목록", comment: ""), style: ._22T2_B)
                         .foregroundStyle(Color.GR7)
                 }
                 .foregroundStyle(Color.GR5)
@@ -52,22 +52,22 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        BDText(text: conversation.title, style: .H1_SB_130)
+                                        BDText(text: conversation.title, style: ._17H_B)
                                             .foregroundStyle(Color.GR8)
                                         
-                                        BDText(text: locationStore.calculateDistance(conversation.location).toStringDistance(), style: .FN_SB_135)
+                                        BDText(text: locationStore.calculateDistance(conversation.location).toStringDistance(), style: ._13F_M)
                                             .foregroundStyle(Color.OR6)
                                     }
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: .FN_SB_135)
+                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: ._13F_M)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()
                                         
                                         Group {
-                                            BDText(text: NSLocalizedString("대화하기", comment: ""), style: .H2_SB_135)
+                                            BDText(text: NSLocalizedString("대화하기", comment: ""), style: ._15H2_SMB)
                                                 .foregroundStyle(Color.GR7)
                                             
                                             Image(systemName: "chevron.right")
@@ -88,7 +88,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                         }
                         //                    .padding(.bottom, 32)
                     } else {
-                        BDText(text: NSLocalizedString("근처에서 나눈 대화가 없어요.", comment: ""), style: .H2_SB_135)
+                        BDText(text: NSLocalizedString("근처에서 나눈 대화가 없어요.", comment: ""), style: ._15H2_SMB)
                             .foregroundStyle(Color.GR3)
                             .frame(
                                 maxWidth: .infinity,
@@ -98,7 +98,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             .padding(.horizontal, 32)
                     }
                 } else {
-                    BDText(text: NSLocalizedString("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", comment: ""), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", comment: ""), style: ._15H2_SMB)
                         .foregroundStyle(Color.GR3)
                         .frame(
                             maxWidth: .infinity,

@@ -22,16 +22,16 @@ struct SettingsGuidingPreView: View, FirebaseAnalyzable {
             } label: {
                 BDText(
                     text: NSLocalizedString("취소", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
             
-            BDText(text: guidingMessage, style: .LT_B_160)
+            BDText(text: guidingMessage, style: ._34LT_EXB)
                 .multilineTextAlignment(.leading)
             
             BDText(
               text: Constants.CONVERSATION_GUIDINGMESSAGE,
-                style: .T2_B_160
+                style: ._22T2_B
             )
             
             Spacer()

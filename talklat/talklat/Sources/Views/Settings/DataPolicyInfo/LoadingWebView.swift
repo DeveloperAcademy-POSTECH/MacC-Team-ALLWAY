@@ -28,7 +28,7 @@ struct LoadingWebView: View, FirebaseAnalyzable {
             if let error = error {
                 BDText(
                     text: NSLocalizedString("webView.loading.failure", comment: ""),
-                    style: .T3_B_125
+                    style: ._20H1_B
                 )
                 
             } else {
@@ -72,7 +72,7 @@ struct LoadingWebView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -80,7 +80,7 @@ struct LoadingWebView: View, FirebaseAnalyzable {
             
             ToolbarItem(placement: .principal) {
                 BDText(text: NSLocalizedString("개인정보 처리방침", comment: "")
-                       , style: .H1_B_130)
+                       , style: ._17H_B)
             }
         }
     }

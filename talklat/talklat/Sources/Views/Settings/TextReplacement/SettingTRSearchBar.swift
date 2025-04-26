@@ -43,7 +43,7 @@ struct SettingTRSearchBar: View {
                 } label: {
                     BDText(
                         text: NSLocalizedString("취소", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 .padding(.leading, 8)

@@ -55,7 +55,7 @@ struct SearchBarView: View, FirebaseAnalyzable {
                 } label: {
                     BDText(
                         text: NSLocalizedString("취소", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
             }

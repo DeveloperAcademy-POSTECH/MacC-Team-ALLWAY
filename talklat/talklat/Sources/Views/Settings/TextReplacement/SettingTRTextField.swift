@@ -20,7 +20,7 @@ struct SettingTRTextField: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                BDText(text: title, style: .H2_SB_135)
+                BDText(text: title, style: ._15H2_SMB)
                     .foregroundStyle(Color.GR5)
                     .padding(.horizontal, 16)
                 Spacer()
@@ -70,17 +70,17 @@ struct SettingTRTextField: View {
         isTextEmpty: Bool
     ) -> some View {
         if !allowSpace && text.contains(" ") {
-            return BDText(text: NSLocalizedString("textReplacement.noWhiteSpace", comment: ""), style: .FN_SB_135)
+            return BDText(text: NSLocalizedString("textReplacement.noWhiteSpace", comment: ""), style: ._13F_M)
                 .foregroundColor(Color.RED)
         }
         if currentCount == 0 {
-            return BDText(text: NSLocalizedString("textReplacement.morethanone", comment: ""), style: .FN_SB_135)
+            return BDText(text: NSLocalizedString("textReplacement.morethanone", comment: ""), style: ._13F_M)
                 .foregroundColor(Color.RED)
         } else {
             let displayCount = min(currentCount, limit)
             let countText = "\(displayCount)/\(limit)"
             let textColor: Color = currentCount >= limit ? Color.RED : Color.GR4
-            return BDText(text: countText, style: .FN_SB_135)
+            return BDText(text: countText, style: ._13F_M)
                 .foregroundColor(textColor)
         }
     }

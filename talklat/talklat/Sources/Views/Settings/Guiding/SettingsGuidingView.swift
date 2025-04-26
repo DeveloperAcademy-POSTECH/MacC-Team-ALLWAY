@@ -32,7 +32,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
             
             BDText(
                 text: NSLocalizedString("settings.guide.description", comment: ""),
-                style: .H2_SB_135
+                style: ._15H2_SMB
             )
             .foregroundColor(.GR3)
             .padding(.bottom, 24)
@@ -79,7 +79,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -88,7 +88,7 @@ struct SettingsGuidingView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("settings.guiding.title", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }

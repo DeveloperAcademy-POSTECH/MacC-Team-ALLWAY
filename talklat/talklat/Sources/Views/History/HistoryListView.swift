@@ -87,7 +87,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                                 
                                 BDText(
                                     text: NSLocalizedString("home.title", comment: ""),
-                                    style: .H1_B_130
+                                    style: ._17H_B
                                 )
                             }
                             .fontWeight(.medium)
@@ -97,7 +97,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                     ToolbarItem(placement: .principal) {
                         BDText(
                             text: NSLocalizedString("히스토리", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     
@@ -117,7 +117,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
                         } label: {
                             BDText(
                                 text: isEditing ? NSLocalizedString("완료", comment: "") : NSLocalizedString("편집", comment: ""),
-                                style: .H1_B_130
+                                style: ._17H_B
                             )
                         }
                         .onChange(of: isEditing) { _, newValue in
@@ -166,7 +166,7 @@ struct HistoryListView: View, FirebaseAnalyzable {
             }
         } confirmButtonLabel: {
             HStack(spacing: 8) {
-                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)
+                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: ._15H2_SMB)
             }
         }
         .onChange(of: isSearchFocused) { _, _ in
@@ -214,7 +214,7 @@ struct LocationList: View, FirebaseAnalyzable {
                     Image(systemName: "location.slash.fill")
                 }
                 
-                BDText(text: location.blockName, style: .T3_B_125)
+                BDText(text: location.blockName, style: ._20H1_B)
                     .foregroundColor(.GR8)
                     .padding(.leading, -5)
                 
@@ -338,13 +338,13 @@ struct CellItem: View, FirebaseAnalyzable {
                 VStack(alignment: .leading, spacing: -3) {
                     BDText(
                         text: conversation.title,
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                     .foregroundStyle(Color.GR8)
                     
                     BDText(
                         text:conversation.createdAt.convertToDate(),
-                        style: .H2_M_135
+                        style: ._15H2_R
                     )
                     .foregroundColor(.GR5)
                 }

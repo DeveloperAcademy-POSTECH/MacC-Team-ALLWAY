@@ -60,7 +60,7 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                     firebaseStore.userDidAction(.tapped(.delete))
                     store.onShowDialogButtonTapped()
                 } label: {
-                    BDText(text: NSLocalizedString("textReplacement.delete", comment: ""), style: .H1_B_130)
+                    BDText(text: NSLocalizedString("textReplacement.delete", comment: ""), style: ._17H_B)
                         .foregroundColor(Color.white)
                         .cornerRadius(22)
                 }
@@ -94,7 +94,7 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("목록", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -105,7 +105,7 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("편집", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
             
@@ -123,7 +123,7 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 } label: {
                     BDText(
                         text: NSLocalizedString("저장", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 .disabled(store.isSaveButtonDisabled)
@@ -148,7 +148,7 @@ struct TKTextReplacementEditView: View, FirebaseAnalyzable {
                 store.onDismissRemoveAlert()
             },
             confirmButtonLabel: {
-                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: .H2_SB_135)
+                BDText(text: NSLocalizedString("네, 삭제할래요", comment: ""), style: ._15H2_SMB)
             }
         )
     }

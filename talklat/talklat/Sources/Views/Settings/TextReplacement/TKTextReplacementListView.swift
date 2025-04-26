@@ -62,7 +62,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"),
-                            style: .H1_SB_130
+                            style: ._17H_B
                         )
                         .foregroundStyle(Color.GR3)
                         .multilineTextAlignment(.center)
@@ -83,7 +83,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                                 // MARK: 리스트의 Header
                                 Section(
                                     header:
-                                        BDText(text: groupKey, style: .H2_SB_135)
+                                        BDText(text: groupKey, style: ._15H2_SMB)
                                         .id(groupKey)
                                         .foregroundColor(.GR5)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -124,7 +124,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                 }
@@ -133,7 +133,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("textReplacement.title", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
             
@@ -297,7 +297,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                 } label: {
                     BDText(
                         text: NSLocalizedString("취소", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 .padding(.leading, 8)

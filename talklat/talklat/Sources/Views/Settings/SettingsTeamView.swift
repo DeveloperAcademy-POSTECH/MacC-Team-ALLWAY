@@ -27,7 +27,7 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                 HStack {
                     BDText(
                         text: NSLocalizedString("creators.description", comment: ""),
-                        style: .H1_M_160
+                        style: ._17H_R
                     )
                     .foregroundStyle(Color.GR9)
                     
@@ -55,11 +55,11 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                         }
                     VStack(alignment: .leading, spacing: 1) {
                         Spacer()
-                        BDText(text: "레츠 Lets", style: .H1_B_130)
+                        BDText(text: "레츠 Lets", style: ._17H_B)
                             .foregroundStyle(Color.GR9)
-                        BDText(text: "iOS Developer", style: .FN_SB_135)
+                        BDText(text: "iOS Developer", style: ._13F_M)
                             .foregroundStyle(Color.GR5)
-                        BDText(text: NSLocalizedString("lets.sentence", comment: ""), style: .FN_SB_135)
+                        BDText(text: NSLocalizedString("lets.sentence", comment: ""), style: ._13F_M)
                             .rotationEffect(Angle(degrees: 180))
                             .foregroundStyle(Color.Exception35)
                         Spacer()
@@ -143,7 +143,7 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     .tint(Color.OR5)
@@ -154,7 +154,7 @@ struct SettingsTeamView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("creators.title", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }
@@ -179,11 +179,11 @@ struct TeamOneView: View {
                 }
             VStack(alignment: .leading, spacing: 1) {
                 Spacer()
-                BDText(text: name, style: .H1_B_130)
+                BDText(text: name, style: ._17H_B)
                     .foregroundStyle(Color.GR9)
-                BDText(text: jobTitle, style: .FN_SB_135)
+                BDText(text: jobTitle, style: ._13F_M)
                     .foregroundStyle(Color.GR6)
-                BDText(text: customMessage, style: .FN_SB_135)
+                BDText(text: customMessage, style: ._13F_M)
                     .foregroundStyle(Color.Exception35)
                 Spacer()
             }

@@ -35,10 +35,10 @@ struct CustomAlertView<Button: View>: View {
                     .foregroundColor(Color.OR5)
                     .padding()
                 
-                BDText(text: title, style: .H1_B_130)
+                BDText(text: title, style: ._17H_B)
                     .padding(.bottom)
                 
-                BDText(text: message, style: .H2_SB_135)
+                BDText(text: message, style: ._15H2_SMB)
                     .foregroundStyle(Color.GR6)
                     .padding([.bottom, .horizontal])
                 

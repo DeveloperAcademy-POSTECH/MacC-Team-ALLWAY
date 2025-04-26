@@ -20,7 +20,7 @@ struct BDListCell<LabelIcon: View, TrailingUI: View>: View {
                 .font(.system(size: 15))
             
             VStack(alignment: .leading, spacing: 3) {
-                BDText(text: label, style: .H1_B_130)
+                BDText(text: label, style: ._17H_B)
                     .foregroundColor(.GR8)
             }
             

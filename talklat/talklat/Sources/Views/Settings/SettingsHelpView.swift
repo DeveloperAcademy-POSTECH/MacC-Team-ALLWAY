@@ -52,7 +52,7 @@ struct SettingsHelpView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("설정", comment: ""),
-                            style: .H1_B_130
+                            style: ._17H_B
                         )
                     }
                     .tint(Color.OR5)
@@ -63,7 +63,7 @@ struct SettingsHelpView: View, FirebaseAnalyzable {
             ToolbarItem(placement: .principal) {
                 BDText(
                     text: NSLocalizedString("needHelp.title", comment: ""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
             }
         }

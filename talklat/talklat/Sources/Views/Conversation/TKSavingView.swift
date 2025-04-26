@@ -33,7 +33,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 } label: {
                     BDText(
                         text: NSLocalizedString("취소", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 
@@ -42,7 +42,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 HStack(spacing: 5) {
                     Image(systemName: "location.fill")
                     
-                    BDText(text: locationStore(\.mainPlaceName), style: .H1_B_130)
+                    BDText(text: locationStore(\.mainPlaceName), style: ._17H_B)
                 }
                 .foregroundStyle(Color.GR7)
                 
@@ -65,7 +65,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
                 } label: {
                     BDText(
                         text: NSLocalizedString("저장", comment: ""),
-                        style: .H1_B_130
+                        style: ._17H_B
                     )
                 }
                 .disabled(store(\.conversationTitle).isEmpty)
@@ -78,7 +78,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
             HStack {
                 BDText(
                     text: NSLocalizedString("제목", comment: ""),
-                    style: .H2_SB_135
+                    style: ._15H2_SMB
                 )
                 .foregroundStyle(Color.GR5)
                 
@@ -129,7 +129,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
             if store(\.conversationTitle).isEmpty {
                 BDText(
                     text: NSLocalizedString("textReplacement.morethanone", comment: ""),
-                    style: .FN_SB_135)
+                    style: ._13F_M)
                 .foregroundStyle(Color.RED)
                 .padding(.leading, 32)
                 .transition(.opacity.animation(.easeInOut))
@@ -141,7 +141,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
                     .padding(.leading, 32)
                 
             } else {
-                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: .FN_SB_135)
+                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: ._13F_M)
                     .padding(.leading, 32)
                     .foregroundStyle(Color.GR4)
                     .animation(.none, value: store(\.conversationTitle))

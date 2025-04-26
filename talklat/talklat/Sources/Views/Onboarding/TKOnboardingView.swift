@@ -59,12 +59,12 @@ struct TKOnboardingView: View {
                 ) {
                     // MARK: CONDITION
                     if authManager.hasAllAuthBeenObtained {
-                        BDText(text: Constants.Onboarding.ALL_AUTH, style: .LT_B_160)
+                        BDText(text: Constants.Onboarding.ALL_AUTH, style: ._34LT_EXB)
                             .fixedSize()
                             .foregroundStyle(Color.OR6)
                         
                     } else {
-                        BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: .LT_B_160)
+                        BDText(text: Constants.Onboarding.NOT_ALL_AUTH, style: ._34LT_EXB)
                             .fixedSize()
                             .foregroundStyle(Color.OR6)
                     }
@@ -188,7 +188,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    BDText(text: NSLocalizedString("마이크 권한", comment: ""), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("마이크 권한", comment: ""), style: ._15H2_SMB)
                 }
                 
                 HStack {
@@ -203,7 +203,7 @@ struct TKOnboardingView: View {
                         : Color.RED
                     )
                     
-                    BDText(text: NSLocalizedString("음성 인식 권한", comment: ""), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("음성 인식 권한", comment: ""), style: ._15H2_SMB)
                 }
                 
                 HStack {
@@ -217,7 +217,7 @@ struct TKOnboardingView: View {
                         ? Color.green
                         : Color.RED
                     )
-                    BDText(text: NSLocalizedString("locationPermission", comment:""), style: .H2_SB_135)
+                    BDText(text: NSLocalizedString("locationPermission", comment:""), style: ._15H2_SMB)
                 }
                 
             }
@@ -230,7 +230,7 @@ struct TKOnboardingView: View {
             alignment: .leading,
             spacing: 52
         ) {
-            BDText(text: Constants.Onboarding.GUIDE_MESSAGE, style: .LT_B_160)
+            BDText(text: Constants.Onboarding.GUIDE_MESSAGE, style: ._34LT_EXB)
                 .foregroundStyle(Color.OR6)
             
             Image("bisdam_icon")
@@ -249,14 +249,14 @@ struct TKOnboardingView: View {
             if onboardingStep != .complete,
                onboardingStep != .start {
                 let prompt = NSLocalizedString("onboarding.nextButtonPrompt", comment: "")
-                BDText(text: String(format: prompt, info.title), style: .FN_SB_135)
+                BDText(text: String(format: prompt, info.title), style: ._13F_M)
                     .foregroundStyle(Color.OR6)
                     .multilineTextAlignment(.center)
             }
             
             if onboardingStep == .complete,
                !authManager.hasAllAuthBeenObtained {
-                BDText(text: Constants.Onboarding.ASK_FOR_AUTH_ALL_GUIDE, style: .H1_B_130)
+                BDText(text: Constants.Onboarding.ASK_FOR_AUTH_ALL_GUIDE, style: ._17H_B)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.white)
                     
@@ -275,7 +275,7 @@ struct TKOnboardingView: View {
                     text: onboardingStep == .complete
                        ? NSLocalizedString("startButton", comment:"")
                        : NSLocalizedString("nextButton", comment:""),
-                    style: .H1_B_130
+                    style: ._17H_B
                 )
                 .foregroundStyle(
                     onboardingStep == .complete

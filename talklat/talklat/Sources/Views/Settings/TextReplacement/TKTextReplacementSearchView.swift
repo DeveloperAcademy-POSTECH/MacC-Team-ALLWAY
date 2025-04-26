@@ -53,7 +53,7 @@ struct TKTextReplacementSearchView: View {
                 .padding(.bottom, 40)
             BDText(
                 text: NSLocalizedString("noSearchResult", comment: ""),
-                style: .H1_B_130
+                style: ._17H_B
             )
                 .foregroundColor(Color.GR3)
             Spacer()
