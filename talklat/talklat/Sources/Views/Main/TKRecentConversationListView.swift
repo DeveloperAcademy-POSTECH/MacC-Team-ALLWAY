@@ -52,16 +52,16 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        BDText(text: conversation.title, style: ._17H_SMB)
+                                        BDText(text: conversation.title, style: ._17H_B)
                                             .foregroundStyle(Color.GR8)
                                         
-                                        BDText(text: locationStore.calculateDistance(conversation.location).toStringDistance(), style: .FN_SB_135)
+                                        BDText(text: locationStore.calculateDistance(conversation.location).toStringDistance(), style: ._13F_M)
                                             .foregroundStyle(Color.OR6)
                                     }
                                     
                                     HStack {
                                         // MARK: 추후에 update되면 updatedAt을 넣는것으로 변경
-                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: .FN_SB_135)
+                                        BDText(text: conversation.updatedAt?.convertToDate() ?? conversation.createdAt.convertToDate(), style: ._13F_M)
                                             .foregroundStyle(Color.GR4)
                                         
                                         Spacer()

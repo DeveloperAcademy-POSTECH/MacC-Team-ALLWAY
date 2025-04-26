@@ -49,7 +49,7 @@ struct CustomHistoryView: View, FirebaseAnalyzable {
                     //MARK: Swipe down action
                 } label: {
                     VStack {
-                        BDText(text: "작성화면으로 돌아가기", style: .FN_SB_135)
+                        BDText(text: "작성화면으로 돌아가기", style: ._13F_M)
                         
                         Image(systemName: "chevron.down")
                             .resizable()

@@ -63,7 +63,7 @@ struct TKHistoryView: View, FirebaseAnalyzable {
                     store.onDismissPreviewChevronButtonTapped()
                 } label: {
                     VStack(spacing: 8) {
-                        BDText(text: NSLocalizedString("작성 화면으로 돌아가기", comment: ""), style: .FN_SB_135)
+                        BDText(text: NSLocalizedString("작성 화면으로 돌아가기", comment: ""), style: ._13F_M)
                         
                         Image(systemName: "chevron.compact.down")
                             .resizable()

@@ -62,7 +62,7 @@ struct TKTextReplacementListView: View, FirebaseAnalyzable {
                         
                         BDText(
                             text: NSLocalizedString("settings.textReplacement.list.noItems", comment: "No items message"),
-                            style: ._17H_SMB
+                            style: ._17H_B
                         )
                         .foregroundStyle(Color.GR3)
                         .multilineTextAlignment(.center)

@@ -249,7 +249,7 @@ struct TKOnboardingView: View {
             if onboardingStep != .complete,
                onboardingStep != .start {
                 let prompt = NSLocalizedString("onboarding.nextButtonPrompt", comment: "")
-                BDText(text: String(format: prompt, info.title), style: .FN_SB_135)
+                BDText(text: String(format: prompt, info.title), style: ._13F_M)
                     .foregroundStyle(Color.OR6)
                     .multilineTextAlignment(.center)
             }

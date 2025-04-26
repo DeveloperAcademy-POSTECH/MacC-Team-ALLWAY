@@ -129,7 +129,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
             if store(\.conversationTitle).isEmpty {
                 BDText(
                     text: NSLocalizedString("textReplacement.morethanone", comment: ""),
-                    style: .FN_SB_135)
+                    style: ._13F_M)
                 .foregroundStyle(Color.RED)
                 .padding(.leading, 32)
                 .transition(.opacity.animation(.easeInOut))
@@ -141,7 +141,7 @@ struct TKSavingView: View, FirebaseAnalyzable {
                     .padding(.leading, 32)
                 
             } else {
-                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: .FN_SB_135)
+                BDText(text: "\(store(\.conversationTitle).count)/\(store.conversationTitleLimit)", style: ._13F_M)
                     .padding(.leading, 32)
                     .foregroundStyle(Color.GR4)
                     .animation(.none, value: store(\.conversationTitle))

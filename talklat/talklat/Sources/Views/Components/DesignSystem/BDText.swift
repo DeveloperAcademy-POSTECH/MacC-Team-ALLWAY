@@ -15,7 +15,7 @@ enum BDTextStyle {
     // 20pt (T3 -> H1)
     case _20H1_B, _20H1_R
     // 17pt (H1 -> H)
-    case _17H_B, _17H_SMB, _17H_R
+    case _17H_B, _17H_R
     // 15pt (H2)
     case _15H2_SMB, _15H2_R
     // 13pt (FN -> F)
@@ -28,9 +28,6 @@ enum BDTextStyle {
     case _28T1_B
     // 20pt (H1)
     case _20H1_SMB
-    
-    // MARK: Legacy
-    case FN_SB_135
 }
 
 struct BDText: View {
@@ -68,14 +65,11 @@ struct BDText: View {
             // 20pt (H1)
         case ._20H1_B:
             return (Font.custom("Pretendard-Bold", size: 20), .bold, 1.3, 20)
-
         case ._20H1_R:
             return (Font.custom("Pretendard-Medium", size: 20), .regular, 1.3, 20)
             // 17pt (H)
         case ._17H_B:
             return (Font.custom("Pretendard-Bold", size: 17), .bold, 1.3, 17)
-        case ._17H_SMB:
-            return (Font.custom("Pretendard-SemiBold", size: 17), .semibold, 1.3, 17)
         case ._17H_R:
             return (Font.custom("Pretendard-Medium", size: 17), .regular, 1.3, 17)
             // 15pt (H2)
@@ -98,10 +92,6 @@ struct BDText: View {
             // 20pt (H1)
         case ._20H1_SMB:
             return (Font.custom("Pretendard-SemiBold", size: 20), .semibold, 1.7, 20)
-            
-            // MARK: Legacy
-        case .FN_SB_135:
-            return (Font.custom("Pretendard-SemiBold", size: 13), .semibold, 1.3, 13)
 
         }
     }
