@@ -25,11 +25,12 @@ struct HistoryListView: View, FirebaseAnalyzable {
     )
     @State private var isEditing: Bool = false
     @State private var isDialogShowing: Bool = false
-    @State internal var isSearching: Bool = false
-    @State internal var searchText: String = ""
+    @State var isSearching: Bool = false
+    @State var searchText: String = ""
+    @State var isLocationAlertOn: Bool = false
     
     // not in store
-    @FocusState internal var isSearchFocused: Bool
+    @FocusState var isSearchFocused: Bool
     
     var body: some View {
         VStack {
@@ -41,105 +42,134 @@ struct HistoryListView: View, FirebaseAnalyzable {
             .focused($isSearchFocused)
             .navigationBarBackButtonHidden(true)
             .disabled(isEditing ? true : false)
+            .padding(.horizontal, 20)
             
             Spacer()
             
-            // MARK: - History List
-            if !isSearching {
-                Group {
-                    // Unavailable View
-                    if dataStore.conversations.isEmpty {
-                        TKUnavailableViewBuilder(
-                            icon: "bubble.left.and.bubble.right.fill",
-                            description:  NSLocalizedString("history.noconversation", comment: "")
-                        )
-                    } else {
-                        ScrollView {
-                            ForEach(
-                                dataStore.filterDuplicatedBlockNames(
-                                    locations: dataStore.locations
-                                )
-                            ) { location in
-                                LocationList(
-                                    dataStore: dataStore,
-                                    location: location,
-                                    selectedConversation: $selectedConversation,
-                                    isEditing: $isEditing,
-                                    isDialogShowing: $isDialogShowing
-                                )
-                                .padding(.bottom, 24)
-                            }
-                            .padding(.top, 24)
+            ScrollView {
+                VStack {
+                    // MARK: - Location Alert
+                    if isLocationAlertOn {
+                        HStack {
+                            Image(systemName: "info.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(.OR6)
+                                .padding(.trailing, 12)
+                            
+                            BDText(text: NSLocalizedString("history.location.alert", comment: ""), style: .FN_M_135)
+                                .foregroundColor(.GR7)
                         }
-                        .scrollIndicators(.hidden)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 16)
+                        .background {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.ExceptionWhite17)
+                                .stroke(Color.Exception26, lineWidth: 1.1)
+                        }
+                        .padding(.top, 8)
                     }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        // Back Button
-                        Button {
-                            firebaseStore.userDidAction(.tapped(.back))
-                            dismiss()
-                        } label: {
-                            HStack {
-                                Image(systemName: "chevron.left")
-                                    .bold()
-                                
+                    
+                    // MARK: - History List
+                    if !isSearching {
+                        Group {
+                            // Unavailable View
+                            if dataStore.conversations.isEmpty {
+                                TKUnavailableViewBuilder(
+                                    icon: "bubble.left.and.bubble.right.fill",
+                                    description:  NSLocalizedString("history.noconversation", comment: "")
+                                )
+                            } else {
+                                ScrollView {
+                                    ForEach(
+                                        dataStore.filterDuplicatedBlockNames(
+                                            locations: dataStore.locations
+                                        )
+                                    ) { location in
+                                        LocationList(
+                                            dataStore: dataStore,
+                                            location: location,
+                                            selectedConversation: $selectedConversation,
+                                            isEditing: $isEditing,
+                                            isDialogShowing: $isDialogShowing,
+                                            isLocationAlertOn: $isLocationAlertOn
+                                        )
+                                        .padding(.bottom, 24)
+                                    }
+                                    .padding(.top, 14)
+                                }
+                                .scrollIndicators(.hidden)
+                            }
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                // Back Button
+                                Button {
+                                    firebaseStore.userDidAction(.tapped(.back))
+                                    dismiss()
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "chevron.left")
+                                            .bold()
+                                        
+                                        BDText(
+                                            text: NSLocalizedString("home.title", comment: ""),
+                                            style: .H1_B_130
+                                        )
+                                    }
+                                    .fontWeight(.medium)
+                                }
+                            }
+                            
+                            ToolbarItem(placement: .principal) {
                                 BDText(
-                                    text: NSLocalizedString("home.title", comment: ""),
+                                    text: NSLocalizedString("히스토리", comment: ""),
                                     style: .H1_B_130
                                 )
                             }
-                            .fontWeight(.medium)
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .principal) {
-                        BDText(
-                            text: NSLocalizedString("히스토리", comment: ""),
-                            style: .H1_B_130
-                        )
-                    }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        // Edit Button
-                        Button {
-                            withAnimation(
-                                .spring(
-                                    dampingFraction: 0.7,
-                                    blendDuration: 0.4
-                                )
-                            ) {
-                                withAnimation {
-                                    isEditing.toggle()
+                            
+                            ToolbarItem(placement: .topBarTrailing) {
+                                // Edit Button
+                                Button {
+                                    withAnimation(
+                                        .spring(
+                                            dampingFraction: 0.7,
+                                            blendDuration: 0.4
+                                        )
+                                    ) {
+                                        withAnimation {
+                                            isEditing.toggle()
+                                        }
+                                    }
+                                } label: {
+                                    BDText(
+                                        text: isEditing ? NSLocalizedString("완료", comment: "") : NSLocalizedString("편집", comment: ""),
+                                        style: .H1_B_130
+                                    )
+                                }
+                                .onChange(of: isEditing) { _, newValue in
+                                    if newValue == true {
+                                        firebaseStore.userDidAction(.tapped(.edit))
+                                    } else {
+                                        firebaseStore.userDidAction(.tapped(.complete))
+                                    }
                                 }
                             }
-                        } label: {
-                            BDText(
-                                text: isEditing ? NSLocalizedString("완료", comment: "") : NSLocalizedString("편집", comment: ""),
-                                style: .H1_B_130
-                            )
                         }
-                        .onChange(of: isEditing) { _, newValue in
-                            if newValue == true {
-                                firebaseStore.userDidAction(.tapped(.edit))
-                            } else {
-                                firebaseStore.userDidAction(.tapped(.complete))
-                            }
-                        }
+                    } else {
+                        // MARK: - History Search
+                        HistoryListSearchView(
+                            dataStore: dataStore,
+                            isSearching: $isSearching,
+                            searchText: $searchText
+                        )
+                        .navigationBarBackButtonHidden(true)
                     }
                 }
-            } else {
-                // MARK: - History Search
-                HistoryListSearchView(
-                    dataStore: dataStore,
-                    isSearching: $isSearching,
-                    searchText: $searchText
-                )
-                .navigationBarBackButtonHidden(true)
+                .padding(.horizontal, 20)
             }
         }
-        .padding(.horizontal, 20)
         .background(Color.ExceptionWhiteW8)
         .showTKAlert(
             isPresented: $isDialogShowing,
@@ -199,16 +229,18 @@ struct HistoryListView: View, FirebaseAnalyzable {
 struct LocationList: View, FirebaseAnalyzable {
     let firebaseStore: any TKFirebaseStore = HistoryFirebaseStore()
     var dataStore: TKSwiftDataStore
-    internal var location: TKLocation
-    @State internal var isCollapsed: Bool = false
-    @Binding internal var selectedConversation: TKConversation
-    @Binding internal var isEditing: Bool
-    @Binding internal var isDialogShowing: Bool
+    var location: TKLocation
+    @State var isCollapsed: Bool = false
+    @Binding var selectedConversation: TKConversation
+    @Binding var isEditing: Bool
+    @Binding var isDialogShowing: Bool
+    @Binding var isLocationAlertOn: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if location.blockName != "위치정보없음" { // TODO: nil 값 확인 필요
+                if location.longitude != initialLongitude,
+                   location.latitude != initialLatitude {
                     Image(systemName: "location.fill")
                 } else {
                     Image(systemName: "location.slash.fill")
@@ -236,7 +268,7 @@ struct LocationList: View, FirebaseAnalyzable {
                         .rotationEffect(isCollapsed ? .degrees(90) : .degrees(0))
                         .font(
                             .system(
-                                size: 17,
+                                size: 14,
                                 weight: .bold,
                                 design: .rounded
                             )
@@ -246,6 +278,7 @@ struct LocationList: View, FirebaseAnalyzable {
                 }
                 .disabled(isEditing)
             }
+            .padding(.bottom, 12)
             
             // Each List Cell
             if !isCollapsed {
@@ -283,6 +316,16 @@ struct LocationList: View, FirebaseAnalyzable {
                         removal: .identity
                     )
                 )
+                .onAppear {
+                    if location.longitude == initialLongitude,
+                       location.latitude == initialLatitude {
+                        if dataStore.getLocationBasedConversations(
+                            location: location
+                        ).count > 7 {
+                            isLocationAlertOn = true
+                        }
+                    }
+                }
             }
         }
         .background(Color.ExceptionWhiteW8)
@@ -352,18 +395,18 @@ struct CellItem: View, FirebaseAnalyzable {
                 Spacer()
                 
                 Image(systemName: "chevron.right")
-                    .opacity(isEditing ? 0 : 1)
-                    .foregroundColor(.ExceptionWhite36)
+                    .foregroundColor(.Exception35)
                     .font(
                         .system(
-                            size: 17,
+                            size: 14,
                             weight: .bold,
                             design: .rounded
                         )
                     )
             }
             .frame(height: 60)
-            .padding(.horizontal)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 4)
             .background(Color.ExceptionWhite17)
             .cornerRadius(16)
             .onTapGesture {
