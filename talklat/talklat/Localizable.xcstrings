@@ -1161,7 +1161,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "좋아요! 이제 비스담을 이용해 볼까요?"
+            "value" : "좋아요!\n이제 비스담을\n이용해 볼까요?"
           }
         },
         "zh-Hans" : {
@@ -1277,7 +1277,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "저런:( 허용하지 않은 권한이 있군요."
+            "value" : "저런:(\n허용하지 않은\n권한이 있군요."
           }
         },
         "zh-Hans" : {
