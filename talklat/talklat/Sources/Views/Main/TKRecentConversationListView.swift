@@ -20,7 +20,7 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                 HStack(spacing: 2) {
                     if locationStore(\.isAuthorized) {
                         Image(systemName: "bubble.left.and.bubble.right.fill")
-                            .foregroundColor(.GR5)
+                            .foregroundColor(.OR5)
                             .padding(.trailing, 7)
                     } else {
                         Image("none.talk.light")
@@ -98,14 +98,41 @@ struct TKRecentConversationListView: View, FirebaseAnalyzable {
                             .padding(.horizontal, 32)
                     }
                 } else {
-                    BDText(text: NSLocalizedString("근처 대화 목록을 불러올 수 없습니다. 설정에서 위치 권한을 허용해주세요.", comment: ""), style: .H2_SB_135)
-                        .foregroundStyle(Color.GR3)
-                        .frame(
-                            maxWidth: .infinity,
-                            alignment: .leading
-                        )
-                        .padding(.bottom, 32)
-                        .padding(.horizontal, 32)
+                    VStack(alignment: .leading) {
+                        BDText(text: NSLocalizedString("conversation.location.alert", comment: ""), style: .H2_SB_135)
+                            .foregroundStyle(Color.GR3)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                        
+                        Button {
+                            if let url = URL(
+                                string: UIApplication.openSettingsURLString
+                            ) {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            HStack {
+                                BDText(text: NSLocalizedString("location.auth.link", comment: ""), style: .H2_SB_135)
+                                    .foregroundStyle(Color.GR7)
+                                
+                                Image(systemName: "arrow.up.right.square.fill")
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                                    .foregroundStyle(Color.GR4)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color.ExceptionWhite17)
+                            .cornerRadius(22)
+                        }
+                        .padding(.vertical, 12)
+                        
+                        Spacer()
+                    }
+                    .padding(.bottom, 32)
+                    .padding(.horizontal, 32)
                 }
             }
             .refreshable {
